@@ -1,0 +1,19 @@
+[user]
+  name = ktsuda
+  email = ktsuda@users.noreply.github.com
+[core]
+  editor = vim
+  ignorecase = false
+  excludesfile = ~/.gitignore
+[push]
+  default = simple
+[diff]
+  tool = vimdiff
+  algorithm = histogram
+[alias]
+  b = branch -av
+  s = status -sb
+  c = commit -v
+  fix = commit --amend
+  l = log --graph --date-order --all --abbrev-commit --date=short --pretty=format:'%C(yellow)%d %Cred%h %Cgreen%ad %C(white)%s%Creset %C(cyan)%cn%Creset'
+  undo = reset --soft HEAD^

@@ -1,0 +1,46 @@
+defutf8 on
+defencoding utf8
+encoding utf8 utf8
+
+startup_message off
+vbell off
+vbell_msg "Bell"
+
+escape ^Tt
+
+defscrollback 10000
+altscreen off
+autodetach on
+
+defbce on
+crlf off
+attrcolor b ".I"
+termcapinfo xterm "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+termcapinfo xterm-color "Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm"
+
+bind q
+bind q only
+
+bind '-' eval split focus
+bind \"
+bind \" eval split focus screen
+
+bind '|' eval 'split -v' focus
+bind '%'
+bind '%' eval 'split -v' focus screen
+
+bind x remove
+bind = resize =
+
+bind j focus down
+bind k focus up
+bind h focus left
+bind l focus right
+
+bind N colon 'number '
+bind r source "$HOME/.screenrc"
+
+term xterm-256color
+caption always
+hardstatus alwayslastline '%02c:%s %{=b .y}%H%{-} %L=%-w%45L>%{=u ..}%n %t%{-}%+w %-17<%=%{= .y}(%l)'
+shell $SHELL
