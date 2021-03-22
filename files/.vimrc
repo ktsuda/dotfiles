@@ -95,8 +95,7 @@ set updatetime=250
 
 " fzf.vim ======================================================================
 let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'window':
-    \ { 'width': 1, 'height': 0.4, 'yoffset': 1, 'border': 'horizontal' } }
+let g:fzf_layout = { 'down': '40%' }
 let g:fzf_commits_log_options =
     \ '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let $FZF_DEFAULT_OPTS='--reverse'
