@@ -105,8 +105,14 @@ nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " lsp ==========================================================================
-" let g:asyncomplete_auto_completeopt = 0
-" set completeopt=menuone,noinsert,noselect,preview
+nmap <silent> <leader>gd :LspDefinition<CR>
+nmap <silent> <leader>rn :LspRename<CR>
+nmap <silent> <Leader>gt :LspTypeDefinition<CR>
+nmap <silent> <Leader>gr :LspReferences<CR>
+nmap <silent> <Leader>gi :LspImplementation<CR>
+nmap <silent> <Leader>gh :LspHover<CR>
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
 
 " clang-format =================================================================
 let g:clang_format#code_style = 'google'
