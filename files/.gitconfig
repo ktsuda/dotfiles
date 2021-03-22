@@ -17,3 +17,5 @@
   fix = commit --amend
   l = log --graph --date-order --all --abbrev-commit --date=short --pretty=format:'%C(yellow)%d %Cred%h %Cgreen%ad %C(white)%s%Creset %C(cyan)%cn%Creset'
   undo = reset --soft HEAD^
+[credential]
+  helper = store

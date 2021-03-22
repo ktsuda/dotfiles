@@ -32,6 +32,7 @@ autoload -Uz colors; colors
 [[ -d "$HOME/.ghq/src" ]] && GHQ_ROOT="$HOME/.ghq/src"
 [[ -d "$HOME/.ghq/bin" ]] && PATH="$HOME/.ghq/bin:$PATH"
 [[ -d "$HOME/.cargo/bin" ]] && PATH="$HOME/.cargo/bin:$PATH"
+[[ -d "$HOME/.fzf/bin" ]] && PATH="$HOME/.fzf/bin:$PATH"
 [[ -d "$HOME/.screen" ]] && SCREENDIR=$HOME/.screen
 
 export EDITOR
