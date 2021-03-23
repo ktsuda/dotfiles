@@ -40,7 +40,11 @@ bind l focus right
 bind N colon 'number '
 bind r source "$HOME/.screenrc"
 
+bind w windowlist -b
+
 term xterm-256color
 caption always
-hardstatus alwayslastline '%02c:%s %{=b .y}%H%{-} %L=%-w%45L>%{=u ..}%n %t%{-}%+w %-17<%=%{= .y}(%l)'
+hardstatus off
+hardstatus alwayslastline
+hardstatus string '%02c:%s %{=b .y}%H%{-} %L=%-w%45L>%{+bu dG}%n %t%{-}%+w %-17<%=%{= .y}(%l)'
 shell $SHELL
