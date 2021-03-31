@@ -11,5 +11,5 @@ declare -a arr=(
 
 for file in "${arr[@]}"
 do
-  diff files/$file ~/$file
+  diff skel/$file ~/$file
 done
