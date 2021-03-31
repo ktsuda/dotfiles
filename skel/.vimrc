@@ -70,6 +70,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
 Plug 'thinca/vim-quickrun'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'tyru/skk.vim'
 call plug#end()
@@ -126,21 +127,15 @@ nmap <silent> <leader>aa :A<CR>
 nmap <silent> <leader>at :AT<CR>
 nmap <silent> <leader>av :AV<CR>
 
-" lightline ====================================================================
-let g:lightline = {
-    \ 'component_function': {
-        \ 'filename': 'LightlineFilename'
-        \ }
-        \ }
-
-function! LightlineFilename()
-    let root = fnamemodify(get(b:, 'git_dir'), ':h')
-    let path = expand('%:p')
-    if path[:len(root)-1] ==# root
-        return path[len(root)+1:]
-    endif
-    return expand('%')
-endfunction
+" editorconfig-vim =============================================================
+let g:EditorConfig_exclude_patterns = [
+    \ 'fugitive://.*',
+    \ 'scp://.*'
+    \ ]
+augroup editor_config
+    autocmd!
+    autocmd FileType gitcommit let b:EditorConfig_disable = 1
+augroup END
 
 " skk.vim ======================================================================
 let skk_large_jisyo='~/.skk/dict/SKK-JISYO.L'
@@ -162,13 +157,6 @@ if has('mac') || has('win64') || has('win32')
     set clipboard^=unnamed
 else
     set clipboard^=unnamedplus
-endif
-
-" color column =================================================================
-set textwidth=80
-if (exists('+colorcolumn'))
-    hi ColorColumn ctermbg=red guibg=DarkRed
-    call matchadd('ColorColumn', '\%81v', 81)
 endif
 
 " spacing ======================================================================
