@@ -16,7 +16,7 @@ set fileformats=unix,dos,mac
 
 " misc =========================================================================
 let g:vim_indent_cont = 4
-set autochdir
+" set autochdir " incompatible with vim-dirvish
 set relativenumber
 set number
 set guicursor=
@@ -61,7 +61,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'justinmk/vim-dirvish'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
@@ -100,9 +100,6 @@ let g:fzf_commits_log_options =
     \ '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let $FZF_DEFAULT_OPTS='--reverse'
 nnoremap <silent> <C-p> :GFiles<CR>
-
-" nerdtree =====================================================================
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " lsp ==========================================================================
 nmap <silent> <leader>gd :LspDefinition<CR>
