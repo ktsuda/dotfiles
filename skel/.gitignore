@@ -32,3 +32,5 @@ Thumbs.db
 # tag files
 tags
 tags.lock
+
+.editorconfig
