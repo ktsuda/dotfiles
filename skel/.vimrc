@@ -69,6 +69,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'rhysd/vim-clang-format'
 Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
+Plug 'preservim/tagbar'
 Plug 'thinca/vim-quickrun'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'wakatime/vim-wakatime'
