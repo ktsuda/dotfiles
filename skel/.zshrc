@@ -34,6 +34,7 @@ autoload -Uz colors; colors
 [[ -d "$HOME/.cargo/bin" ]] && PATH="$HOME/.cargo/bin:$PATH"
 [[ -d "$HOME/.fzf/bin" ]] && PATH="$HOME/.fzf/bin:$PATH"
 [[ -d "$HOME/.screen" ]] && SCREENDIR=$HOME/.screen
+[[ -d "/opt/matlab/R2020a/bin" ]] && PATH="/opt/matlab/R2020a/bin:$PATH"
 
 export EDITOR
 export GOPATH
