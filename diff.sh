@@ -7,6 +7,7 @@ declare -a arr=(
   ".tigrc"
   ".vimrc"
   ".zshrc"
+  ".config/i3/config"
 )
 
 for file in "${arr[@]}"
