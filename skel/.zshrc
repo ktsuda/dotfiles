@@ -90,7 +90,7 @@ function git-repo-cd() {
 zle -N git-repo-cd
 bindkey "^s" git-repo-cd
 
-PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color}(%*%) %~
+PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[cyan]}%m${reset_color}(%*%) %~
 %# "
 
 RPROMPT="[%~]"
