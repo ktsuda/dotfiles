@@ -25,6 +25,7 @@ set hlsearch
 set laststatus=2
 set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
 set modeline
+set modelines=5
 set hidden
 set incsearch
 set smartcase
