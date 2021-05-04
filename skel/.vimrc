@@ -23,7 +23,7 @@ set smartindent
 set backspace=indent,eol,start
 set hlsearch
 set laststatus=2
-set statusline=%F%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
+set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
 set modeline
 set hidden
 set incsearch
