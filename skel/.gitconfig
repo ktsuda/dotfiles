@@ -19,3 +19,5 @@
   undo = reset --soft HEAD^
 [credential]
   helper = store
+[init]
+  defaultBranch = main
