@@ -65,7 +65,6 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'rhysd/vim-clang-format'
 Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
 Plug 'preservim/tagbar'
@@ -115,15 +114,10 @@ nmap <silent> <Leader>gh :LspHover<CR>
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 
-" clang-format =================================================================
-let g:clang_format#code_style = 'google'
-let g:clang_format#style_options = {
-    \ 'AlignConsecutiveAssignments': 'true',
-    \ 'DerivePointerAlignment': 'false',
-    \ 'PointerAlignment': 'Right',
-    \ 'KeepEmptyLinesAtTheStartOfBlocks': 'true',
-    \ 'SpacesBeforeTrailingComments': 1
-    \ }
+augroup lsp_format
+    autocmd!
+    autocmd BufWritePre *.(py|cpp|c|h) LspDocumentFormatSync
+augroup END
 
 " a.vim ========================================================================
 nmap <silent> <leader>aa :A<CR>
