@@ -41,6 +41,9 @@ export GOPATH
 export GHQ_ROOT
 export SCREENDIR
 
+export GOBIN="$HOME/bin"
+export GO111MODULE="auto"
+
 if type vim > /dev/null 2>&1; then
   EDITOR=vim
 else
