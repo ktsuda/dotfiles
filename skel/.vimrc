@@ -159,6 +159,8 @@ else
     set clipboard^=unnamedplus
 endif
 
+nnoremap Y y$
+
 " spacing ======================================================================
 augroup filetype_tab
     autocmd!
