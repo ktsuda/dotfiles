@@ -145,11 +145,16 @@ let g:skk_auto_save_jisyo = 1
 set imdisable
 
 " defx =========================================================================
+nnoremap <silent> <C-e> :<C-u>Defx<CR>
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
-    nnoremap <silent><buffer><expr> l defx#do_action('open')
+    nnoremap <silent><buffer><expr> <CR> defx#do_action('multi', ['drop', 'quit'])
+    nnoremap <silent><buffer><expr> C defx#do_action('open')
     nnoremap <silent><buffer><expr> h defx#do_action('cd', ['..'])
-    nnoremap <silent><buffer><expr> o defx#do_action('open_tree', 'toggle')
+    nnoremap <silent><buffer><expr> l
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree', 'toggle') :
+        \ defx#do_action('multi', [['drop', 'tabnew'], 'quit'])
     nnoremap <silent><buffer><expr> e defx#do_action('preview')
     nnoremap <silent><buffer><expr> a defx#do_action('new_file')
     nnoremap <silent><buffer><expr> d defx#do_action('new_directory')
