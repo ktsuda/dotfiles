@@ -79,6 +79,7 @@ else
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'iberianpig/tig-explorer.vim'
 call plug#end()
 
 augroup install_plugins
@@ -158,6 +159,15 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> I defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
 endfunction
+
+" tig-explorer.vim =============================================================
+nnoremap <leader>t :TigOpenProjectRootDir<CR>
+nnoremap <leader>T :TigOpenCurrentFile<CR>
+nnoremap <leader>g :TigGrep<CR>
+nnoremap <leader>r :TigGrepResume<CR>
+nnoremap <leader>gy :TigGrep<Space><C-R>"<CR>
+nnoremap <leader>cg :<C-u>:TigGrep<Space><C-R><C-W><CR>
+nnoremap <leader>b :TigBlame<CR>
 
 " quickfix =====================================================================
 nnoremap [q :cprevious<CR>
