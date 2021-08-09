@@ -76,6 +76,8 @@ else
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'iberianpig/tig-explorer.vim'
 call plug#end()
 
@@ -164,6 +166,13 @@ function! s:defx_my_settings() abort
     nnoremap <silent><buffer><expr> I defx#do_action('toggle_ignored_files')
     nnoremap <silent><buffer><expr> q defx#do_action('quit')
 endfunction
+
+" ultisnips ====================================================================
+" exec :UltiSnipsEdit to create a new snippet.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsEditSplit="horizontal"
 
 " tig-explorer.vim =============================================================
 nnoremap <leader>t :TigOpenProjectRootDir<CR>
