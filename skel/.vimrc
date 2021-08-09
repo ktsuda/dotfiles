@@ -21,7 +21,8 @@ set smartindent
 set backspace=indent,eol,start
 set hlsearch
 set laststatus=2
-set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
+set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%{tagbar#currenttag('[%s]','')}%=%l/%L(%02v)
+
 set modeline
 set modelines=5
 set hidden
@@ -124,6 +125,9 @@ augroup END
 nmap <silent> <leader>aa :A<CR>
 nmap <silent> <leader>at :AT<CR>
 nmap <silent> <leader>av :AV<CR>
+
+" tagbar =======================================================================
+let g:tagbar_width = 30
 
 " editorconfig-vim =============================================================
 let g:EditorConfig_exclude_patterns = [
