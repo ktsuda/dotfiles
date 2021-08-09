@@ -16,8 +16,6 @@ set fileformats=unix,dos,mac
 
 " misc =========================================================================
 let g:vim_indent_cont = 4
-set relativenumber
-set number
 set guicursor=
 set smartindent
 set backspace=indent,eol,start
