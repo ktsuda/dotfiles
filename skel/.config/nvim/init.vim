@@ -66,6 +66,9 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'iberianpig/tig-explorer.vim'
+if has('nvim')
+    Plug 'rbgrouleff/bclose.vim'
+endif
 call plug#end()
 
 augroup install_plugins
