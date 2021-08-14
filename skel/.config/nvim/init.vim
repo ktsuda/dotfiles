@@ -29,12 +29,6 @@ set showmatch
 set wildmenu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 
-if has("patch-8.1.1564")
-    set signcolumn=number
-else
-    set signcolumn=yes
-endif
-
 set scrolloff=8
 set list
 set listchars=tab:»-,trail:-
@@ -60,6 +54,7 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
 Plug 'thinca/vim-quickrun'
+Plug 'wakatime/vim-wakatime'
 if has('nvim')
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 else

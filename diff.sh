@@ -8,6 +8,7 @@ declare -a arr=(
   ".vimrc"
   ".zshrc"
   ".config/i3/config"
+  ".config/nvim/init.vim"
 )
 
 for file in "${arr[@]}"

@@ -21,7 +21,7 @@ set smartindent
 set backspace=indent,eol,start
 set hlsearch
 set laststatus=2
-set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%{tagbar#currenttag('[%s]','')}%=%l/%L(%02v)
+set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
 
 set modeline
 set modelines=5
@@ -32,12 +32,6 @@ set showmode
 set showmatch
 set wildmenu
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
-
-if has("patch-8.1.1564")
-    set signcolumn=number
-else
-    set signcolumn=yes
-endif
 
 set scrolloff=8
 set list
@@ -62,11 +56,8 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'kana/vim-operator-user'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
-Plug 'preservim/tagbar'
 Plug 'thinca/vim-quickrun'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'tyru/skk.vim'
 if has('nvim')
@@ -97,14 +88,9 @@ set background=dark
 colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
 
-" gitgutter ====================================================================
-set updatetime=250
-
 " fzf.vim ======================================================================
 let g:fzf_buffers_jump = 1
 let g:fzf_layout = { 'down': '40%' }
-let g:fzf_commits_log_options =
-    \ '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 let $FZF_DEFAULT_OPTS='--reverse'
 nnoremap <silent> <C-p> :GFiles<CR>
 
@@ -121,24 +107,6 @@ let g:lsp_diagnostics_echo_cursor = 1
 augroup lsp_format
     autocmd!
     autocmd BufWritePre *.(py|cpp|c|h) LspDocumentFormatSync
-augroup END
-
-" a.vim ========================================================================
-nmap <silent> <leader>aa :A<CR>
-nmap <silent> <leader>at :AT<CR>
-nmap <silent> <leader>av :AV<CR>
-
-" tagbar =======================================================================
-let g:tagbar_width = 30
-
-" editorconfig-vim =============================================================
-let g:EditorConfig_exclude_patterns = [
-    \ 'fugitive://.*',
-    \ 'scp://.*'
-    \ ]
-augroup editor_config
-    autocmd!
-    autocmd FileType gitcommit let b:EditorConfig_disable = 1
 augroup END
 
 " skk.vim ======================================================================
