@@ -55,6 +55,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'vim-scripts/a.vim', {'for': ['c', 'cpp']}
 Plug 'thinca/vim-quickrun'
 Plug 'wakatime/vim-wakatime'
+Plug 'tyru/skk.vim'
 if has('nvim')
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -137,6 +138,11 @@ augroup lsp_format
     autocmd!
     autocmd BufWritePre *.(py|cpp|c|h) LspDocumentFormatSync
 augroup END
+
+" skk.vim ======================================================================
+let skk_large_jisyo='~/.skk/dict/SKK-JISYO.L'
+let g:skk_auto_save_jisyo = 1
+set imdisable
 
 " defx =========================================================================
 nnoremap <silent> <C-e> :<C-u>Defx<CR>
