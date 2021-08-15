@@ -21,7 +21,6 @@ set smartindent
 set backspace=indent,eol,start
 set hlsearch
 set laststatus=2
-set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
 
 set modeline
 set modelines=5
@@ -49,6 +48,7 @@ endif
 
 call plug#begin()
 Plug 'gruvbox-community/gruvbox'
+Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -70,6 +70,9 @@ endif
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'iberianpig/tig-explorer.vim'
+if has('nvim')
+    Plug 'rbgrouleff/bclose.vim'
+endif
 call plug#end()
 
 augroup install_plugins
@@ -88,19 +91,60 @@ set background=dark
 colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
 
+" airline ======================================================================
+let g:airline#extensions#tabline#enabled = 1
+nmap th <Plug>AirlineSelectPrevTab
+nmap tl <Plug>AirlineSelectNextTab
+
 " fzf.vim ======================================================================
 let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'down': '40%' }
 let $FZF_DEFAULT_OPTS='--reverse'
 nnoremap <silent> <C-p> :GFiles<CR>
+
+if has('nvim')
+    function! s:create_float(hl, opts)
+        let buf = nvim_create_buf(v:false, v:true)
+        let opts = extend({'relative': 'editor', 'style': 'minimal'}, a:opts)
+        let win = nvim_open_win(buf, v:true, opts)
+        call setwinvar(win, '&winhighlight', 'NormalFloat:'.a:hl)
+        call setwinvar(win, '&colorcolumn', '')
+        return buf
+    endfunction
+
+    function! FloatingFZF()
+        " Size and position
+        let width = float2nr(&columns * 0.8)
+        let height = float2nr(&lines * 0.8)
+        let row = float2nr((&lines - height) / 2)
+        let col = float2nr((&columns - width) / 2)
+
+        " Border
+        let top = '╭' . repeat('─', width - 2) . '╮'
+        let mid = '│' . repeat(' ', width - 2) . '│'
+        let bot = '╰' . repeat('─', width - 2) . '╯'
+        let border = [top] + repeat([mid], height - 2) + [bot]
+
+        " Draw frame
+        let s:frame = s:create_float('Comment', {'row': row, 'col': col, 'width': width, 'height': height})
+        call nvim_buf_set_lines(s:frame, 0, -1, v:true, border)
+
+        " Draw viewport
+        call s:create_float('Normal', {'row': row + 1, 'col': col + 2, 'width': width - 4, 'height': height - 2})
+        autocmd BufWipeout <buffer> execute 'bwipeout' s:frame
+    endfunction
+
+    let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+else
+    let g:fzf_layout = { 'down': '40%' }
+endif
 
 " lsp ==========================================================================
 nmap <silent> <leader>gd :LspDefinition<CR>
 nmap <silent> <leader>rn :LspRename<CR>
-nmap <silent> <Leader>gt :LspTypeDefinition<CR>
-nmap <silent> <Leader>gr :LspReferences<CR>
-nmap <silent> <Leader>gi :LspImplementation<CR>
-nmap <silent> <Leader>gh :LspHover<CR>
+nmap <silent> <leader>gt :LspTypeDefinition<CR>
+nmap <silent> <leader>gr :LspReferences<CR>
+nmap <silent> <leader>gi :LspImplementation<CR>
+nmap <silent> <leader>gh :LspHover<CR>
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 
@@ -155,11 +199,6 @@ nnoremap <leader>b :TigBlame<CR>
 nnoremap [q :cprevious<CR>
 nnoremap ]q :cnext<CR>
 nnoremap 'q :cclose<CR>
-
-" tab ==========================================================================
-nnoremap <silent>tt :<C-u>tabe<CR>
-nnoremap <silent>th :<C-u>tabp<CR>
-nnoremap <silent>tl :<C-u>tabn<CR>
 
 " clipboard ====================================================================
 if has('mac') || has('win64') || has('win32')

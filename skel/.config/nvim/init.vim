@@ -17,7 +17,6 @@ set smartindent
 set backspace=indent,eol,start
 set hlsearch
 set laststatus=2
-set statusline=%f%m%h%w%<(%Y)[%{&fenc!=''?&fenc:&enc}:%{&ff}]%=%l/%L(%02v)
 
 set modeline
 set modelines=5
@@ -45,6 +44,7 @@ endif
 
 call plug#begin()
 Plug 'gruvbox-community/gruvbox'
+Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
@@ -87,6 +87,11 @@ set background=dark
 colorscheme gruvbox
 hi Normal guibg=NONE ctermbg=NONE
 
+" airline ======================================================================
+let g:airline#extensions#tabline#enabled = 1
+nmap th <Plug>AirlineSelectPrevTab
+nmap tl <Plug>AirlineSelectNextTab
+
 " fzf.vim ======================================================================
 let g:fzf_buffers_jump = 1
 let $FZF_DEFAULT_OPTS='--reverse'
@@ -125,15 +130,17 @@ if has('nvim')
     endfunction
 
     let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+else
+    let g:fzf_layout = { 'down': '40%' }
 endif
 
 " lsp ==========================================================================
 nmap <silent> <leader>gd :LspDefinition<CR>
 nmap <silent> <leader>rn :LspRename<CR>
-nmap <silent> <Leader>gt :LspTypeDefinition<CR>
-nmap <silent> <Leader>gr :LspReferences<CR>
-nmap <silent> <Leader>gi :LspImplementation<CR>
-nmap <silent> <Leader>gh :LspHover<CR>
+nmap <silent> <leader>gt :LspTypeDefinition<CR>
+nmap <silent> <leader>gr :LspReferences<CR>
+nmap <silent> <leader>gi :LspImplementation<CR>
+nmap <silent> <leader>gh :LspHover<CR>
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 
@@ -188,11 +195,6 @@ nnoremap <leader>b :TigBlame<CR>
 nnoremap [q :cprevious<CR>
 nnoremap ]q :cnext<CR>
 nnoremap 'q :cclose<CR>
-
-" tab ==========================================================================
-nnoremap <silent>tt :<C-u>tabe<CR>
-nnoremap <silent>th :<C-u>tabp<CR>
-nnoremap <silent>tl :<C-u>tabn<CR>
 
 " clipboard ====================================================================
 if has('mac') || has('win64') || has('win32')
