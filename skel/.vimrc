@@ -93,6 +93,7 @@ hi Normal guibg=NONE ctermbg=NONE
 
 " airline ======================================================================
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 nmap th <Plug>AirlineSelectPrevTab
 nmap tl <Plug>AirlineSelectNextTab
 
