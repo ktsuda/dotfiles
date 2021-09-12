@@ -1,3 +1,8 @@
+-- never load plugins when you commit
+if vim.env.HOME ~= vim.env.USERPROFILE and vim.env.GIT_EXEC_PATH ~= '' then
+  return
+end
+
 -- helpers
 local cmd = vim.cmd
 local fn = vim.fn
