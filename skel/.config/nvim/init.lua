@@ -220,3 +220,7 @@ g.UltiSnipsExpandTrigger = '<Tab>'
 g.UltiSnipsJumpForwardTrigger = '<C-f>'
 g.UltiSnipsJumpBackwardTrigger = '<C-b>'
 g.UltiSnipsEditSplit = 'horizontal'
+
+-- configuration file
+map('n', '<leader>,', ':e '..vim.env.MYVIMRC..'<CR>')
+map('n', '<leader>.', ':luafile '..vim.env.MYVIMRC..'<CR>')
