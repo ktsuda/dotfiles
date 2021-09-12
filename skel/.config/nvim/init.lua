@@ -1,5 +1,5 @@
 -- never load plugins when you commit
-if vim.env.HOME ~= vim.env.USERPROFILE and vim.env.GIT_EXEC_PATH ~= '' then
+if vim.env.GIT_EXEC_PATH ~= nil and vim.env.GIT_EXEC_PATH ~= '' then
   return
 end
 
