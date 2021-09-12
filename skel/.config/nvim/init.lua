@@ -164,7 +164,6 @@ local servers = {
   'jsonls',         -- npm i -g vscode-langservers-extracted
   'pylsp',          -- npm i python-lsp-server
   'rust_analyzer',
-  'sumneko_lua',
   'texlab',
   'tsserver',
   'vimls',
