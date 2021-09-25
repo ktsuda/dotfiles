@@ -50,6 +50,7 @@ require('packer').startup(function(use)
       {'junegunn/fzf.vim'},
     }
   }
+  use {'junegunn/vim-easy-align'}
   use {'tpope/vim-surround'}
   use {'SirVer/ultisnips'}
   use {'honza/vim-snippets'}
