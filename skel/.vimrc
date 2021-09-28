@@ -101,6 +101,7 @@ nmap tl <Plug>AirlineSelectNextTab
 let g:fzf_buffers_jump = 1
 let $FZF_DEFAULT_OPTS='--reverse'
 nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <silent> <C-n> :Files<CR>
 
 if has('nvim')
     function! s:create_float(hl, opts)
