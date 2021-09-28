@@ -7,6 +7,7 @@ declare -a arr=(
   ".tigrc"
   ".vimrc"
   ".zshrc"
+  ".tmux.conf"
   ".config/i3/config"
   ".config/nvim/init.lua"
 )
