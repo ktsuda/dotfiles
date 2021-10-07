@@ -57,6 +57,11 @@ require('packer').startup(function(use)
   use {'thinca/vim-quickrun'}
   use {'iberianpig/tig-explorer.vim'}
   use {'rbgrouleff/bclose.vim'}
+  use {
+    'iamcco/markdown-preview.nvim',
+    ft = {'markdown'},
+    run = 'cd app && yarn install'
+  }
   use {'wakatime/vim-wakatime'}
 end)
 
@@ -215,6 +220,11 @@ lsp.sumneko_lua.setup {
 lsp.zeta_note.setup {
   cmd = {vim.env.HOME .. '/bin/zeta_note'}
 }
+
+-- markdown-preview
+g.mkdp_auto_start = 0
+g.mkdp_auto_close = 1
+g.mkdp_refresh_slow = 1
 
 -- snippets
 g.UltiSnipsExpandTrigger = '<Tab>'
