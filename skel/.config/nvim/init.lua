@@ -8,13 +8,14 @@ local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
 local opt = vim.opt
+local api = vim.api
 
 local function map(mode, lhs, rhs, _opts)
   local opts = {noremap = true}
   if _opts then
     opts = vim.tbl_extend('force', opts, _opts)
   end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+  api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
 local function bmap(bufnr, mode, lhs, rhs, _opts)
@@ -22,11 +23,11 @@ local function bmap(bufnr, mode, lhs, rhs, _opts)
   if _opts then
     opts = vim.tbl_extend('force', opts, _opts)
   end
-  vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+  api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
 end
 
 -- plugins
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system(
@@ -120,14 +121,14 @@ map('n', '<leader>g', ':TigGrep<CR>')
 map('n', '<leader>b', ':TigBlame<CR>')
 
 -- airline
-vim.g['airline#extensions#tabline#enabled'] = 1
-vim.g['airline#extensions#tabline#buffer_idx_mode'] = 1
+g['airline#extensions#tabline#enabled'] = 1
+g['airline#extensions#tabline#buffer_idx_mode'] = 1
 
 -- fzf
 g.fzf_buffers_jump = 1
 
 -- nerdtree
-vim.api.nvim_set_var('NERDTreeShowHidden', 1)
+api.nvim_set_var('NERDTreeShowHidden', 1)
 
 -- treesitter
 local treesitter = require('nvim-treesitter.configs')
@@ -210,7 +211,7 @@ lsp.sumneko_lua.setup {
     Lua = {
       runtime = {version = 'LuaJIT', path = runtime_path},
       diagnostics = {globals = {'vim'}},
-      workspace = {library = vim.api.nvim_get_runtime_file('', true)},
+      workspace = {library = api.nvim_get_runtime_file('', true)},
       telemetry = {enable = false},
     },
   },
