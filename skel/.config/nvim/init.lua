@@ -123,6 +123,21 @@ map('n', '<leader>T', ':TigOpenCurrentFile<CR>')
 map('n', '<leader>g', ':TigGrep<CR>')
 map('n', '<leader>b', ':TigBlame<CR>')
 
+if fn.has('mac') then
+  map('',  '∆', '<C-w>j')
+  map('i', '∆', '<Esc><C-w>j')
+  map('t', '∆', '<C-\\><C-n><C-w>j')
+  map('',  '˚', '<C-w>k')
+  map('i', '˚', '<Esc><C-w>k')
+  map('t', '˚', '<C-\\><C-n><C-w>k')
+  map('',  '˙', '<C-w>h')
+  map('i', '˙', '<Esc><C-w>h')
+  map('t', '˙', '<C-\\><C-n><C-w>h')
+  map('',  '¬', '<C-w>l')
+  map('i', '¬', '<Esc><C-w>l')
+  map('t', '¬', '<C-\\><C-n><C-w>l')
+end
+
 -- airline
 g['airline#extensions#tabline#enabled'] = 1
 g['airline#extensions#tabline#buffer_idx_mode'] = 1
