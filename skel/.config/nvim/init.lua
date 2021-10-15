@@ -163,7 +163,6 @@ g.completion_enable_auto_popup = 1
 
 local lsp = require('lspconfig')
 local lspfuzzy = require('lspfuzzy')
-local compl = require('completion')
 
 local completion_callback = function(client, bufnr)
   bmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -176,7 +175,7 @@ local completion_callback = function(client, bufnr)
   bmap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
   bmap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
   bmap(bufnr, 'n', '<leader>m', '<cmd>lua vim.lsp.buf.rename()<CR>')
-  compl.on_attach(client)
+  require('completion').on_attach(client)
 end
 
 local servers = {
@@ -185,12 +184,9 @@ local servers = {
   'cmake',          -- pip install cmake-language-server
   'dockerls',       -- npm i -g dockerfile-language-server-nodejs
   'gopls',          -- brew install gopls
-  'graphql',        -- npm i -g graphql-language-service-cli
   'jsonls',         -- npm i -g vscode-langservers-extracted
   'pylsp',          -- npm i python-lsp-server
-  'rust_analyzer',
   'texlab',
-  'tsserver',
   'vimls',
   'vuels',
   'yamlls',
@@ -202,8 +198,6 @@ for _, srv in ipairs(servers) do
     flags = {debounce_text_changes = 150},
   }
 end
-
-lspfuzzy.setup {}
 
 -- sumneko_lua
 local system_name
@@ -239,6 +233,9 @@ lsp.sumneko_lua.setup {
 lsp.zeta_note.setup {
   cmd = {vim.env.HOME .. '/bin/zeta_note'}
 }
+
+-- lsp fuzzy
+lspfuzzy.setup {}
 
 -- markdown-preview
 g.mkdp_auto_start = 0
