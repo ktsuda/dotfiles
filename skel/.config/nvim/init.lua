@@ -89,6 +89,9 @@ opt.wildmode = {'list', 'longest'}
 opt.wrap = false
 opt.hlsearch = true
 opt.incsearch = true
+opt.autoindent = true
+opt.textwidth = 78
+opt.formatoptions = 'roqnlj'
 
 cmd 'set clipboard&'
 if fn.has('mac') then
