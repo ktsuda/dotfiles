@@ -5,7 +5,8 @@ bindkey -e
 setopt IGNOREEOF
 # share history, avoid duplication
 setopt share_history
-setopt histignorealldups
+setopt hist_reduce_blanks
+setopt hist_ignore_all_dups
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
