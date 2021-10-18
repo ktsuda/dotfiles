@@ -53,6 +53,7 @@ require('packer').startup(function(use)
   }
   use {'junegunn/vim-easy-align'}
   use {'tpope/vim-surround'}
+  use {'dhruvasagar/vim-table-mode'}
   use {'SirVer/ultisnips'}
   use {'honza/vim-snippets'}
   use {'thinca/vim-quickrun'}
@@ -147,6 +148,9 @@ g.fzf_buffers_jump = 1
 
 -- nerdtree
 api.nvim_set_var('NERDTreeShowHidden', 1)
+
+-- vim-table-mode
+g.table_mode_corner='|'
 
 -- treesitter
 local treesitter = require('nvim-treesitter.configs')
