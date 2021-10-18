@@ -19,6 +19,12 @@ setopt pushd_ignore_dups
 setopt no_flow_control
 
 # completion
+if type brew &>/dev/null; then
+  fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fi
+
+typeset -U fpath
+
 autoload -Uz compinit; compinit
 # color
 autoload -Uz colors; colors
@@ -35,6 +41,10 @@ autoload -Uz colors; colors
 [[ -d "$HOME/.fzf/bin" ]] && PATH="$HOME/.fzf/bin:$PATH"
 [[ -d "$HOME/.screen" ]] && SCREENDIR=$HOME/.screen
 [[ -d "/opt/matlab/R2020a/bin" ]] && PATH="/opt/matlab/R2020a/bin:$PATH"
+[[ -d "/opt/homebrew/sbin" ]] && PATH="/opt/homebrew/sbin:$PATH"
+[[ -d "/opt/homebrew/bin" ]] && PATH="/opt/homebrew/bin:$PATH"
+
+typeset -U path
 
 export EDITOR
 export GOPATH
@@ -61,10 +71,18 @@ function goto_repo_root() {
   fi
 }
 
-alias ls='/bin/ls -F'
-alias ll='ls -l'
-alias la='ls -A'
-alias lla='ll -A'
+if type exa > /dev/null 2>&1; then
+  alias ls='exa -F --no-icons'
+  alias ll='ls -l'
+  alias la='ls -a'
+  alias lla='ll -a'
+else
+  alias ls='/bin/ls -F'
+  alias ll='ls -l'
+  alias la='ls -A'
+  alias lla='ll -A'
+fi
+
 alias rm='rm -i'
 alias cp='cp -ip'
 alias mv='mv -i'
@@ -74,6 +92,7 @@ alias gb='git branch -av'
 alias t='tig'
 alias ta='tig --all'
 alias ag='rg'
+alias v='vim'
 
 function chdir_parent() {
   echo
