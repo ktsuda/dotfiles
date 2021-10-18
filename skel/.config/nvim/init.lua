@@ -186,10 +186,10 @@ local servers = {
   'gopls',          -- brew install gopls
   'jsonls',         -- npm i -g vscode-langservers-extracted
   'pylsp',          -- npm i python-lsp-server
-  'texlab',
-  'vimls',
-  'vuels',
-  'yamlls',
+  'texlab',         -- cargo install --git https://github.com/latex-lsp/texlab.git --locked
+  'vimls',          -- yarn global add vim-language-server
+  'vls',            -- yarn global add vls
+  'yamlls',         -- npm i -g yaml-language-server
 }
 
 for _, srv in ipairs(servers) do
