@@ -27,8 +27,13 @@ fi
 typeset -U fpath
 
 autoload -Uz compinit; compinit
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+setopt list_packed
+
 # color
 autoload -Uz colors; colors
+zstyle ':completion:*' list-colors ''
 
 # env variables
 [[ -d "/opt/local/bin" ]] && PATH="/opt/local/bin:$PATH"
