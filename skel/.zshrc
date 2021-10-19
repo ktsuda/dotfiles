@@ -47,6 +47,8 @@ zstyle ':completion:*' list-colors ''
 [[ -d "$HOME/.fzf/bin" ]] && PATH="$HOME/.fzf/bin:$PATH"
 [[ -d "$HOME/.screen" ]] && SCREENDIR=$HOME/.screen
 [[ -d "/opt/matlab/R2020a/bin" ]] && PATH="/opt/matlab/R2020a/bin:$PATH"
+[[ -d "$HOME/.gem/ruby/2.6.0/bin" ]] && PATH="$HOME/.gem/ruby/2.6.0/bin:$PATH"
+[[ -d "/opt/homebrew/opt/llvm/bin" ]] && PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 [[ -d "/opt/homebrew/sbin" ]] && PATH="/opt/homebrew/sbin:$PATH"
 [[ -d "/opt/homebrew/bin" ]] && PATH="/opt/homebrew/bin:$PATH"
 

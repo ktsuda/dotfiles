@@ -5,10 +5,12 @@ declare -a common=(
   ".gitignore"
   ".screenrc"
   ".tigrc"
-  ".vimrc"
   ".zshrc"
   ".tmux.conf"
   ".config/nvim/init.lua"
+  ".config/nvim/lua/config.lua"
+  ".config/nvim/lua/keybindings.lua"
+  ".config/nvim/lua/packages.lua"
 )
 
 for file in "${common[@]}"
