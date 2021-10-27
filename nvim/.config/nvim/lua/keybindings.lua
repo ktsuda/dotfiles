@@ -3,6 +3,7 @@ local opts = {noremap = true, silent = true}
 vim.g.mapleader = ' '
 keymap('n', '<C-p>', ':GFiles<CR>', opts)
 keymap('n', '<C-n>', ':Files<CR>', opts)
+keymap('n', '<C-s>', ':Rg<CR>', opts)
 keymap('', '<C-e>', ':NERDTreeToggle<CR>', opts)
 keymap('n', 'Y', 'y$', opts)
 keymap('n', '[q', ':cprevious<CR>', opts)
