@@ -82,6 +82,7 @@ local lsp_servers = {
   'clangd',     -- brew install llvm
   'gopls',      -- GO111MODULE=on go get golang.org/x/tools/gopls@latest
   'solargraph', -- gem install --user-install solargraph
+  'texlab',     --- brew install texlab or cargo install --git https://github.com/latex-lsp/texlab.git --locked
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
