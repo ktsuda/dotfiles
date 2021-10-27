@@ -14,6 +14,7 @@ opt.textwidth = 78
 opt.formatoptions = 'roqnlj'
 opt.number = true
 opt.relativenumber = true
+opt.autochdir = true
 
 vim.cmd 'set clipboard&'
 if fn.has('mac') then
