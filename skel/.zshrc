@@ -68,17 +68,6 @@ else
   EDITOR=nano
 fi
 
-if type screen > /dev/null 2>&1; then
-  alias s='screen'
-fi
-
-alias q='goto_repo_root'
-function goto_repo_root() {
-  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    cd $(git rev-parse --show-toplevel)
-  fi
-}
-
 if type exa > /dev/null 2>&1; then
   alias ls='exa -F --no-icons'
   alias ll='ls -l'
@@ -94,13 +83,23 @@ fi
 alias rm='rm -i'
 alias cp='cp -ip'
 alias mv='mv -i'
-alias gfp='git fetch -p'
-alias gs='git status -sb'
-alias gb='git branch -av'
+alias g='git'
+alias gfp='g fetch -p'
+alias ga='g a'
+alias gs='g status -sb'
+alias gb='g branch -av'
 alias t='tig'
 alias ta='tig --all'
 alias ag='rg'
 alias v='vim'
+alias vimdiff='nvim -d'
+
+alias q='goto_repo_root'
+function goto_repo_root() {
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    cd $(git rev-parse --show-toplevel)
+  fi
+}
 
 function chdir_parent() {
   echo
@@ -111,7 +110,7 @@ zle -N chdir_parent
 bindkey '^u' chdir_parent
 
 function git-repo-cd() {
-  local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
+  local selected_dir=$(ghq list --full-path | fzf-tmux --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
@@ -134,21 +133,31 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 
-if [[ ! -n $TMUX && $- == *l* ]]; then
-  ID="`tmux list-sessions`"
-  if [[ -z "$ID" ]]; then
-    tmux new-session
+function custom_tmux_session() {
+  if [[ ! -n $TMUX && $- == *l* ]]; then
+    ID="`tmux list-sessions`"
+    if [[ -z "$ID" ]]; then
+      tmux new-session
+    fi
+    create_new_session="Create a new session"
+    ID="$ID\n${create_new_session}:"
+    ID="`echo $ID | fzf | cut -d: -f1`"
+    if [[ "$ID" = "${create_new_session}" ]]; then
+      tmux new-session
+    elif [[ -n "$ID" ]]; then
+      tmux attach-session -t "$ID"
+    else
+      :
+    fi
   fi
-  create_new_session="Create a new session"
-  ID="$ID\n${create_new_session}:"
-  ID="`echo $ID | fzf | cut -d: -f1`"
-  if [[ "$ID" = "${create_new_session}" ]]; then
-    tmux new-session
-  elif [[ -n "$ID" ]]; then
-    tmux attach-session -t "$ID"
-  else
-    :
-  fi
+}
+
+if type tmux > /dev/null 2>&1; then
+  alias s='custom_tmux_session'
+elif type screen > /dev/null 2>&1; then
+  alias s='screen'
+else
+  ;
 fi
 
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
