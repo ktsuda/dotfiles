@@ -24,7 +24,7 @@ function set_stow_folders() {
         exit 1
         ;;
       --macos)
-        STOW_FOLDERS=("iterm2")
+        STOW_FOLDERS=("iterm2 tmux")
         shift
         ;;
       *)
