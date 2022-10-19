@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+DOTFILES_DIR=$(dirname $(readlink "$0" || echo "$0"))
+
+DELETE=0
+INSTALL=1
+STOW_FOLDERS=()
+
+function set_stow_folders() {
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -D | --delete)
+        DELETE=1
+        INSTALL=0
+        shift
+        ;;
+      -U | --update)
+        DELETE=1
+        INSTALL=1
+        shift
+        ;;
+      -h | --help)
+        usage
+        exit 1
+        ;;
+      --macos)
+        STOW_FOLDERS=("iterm2")
+        shift
+        ;;
+      *)
+        STOW_FOLDERS+=("$1")
+        shift
+        ;;
+    esac
+  done
+
+  if test -z $STOW_FOLDERS; then
+    STOW_FOLDERS=$(ls -d -1 */ | tr '\n' ' ' | sed 's/\///g')
+  fi
+}
+
+function usage() {
+  cat << EOF
+usage: $(basename ${0}) [--help] [--update | --delete]
+                        [--macos] [dirs]
+
+options:
+    --help, -h        print this
+    --update, -U      update/install dotfiles
+    --delete, -D      delete dotfiles
+    --macos           select dotfiles for macos
+EOF
+}
+
+function update() {
+  for folder in $(echo $STOW_FOLDERS); do
+    if [ "${DELETE}" -eq "1" ]; then
+      printf "Deleting %-14s" $folder
+      stow -t $HOME -D $folder 2> /dev/null
+    fi
+    if [ "${INSTALL}" -eq "1" ]; then
+      printf "Installing %-14s" $folder
+      stow -t $HOME $folder
+    fi
+    echo " ...   Done"
+  done
+}
+
+function main() {
+  pushd $DOTFILES_DIR > /dev/null
+  set_stow_folders "$@"
+  update
+  popd > /dev/null
+}
+
+main $@
