@@ -1,0 +1,24 @@
+[user]
+  name = ktsuda
+  email = ktsuda@users.noreply.github.com
+[core]
+  editor = vim
+  pager = less -FX
+  ignoreCase = false
+  excludesFile = ~/.config/git/ignore
+[merge]
+  conflictStyle = diff3
+[push]
+  default = simple
+  autoSetupRemote = true
+[diff]
+  colorMoved = default
+  colorMovedWS = allow-indentation-change
+[alias]
+  fix = commit --amend
+  now = commit --amend --no-edit
+  l = log --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(red)%h %C(green)%ad %C(cyan)%cn %C(white)%s %C(yellow)%d%Creset'
+[credential]
+  helper = store
+[init]
+  defaultBranch = main
