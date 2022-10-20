@@ -1,3 +1,7 @@
+-- Configuration file for neovim
+-- Author: ktsuda
+-- Date: 2022-10-20
+-- Install packer {{{
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 
@@ -12,7 +16,8 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   })
   vim.api.nvim_command('packeradd packer.nvim')
 end
-
+-- }}}
+-- Load the config file every time when it's saved {{{
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/init.lua',
   callback = function()
@@ -23,7 +28,8 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   end,
   group = vim.api.nvim_create_augroup('packer_user_config', { clear = true }),
 })
-
+-- }}}
+-- plugins {{{
 local packer_status, packer = pcall(require, 'packer')
 if not packer_status then return end
 
@@ -99,7 +105,8 @@ if is_bootstrap then
   print 'Restart neovim after the paker process completes.'
   return
 end
-
+-- }}}
+-- options {{{
 vim.g.mapleader = ' '
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
@@ -109,6 +116,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.o.laststatus = 2
 vim.wo.signcolumn = 'yes'
+vim.o.foldmethod = 'marker'
 vim.o.hlsearch = true
 vim.o.termguicolors = true
 vim.api.nvim_command('colorscheme neosolarized')
@@ -126,13 +134,15 @@ elseif vim.fn.has('win32') == 1 then
 else
   vim.opt.clipboard = 'unnamedplus'
 end
-
+-- }}}
+-- common keymaps {{{
 vim.keymap.set('n', 'Y', 'y$', { silent = true })
 vim.keymap.set('n', '[q', '<cmd>cprevious<cr>', { silent = true })
 vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { silent = true })
 vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { silent = true })
 vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { silent = true })
-
+-- }}}
+-- cmp {{{
 local cmp_status, cmp = pcall(require, 'cmp')
 if not cmp_status then return end
 local luasnip_status, luasnip = pcall(require, 'luasnip')
@@ -193,7 +203,8 @@ cmp.setup({
     },
   },
 })
-
+-- }}}
+-- lsp {{{
 local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
 if not lspconfig_status then return end
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
@@ -259,7 +270,8 @@ for _, lspserver in ipairs(servers) do
 
   lspconfig[lspserver].setup(lspconfig_opts)
 end
-
+-- }}}
+-- telescope {{{
 local telescope_status, telescope = pcall(require, 'telescope')
 if not telescope_status then return end
 telescope.setup({
@@ -335,7 +347,13 @@ vim.keymap.set('n', '<leader>ug', telescope_custom.grep_repo, { silent = true })
 vim.keymap.set('n', '<leader>uu', telescope_builtin.find_files, { silent = true })
 vim.keymap.set('n', '<leader>uk', telescope_builtin.keymaps, { silent = true })
 vim.keymap.set('n', '<leader>ub', telescope_builtin.buffers, { silent = true })
-
+vim.keymap.set('n', '<leader>us', telescope_builtin.grep_string, { silent = true })
+vim.keymap.set('n', '<leader>gc', telescope_builtin.git_commits, { silent = true })
+vim.keymap.set('n', '<leader>gb', telescope_builtin.git_branches, { silent = true })
+vim.keymap.set('n', '<leader>gs', telescope_builtin.git_status, { silent = true })
+vim.keymap.set('n', '<leader>gt', telescope_builtin.git_stash, { silent = true })
+-- }}}
+-- nvim-tree {{{
 local nvim_tree_status, nvim_tree = pcall(require, 'nvim-tree')
 if not nvim_tree_status then return end
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
@@ -364,11 +382,13 @@ nvim_tree.setup({
   },
   vim.keymap.set('n', '<C-e>', nvim_tree.toggle, { silent = true })
 })
-
+-- }}}
+-- bufferline {{{
 local bufferline_status, bufferline = pcall(require, 'bufferline')
 if not bufferline_status then return end
 bufferline.setup({})
-
+-- }}}
+-- lualine {{{
 local lualine_status, lualine = pcall(require, 'lualine')
 if not lualine_status then return end
 lualine.setup({
@@ -383,8 +403,10 @@ lualine.setup({
     'fzf',
   },
 })
-
+-- }}}
+-- markdown previewer {{{
 vim.g.mkdp_auto_start = 0
 vim.g.mkdp_auto_close = 1
 vim.g.mkdp_refresh_slow = 0
 vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', { silent = true })
+-- }}}
