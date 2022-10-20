@@ -274,6 +274,7 @@ end
 -- telescope {{{
 local telescope_status, telescope = pcall(require, 'telescope')
 if not telescope_status then return end
+local telescope_actions = require('telescope.actions')
 telescope.setup({
   defaults = {
     vimgrep_arguments = {
@@ -296,8 +297,8 @@ telescope.setup({
     },
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<C-u>'] = telescope_actions.preview_scrolling_up,
+        ['<C-d>'] = telescope_actions.preview_scrolling_down,
       },
     },
   },
