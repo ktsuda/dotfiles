@@ -2,7 +2,7 @@
   name = ktsuda
   email = ktsuda@users.noreply.github.com
 [core]
-  editor = vim
+  editor = nvim
   pager = less -FX
   ignoreCase = false
   excludesFile = ~/.config/git/ignore
