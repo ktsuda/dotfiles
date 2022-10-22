@@ -1,0 +1,22 @@
+set line-graphics = default
+set commit-order = topo # auto default topo date author-date reverse
+set ignore-case = smart-case
+set wrap-lines = yes 
+
+set main-view = line-number:yes,interval=10 \
+                date:relative-compact \
+                id:yes \
+                author:no \
+                commit-title:graph=v2,refs=yes,overflow=yes
+
+set refs-view = line-number:yes,interval=10 \
+                date:relative-compact \
+                id:yes \
+                author:no \
+                ref:yes
+
+bind main R !git rebase -i %(commit)
+bind diff R !git rebase -i %(commit)
+bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
+bind status C !git commit -s -v
+bind status P !git push
