@@ -78,6 +78,7 @@ alias mv='mv -i'
 alias gs='git status -sb'
 alias gc='git commit -s -v'
 alias gl='git l'
+alias ga='git add -N . && git add -p'
 
 alias t='tig'
 alias ta='tig --all'
