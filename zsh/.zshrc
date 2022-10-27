@@ -140,9 +140,10 @@ function custom_tmux_session() {
       tmux new-session -s"$ID"
     fi
   else
-    ID="`tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1`"
+    ID="`tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1`"
     if [[ -z "$ID" ]]; then
-      return 1
+      tmux new-session -s "default"
+      return
     fi
     if [[ -n $TMUX ]]; then
       tmux switch-client -t "$ID"
