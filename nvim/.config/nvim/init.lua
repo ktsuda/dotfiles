@@ -45,46 +45,23 @@ packer.startup(function(use)
       vim.g.neosolarized_underline = 0
     end,
   })
-  use({
-    'hrsh7th/cmp-nvim-lsp',
-    requires = {
-      { 'neovim/nvim-lspconfig' },
-      { 'hrsh7th/nvim-cmp' },
-    },
-  })
-  use({
-    'saadparwaiz1/cmp_luasnip',
-    requires = {
-      { 'L3MON4D3/LuaSnip' },
-      { 'hrsh7th/nvim-cmp' },
-    },
-  })
-  use({
-    'nvim-telescope/telescope.nvim',
-    requires = { 'nvim-lua/plenary.nvim' },
-  })
+  use('neovim/nvim-lspconfig')
+  use('hrsh7th/nvim-cmp')
+  use('hrsh7th/cmp-nvim-lsp')
+  use('L3MON4D3/LuaSnip')
+  use('saadparwaiz1/cmp_luasnip')
+  use('nvim-lua/plenary.nvim')
+  use('nvim-telescope/telescope.nvim')
   use({
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'make',
-    requires = { 'nvim-telescope/telescope.nvim' },
     cond = vim.fn.executable('make') == 1,
   })
-  use({
-    'nvim-telescope/telescope-project.nvim',
-    requires = { 'nvim-telescope/telescope.nvim' },
-  })
-  use({
-    'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-  })
-  use({
-    'akinsho/bufferline.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-  })
-  use({
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-  })
+  use('nvim-telescope/telescope-project.nvim')
+  use('kyazdani42/nvim-web-devicons')
+  use('kyazdani42/nvim-tree.lua')
+  use('akinsho/bufferline.nvim')
+  use('nvim-lualine/lualine.nvim')
   use('christoomey/vim-tmux-navigator')
   use('szw/vim-maximizer')
   use({
