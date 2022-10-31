@@ -85,6 +85,8 @@ packer.startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   })
+  use('christoomey/vim-tmux-navigator')
+  use('szw/vim-maximizer')
   use({
     'iamcco/markdown-preview.nvim',
     run = 'cd app && npm install',
@@ -139,8 +141,6 @@ end
 vim.keymap.set('n', 'Y', 'y$', { silent = true })
 vim.keymap.set('n', '[q', '<cmd>cprevious<cr>', { silent = true })
 vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { silent = true })
-vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { silent = true })
-vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { silent = true })
 -- }}}
 -- cmp {{{
 local cmp_status, cmp = pcall(require, 'cmp')
@@ -404,6 +404,9 @@ lualine.setup({
     'fzf',
   },
 })
+-- }}}
+-- vim maximizer {{{
+vim.keymap.set('n', '<leader>sm', '<cmd>MaximizerToggle<cr>', { silent = true })
 -- }}}
 -- markdown previewer {{{
 vim.g.mkdp_auto_start = 0
