@@ -274,7 +274,8 @@ end
 -- telescope {{{
 local telescope_status, telescope = pcall(require, 'telescope')
 if not telescope_status then return end
-local telescope_actions = require('telescope.actions')
+local actions_status, telescope_actions = pcall(require, 'telescope.actions')
+if not actions_status then return end
 telescope.setup({
   defaults = {
     vimgrep_arguments = {
@@ -326,7 +327,8 @@ telescope.setup({
 pcall(telescope.load_extension, 'project')
 pcall(telescope.load_extension, 'fzf')
 
-local telescope_builtin = require('telescope.builtin')
+local builtin_status, telescope_builtin = pcall(require, 'telescope.builtin')
+if not builtin_status then return end
 local telescope_custom = {
   find_repo = function()
     telescope_builtin.find_files({
