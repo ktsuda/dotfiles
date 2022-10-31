@@ -145,17 +145,16 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 's' }),
-    ['<C-g>'] = cmp.mapping.close(),
-    ['<C-y>'] = cmp.mapping.confirm({
-      benavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    }),
+    ['<C-g>'] = cmp.mapping.abort(),
     ['<C-Space>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         return cmp.complete_common_string()
       end
       fallback()
     end, { 'i', 'c' }),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
   },
   sources = {
     { name = 'nvim_lsp' },
