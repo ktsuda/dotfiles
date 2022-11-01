@@ -96,6 +96,7 @@ vim.o.softtabstop = 2
 vim.o.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.o.autoindent = true
 vim.o.laststatus = 2
 vim.wo.signcolumn = 'yes'
 vim.o.foldmethod = 'marker'
