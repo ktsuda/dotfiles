@@ -47,9 +47,12 @@ packer.startup(function(use)
   })
   use('neovim/nvim-lspconfig')
   use('hrsh7th/nvim-cmp')
+  use('hrsh7th/cmp-buffer')
+  use('hrsh7th/cmp-path')
   use('hrsh7th/cmp-nvim-lsp')
   use('L3MON4D3/LuaSnip')
   use('saadparwaiz1/cmp_luasnip')
+  use('rafamadriz/friendly-snippets')
   use('nvim-lua/plenary.nvim')
   use('nvim-telescope/telescope.nvim')
   use({
@@ -125,6 +128,9 @@ if not cmp_status then return end
 local luasnip_status, luasnip = pcall(require, 'luasnip')
 if not luasnip_status then return end
 
+require('luasnip/loaders/from_vscode').lazy_load()
+vim.opt.completeopt = 'menu,menuone,noselect'
+
 cmp.setup({
   mapping = {
     ['<C-n>'] = cmp.mapping(function(fallback)
@@ -159,6 +165,8 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
   },
   snippet = {
     expand = function(args)
