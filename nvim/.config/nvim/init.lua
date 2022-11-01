@@ -336,6 +336,8 @@ vim.keymap.set('n', '<leader>gt', telescope_builtin.git_stash, { silent = true }
 local nvim_tree_status, nvim_tree = pcall(require, 'nvim-tree')
 if not nvim_tree_status then return end
 local tree_cb = require('nvim-tree.config').nvim_tree_callback
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 nvim_tree.setup({
   update_cwd = true,
   update_focused_file = {
