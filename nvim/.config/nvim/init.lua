@@ -262,14 +262,6 @@ local actions_status, telescope_actions = pcall(require, 'telescope.actions')
 if not actions_status then return end
 telescope.setup({
   defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case',
-      '-uu',
-    },
     file_ignore_patterns = {
       '%.git/.*',
       'node_modules/.*',
