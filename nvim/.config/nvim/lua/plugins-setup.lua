@@ -55,7 +55,6 @@ packer.startup(function(use)
   use({
     'nvim-telescope/telescope-fzf-native.nvim',
     run = 'make',
-    cond = vim.fn.executable('make') == 1,
   })
   use('nvim-telescope/telescope-project.nvim')
   use('kyazdani42/nvim-web-devicons')
