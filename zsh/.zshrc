@@ -1,7 +1,16 @@
 bindkey -e
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
+case ${OSTYPE} in
+  darwin*)
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    ;;
+  linux*)
+    export LC_ALL=en_US.utf8
+    export LANG=en_US.utf8
+    export LANGUAGE=en_US.utf8
+    ;;
+esac
 
 # prevent zsh from exit with ctrl-d key
 setopt IGNOREEOF
@@ -23,7 +32,11 @@ setopt no_flow_control
 
 typeset -U path PATH
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+case ${OSTYPE} in
+  darwin*)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    ;;
+esac
 
 path=(
   ~/.ghq/bin(N-/)
@@ -41,7 +54,7 @@ path=(
   /sbin
   /usr/local/sbin(N-/)
   /opt/local/bin(N-/)
-  /Library/Apple/usr/bin
+  /Library/Apple/usr/bin(N-/)
   $path
 )
 
@@ -53,7 +66,12 @@ fpath=(
   $fpath
 )
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+case ${OSTYPE} in
+  darwin*)
+    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ;;
+esac
+
 autoload -Uz compinit; compinit
 
 export GHQ_ROOT="$HOME/.ghq/src"

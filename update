@@ -27,6 +27,10 @@ function set_stow_folders() {
         STOW_FOLDERS=("iterm2 tmux git nvim zsh")
         shift
         ;;
+      --linux)
+        STOW_FOLDERS=("tmux git nvim zsh")
+        shift
+        ;;
       *)
         STOW_FOLDERS+=("$1")
         shift
