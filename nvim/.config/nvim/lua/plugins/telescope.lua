@@ -7,6 +7,10 @@ telescope.setup({
     file_ignore_patterns = {
       '%.git/.*',
       'node_modules/.*',
+      '.npm/.*',
+      '.vscode/.*',
+      '.cache/.*',
+      '.gem/.*',
       '%.DS_Store',
       '%.jpg$',
       '%.JPG$',
@@ -18,6 +22,8 @@ telescope.setup({
       i = {
         ['<C-u>'] = telescope_actions.preview_scrolling_up,
         ['<C-d>'] = telescope_actions.preview_scrolling_down,
+        ['<C-k>'] = telescope_actions.results_scrolling_up,
+        ['<C-j>'] = telescope_actions.results_scrolling_down,
       },
     },
   },
