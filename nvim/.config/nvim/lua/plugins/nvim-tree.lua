@@ -10,6 +10,7 @@ nvim_tree.setup({
     update_cwd = false,
   },
   view = {
+    adaptive_size = true,
     mappings = {
       custom_only = false,
       list = {
