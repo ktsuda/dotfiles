@@ -11,7 +11,7 @@ vim.wo.signcolumn = 'yes'
 vim.o.foldmethod = 'marker'
 vim.o.hlsearch = true
 vim.o.termguicolors = true
-vim.api.nvim_command('colorscheme neosolarized')
+vim.api.nvim_command('colorscheme NeoSolarized')
 vim.o.background = 'dark'
 vim.api.nvim_command('highlight Normal ctermbg=none guibg=none')
 vim.api.nvim_command('highlight NonText ctermbg=none guibg=none')
