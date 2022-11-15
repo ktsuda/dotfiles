@@ -79,6 +79,14 @@ export GOPATH="$HOME/.ghq"
 export GOBIN="$HOME/bin"
 export GO11MODULE="auto"
 
+PROMPT='%n@%m:%~$ '
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%b'
+
 if type gls &>/dev/null; then
   alias ls='gls -X -F -T 2 -C --color=auto'
 else
