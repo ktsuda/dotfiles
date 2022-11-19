@@ -40,6 +40,7 @@ esac
 
 path=(
   ~/.ghq/bin(N-/)
+  ~/.fzf/bin(N-/)
   ~/bin(N-/)
   /usr/local/go/bin(N-/)
   ~/.cargo/bin(N-/)
@@ -137,24 +138,58 @@ function __fzfcmd() {
 }
 
 function git-repo-cd() {
-  local selected_dir=$(ghq list --full-path | $(__fzfcmd) --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
+  local selected_dir=$(ghq list --full-path | \
+    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd)) 
+  local ret=$?
+  if [ -z "$selected_dir" ]; then
+    zle redisplay
+    return 0
   fi
+  eval "builtin cd -- ${selected_dir}"
+  zle reset-prompt
+  return $ret
 }
 zle -N git-repo-cd
 bindkey "^s" git-repo-cd
 
-function fssh() {
-  local selected_host
-  selected_host=$(cat ~/.ssh/config | grep -i ^host | awk '{print $2}' | $(__fzfcmd))
-  if [ -n "$selected_dir" ]; then
-    ssh ${selected_host}
-  else
-    return 1
+function history-widget() {
+  local selected num
+  selected=($(fc -rl 1 | FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd)))
+  local ret=$?
+  if [ -n "$selected" ]; then
+    num=$selected[1]
+    if [ -n "$num" ]; then
+      zle vi-fetch-history -n $num
+    fi
   fi
- }
+  zle reset-prompt
+  return $ret
+}
+zle -N history-widget
+bindkey "^r" history-widget
+
+function grep-and-fuzzy-find() {
+  local selected_file
+  RG_PREFIX='rg --column --line-number --no-heading --smart-case --hidden '
+  selected_file=$(FZF_DEFAULT_COMMAND="$RG_PREFIX $LBUFFER" \
+    fzf --reverse --disabled \
+    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+    --bind "alt-enter:unbind(change,alt-enter)+change-prompt(rg>fzf> )+enable-search+clear-query" \
+    --prompt 'rg> ' --delimiter : \
+    --preview 'bat --color=always --theme="Solarized (dark)" {1} -H {2}' \
+    --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
+  local ret=$?
+  if [ -n "$selected_file" ]; then
+    parts=(${(@s/:/)selected_file})
+    if [ -n "$parts[1]" -a -n "$parts[2]" ]; then
+      nvim "$parts[1]" "+$parts[2]"
+    fi
+  fi
+  zle reset-prompt
+  return $ret
+}
+zle -N grep-and-fuzzy-find
+bindkey "^q" grep-and-fuzzy-find
 
 function custom_tmux_session() {
   if [[ "$#" -ge 1 ]]; then
