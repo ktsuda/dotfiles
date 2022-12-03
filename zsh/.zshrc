@@ -170,7 +170,7 @@ bindkey "^r" history-widget
 
 function grep-and-fuzzy-find() {
   local selected_file
-  RG_PREFIX='rg --column --line-number --no-heading --smart-case --hidden '
+  RG_PREFIX='rg -H --column -n -S -uu '
   selected_file=$(FZF_DEFAULT_COMMAND="$RG_PREFIX $LBUFFER" \
     fzf --reverse --disabled \
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
