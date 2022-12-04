@@ -102,10 +102,11 @@ alias rm='rm -i'
 alias cp='cp -ip'
 alias mv='mv -i'
 
-alias gs='git status -sb'
-alias gc='git commit -s -v'
 alias gl='git l'
+alias gs='git status -sb'
 alias ga='git add -N . && git add -p'
+alias gc='git commit -s -v'
+alias gp='git push origin'
 
 alias t='tig'
 alias ta='tig --all'
