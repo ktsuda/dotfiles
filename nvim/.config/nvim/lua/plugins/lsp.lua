@@ -21,7 +21,13 @@ local on_attach = function(_, bufnr)
   })
 end
 
-local servers = { 'clangd', 'pyright', 'tsserver', 'sumneko_lua' }
+local servers = {
+  'clangd',
+  'pyright',
+  'tsserver',
+  'sumneko_lua',
+  'gopls',
+}
 
 for _, lspserver in ipairs(servers) do
   local capabilities = vim.lsp.protocol.make_client_capabilities()
