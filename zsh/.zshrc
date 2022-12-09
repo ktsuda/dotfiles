@@ -32,12 +32,6 @@ setopt no_flow_control
 
 typeset -U path PATH
 
-case ${OSTYPE} in
-  darwin*)
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-    ;;
-esac
-
 path=(
   ~/.ghq/bin(N-/)
   ~/.fzf/bin(N-/)
@@ -59,10 +53,17 @@ path=(
   $path
 )
 
+case ${OSTYPE} in
+  darwin*)
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    ;;
+esac
+
 typeset -U fpath
 
 fpath=(
   /opt/homebrew/share/zsh-completions(N-/)
+  /opt/homebrew/share/zsh/site-functions(N-/)
   ~/.config/zsh/zsh-completions(N-/)
   $fpath
 )
