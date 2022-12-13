@@ -18,7 +18,7 @@ local on_attach = function(_, bufnr)
     group = lsp_augroup,
     buffer = bufnr,
     callback = function(_)
-      vim.lsp.buf.formatting_sync({ timeout_ms = 3000 })
+      -- vim.lsp.buf.format({ timeout_ms = 3000 })
     end,
   })
 end
