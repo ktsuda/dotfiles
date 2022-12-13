@@ -89,11 +89,19 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
-if type gls &>/dev/null; then
-  alias ls='gls -X -F -T 2 -C --color=auto'
-else
-  alias ls='ls -F -C -G'
-fi
+case ${OSTYPE} in
+  darwin*)
+    if type gls &>/dev/null; then
+      alias ls='gls -X -F -T 2 -C --color=auto'
+    else
+      alias ls='ls -F -C -G'
+    fi
+    ;;
+  linux*)
+    alias ls='ls -XFC -T 2 --color=auto'
+    ;;
+esac
+
 
 alias ll='ls -l'
 alias la='ls -A'
