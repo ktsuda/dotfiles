@@ -1,2 +1,4 @@
 .DS_Store
 nvim/.config/nvim/plugin
+.clangd
+compile_commands.json
