@@ -29,6 +29,7 @@ local servers = {
   'tsserver',
   'sumneko_lua',
   'gopls',
+  'marksman',
 }
 
 for _, lspserver in ipairs(servers) do
