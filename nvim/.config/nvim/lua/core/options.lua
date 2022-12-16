@@ -26,5 +26,5 @@ elseif vim.fn.has('win64') == 1 then
 elseif vim.fn.has('win32') == 1 then
   vim.opt.clipboard = 'unnamed'
 else
-  vim.opt.clipboard = 'unnamedplus'
+  vim.opt.clipboard = 'unnamedplus' -- install xsel or xclip
 end
