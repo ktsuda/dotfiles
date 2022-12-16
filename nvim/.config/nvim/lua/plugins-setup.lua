@@ -61,7 +61,6 @@ packer.startup(function(use)
   use('kyazdani42/nvim-tree.lua')
   use('akinsho/bufferline.nvim')
   use('nvim-lualine/lualine.nvim')
-  use('christoomey/vim-tmux-navigator')
   use('szw/vim-maximizer')
   use({
     'iamcco/markdown-preview.nvim',
