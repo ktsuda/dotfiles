@@ -71,6 +71,7 @@ packer.startup(function(use)
     ft = { 'markdown' },
     cond = vim.fn.executable('npm') == 1,
   })
+  use('dhruvasagar/vim-table-mode')
 
   if is_bootstrap then
     packer.sync()
