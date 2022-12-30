@@ -4,6 +4,7 @@
 require('plugins-setup')
 require('core.options')
 require('core.keymaps')
+require('plugins.colorscheme')
 require('plugins.cmp')
 require('plugins.lsp')
 require('plugins.telescope')

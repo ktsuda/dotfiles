@@ -1,35 +1,40 @@
 -- Install packer
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = vim.fn.system({
-    'git',
-    'clone',
-    '--depth',
-    '1',
-    'https://github.com/wbthomason/packer.nvim',
-    install_path,
-  })
-  vim.api.nvim_command('packeradd packer.nvim')
+local ensure_packer = function()
+  local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.fn.system({
+      'git',
+      'clone',
+      '--depth',
+      '1',
+      'https://github.com/wbthomason/packer.nvim',
+      install_path,
+    })
+    vim.api.nvim_command('packadd packer.nvim')
+    return true
+  else
+    return false
+  end
 end
 
+local packer_bootstrap = ensure_packer()
+
 -- Load the config file every time when it's saved
+local packer_status, packer = pcall(require, 'packer')
+if not packer_status then return end
+
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/lua/plugins-setup.lua',
   callback = function()
     local readable = vim.api.nvim_exec('source <afile>', true)
     if readable then
-      vim.api.nvim_command('PackerSync')
+      packer.sync()
     end
   end,
   group = vim.api.nvim_create_augroup('packer_user_config', { clear = true }),
 })
 
 -- plugins
-local packer_status, packer = pcall(require, 'packer')
-if not packer_status then return end
-
 packer.startup(function(use)
   use('wbthomason/packer.nvim')
   use('tpope/vim-fugitive')
@@ -73,12 +78,12 @@ packer.startup(function(use)
   })
   use('dhruvasagar/vim-table-mode')
 
-  if is_bootstrap then
+  if packer_bootstrap then
     packer.sync()
   end
 end)
 
-if is_bootstrap then
+if packer_bootstrap then
   print 'Installing plugins...'
   print 'Restart neovim after the paker process completes.'
   return
