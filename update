@@ -24,11 +24,11 @@ function set_stow_folders() {
         exit 1
         ;;
       --macos)
-        STOW_FOLDERS=("tmux git nvim zsh marksman")
+        STOW_FOLDERS=("tmux git nvim zsh marksman kitty")
         shift
         ;;
       --linux)
-        STOW_FOLDERS=("tmux git nvim zsh marksman")
+        STOW_FOLDERS=("tmux git nvim zsh marksman kitty")
         shift
         ;;
       *)

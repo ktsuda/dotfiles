@@ -77,6 +77,7 @@ packer.startup(function(use)
     cond = vim.fn.executable('npm') == 1,
   })
   use('dhruvasagar/vim-table-mode')
+  use('fladson/vim-kitty')
 
   if packer_bootstrap then
     packer.sync()
