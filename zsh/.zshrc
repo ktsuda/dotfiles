@@ -113,6 +113,7 @@ alias mv='mv -i'
 
 alias gl='git l'
 alias gs='git status -sb'
+alias gd='git diff'
 alias ga='git add -N . && git add -p'
 alias gc='git commit -s -v'
 alias gp='git push origin'
