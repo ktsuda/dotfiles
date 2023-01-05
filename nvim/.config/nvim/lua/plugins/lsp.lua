@@ -28,47 +28,35 @@ local servers = {
   'pyright',
   'tsserver',
   'sumneko_lua',
-  'gopls',
   'marksman',
 }
 
-for _, lspserver in ipairs(servers) do
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  local lsp_flags = { debounce_text_chages = 150 }
-  local lspconfig_opts = { on_attach = on_attach, flags = lsp_flags }
+local lsp_flags = { debounce_text_chages = 150 }
+local lspconfig_opts = { on_attach = on_attach, flags = lsp_flags }
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local settings = {}
 
+for _, lspserver in ipairs(servers) do
   if lspserver == 'clangd' then
     capabilities.offsetEncoding = { 'utf-16' }
-    lspconfig_opts = vim.tbl_deep_extend('force', {
-      capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
-    }, lspconfig_opts)
   elseif lspserver == 'pyright' then
-    lspconfig_opts = vim.tbl_deep_extend('force', {
-      capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
-      settings = {
-        python = {
-          analysis = {
-            typeCheckingMode = 'off',
-          },
-        },
+    settings.python = {
+      analysis = {
+        typeCheckingMode = 'off',
       },
-    }, lspconfig_opts)
+    }
   elseif lspserver == 'sumneko_lua' then
-    lspconfig_opts = vim.tbl_deep_extend('force', {
-      capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { 'vim' },
-          },
-        },
+    settings.Lua = {
+      diagnostics = {
+        globals = { 'vim' },
       },
-    }, lspconfig_opts)
-  else
-    lspconfig_opts = vim.tbl_deep_extend('force', {
-      capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
-    }, lspconfig_opts)
+    }
   end
+
+  lspconfig_opts = vim.tbl_deep_extend('keep', lspconfig_opts, {
+    capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
+    settings = settings,
+  })
 
   lspconfig[lspserver].setup(lspconfig_opts)
 end
