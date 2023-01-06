@@ -3,7 +3,7 @@ if not lspconfig_status then return end
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not cmp_nvim_lsp_status then return end
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   vim.lsp.set_log_level('debug')
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
@@ -11,16 +11,7 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.format, bufopts)
-  local lsp_augroup = 'LspFormat' .. bufnr
-  vim.api.nvim_create_augroup(lsp_augroup, { clear = true })
-  vim.api.nvim_create_autocmd('BufWritePre', {
-    group = lsp_augroup,
-    buffer = bufnr,
-    callback = function(_)
-      -- vim.lsp.buf.format({ timeout_ms = 3000 })
-    end,
-  })
+  client.server_capabilities.document_formatting = false
 end
 
 local servers = {
