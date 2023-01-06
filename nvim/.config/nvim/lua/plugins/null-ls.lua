@@ -2,12 +2,31 @@ local null_ls_status, null_ls = pcall(require, 'null-ls')
 if not null_ls_status then return end
 
 local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
 
 local sources = {
-  -- webdev, markdown, yaml
+  -- webdev
   formatting.prettier.with({
+    filetypes = {
+      'typescript',
+      'typescriptreact',
+      'javascriptreact',
+      'graphql',
+      'html',
+      'css',
+      'scss',
+      'yaml',
+      'less',
+      'jsonc',
+      'json',
+      'javascript',
+      'vue',
+    },
     extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
   }),
+  -- markdown
+  formatting.markdownlint,
+  diagnostics.markdownlint,
   -- c/c++
   formatting.clang_format,
   -- sh
