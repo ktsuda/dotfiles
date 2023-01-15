@@ -22,3 +22,6 @@
   helper = store
 [init]
   defaultBranch = main
+[clangFormat]
+	binary = clang-format
+	style = file
