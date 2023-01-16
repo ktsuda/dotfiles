@@ -164,6 +164,21 @@ function git-repo-cd() {
 zle -N git-repo-cd
 bindkey "^s" git-repo-cd
 
+function subdir-cd() {
+  local selected_dir=$(find . -type d | \
+    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  local ret=$?
+  if [ -z "$selected_dir" ]; then
+    zle redisplay
+    return 0
+  fi
+  eval "builtin cd -- ${selected_dir}"
+  zle reset-prompt
+  return $ret
+}
+zle -N subdir-cd
+bindkey "^o" subdir-cd
+
 function history-widget() {
   local selected num
   selected=($(fc -rl 1 | FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd)))
