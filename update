@@ -24,7 +24,7 @@ function set_stow_folders() {
         exit 1
         ;;
       --macos)
-        STOW_FOLDERS=("zsh git gh tig-mac nvim marksman kitty-mac w3m")
+        STOW_FOLDERS=("zsh git gh tig-mac nvim marksman iterm2 kitty-mac w3m")
         shift
         ;;
       --linux)
