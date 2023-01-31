@@ -63,6 +63,7 @@ packer.startup(function(use)
     run = 'make',
   })
   use('nvim-telescope/telescope-project.nvim')
+  use('simrat39/symbols-outline.nvim')
   use('kyazdani42/nvim-web-devicons')
   use('kyazdani42/nvim-tree.lua')
   use('windwp/nvim-autopairs')
