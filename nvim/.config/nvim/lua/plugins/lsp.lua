@@ -29,7 +29,7 @@ local settings = {}
 
 for _, lspserver in ipairs(servers) do
   if lspserver == 'clangd' then
-    capabilities.offsetEncoding = { 'utf-16' }
+    capabilities.offsetEncoding = { 'utf-8', 'utf-16' }
   elseif lspserver == 'pyright' then
     settings.python = {
       analysis = {
