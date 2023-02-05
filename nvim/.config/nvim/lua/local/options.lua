@@ -14,6 +14,7 @@ vim.o.termguicolors = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.updatetime = 100
+vim.o.background = 'dark'
 
 if vim.fn.has('mac') == 1 then
   vim.opt.clipboard = 'unnamed'

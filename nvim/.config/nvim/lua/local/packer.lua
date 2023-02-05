@@ -24,7 +24,7 @@ local packer_status, packer = pcall(require, 'packer')
 if not packer_status then return end
 
 vim.api.nvim_create_autocmd('BufWritePost', {
-  pattern = '*/.config/nvim/lua/plugins-setup.lua',
+  pattern = '*/.config/nvim/lua/local/packer.lua',
   callback = function()
     local readable = vim.api.nvim_exec('source <afile>', true)
     if readable then
@@ -45,6 +45,9 @@ packer.startup(function(use)
     'overcache/neosolarized',
     config = function()
       vim.g.neosolarized_underline = 0
+      vim.api.nvim_command('colorscheme NeoSolarized')
+      vim.api.nvim_command('highlight Normal ctermbg=none guibg=none')
+      vim.api.nvim_command('highlight NonText ctermbg=none guibg=none')
     end,
   })
   use('neovim/nvim-lspconfig')
@@ -63,6 +66,10 @@ packer.startup(function(use)
     run = 'make',
   })
   use('nvim-telescope/telescope-project.nvim')
+  use({
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+  })
   use('simrat39/symbols-outline.nvim')
   use('kyazdani42/nvim-web-devicons')
   use('kyazdani42/nvim-tree.lua')
