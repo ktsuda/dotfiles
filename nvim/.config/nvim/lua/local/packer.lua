@@ -45,9 +45,11 @@ packer.startup(function(use)
     'overcache/neosolarized',
     config = function()
       vim.g.neosolarized_underline = 0
-      vim.api.nvim_command('colorscheme NeoSolarized')
-      vim.api.nvim_command('highlight Normal ctermbg=none guibg=none')
-      vim.api.nvim_command('highlight NonText ctermbg=none guibg=none')
+      vim.cmd.colorscheme('NeoSolarized')
+      vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'NonText', { bg = 'none' })
+      vim.api.nvim_set_hl(0, 'LineNr', { bg = 'none' })
     end,
   })
   use('neovim/nvim-lspconfig')
