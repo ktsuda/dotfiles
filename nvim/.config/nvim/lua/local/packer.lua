@@ -76,7 +76,6 @@ packer.startup(function(use)
   use('windwp/nvim-autopairs')
   use('akinsho/bufferline.nvim')
   use('nvim-lualine/lualine.nvim')
-  use('szw/vim-maximizer')
   use({
     'iamcco/markdown-preview.nvim',
     run = 'cd app && npm install',
