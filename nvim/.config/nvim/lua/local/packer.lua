@@ -21,7 +21,9 @@ local packer_bootstrap = ensure_packer()
 
 -- Load the config file every time when it's saved
 local packer_status, packer = pcall(require, 'packer')
-if not packer_status then return end
+if not packer_status then
+  return
+end
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/lua/local/packer.lua',
@@ -37,57 +39,78 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- plugins
 packer.startup(function(use)
   use('wbthomason/packer.nvim')
-  use('tpope/vim-fugitive')
-  use('airblade/vim-gitgutter')
-  use('tpope/vim-surround')
+  -- git
+  use({
+    'tpope/vim-fugitive',
+    'airblade/vim-gitgutter',
+  })
+  -- colorscheme
+  use({
+    {
+      'overcache/neosolarized',
+      config = function()
+        vim.g.neosolarized_underline = 0
+        vim.cmd.colorscheme('NeoSolarized')
+        vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'NonText', { bg = 'none' })
+        vim.api.nvim_set_hl(0, 'LineNr', { bg = 'none' })
+      end,
+    },
+    {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdate',
+    },
+  })
+  -- fuzzy finder
+  use({
+    {
+      'nvim-telescope/telescope.nvim',
+      requires = { 'nvim-lua/plenary.nvim' },
+    },
+    {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      run = 'make',
+    },
+    { 'nvim-telescope/telescope-project.nvim' },
+  })
+  -- lsp
+  use({
+    { 'neovim/nvim-lspconfig' },
+    { 'hrsh7th/nvim-cmp' },
+    { 'hrsh7th/cmp-buffer' },
+    { 'hrsh7th/cmp-path' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'L3MON4D3/LuaSnip' },
+    { 'saadparwaiz1/cmp_luasnip' },
+    { 'rafamadriz/friendly-snippets' },
+    { 'jose-elias-alvarez/null-ls.nvim' },
+  })
+  -- decoration
+  use({
+    { 'kyazdani42/nvim-web-devicons' },
+    { 'kyazdani42/nvim-tree.lua' },
+    { 'akinsho/bufferline.nvim' },
+    { 'nvim-lualine/lualine.nvim' },
+    { 'fladson/vim-kitty' },
+  })
+  -- utilities
+  use({
+    { 'tpope/vim-surround' },
+    { 'windwp/nvim-autopairs' },
+    { 'dhruvasagar/vim-table-mode' },
+    {
+      'iamcco/markdown-preview.nvim',
+      run = 'cd app && npm install',
+      setup = function()
+        vim.g.mkdp_filetypes = { 'markdown' }
+      end,
+      ft = { 'markdown' },
+      cond = vim.fn.executable('npm') == 1,
+    },
+  })
+  -- time tracker
   use('wakatime/vim-wakatime')
-  use({
-    'overcache/neosolarized',
-    config = function()
-      vim.g.neosolarized_underline = 0
-      vim.cmd.colorscheme('NeoSolarized')
-      vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-      vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-      vim.api.nvim_set_hl(0, 'NonText', { bg = 'none' })
-      vim.api.nvim_set_hl(0, 'LineNr', { bg = 'none' })
-    end,
-  })
-  use('neovim/nvim-lspconfig')
-  use('hrsh7th/nvim-cmp')
-  use('hrsh7th/cmp-buffer')
-  use('hrsh7th/cmp-path')
-  use('hrsh7th/cmp-nvim-lsp')
-  use('L3MON4D3/LuaSnip')
-  use('saadparwaiz1/cmp_luasnip')
-  use('rafamadriz/friendly-snippets')
-  use('jose-elias-alvarez/null-ls.nvim')
-  use('nvim-lua/plenary.nvim')
-  use('nvim-telescope/telescope.nvim')
-  use({
-    'nvim-telescope/telescope-fzf-native.nvim',
-    run = 'make',
-  })
-  use('nvim-telescope/telescope-project.nvim')
-  use({
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-  })
-  use('kyazdani42/nvim-web-devicons')
-  use('kyazdani42/nvim-tree.lua')
-  use('windwp/nvim-autopairs')
-  use('akinsho/bufferline.nvim')
-  use('nvim-lualine/lualine.nvim')
-  use({
-    'iamcco/markdown-preview.nvim',
-    run = 'cd app && npm install',
-    setup = function()
-      vim.g.mkdp_filetypes = { 'markdown' }
-    end,
-    ft = { 'markdown' },
-    cond = vim.fn.executable('npm') == 1,
-  })
-  use('dhruvasagar/vim-table-mode')
-  use('fladson/vim-kitty')
 
   if packer_bootstrap then
     packer.sync()
@@ -95,7 +118,7 @@ packer.startup(function(use)
 end)
 
 if packer_bootstrap then
-  print 'Installing plugins...'
-  print 'Restart neovim after the paker process completes.'
+  print('Installing plugins...')
+  print('Restart neovim after the paker process completes.')
   return
 end
