@@ -80,6 +80,13 @@ local telescope_custom = {
       search = vim.fn.input("Grep > "),
     })
   end,
+  git_commits = function()
+    telescope_builtin.git_commits({
+      git_command = {
+        'git', 'log', '--all', '--date=short', '--pretty=oneline', '--format=%h %ad %cn %s %d',
+       }
+    })
+  end,
 }
 vim.keymap.set('n', '<C-s>', telescope_custom.ghq_list, { silent = true })
 vim.keymap.set('n', '<C-p>', telescope_custom.find_repo, { silent = true })
@@ -88,6 +95,6 @@ vim.keymap.set('n', '<leader>uu', telescope_builtin.find_files, { silent = true 
 vim.keymap.set('n', '<leader>uk', telescope_builtin.keymaps, { silent = true })
 vim.keymap.set('n', '<leader>ub', telescope_builtin.buffers, { silent = true })
 vim.keymap.set('n', '<leader>us', telescope_custom.grep_string, { silent = true })
-vim.keymap.set('n', '<leader>gc', telescope_builtin.git_commits, { silent = true })
+vim.keymap.set('n', '<leader>gc', telescope_custom.git_commits, { silent = true })
 vim.keymap.set('n', '<leader>gb', telescope_builtin.git_branches, { silent = true })
 vim.keymap.set('n', '<leader>ps', telescope_builtin.treesitter, { silent = true })
