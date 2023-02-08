@@ -70,7 +70,6 @@ packer.startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
   })
-  use('simrat39/symbols-outline.nvim')
   use('kyazdani42/nvim-web-devicons')
   use('kyazdani42/nvim-tree.lua')
   use('windwp/nvim-autopairs')
