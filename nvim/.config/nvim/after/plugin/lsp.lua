@@ -2,6 +2,10 @@ local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
 if not lspconfig_status then return end
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not cmp_nvim_lsp_status then return end
+local mason_status, _ = pcall(require, 'mason')
+if not mason_status then return end
+local mason_lspconfig_status, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if not mason_lspconfig_status then return end
 
 local on_attach = function(client, bufnr)
   vim.lsp.set_log_level('debug')
@@ -15,39 +19,46 @@ local on_attach = function(client, bufnr)
 end
 
 local servers = {
-  'clangd',
-  'pyright',
-  'tsserver',
-  'sumneko_lua',
-  'marksman',
-}
-
-local lsp_flags = { debounce_text_chages = 150 }
-local lspconfig_opts = { on_attach = on_attach, flags = lsp_flags }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-local settings = {}
-
-for _, lspserver in ipairs(servers) do
-  if lspserver == 'clangd' then
-    capabilities.offsetEncoding = { 'utf-8', 'utf-16' }
-  elseif lspserver == 'pyright' then
-    settings.python = {
+  clangd = {},
+  pyright = {
+    python = {
       analysis = {
         typeCheckingMode = 'off',
       },
-    }
-  elseif lspserver == 'sumneko_lua' then
-    settings.Lua = {
+    },
+  },
+  tsserver = {},
+  marksman = {},
+  sumneko_lua = {
+    Lua = {
+      workspace = {
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
+      },
       diagnostics = {
         globals = { 'vim' },
       },
-    }
-  end
+    },
+  },
+}
 
-  lspconfig_opts = vim.tbl_deep_extend('keep', lspconfig_opts, {
-    capabilities = cmp_nvim_lsp.default_capabilities(capabilities),
-    settings = settings,
-  })
+local flags = { debounce_text_chages = 150 }
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
-  lspconfig[lspserver].setup(lspconfig_opts)
-end
+mason_lspconfig.setup({
+  ensure_installed = vim.tbl_keys(servers),
+})
+
+mason_lspconfig.setup_handlers({
+  function(server_name)
+    lspconfig[server_name].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      flags = flags,
+      settings = servers[server_name],
+    })
+  end,
+})
