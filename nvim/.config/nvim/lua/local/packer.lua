@@ -28,7 +28,8 @@ end
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/lua/local/packer.lua',
   callback = function()
-    local readable = vim.api.nvim_exec('source <afile>', true)
+    local command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile'
+    local readable = vim.api.nvim_exec(command, true)
     if readable then
       packer.sync()
     end
@@ -60,10 +61,9 @@ packer.startup(function(use)
     {
       'nvim-treesitter/nvim-treesitter',
       run = function()
-        local ts_update = require('nvim-treesitter.install').update({
-          with_sync = true,
-        })
-        ts_update()
+        pcall(require, 'nvim-treesitter.install').update({
+	      with_sync = true,
+	    })
       end,
     },
   })
@@ -71,6 +71,7 @@ packer.startup(function(use)
   use({
     {
       'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
       requires = { 'nvim-lua/plenary.nvim' },
     },
     {
