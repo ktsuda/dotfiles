@@ -6,7 +6,7 @@ local diagnostics = null_ls.builtins.diagnostics
 
 local sources = {
   -- webdev
-  formatting.prettier.with({
+  formatting.prettierd.with({
     filetypes = {
       'typescript',
       'typescriptreact',
@@ -16,6 +16,7 @@ local sources = {
       'css',
       'scss',
       'yaml',
+      'markdown',
       'less',
       'jsonc',
       'json',
@@ -25,8 +26,7 @@ local sources = {
     extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
   }),
   -- markdown
-  formatting.markdownlint,
-  diagnostics.markdownlint,
+  diagnostics.markdownlint_cli2,
   -- c/c++
   formatting.clang_format,
   -- sh
