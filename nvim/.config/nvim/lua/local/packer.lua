@@ -102,6 +102,7 @@ packer.startup(function(use)
     { 'akinsho/bufferline.nvim' },
     { 'nvim-lualine/lualine.nvim' },
     { 'fladson/vim-kitty' },
+    { 'kovetskiy/sxhkd-vim'},
   })
   -- utilities
   use({
