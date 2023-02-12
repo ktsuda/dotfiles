@@ -65,8 +65,8 @@ packer.startup(function(use)
       'nvim-treesitter/nvim-treesitter',
       run = function()
         pcall(require, 'nvim-treesitter.install').update({
-	      with_sync = true,
-	    })
+          with_sync = true,
+        })
       end,
     },
   })
@@ -105,7 +105,7 @@ packer.startup(function(use)
     { 'akinsho/bufferline.nvim' },
     { 'nvim-lualine/lualine.nvim' },
     { 'fladson/vim-kitty' },
-    { 'kovetskiy/sxhkd-vim'},
+    { 'kovetskiy/sxhkd-vim' },
   })
   -- utilities
   use({

@@ -1,92 +1,103 @@
 local telescope_status, telescope = pcall(require, 'telescope')
-if not telescope_status then return end
+if not telescope_status then
+  return
+end
 local actions_status, telescope_actions = pcall(require, 'telescope.actions')
-if not actions_status then return end
+if not actions_status then
+  return
+end
 telescope.setup({
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '-H',
-      '--column',
-      '-n',
-      '-S',
-      '-uu',
+    defaults = {
+        vimgrep_arguments = {
+            'rg',
+            '-H',
+            '--column',
+            '-n',
+            '-S',
+            '-uu',
+        },
+        file_ignore_patterns = {
+            '%.git/.*',
+            'node_modules/.*',
+            '.npm/.*',
+            '.vscode/.*',
+            '.cache/.*',
+            '.gem/.*',
+            '%.DS_Store',
+            '%.jpg$',
+            '%.JPG$',
+            '%.jpeg',
+            '%.png$',
+            '%.PNG$',
+        },
+        mappings = {
+            i = {
+                ['<C-k>'] = telescope_actions.preview_scrolling_up,
+                ['<C-j>'] = telescope_actions.preview_scrolling_down,
+                ['<C-u>'] = telescope_actions.results_scrolling_up,
+                ['<C-d>'] = telescope_actions.results_scrolling_down,
+            },
+        },
     },
-    file_ignore_patterns = {
-      '%.git/.*',
-      'node_modules/.*',
-      '.npm/.*',
-      '.vscode/.*',
-      '.cache/.*',
-      '.gem/.*',
-      '%.DS_Store',
-      '%.jpg$',
-      '%.JPG$',
-      '%.jpeg',
-      '%.png$',
-      '%.PNG$',
+    pickers = {
+        find_files = {
+            hidden = true,
+        },
     },
-    mappings = {
-      i = {
-        ['<C-k>'] = telescope_actions.preview_scrolling_up,
-        ['<C-j>'] = telescope_actions.preview_scrolling_down,
-        ['<C-u>'] = telescope_actions.results_scrolling_up,
-        ['<C-d>'] = telescope_actions.results_scrolling_down,
-      },
+    extensions = {
+        project = {
+            base_dirs = {
+                { path = vim.env.GHQ_ROOT, max_depth = 4 },
+            },
+            hidden_files = true,
+        },
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = 'smart_case',
+        },
     },
-  },
-  pickers = {
-    find_files = {
-      hidden = true,
-    },
-  },
-  extensions = {
-    project = {
-      base_dirs = {
-        { path = vim.env.GHQ_ROOT, max_depth = 4 },
-      },
-      hidden_files = true,
-    },
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = 'smart_case',
-    },
-  },
 })
 
 pcall(telescope.load_extension, 'project')
 pcall(telescope.load_extension, 'fzf')
 
 local builtin_status, telescope_builtin = pcall(require, 'telescope.builtin')
-if not builtin_status then return end
+if not builtin_status then
+  return
+end
 local telescope_custom = {
-  find_repo = function()
-    telescope_builtin.find_files({
-      cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
-    })
-  end,
-  grep_repo = function()
-    telescope_builtin.live_grep({
-      cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
-    })
-  end,
-  ghq_list = function()
-    telescope.extensions.project.project({ display_type = 'full' })
-  end,
-  grep_string = function()
-    telescope_builtin.grep_string({
-      search = vim.fn.input("Grep > "),
-    })
-  end,
-  git_commits = function()
-    telescope_builtin.git_commits({
-      git_command = {
-        'git', 'log', '--all', '--date=short', '--pretty=oneline', '--format=%h %ad %cn %s %d',
-       }
-    })
-  end,
+    find_repo = function()
+      telescope_builtin.find_files({
+          cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
+      })
+    end,
+    grep_repo = function()
+      telescope_builtin.live_grep({
+          cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
+      })
+    end,
+    ghq_list = function()
+      telescope.extensions.project.project({ display_type = 'full' })
+    end,
+    grep_string = function()
+      telescope_builtin.grep_string({
+          search = vim.fn.input('Grep > '),
+      })
+    end,
+    git_commits = function()
+      telescope_builtin.git_commits({
+          git_command = {
+              'git',
+              'log',
+              '--all',
+              '--date=short',
+              '--pretty=oneline',
+              '--format=%h %ad %cn %s %d',
+          },
+      })
+    end,
 }
 vim.keymap.set('n', '<C-s>', telescope_custom.ghq_list, { silent = true })
 vim.keymap.set('n', '<C-p>', telescope_custom.find_repo, { silent = true })
