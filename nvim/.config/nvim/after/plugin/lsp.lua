@@ -2,10 +2,12 @@ local lspconfig_status, lspconfig = pcall(require, 'lspconfig')
 if not lspconfig_status then return end
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not cmp_nvim_lsp_status then return end
-local mason_status, _ = pcall(require, 'mason')
+local mason_status, mason = pcall(require, 'mason')
 if not mason_status then return end
 local mason_lspconfig_status, mason_lspconfig = pcall(require, 'mason-lspconfig')
 if not mason_lspconfig_status then return end
+
+mason.setup()
 
 local on_attach = function(client, bufnr)
   vim.lsp.set_log_level('debug')
@@ -29,7 +31,7 @@ local servers = {
   },
   tsserver = {},
   marksman = {},
-  sumneko_lua = {
+  lua_ls = {
     Lua = {
       workspace = {
         checkThirdParty = false,
