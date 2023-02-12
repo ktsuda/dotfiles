@@ -108,6 +108,7 @@ packer.startup(function(use)
   use({
     { 'tpope/vim-surround' },
     { 'windwp/nvim-autopairs' },
+    { 'mbbill/undotree' },
     { 'dhruvasagar/vim-table-mode' },
     {
       'iamcco/markdown-preview.nvim',
