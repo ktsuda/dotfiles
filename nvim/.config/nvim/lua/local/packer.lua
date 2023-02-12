@@ -46,7 +46,7 @@ packer.startup(function(use)
       'ktsuda/vim-fugitive',
       branch = 'signoff',
     },
-    { 'airblade/vim-gitgutter' },
+    { 'lewis6991/gitsigns.nvim' },
   })
   -- colorscheme
   use({
