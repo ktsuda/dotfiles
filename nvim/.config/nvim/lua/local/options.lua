@@ -17,13 +17,14 @@ vim.o.updatetime = 50
 vim.o.guicursor = ''
 vim.o.colorcolumn = '80'
 vim.o.background = 'dark'
+vim.o.completeopt = 'menu,menuone,noselect'
 
 if vim.fn.has('mac') == 1 then
-  vim.opt.clipboard = 'unnamed'
+  vim.o.clipboard = 'unnamed'
 elseif vim.fn.has('win64') == 1 then
-  vim.opt.clipboard = 'unnamed'
+  vim.o.clipboard = 'unnamed'
 elseif vim.fn.has('win32') == 1 then
-  vim.opt.clipboard = 'unnamed'
+  vim.o.clipboard = 'unnamed'
 else
-  vim.opt.clipboard = 'unnamedplus' -- install xsel or xclip
+  vim.o.clipboard = 'unnamedplus' -- install xsel or xclip
 end

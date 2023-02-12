@@ -1,6 +1,13 @@
 -- Install packer
+local packer_status, packer = pcall(require, 'packer')
+if not packer_status then
+  return
+end
+
 local ensure_packer = function()
-  local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  local install_path = vim.fn.stdpath('data')
+    .. '/site/pack/packer/start/packer.nvim'
+
   if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     vim.fn.system({
       'git',
@@ -10,7 +17,9 @@ local ensure_packer = function()
       'https://github.com/wbthomason/packer.nvim',
       install_path,
     })
+
     vim.api.nvim_command('packadd packer.nvim')
+
     return true
   else
     return false
@@ -19,17 +28,11 @@ end
 
 local packer_bootstrap = ensure_packer()
 
--- Load the config file every time when it's saved
-local packer_status, packer = pcall(require, 'packer')
-if not packer_status then
-  return
-end
-
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/lua/local/packer.lua',
   callback = function()
-    local command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile'
-    local readable = vim.api.nvim_exec(command, true)
+    local readable = vim.api.nvim_exec('source <afile>', true)
+
     if readable then
       packer.sync()
     end
@@ -45,6 +48,11 @@ packer.startup(function(use)
     {
       'ktsuda/vim-fugitive',
       branch = 'signoff',
+      lock = true,
+      config = function()
+        vim.keymap.set('n', '<leader>gs', vim.cmd.Git, {})
+        vim.keymap.set('n', '<leader>gd', vim.cmd.Gdiff, {})
+      end,
     },
     { 'lewis6991/gitsigns.nvim' },
   })
@@ -64,9 +72,7 @@ packer.startup(function(use)
     {
       'nvim-treesitter/nvim-treesitter',
       run = function()
-        pcall(require, 'nvim-treesitter.install').update({
-          with_sync = true,
-        })
+        pcall(require, 'nvim-treesitter.install').update({ with_sync = true })
       end,
     },
   })
@@ -75,6 +81,7 @@ packer.startup(function(use)
     {
       'nvim-telescope/telescope.nvim',
       branch = '0.1.x',
+      lock = true,
       requires = { 'nvim-lua/plenary.nvim' },
     },
     {
@@ -104,20 +111,38 @@ packer.startup(function(use)
     { 'kyazdani42/nvim-tree.lua' },
     { 'akinsho/bufferline.nvim' },
     { 'nvim-lualine/lualine.nvim' },
-    { 'fladson/vim-kitty' },
-    { 'kovetskiy/sxhkd-vim' },
+    {
+      'fladson/vim-kitty',
+      ft = { 'kitty' },
+    },
+    {
+      'kovetskiy/sxhkd-vim',
+      ft = { 'sxhkd' },
+    },
   })
   -- utilities
   use({
     { 'tpope/vim-surround' },
     { 'windwp/nvim-autopairs' },
     { 'mbbill/undotree' },
-    { 'dhruvasagar/vim-table-mode' },
+    {
+      'dhruvasagar/vim-table-mode',
+      ft = { 'markdown' },
+      config = function()
+        vim.g.table_mode_corner = '|'
+      end,
+    },
     {
       'iamcco/markdown-preview.nvim',
       run = 'cd app && npm install',
       setup = function()
         vim.g.mkdp_filetypes = { 'markdown' }
+      end,
+      config = function()
+        vim.g.mkdp_auto_start = 0
+        vim.g.mkdp_auto_close = 1
+        vim.g.mkdp_refresh_slow = 0
+        vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, {})
       end,
       ft = { 'markdown' },
       cond = vim.fn.executable('npm') == 1,

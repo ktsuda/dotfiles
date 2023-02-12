@@ -2,6 +2,7 @@ local lualine_status, lualine = pcall(require, 'lualine')
 if not lualine_status then
   return
 end
+
 lualine.setup({
     options = {
         theme = 'auto',
@@ -13,4 +14,11 @@ lualine.setup({
         'nvim-tree',
         'fzf',
     },
+  },
+  extensions = {
+    'quickfix',
+    'fugitive',
+    'nvim-tree',
+    'fzf',
+  },
 })

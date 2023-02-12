@@ -1,10 +1,16 @@
 vim.g.mapleader = ' '
-vim.keymap.set('n', 'Y', 'y$', { silent = true })
-vim.keymap.set('n', '[q', '<cmd>cprevious<cr>', { silent = true })
-vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { silent = true })
-vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { silent = true })
-vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { silent = true })
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { noremap = true, silent = true })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { noremap = true, silent = true })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { noremap = true, silent = true })
+
+local function map(mode, l, r, opts)
+  opts = opts or {}
+  vim.keymap.set(mode, l, r, opts)
+end
+
+map('n', 'Y', 'y$')
+map('n', '[q', '<cmd>cprevious<cr>')
+map('n', ']q', '<cmd>cnext<cr>')
+map('n', '<C-h>', '<cmd>bprev<cr>')
+map('n', '<C-l>', '<cmd>bnext<cr>')
+map('n', '<leader>d', vim.diagnostic.open_float)
+map('n', '[d', vim.diagnostic.goto_prev)
+map('n', ']d', vim.diagnostic.goto_next)
+map('n', '<leader>q', vim.diagnostic.setloclist)
