@@ -42,8 +42,11 @@ packer.startup(function(use)
   use('wbthomason/packer.nvim')
   -- git
   use({
-    'tpope/vim-fugitive',
-    'airblade/vim-gitgutter',
+    {
+      'ktsuda/vim-fugitive',
+      branch = 'signoff',
+    },
+    { 'airblade/vim-gitgutter' },
   })
   -- colorscheme
   use({
