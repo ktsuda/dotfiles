@@ -26,7 +26,7 @@ local sources = {
     extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
   }),
   -- markdown
-  diagnostics.markdownlint_cli2,
+  diagnostics.markdownlint,
   -- c/c++
   formatting.clang_format,
   -- sh
