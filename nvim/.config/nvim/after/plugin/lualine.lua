@@ -4,15 +4,26 @@ if not lualine_status then
 end
 
 lualine.setup({
-    options = {
-        theme = 'auto',
-        icons_enabled = false,
+  options = {
+    theme = 'solarized_dark',
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_b = {
+      { 'branch' },
     },
-    extensions = {
-        'quickfix',
-        'fugitive',
-        'nvim-tree',
-        'fzf',
+    lualine_c = {
+      {
+        'diff',
+        colored = true,
+        diff_color = {
+          added = 'DiffAdd',
+          modified = 'DiffChange',
+          removed = 'DiffDelete',
+        },
+      },
+      { 'diagnostics' },
+      { 'filename' },
     },
   },
   extensions = {
