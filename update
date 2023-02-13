@@ -28,7 +28,7 @@ function set_stow_folders() {
         shift
         ;;
       --linux)
-        STOW_FOLDERS=("zsh tmux git gh tig-linux nvim marksman kitty-linux w3m i3 sxhkd bspwm rofi")
+        STOW_FOLDERS=("zsh tmux git gh tig-linux nvim marksman kitty-linux w3m i3")
         shift
         ;;
       *)
