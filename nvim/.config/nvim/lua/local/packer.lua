@@ -148,6 +148,23 @@ packer.startup(function(use)
       cond = vim.fn.executable('npm') == 1,
     },
   })
+  -- input method
+  use({
+    { 'vim-denops/denops.vim' },
+    {
+      'vim-skk/skkeleton',
+      config = function()
+        vim.keymap.set('i', '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })
+        vim.keymap.set('c', '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })
+        vim.cmd [[
+          call skkeleton#config({
+            \   'eggLikeNewline': v:true,
+            \   'globalJisyo': expand('~/.cache/skk/SKK-JISYO.L'),
+            \ })
+        ]]
+      end,
+    },
+  })
   -- time tracker
   use('wakatime/vim-wakatime')
 

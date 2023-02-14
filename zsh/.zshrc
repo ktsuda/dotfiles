@@ -42,6 +42,7 @@ path=(
   ~/.yarn/bin(N-/)
   ~/Library/Python/3.9/bin(N-/)
   ~/.config/yarn/global/node_modules/bin(N-/)
+  ~/.deno/bin(N-/)
   /usr/local/bin(N-/)
   /usr/bin
   /usr/sbin
