@@ -57,6 +57,7 @@ local sources = {
 }
 
 local on_attach = function(_, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'formatexpr', '')
   vim.keymap.set('n', '<space>f', function()
     vim.lsp.buf.format({ timeout_ms = 2000 })
   end, { buffer = bufnr })
