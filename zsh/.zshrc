@@ -124,6 +124,8 @@ alias t='tig'
 alias ta='tig --all'
 alias ts='tig status'
 
+alias r='ranger'
+
 alias v='nvim'
 alias vim='nvim'
 alias vc='nvim --clean'
