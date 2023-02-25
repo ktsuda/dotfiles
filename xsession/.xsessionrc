@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+nitrogen --restore &
+# exec i3
+exec awesome
