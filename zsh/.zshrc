@@ -96,14 +96,20 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 case ${OSTYPE} in
   darwin*)
-    if type gls &>/dev/null; then
+    if type exa &>/dev/null; then
+      alias ls='exa -F --icons --color=automatic'
+    elif type gls &>/dev/null; then
       alias ls='gls -X -F -T 2 -C --color=auto'
     else
       alias ls='ls -F -C -G'
     fi
     ;;
   linux*)
-    alias ls='ls -XFC -T 2 --color=auto'
+    if type exa &>/dev/null; then
+      alias ls='exa -F --icons --color=automatic'
+    else
+      alias ls='ls -XFC -T 2 --color=auto'
+    fi
     ;;
 esac
 
@@ -112,8 +118,8 @@ if type bat &>/dev/null; then
 fi
 
 alias ll='ls -l'
-alias la='ls -A'
-alias lla='ll -A'
+alias la='ls -a'
+alias lla='ll -a'
 
 alias rm='rm -i'
 alias cp='cp -ip'
