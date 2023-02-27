@@ -62,6 +62,7 @@ telescope.setup({
 
 pcall(telescope.load_extension, 'project')
 pcall(telescope.load_extension, 'fzf')
+pcall(telescope.load_extension, 'zoxide')
 
 local builtin_status, telescope_builtin = pcall(require, 'telescope.builtin')
 if not builtin_status then
@@ -98,6 +99,7 @@ local telescope_custom = {
       },
     })
   end,
+  zoxide_list = telescope.extensions.zoxide.list,
 }
 
 local function map(mode, l, r, opts)
@@ -106,6 +108,7 @@ local function map(mode, l, r, opts)
 end
 
 map('n', '<C-s>', telescope_custom.ghq_list)
+map('n', '<leader>cd', telescope_custom.zoxide_list)
 map('n', '<C-p>', telescope_custom.find_repo)
 map('n', '<leader>ug', telescope_custom.grep_repo)
 map('n', '<leader>uu', telescope_builtin.find_files)

@@ -77,6 +77,10 @@ esac
 
 autoload -Uz compinit; compinit
 
+if type zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
 export GHQ_ROOT="$HOME/.ghq/src"
 export GOPATH="$HOME/.ghq"
 export GOBIN="$HOME/bin"

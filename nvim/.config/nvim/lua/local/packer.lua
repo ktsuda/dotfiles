@@ -85,6 +85,7 @@ packer.startup(function(use)
       run = 'make',
     },
     { 'nvim-telescope/telescope-project.nvim' },
+    { 'jvgrootveld/telescope-zoxide' },
   })
   -- lsp
   use({
