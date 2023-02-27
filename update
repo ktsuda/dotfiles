@@ -59,11 +59,11 @@ EOF
 function update() {
   for folder in $(echo $STOW_FOLDERS); do
     if [ "${DELETE}" -eq "1" ]; then
-      printf "Deleting %-14s" $folder
+      printf "Deleting %-17s" $folder
       stow -t $HOME -D $folder 2> /dev/null
     fi
     if [ "${INSTALL}" -eq "1" ]; then
-      printf "Installing %-14s" $folder
+      printf "Installing %-17s" $folder
       stow -t $HOME $folder
     fi
     echo " ...   Done"
