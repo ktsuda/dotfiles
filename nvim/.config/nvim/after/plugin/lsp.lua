@@ -45,8 +45,6 @@ local servers = {
       analysis = { typeCheckingMode = 'off' },
     },
   },
-  tsserver = {},
-  marksman = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
