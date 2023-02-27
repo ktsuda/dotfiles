@@ -210,7 +210,7 @@ function grep-and-fuzzy-find() {
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
     --bind "alt-enter:unbind(change,alt-enter)+change-prompt(rg>fzf> )+enable-search+clear-query" \
     --prompt 'rg> ' --delimiter : \
-    --preview 'bat --color=always --theme="Solarized (dark)" {1} -H {2}' \
+    --preview 'bat --color=always --theme="gruvbox-dark" {1} -H {2}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
   local ret=$?
   if [ -n "$selected_file" ]; then

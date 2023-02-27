@@ -5,7 +5,7 @@ end
 
 lualine.setup({
   options = {
-    theme = 'solarized_dark',
+    theme = 'gruvbox_dark',
     icons_enabled = true,
   },
   sections = {

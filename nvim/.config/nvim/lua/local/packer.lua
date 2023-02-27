@@ -59,10 +59,9 @@ packer.startup(function(use)
   -- colorscheme
   use({
     {
-      'overcache/neosolarized',
+      'ellisonleao/gruvbox.nvim',
       config = function()
-        vim.g.neosolarized_underline = 0
-        vim.cmd.colorscheme('NeoSolarized')
+        vim.cmd.colorscheme('gruvbox')
       end,
     },
     {
