@@ -107,6 +107,9 @@ case ${OSTYPE} in
     ;;
 esac
 
+if type bat &>/dev/null; then
+  alias cat='bat --color=always --theme="gruvbox-dark"'
+fi
 
 alias ll='ls -l'
 alias la='ls -A'
