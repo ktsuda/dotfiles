@@ -103,6 +103,10 @@ case ${OSTYPE} in
     else
       alias ls='ls -F -C -G'
     fi
+
+    if type fd &>/dev/null; then
+      alias fd='fd --hidden --exclude .git'
+    fi
     ;;
   linux*)
     if type exa &>/dev/null; then
@@ -110,11 +114,19 @@ case ${OSTYPE} in
     else
       alias ls='ls -XFC -T 2 --color=auto'
     fi
+
+    if type fdfind &>/dev/null; then
+      alias fd='fdfind --hidden --exclude .git'
+    fi
     ;;
 esac
 
 if type bat &>/dev/null; then
   alias cat='bat --color=always --theme="gruvbox-dark"'
+fi
+
+if type rg &>/dev/null; then
+  alias rg='rg -H --column -n -S --no-heading -uu -g !.git'
 fi
 
 alias ll='ls -l'
@@ -213,11 +225,11 @@ bindkey "^r" history-widget
 
 function grep-and-fuzzy-find() {
   local selected_file
-  RG_PREFIX='rg -H --column -n -S -uu '
+  RG_PREFIX='rg -H --column -n -S -uu -g !.git'
   selected_file=$(FZF_DEFAULT_COMMAND="$RG_PREFIX $LBUFFER" \
     fzf --reverse --disabled \
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-    --bind "alt-enter:unbind(change,alt-enter)+change-prompt(rg>fzf> )+enable-search+clear-query" \
+    --bind "alt-q:unbind(change,alt-q)+change-prompt(rg>fzf> )+enable-search+clear-query" \
     --prompt 'rg> ' --delimiter : \
     --preview 'bat --color=always --theme="gruvbox-dark" {1} -H {2}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
