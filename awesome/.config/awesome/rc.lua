@@ -308,6 +308,12 @@ globalkeys = gears.table.join(
   awful.key({ modkey, 'Control' }, 'k', function()
     awful.screen.focus_relative(-1)
   end, { description = 'focus the previous screen', group = 'screen' }),
+  awful.key({ modkey, 'Control' }, 'l', function()
+    awful.screen.focus_relative(1)
+  end, { description = 'focus the next screen', group = 'screen' }),
+  awful.key({ modkey, 'Control' }, 'h', function()
+    awful.screen.focus_relative(-1)
+  end, { description = 'focus the previous screen', group = 'screen' }),
   awful.key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
   awful.key({ modkey }, 'Tab', function()
     awful.client.focus.history.previous()
@@ -337,12 +343,6 @@ globalkeys = gears.table.join(
   awful.key({ modkey, 'Shift' }, 'l', function()
     awful.tag.incnmaster(-1, nil, true)
   end, { description = 'decrease the number of master clients', group = 'layout' }),
-  awful.key({ modkey, 'Control' }, 'h', function()
-    awful.tag.incncol(1, nil, true)
-  end, { description = 'increase the number of columns', group = 'layout' }),
-  awful.key({ modkey, 'Control' }, 'l', function()
-    awful.tag.incncol(-1, nil, true)
-  end, { description = 'decrease the number of columns', group = 'layout' }),
   awful.key({ modkey }, 'space', function()
     awful.layout.inc(1)
   end, { description = 'select next', group = 'layout' }),
