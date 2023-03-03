@@ -124,6 +124,15 @@ packer.startup(function(use)
     { 'windwp/nvim-autopairs' },
     { 'mbbill/undotree' },
     {
+      'voldikss/vim-floaterm',
+      config = function()
+        vim.keymap.set('n', '<leader>tt', vim.cmd.FloatermToggle, {})
+        vim.keymap.set('t', '<leader>tt', '<C-\\><C-n>:FloatermToggle<CR>', {})
+        vim.keymap.set('n', '<leader>tf', ':FloatermNew FZF_DEFAULT_COMMAND=\'fdfind --hidden --exclude .git\' fzf<CR>', {})
+        vim.keymap.set('n', '<leader>ts', ':FloatermNew tig status<CR>', {})
+      end,
+    },
+    {
       'dhruvasagar/vim-table-mode',
       ft = { 'markdown' },
       config = function()
