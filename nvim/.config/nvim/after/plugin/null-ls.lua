@@ -53,7 +53,6 @@ local sources = {
   }),
   formatting.black,
   formatting.trim_whitespace,
-  diagnostics.markdownlint,
 }
 
 local on_attach = function(_, bufnr)
