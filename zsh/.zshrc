@@ -22,7 +22,8 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-EDITOR=nvim
+export VISUAL=nvim
+export EDITOR=nvim
 
 setopt auto_pushd
 setopt pushd_ignore_dups
