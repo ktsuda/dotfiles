@@ -130,6 +130,7 @@ packer.startup(function(use)
         vim.keymap.set('t', '<leader>tt', '<C-\\><C-n>:FloatermToggle<CR>', {})
         vim.keymap.set('n', '<leader>tf', ':FloatermNew FZF_DEFAULT_COMMAND=\'fdfind --hidden --exclude .git\' fzf<CR>', {})
         vim.keymap.set('n', '<leader>ts', ':FloatermNew tig status<CR>', {})
+        vim.keymap.set('n', '<leader>gl', ':FloatermNew --height=1.0 tig %<CR>', {})
       end,
     },
     {
