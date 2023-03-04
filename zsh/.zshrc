@@ -246,6 +246,19 @@ function grep-and-fuzzy-find() {
 zle -N grep-and-fuzzy-find
 bindkey "^q" grep-and-fuzzy-find
 
+alias ipv4='ipv4_address'
+function ipv4_address() {
+  local ipv4_address=$(ifconfig | \
+    awk '$0 ~ /inet\ [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/{ print $2 }' | \
+    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  local ret=$?
+  if [ -z "$ipv4_address" ]; then
+    return 0
+  fi
+  echo "$ipv4_address"
+  return $ret
+}
+
 function custom_tmux_session() {
   if [[ "$#" -ge 1 ]]; then
     ID="$1"
