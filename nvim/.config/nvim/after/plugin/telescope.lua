@@ -59,7 +59,8 @@ telescope.setup({
   extensions = {
     project = {
       base_dirs = {
-        { path = vim.env.GHQ_ROOT, max_depth = 4 },
+        { path = vim.env.HOME .. '/src', max_depth = 4 },
+        { path = vim.env.GOPATH .. '/src', max_depth = 4 },
       },
       hidden_files = true,
     },

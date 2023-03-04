@@ -34,9 +34,9 @@ setopt no_flow_control
 typeset -U path PATH
 
 path=(
-  ~/.ghq/bin(N-/)
   ~/.fzf/bin(N-/)
   ~/bin(N-/)
+  ~/go/bin(N-/)
   /usr/local/go/bin(N-/)
   ~/.cargo/bin(N-/)
   ~/.local/bin(N-/)
@@ -82,9 +82,8 @@ if type zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-export GHQ_ROOT="$HOME/.ghq/src"
-export GOPATH="$HOME/.ghq"
-export GOBIN="$HOME/bin"
+export GOPATH="$HOME/go"
+export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
 
 PROMPT='%n@%m:%~$ '

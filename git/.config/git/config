@@ -26,3 +26,6 @@
 [clangFormat]
 	binary = clang-format-10
 	style = file
+[ghq]
+  root = ~/src
+  root = ~/go/src
