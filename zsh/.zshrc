@@ -282,8 +282,21 @@ function custom_tmux_session() {
   fi
 }
 
+function custom_send_to_session() {
+  if [[ "$#" -lt 1 ]]; then
+    return
+  fi
+  ID="`tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1`"
+  if [[ -z "$ID" ]]; then
+    tmux new-session -s "default" tmux new-window -t "default" "$*"
+    return
+  fi
+  tmux new-window -t "$ID" "$*"
+}
+
 if type tmux > /dev/null 2>&1; then
   alias s='custom_tmux_session'
+  alias a='custom_send_to_session'
 elif type screen > /dev/null 2>&1; then
   alias s='screen'
 else
