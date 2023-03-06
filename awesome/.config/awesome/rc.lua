@@ -75,22 +75,13 @@ modkey = 'Mod1'
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-  awful.layout.suit.magnifier,
-  awful.layout.suit.floating,
   awful.layout.suit.tile,
-  awful.layout.suit.tile.left,
-  awful.layout.suit.tile.bottom,
   awful.layout.suit.tile.top,
-  awful.layout.suit.fair,
-  awful.layout.suit.fair.horizontal,
-  awful.layout.suit.spiral,
-  awful.layout.suit.spiral.dwindle,
   awful.layout.suit.max,
-  -- awful.layout.suit.max.fullscreen,
-  awful.layout.suit.corner.nw,
-  -- awful.layout.suit.corner.ne,
-  -- awful.layout.suit.corner.sw,
-  -- awful.layout.suit.corner.se,
+  awful.layout.suit.corner.sw,
+  awful.layout.suit.spiral,
+  awful.layout.suit.floating,
+  awful.layout.suit.magnifier,
 }
 -- }}}
 
@@ -303,16 +294,10 @@ globalkeys = gears.table.join(
   awful.key({ modkey, 'Shift' }, 'k', function()
     awful.client.swap.byidx(-1)
   end, { description = 'swap with previous client by index', group = 'client' }),
-  awful.key({ modkey, 'Control' }, 'j', function()
+  awful.key({ modkey }, 'l', function()
     awful.screen.focus_relative(1)
   end, { description = 'focus the next screen', group = 'screen' }),
-  awful.key({ modkey, 'Control' }, 'k', function()
-    awful.screen.focus_relative(-1)
-  end, { description = 'focus the previous screen', group = 'screen' }),
-  awful.key({ modkey, 'Control' }, 'l', function()
-    awful.screen.focus_relative(1)
-  end, { description = 'focus the next screen', group = 'screen' }),
-  awful.key({ modkey, 'Control' }, 'h', function()
+  awful.key({ modkey }, 'h', function()
     awful.screen.focus_relative(-1)
   end, { description = 'focus the previous screen', group = 'screen' }),
   awful.key({ modkey }, 'u', awful.client.urgent.jumpto, { description = 'jump to urgent client', group = 'client' }),
@@ -332,10 +317,10 @@ globalkeys = gears.table.join(
   end, { description = 'Brave Browser', group = 'launcher' }),
   awful.key({ modkey, 'Control' }, 'r', awesome.restart, { description = 'reload awesome', group = 'awesome' }),
   awful.key({ modkey, 'Shift' }, 'q', awesome.quit, { description = 'quit awesome', group = 'awesome' }),
-  awful.key({ modkey }, 'l', function()
+  awful.key({ modkey, 'Control' }, 'l', function()
     awful.tag.incmwfact(0.05)
   end, { description = 'increase master width factor', group = 'layout' }),
-  awful.key({ modkey }, 'h', function()
+  awful.key({ modkey, 'Control' }, 'h', function()
     awful.tag.incmwfact(-0.05)
   end, { description = 'decrease master width factor', group = 'layout' }),
   awful.key({ modkey, 'Shift' }, 'h', function()
@@ -402,23 +387,15 @@ clientkeys = gears.table.join(
   awful.key({ modkey }, 'o', function(c)
     c:move_to_screen()
   end, { description = 'move to screen', group = 'client' }),
-  awful.key({ modkey }, 't', function(c)
-    c.ontop = not c.ontop
-  end, { description = 'toggle keep on top', group = 'client' }),
-  awful.key({ modkey }, 'n', function(c)
-    -- The client currently has the input focus, so it cannot be
-    -- minimized, since minimized clients can't have the focus.
-    c.minimized = true
-  end, { description = 'minimize', group = 'client' }),
-  awful.key({ modkey }, 'm', function(c)
+  awful.key({ 'Shift', 'Control' }, 'z', function(c)
     c.maximized = not c.maximized
     c:raise()
   end, { description = '(un)maximize', group = 'client' }),
-  awful.key({ modkey, 'Control' }, 'm', function(c)
+  awful.key({ 'Shift', 'Control' }, 'q', function(c)
     c.maximized_vertical = not c.maximized_vertical
     c:raise()
   end, { description = '(un)maximize vertically', group = 'client' }),
-  awful.key({ modkey, 'Shift' }, 'm', function(c)
+  awful.key({ 'Shift', 'Control' }, 'a', function(c)
     c.maximized_horizontal = not c.maximized_horizontal
     c:raise()
   end, { description = '(un)maximize horizontally', group = 'client' })
