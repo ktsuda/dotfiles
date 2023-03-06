@@ -259,6 +259,21 @@ function ipv4_address() {
   return $ret
 }
 
+alias sp='pkg-search'
+function pkg-search() {
+  local selected_pkg=$(dpkg -l | \
+    awk '/^ii/ { print $2 }' | \
+    FZF_DEFAULT_OTS='--height 40% --reverse +m' $(__fzfcmd))
+  local ret=$?
+  if [ -z "$selected_pkg" ]; then
+    return 0
+  fi
+  apt-cache depends $selected_pkg
+  echo
+  apt-cache rdepends $selected_pkg
+  return $ret
+}
+
 function custom_tmux_session() {
   if [[ "$#" -ge 1 ]]; then
     ID="$1"
