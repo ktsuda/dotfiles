@@ -145,6 +145,13 @@ alias ga='git add -N . && git add -p'
 alias gc='git commit -s -v'
 alias gp='git push origin'
 
+alias dp='docker container ls'
+alias di='docker image ls'
+alias dv='docker volume ls'
+alias dn='docker network ls'
+alias drmp='docker rm $(dp -q -f "status=exited")'
+alias drmi='docker rmi $(di -q -f "dangling=true")'
+
 alias t='tig'
 alias ta='tig --all'
 alias ts='tig status'
