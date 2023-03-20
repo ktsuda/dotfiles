@@ -97,7 +97,7 @@ zstyle ':vcs_info:git:*' formats '%b'
 case ${OSTYPE} in
   darwin*)
     if type exa &>/dev/null; then
-      alias ls='exa -F --icons --color=automatic'
+      alias ls='exa -F --color=automatic'
     elif type gls &>/dev/null; then
       alias ls='gls -X -F -T 2 -C --color=auto'
     else
@@ -110,7 +110,7 @@ case ${OSTYPE} in
     ;;
   linux*)
     if type exa &>/dev/null; then
-      alias ls='exa -F --icons --color=automatic'
+      alias ls='exa -F --color=automatic'
     else
       alias ls='ls -XFC -T 2 --color=auto'
     fi
