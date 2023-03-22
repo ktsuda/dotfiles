@@ -69,7 +69,7 @@ packer.startup(function(use)
     {
       'nvim-treesitter/nvim-treesitter',
       run = function()
-        pcall(require, 'nvim-treesitter.install').update({ with_sync = true })
+        pcall(require('nvim-treesitter.install').update({ with_sync = true }))
       end,
     },
   })
