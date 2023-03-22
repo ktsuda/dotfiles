@@ -4,6 +4,12 @@ if not nvim_tree_status then
   return
 end
 
+local nvim_tree_api_status, nvim_tree_api = pcall(require, 'nvim-tree.api')
+
+if not nvim_tree_api_status then
+  return
+end
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 nvim_tree.setup({
@@ -31,5 +37,5 @@ nvim_tree.setup({
       },
     },
   },
-  vim.keymap.set('n', '<C-e>', nvim_tree.toggle, { silent = true }),
+  vim.keymap.set('n', '<C-e>', nvim_tree_api.tree.toggle, { silent = true }),
 })
