@@ -1,9 +1,4 @@
 -- Install packer
-local packer_status, packer = pcall(require, 'packer')
-if not packer_status then
-  return
-end
-
 local ensure_packer = function()
   local install_path = vim.fn.stdpath('data')
     .. '/site/pack/packer/start/packer.nvim'
@@ -27,6 +22,11 @@ local ensure_packer = function()
 end
 
 local packer_bootstrap = ensure_packer()
+
+local packer_status, packer = pcall(require, 'packer')
+if not packer_status then
+  return
+end
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = '*/.config/nvim/lua/local/packer.lua',
