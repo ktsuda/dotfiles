@@ -8,17 +8,10 @@ if not cmp_lsp_status then
   return
 end
 
-local mason_status, mason = pcall(require, 'mason')
-if not mason_status then
-  return
-end
-
 local mason_lspc_status, mason_lspc = pcall(require, 'mason-lspconfig')
 if not mason_lspc_status then
   return
 end
-
-mason.setup()
 
 local on_attach = function(client, bufnr)
   vim.lsp.set_log_level('debug')

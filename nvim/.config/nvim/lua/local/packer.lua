@@ -90,8 +90,13 @@ packer.startup(function(use)
   })
   -- lsp
   use({
+    {
+      'williamboman/mason.nvim',
+      config = function()
+        require('mason').setup()
+      end,
+    },
     { 'neovim/nvim-lspconfig' },
-    { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
     { 'hrsh7th/nvim-cmp' },
     { 'hrsh7th/cmp-buffer' },
@@ -102,6 +107,7 @@ packer.startup(function(use)
     { 'hrsh7th/cmp-nvim-lua' },
     { 'rafamadriz/friendly-snippets' },
     { 'jose-elias-alvarez/null-ls.nvim' },
+    { 'jay-babu/mason-null-ls.nvim' },
   })
   -- decoration
   use({

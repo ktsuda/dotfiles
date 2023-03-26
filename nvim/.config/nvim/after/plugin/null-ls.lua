@@ -3,6 +3,11 @@ if not null_ls_status then
   return
 end
 
+local mason_nls_status, mason_nls = pcall(require, 'mason-null-ls')
+if not mason_nls_status then
+  return
+end
+
 local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 
@@ -66,3 +71,17 @@ null_ls.setup({
   sources = sources,
   on_attach = on_attach,
 })
+
+mason_nls.setup({
+  ensure_installed = {
+    'prettierd',
+    'clang-format',
+    'shfmt',
+    'stylua',
+    'black',
+  },
+  automatic_installation = false,
+  automatic_setup = true,
+})
+
+mason_nls.setup_handlers()
