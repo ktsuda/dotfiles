@@ -200,8 +200,14 @@ zle -N git-repo-cd
 bindkey "^s" git-repo-cd
 
 function subdir-cd() {
-  local selected_dir=$(find . -type d | \
-    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  local selected_dir
+  if type fd &>/dev/null; then
+    local selected_dir=$(fd -t d --hidden | \
+      FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  else
+    local selected_dir=$(find . -type d | \
+      FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  fi
   local ret=$?
   if [ -z "$selected_dir" ]; then
     zle redisplay
