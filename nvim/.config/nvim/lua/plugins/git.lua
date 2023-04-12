@@ -3,10 +3,10 @@ return {
     'ktsuda/vim-fugitive',
     branch = 'signoff',
     pin = true,
-    cmd = { 'G', 'Git', 'Gdiff' },
+    cmd = { 'G', 'Git' },
     keys = {
       { '<leader>gs', '<cmd>G<cr>', desc = 'git status' },
-      { '<leader>gd', '<cmd>Gdiff<cr>', desc = 'git diff' },
+      { '<leader>gd', '<cmd>G diff<cr>', desc = 'git diff' },
     },
   },
   {
