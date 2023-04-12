@@ -5,7 +5,7 @@ return {
   branch = '0.1.x',
   pin = true,
   keys = {
-    { '<C-s>', utils.extension('repos'), desc = 'find repos' },
+    { '<C-s>', utils.extension('repos', 'project'), desc = 'find repos' },
     { '<C-p>', utils.custom('files'), desc = 'find files' },
     { '<leader>ug', utils.custom('grep'), desc = 'grep string' },
     { '<leader>uk', utils.custom('keymaps'), desc = 'list keymaps' },
@@ -111,26 +111,5 @@ return {
         telescope.extensions.project.project({ display_type = 'full' })
       end,
     }
-    local function map(mode, l, r, opts)
-      opts = opts or {}
-      vim.keymap.set(mode, l, r, opts)
-    end
-    map('n', '<C-s>', utils.extension('repos'))
-    map('n', '<C-p>', utils.custom('files'))
-    map('n', '<leader>ug', utils.custom('grep'))
-    map('n', '<leader>uk', utils.custom('keymaps'))
-    map('n', '<leader>ub', utils.custom('buffers'))
-    map('n', '<leader>gc', utils.custom('git_commits', {
-      git_command = {
-        'git',
-        'log',
-        '--all',
-        '--date=short',
-        '--pretty=oneline',
-        '--format=%h %ad %cn %s %d',
-      },
-    }))
-    map('n', '<leader>gb', utils.custom('git_branches'))
-    map('n', '<leader>ps', utils.custom('treesitter'))
   end,
 }
