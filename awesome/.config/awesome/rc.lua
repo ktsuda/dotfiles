@@ -61,10 +61,9 @@ beautiful.init(gears.filesystem.get_themes_dir() .. 'gtk/theme.lua')
 -- This is used later as the default terminal and editor to run.
 -- terminal = "x-terminal-emulator"
 terminal = 'alacritty'
--- editor = os.getenv("EDITOR") or "editor"
-editor = 'nvim'
+editor = os.getenv('EDITOR') or 'nvim'
 editor_cmd = terminal .. ' -e ' .. editor
-browser = 'qutebrowser'
+browser = 'brave-browser'
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -137,7 +136,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock('  %Y.%m.%d  %H:%M  ')
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -197,12 +196,14 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal('property::geometry', set_wallpaper)
 
+local tags = { '1', '2', '3', '4', '5', '6', '7' }
+
 awful.screen.connect_for_each_screen(function(s)
   -- Wallpaper
   set_wallpaper(s)
 
   -- Each screen has its own tag table.
-  awful.tag({ '1', '2', '3', '4', '5', '6', '7', '8', '9' }, s, awful.layout.layouts[1])
+  awful.tag(tags, s, awful.layout.layouts[1])
 
   -- Create a promptbox for each screen
   s.mypromptbox = awful.widget.prompt()
@@ -518,9 +519,10 @@ awful.rules.rules = {
   -- Add titlebars to normal clients and dialogs
   { rule_any = { type = { 'normal', 'dialog' } }, properties = { titlebars_enabled = false } },
 
-  -- Set Firefox to always map on the tag named "2" on screen 1.
-  -- { rule = { class = "Firefox" },
-  --   properties = { screen = 1, tag = "2" } },
+  -- Set each app to always map on a specific tag/screen
+  { rule = { class = 'Alacritty' }, properties = {screen = 1, tag = tags[1] } },
+  { rule = { class = 'Brave-browser' }, properties = { screen = 2, tag = tags[1] } },
+  { rule = { class = 'qutebrowser' }, properties = { screen = 2, tag = tags[1] } },
 }
 -- }}}
 
