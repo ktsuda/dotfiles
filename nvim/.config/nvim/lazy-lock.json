@@ -4,5 +4,10 @@
   "lazy.nvim": { "branch": "main", "commit": "57cce98dfdb2f2dd05a0567d89811e6d0505e13b" },
   "nvim-tree.lua": { "branch": "master", "commit": "48d53a5934fbd51b655d03db7dad35551838f2c9" },
   "nvim-treesitter": { "branch": "master", "commit": "ac4020c70722337c326bf65b645b162ee6e1796b" },
+  "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
+  "telescope-fzf-native.nvim": { "branch": "main", "commit": "580b6c48651cabb63455e97d7e131ed557b8c7e2" },
+  "telescope-project.nvim": { "branch": "master", "commit": "fa081e35ba7397e5147a51ece693aa3afda167fc" },
+  "telescope-zoxide": { "branch": "main", "commit": "68966349aa1b8e9ade403e18479ecf79447389a7" },
+  "telescope.nvim": { "branch": "0.1.x", "commit": "9de317bdea2bc393074651179c4fc7f93e9b2d56" },
   "vim-fugitive": { "branch": "signoff", "commit": "d19e2f7422fc339bbc72c4a720dc4a34bdfd9b03" }
 }
