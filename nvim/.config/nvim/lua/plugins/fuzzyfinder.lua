@@ -1,7 +1,28 @@
+local utils = require('utils.fuzzyfinder')
+
 return {
   'nvim-telescope/telescope.nvim',
   branch = '0.1.x',
   pin = true,
+  keys = {
+    { '<C-s>', utils.extension('repos'), desc = 'find repos' },
+    { '<C-p>', utils.custom('files'), desc = 'find files' },
+    { '<leader>ug', utils.custom('grep'), desc = 'grep string' },
+    { '<leader>uk', utils.custom('keymaps'), desc = 'list keymaps' },
+    { '<leader>ub', utils.custom('buffers'), desc = 'list buffers' },
+    { '<leader>gc', utils.custom('git_commits', {
+      git_command = {
+        'git',
+        'log',
+        '--all',
+        '--date=short',
+        '--pretty=oneline',
+        '--format=%h %ad %cn %s %d',
+      },
+    }), desc = 'git log' },
+    { '<leader>gb', utils.custom('git_branches'), desc = 'git branch' },
+    { '<leader>ps', utils.custom('treesitter'), desc = 'parse tree' },
+  },
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     {
@@ -86,53 +107,30 @@ return {
     pcall(telescope.load_extension, 'fzf')
     local telescope_builtin = require('telescope.builtin')
     local telescope_custom = {
-      find_files = function()
-        if vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1] == 'true' then
-          telescope_builtin.find_files({
-            cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
-          })
-        else
-          telescope_builtin.find_files()
-        end
-      end,
-      grep_string = function()
-        if vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1] == 'true' then
-          telescope_builtin.live_grep({
-            cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1],
-          })
-        else
-          telescope_builtin.grep_string({
-            search = vim.fn.input('Grep > '),
-          })
-        end
-      end,
       ghq_list = function()
         telescope.extensions.project.project({ display_type = 'full' })
-      end,
-      git_commits = function()
-        telescope_builtin.git_commits({
-          git_command = {
-            'git',
-            'log',
-            '--all',
-            '--date=short',
-            '--pretty=oneline',
-            '--format=%h %ad %cn %s %d',
-          },
-        })
       end,
     }
     local function map(mode, l, r, opts)
       opts = opts or {}
       vim.keymap.set(mode, l, r, opts)
     end
-    map('n', '<C-s>', telescope_custom.ghq_list)
-    map('n', '<C-p>', telescope_custom.find_files)
-    map('n', '<leader>ug', telescope_custom.grep_string)
-    map('n', '<leader>uk', telescope_builtin.keymaps)
-    map('n', '<leader>ub', telescope_builtin.buffers)
-    map('n', '<leader>gc', telescope_custom.git_commits)
-    map('n', '<leader>gb', telescope_builtin.git_branches)
-    map('n', '<leader>ps', telescope_builtin.treesitter)
+    map('n', '<C-s>', utils.extension('repos'))
+    map('n', '<C-p>', utils.custom('files'))
+    map('n', '<leader>ug', utils.custom('grep'))
+    map('n', '<leader>uk', utils.custom('keymaps'))
+    map('n', '<leader>ub', utils.custom('buffers'))
+    map('n', '<leader>gc', utils.custom('git_commits', {
+      git_command = {
+        'git',
+        'log',
+        '--all',
+        '--date=short',
+        '--pretty=oneline',
+        '--format=%h %ad %cn %s %d',
+      },
+    }))
+    map('n', '<leader>gb', utils.custom('git_branches'))
+    map('n', '<leader>ps', utils.custom('treesitter'))
   end,
 }
