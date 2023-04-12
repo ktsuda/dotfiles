@@ -28,3 +28,4 @@ elseif vim.fn.has('win32') == 1 then
 else
   vim.o.clipboard = 'unnamedplus' -- install xsel or xclip
 end
+
