@@ -1,8 +1,18 @@
 return {
-	'ellisonleao/gruvbox.nvim',
-	config = function()
-		vim.cmd.colorscheme('gruvbox')
-		vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-		vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-	end,
+    {
+        'xiyaowong/transparent.nvim',
+        opts = function(_, opts)
+          return vim.tbl_extend('force', {
+            extra_groups = {
+              'NormalFloat',
+            },
+          }, opts or {})
+        end,
+    },
+    {
+        'ellisonleao/gruvbox.nvim',
+        config = function()
+            vim.cmd.colorscheme('gruvbox')
+        end,
+    },
 }
