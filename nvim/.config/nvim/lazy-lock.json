@@ -1,4 +1,5 @@
 {
+  "FTerm.nvim": { "branch": "master", "commit": "d1320892cc2ebab472935242d9d992a2c9570180" },
   "LuaSnip": { "branch": "master", "commit": "dc2e307287e9a9eabc18f0e3984c7e8cb164bb38" },
   "bufferline.nvim": { "branch": "main", "commit": "ef4fdc5cea3473801dce89b5fdfe633380c80c65" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
@@ -29,7 +30,6 @@
   "telescope-project.nvim": { "branch": "master", "commit": "fa081e35ba7397e5147a51ece693aa3afda167fc" },
   "telescope.nvim": { "branch": "0.1.x", "commit": "9de317bdea2bc393074651179c4fc7f93e9b2d56" },
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
-  "vim-floaterm": { "branch": "master", "commit": "ff6a8719baf17ab79df730b7ee9227444ee6a088" },
   "vim-fugitive": { "branch": "signoff", "commit": "d19e2f7422fc339bbc72c4a720dc4a34bdfd9b03" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" }
