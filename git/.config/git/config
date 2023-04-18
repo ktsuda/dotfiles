@@ -18,13 +18,13 @@
   fix = commit --amend
   now = commit --amend --no-edit
   l = log --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(red)%h %C(green)%ad %C(cyan)%cn %C(white)%s %C(yellow)%d%Creset'
-	clang-format = clang-format-10
+	clang-format = clang-format-12
 [credential]
   helper = store
 [init]
   defaultBranch = main
 [clangFormat]
-	binary = clang-format-10
+	binary = clang-format-12
 	style = file
 [ghq]
   root = ~/go/src
