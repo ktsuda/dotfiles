@@ -1,4 +1,4 @@
-bindkey -e
+bindkey -v
 
 case ${OSTYPE} in
   darwin*)
