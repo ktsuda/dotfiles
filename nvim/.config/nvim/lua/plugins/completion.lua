@@ -15,7 +15,7 @@ return {
   },
   {
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter', 
+    event = 'InsertEnter',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
@@ -88,7 +88,7 @@ return {
           },
         },
       }
-    end
+    end,
   },
   {
     'hrsh7th/cmp-cmdline',
@@ -111,11 +111,13 @@ return {
         sources = cmp.config.sources({
           { name = 'path' },
         }, {
-          name = 'cmdline',
-          option = {
-            ignore_cmds = { 'Man', '!' },
+          {
+            name = 'cmdline',
+            option = {
+              ignore_cmds = { 'Man', '!' },
+            },
           },
-        })
+        }),
       })
     end,
   },
