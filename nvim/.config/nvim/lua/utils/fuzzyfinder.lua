@@ -9,8 +9,8 @@ function M.custom(builtin, opts)
     if builtin == 'files' then
       if is_inside_work_tree then
         opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
-        builtin = 'find_files'
       end
+      builtin = 'find_files'
     elseif builtin == 'grep' then
       if is_inside_work_tree then
         opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]

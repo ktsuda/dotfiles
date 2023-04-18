@@ -105,11 +105,5 @@ return {
     telescope.setup(opts)
     pcall(telescope.load_extension, 'project')
     pcall(telescope.load_extension, 'fzf')
-    local telescope_builtin = require('telescope.builtin')
-    local telescope_custom = {
-      ghq_list = function()
-        telescope.extensions.project.project({ display_type = 'full' })
-      end,
-    }
   end,
 }
