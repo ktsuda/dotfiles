@@ -30,6 +30,7 @@ return {
       build = 'make',
     },
     { 'nvim-telescope/telescope-project.nvim' },
+    { 'nvim-telescope/telescope-file-browser.nvim' },
   },
   opts = function()
     local telescope_actions = require('telescope.actions')
@@ -91,6 +92,9 @@ return {
           },
           hidden_files = true,
         },
+        file_browser = {
+          hijack_netrw = true,
+        },
         fzf = {
           fuzzy = true,
           override_generic_sorter = true,
@@ -104,6 +108,7 @@ return {
     local telescope = require('telescope')
     telescope.setup(opts)
     pcall(telescope.load_extension, 'project')
+    pcall(telescope.load_extension, 'file_browser')
     pcall(telescope.load_extension, 'fzf')
   end,
 }
