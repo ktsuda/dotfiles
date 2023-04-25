@@ -16,6 +16,8 @@ return {
                     'shfmt',
                     'stylua',
                     'black',
+                    'gofmt',
+                    'goimports',
                 },
                 automatic_installation = false,
                 automatic_setup = false,
@@ -71,6 +73,8 @@ return {
                 },
             }),
             formatting.black,
+            formatting.gofmt,
+            formatting.goimports,
             formatting.trim_whitespace,
         }
         local on_attach = function(_, bufnr)
