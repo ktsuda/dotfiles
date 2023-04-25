@@ -18,6 +18,8 @@ return {
                     'black',
                     'gofmt',
                     'goimports',
+                    'rubocop',
+                    'erb-lint',
                 },
                 automatic_installation = false,
                 automatic_setup = false,
@@ -27,6 +29,7 @@ return {
     opts = function()
         local null_ls = require('null-ls')
         local formatting = null_ls.builtins.formatting
+        local diagnostics = null_ls.builtins.diagnostics
         local sources = {
             formatting.prettierd.with({
                 filetypes = {
@@ -75,6 +78,10 @@ return {
             formatting.black,
             formatting.gofmt,
             formatting.goimports,
+            formatting.rubocop,
+            diagnostics.rubocop,
+            formatting.erb_lint,
+            diagnostics.erb_lint,
             formatting.trim_whitespace,
         }
         local on_attach = function(_, bufnr)

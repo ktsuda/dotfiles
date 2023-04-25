@@ -36,6 +36,8 @@ typeset -U path PATH
 path=(
   ~/.fzf/bin(N-/)
   ~/bin(N-/)
+  ~/.rbenv/bin(N-/)
+  ~/.local/share/nvim/mason/bin(N-/)
   ~/go/bin(N-/)
   /usr/local/go/bin(N-/)
   ~/.cargo/bin(N-/)
@@ -80,6 +82,10 @@ autoload -Uz compinit; compinit
 
 if type zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
+fi
+
+if [ -x "$HOME/.rbenv/bin/rbenv" ]; then
+  eval "$($HOME/.rbenv/bin/rbenv init - zsh)"
 fi
 
 export GOPATH="$HOME/go"
