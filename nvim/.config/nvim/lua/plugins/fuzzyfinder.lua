@@ -7,9 +7,9 @@ return {
   keys = {
     { '<C-s>', utils.extension('repos', 'project'), desc = 'find repos' },
     { '<C-p>', utils.custom('files'), desc = 'find files' },
-    { '<leader>ug', utils.custom('grep'), desc = 'grep string' },
+    { '<C-g>', utils.custom('grep'), desc = 'grep string' },
     { '<leader>uk', utils.custom('keymaps'), desc = 'list keymaps' },
-    { '<leader>ub', utils.custom('buffers'), desc = 'list buffers' },
+    { '<C-b>', utils.custom('buffers'), desc = 'list buffers' },
     { '<leader>gc', utils.custom('git_commits', {
       git_command = {
         'git',
