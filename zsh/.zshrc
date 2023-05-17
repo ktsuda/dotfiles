@@ -72,11 +72,11 @@ fpath=(
   $fpath
 )
 
-case ${OSTYPE} in
-  darwin*)
-    source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-    ;;
-esac
+# git clone https://github.com/zsh-users/zsh-autosuggestions \
+#   ~/.zsh/zsh-autosuggestions
+if [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 autoload -Uz compinit; compinit
 
