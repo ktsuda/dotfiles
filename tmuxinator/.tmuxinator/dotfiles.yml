@@ -1,0 +1,8 @@
+name: dotfiles
+root: ~/src/github.com/ktsuda/dotfiles/
+windows:
+  - develop:
+      layout: main-vertical
+      panes:
+          - nvim
+          - git status
