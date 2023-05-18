@@ -1,0 +1,18 @@
+name: 5gnr
+windows:
+  - develop:
+      root: ~/src/gitlab.com/idaqs/oai/
+      layout: main-horizontal
+      panes:
+        - nvim
+        - git status -sb
+  - 5gc:
+      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_5gc
+  - gnb:
+      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_gnb_rfsim
+  - nrue:
+      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_nrue_rfsim
+  - server:
+      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_nrue_rfsim
+  - client:
+      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_5gc
