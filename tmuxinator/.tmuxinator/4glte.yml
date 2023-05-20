@@ -4,8 +4,8 @@ windows:
       root: ~/src/gitlab.com/idaqs/oai/
       layout: main-horizontal
       panes:
-        - nvim
-        - git status -sb
+        - editor: nvim
+        - console:
   - epc:
       root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_epc
   - enb:
