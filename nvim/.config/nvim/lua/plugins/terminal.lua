@@ -14,10 +14,11 @@ return {
                 mode = 't',
                 desc = 'terminal',
             },
+            { '<leader>ta', '<cmd>FTermTigAll<cr>', desc = 'tig --all' },
             { '<leader>ts', '<cmd>FTermTigStatus<cr>', desc = 'tig status' },
             { '<leader>gl', '<cmd>FTermGitLogP %<cr>', desc = 'git log -p' },
         },
-        cmd = { 'FTermTigStatus', 'FTermGitLogP' },
+        cmd = { 'FTermTigAll', 'FTermTigStatus', 'FTermGitLogP' },
         opts = {
             border = 'double',
             dimensions = {
@@ -30,6 +31,13 @@ return {
             fterm.setup(opts)
             local border = opts.border or 'double'
             local dimensions = opts.dimensions or {}
+            vim.api.nvim_create_user_command('FTermTigAll', function()
+              fterm:new({
+                cmd = 'tig --all',
+                border = border,
+                dimensions = dimensions,
+              }):toggle()
+            end, { bang = true })
             vim.api.nvim_create_user_command('FTermTigStatus', function()
               fterm:new({
                 cmd = 'tig status',
