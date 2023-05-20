@@ -161,6 +161,7 @@ alias drmi='docker rmi $(di -q -f "dangling=true")'
 alias t='tig'
 alias ta='tig --all'
 alias ts='tig status'
+alias tx='tmuxinator'
 
 alias r='ranger'
 
