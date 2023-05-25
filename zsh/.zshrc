@@ -193,7 +193,7 @@ function __fzfcmd() {
 
 function git-repo-cd() {
   local selected_dir=$(ghq list --full-path | \
-    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd)) 
+    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
   local ret=$?
   if [ -z "$selected_dir" ]; then
     zle redisplay

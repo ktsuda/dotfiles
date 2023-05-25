@@ -7,44 +7,44 @@ INSTALL=1
 STOW_FOLDERS=()
 
 function set_stow_folders() {
-  while [[ $# -gt 0 ]]; do
-    case $1 in
-      -D | --delete)
-        DELETE=1
-        INSTALL=0
-        shift
-        ;;
-      -U | --update)
-        DELETE=1
-        INSTALL=1
-        shift
-        ;;
-      -h | --help)
-        usage
-        exit 1
-        ;;
-      --macos)
-        STOW_FOLDERS=("zsh tmux tmuxinator ranger git gh tig-mac nvim alacritty-mac w3m qutebrowser-mac")
-        shift
-        ;;
-      --linux)
-        STOW_FOLDERS=("zsh tmux tmuxinator ranger git gh tig-linux nvim alacritty-linux w3m qutebrowser-linux awesome xsession")
-        shift
-        ;;
-      *)
-        STOW_FOLDERS+=("$1")
-        shift
-        ;;
-    esac
-  done
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -D | --delete)
+                DELETE=1
+                INSTALL=0
+                shift
+                ;;
+            -U | --update)
+                DELETE=1
+                INSTALL=1
+                shift
+                ;;
+            -h | --help)
+                usage
+                exit 1
+                ;;
+            --macos)
+                STOW_FOLDERS=("zsh tmux tmuxinator ranger git gh tig-mac nvim alacritty-mac w3m qutebrowser-mac")
+                shift
+                ;;
+            --linux)
+                STOW_FOLDERS=("zsh tmux tmuxinator ranger git gh tig-linux nvim alacritty-linux w3m qutebrowser-linux awesome xsession")
+                shift
+                ;;
+            *)
+                STOW_FOLDERS+=("$1")
+                shift
+                ;;
+        esac
+    done
 
-  if [[ -z $STOW_FOLDERS ]]; then
-    STOW_FOLDERS=$(ls -d -1 */ | tr '\n' ' ' | sed 's/\///g')
-  fi
+    if [[ -z $STOW_FOLDERS ]]; then
+        STOW_FOLDERS=$(ls -d -1 */ | tr '\n' ' ' | sed 's/\///g')
+    fi
 }
 
 function usage() {
-  cat << EOF
+    cat << EOF
 usage: $(basename ${0}) [--help] [--update | --delete]
                         [--macos] [dirs]
 
@@ -57,24 +57,24 @@ EOF
 }
 
 function update() {
-  for folder in $(echo $STOW_FOLDERS); do
-    if [ "${DELETE}" -eq "1" ]; then
-      printf "Deleting %-17s" $folder
-      stow -t $HOME -D $folder 2> /dev/null
-    fi
-    if [ "${INSTALL}" -eq "1" ]; then
-      printf "Installing %-17s" $folder
-      stow -t $HOME $folder
-    fi
-    echo " ...   Done"
-  done
+    for folder in $(echo $STOW_FOLDERS); do
+        if [ "${DELETE}" -eq "1" ]; then
+            printf "Deleting %-17s" $folder
+            stow -t $HOME -D $folder 2> /dev/null
+        fi
+        if [ "${INSTALL}" -eq "1" ]; then
+            printf "Installing %-17s" $folder
+            stow -t $HOME $folder
+        fi
+        echo " ...   Done"
+    done
 }
 
 function main() {
-  pushd $DOTFILES_DIR > /dev/null
-  set_stow_folders "$@"
-  update
-  popd > /dev/null
+    pushd $DOTFILES_DIR > /dev/null
+    set_stow_folders "$@"
+    update
+    popd > /dev/null
 }
 
 main $@
