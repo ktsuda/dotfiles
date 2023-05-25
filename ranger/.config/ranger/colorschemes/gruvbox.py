@@ -1,12 +1,22 @@
 # This file is part of ranger, the console file manager.
 # License: GNU GPL version 3, see the file "AUTHORS" for details.
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 
 from ranger.gui.colorscheme import ColorScheme
 from ranger.gui.color import (
-    black, blue, cyan, green, magenta, red, white, yellow, default,
-    normal, bold, reverse,
+    black,
+    blue,
+    cyan,
+    green,
+    magenta,
+    red,
+    white,
+    yellow,
+    default,
+    normal,
+    bold,
+    reverse,
     default_colors,
 )
 
@@ -39,9 +49,9 @@ class Default(ColorScheme):
             if context.directory:
                 attr |= bold
                 fg = blue
-            elif context.executable and not \
-                    any((context.media, context.container,
-                         context.fifo, context.socket)):
+            elif context.executable and not any(
+                (context.media, context.container, context.fifo, context.socket)
+            ):
                 attr |= bold
                 fg = green
             if context.socket:
