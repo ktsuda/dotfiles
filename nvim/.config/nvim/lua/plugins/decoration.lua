@@ -27,4 +27,8 @@ return {
       },
     },
   },
+  {
+    'nvchad/nvim-colorizer.lua',
+    opts = {},
+  },
 }
