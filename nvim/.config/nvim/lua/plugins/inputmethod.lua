@@ -8,11 +8,11 @@ return {
   },
   config = function()
     vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })
-    vim.cmd [[
+    vim.cmd([[
       call skkeleton#config({
         \   'eggLikeNewline': v:true,
         \   'globalJisyo': expand('~/.cache/skk/SKK-JISYO.L'),
         \ })
-    ]]
+    ]])
   end,
 }
