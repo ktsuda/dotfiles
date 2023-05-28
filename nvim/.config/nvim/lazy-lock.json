@@ -35,5 +35,6 @@
   "transparent.nvim": { "branch": "main", "commit": "960a8c88d4e06bc6c980dddd9912589a36408833" },
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
   "vim-fugitive": { "branch": "signoff", "commit": "d19e2f7422fc339bbc72c4a720dc4a34bdfd9b03" },
-  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" }
+  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
+  "vim-wakatime": { "branch": "master", "commit": "02be9238319937e04afea73fd0fc7da5413ee041" }
 }
