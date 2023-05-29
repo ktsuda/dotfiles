@@ -36,5 +36,6 @@
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
   "vim-fugitive": { "branch": "signoff", "commit": "d19e2f7422fc339bbc72c4a720dc4a34bdfd9b03" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
+  "vim-table-mode": { "branch": "master", "commit": "9555a3e6e5bcf285ec181b7fc983eea90500feb4" },
   "vim-wakatime": { "branch": "master", "commit": "02be9238319937e04afea73fd0fc7da5413ee041" }
 }
