@@ -19,6 +19,7 @@ vim.o.colorcolumn = '80'
 vim.o.background = 'dark'
 vim.o.completeopt = 'menu,menuone,noselect'
 vim.o.mouse = ''
+vim.o.formatoptions = 'jcroqlmM'
 
 if vim.fn.has('mac') == 1 then
   vim.o.clipboard = 'unnamed'
