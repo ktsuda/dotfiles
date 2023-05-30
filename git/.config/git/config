@@ -29,3 +29,4 @@
 [ghq]
   root = ~/go/src
   root = ~/src
+  root = ~/Projects
