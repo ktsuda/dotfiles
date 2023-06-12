@@ -2,10 +2,10 @@ name: 5gnr
 windows:
   - develop:
       root: ~/src/gitlab.com/idaqs/oai/
-      layout: main-horizontal
       panes:
         - editor: nvim
-        - console:
+  - console:
+      root: ~/src/gitlab.com/idaqs/oai/
   - 5gc:
       root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_5gc
   - gnb:

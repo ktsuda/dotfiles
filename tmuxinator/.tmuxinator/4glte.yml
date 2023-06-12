@@ -2,10 +2,10 @@ name: 4glte
 windows:
   - develop:
       root: ~/src/gitlab.com/idaqs/oai/
-      layout: main-horizontal
       panes:
         - editor: nvim
-        - console:
+  - console:
+      root: ~/src/gitlab.com/idaqs/oai/
   - epc:
       root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_epc
   - enb:
