@@ -93,7 +93,7 @@ return {
           base_dirs = {
             { path = vim.env.HOME .. '/src',   max_depth = 4 },
             { path = vim.env.GOPATH .. '/src', max_depth = 4 },
-            { path = vim.env.HOME .. '/Projects', max_depth = 2 },
+            { path = vim.env.HOME .. '/Projects', max_depth = 4 },
           },
           hidden_files = true,
         },
