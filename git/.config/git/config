@@ -27,6 +27,6 @@
 	binary = clang-format-12
 	style = file
 [ghq]
+  root = ~/Projects
   root = ~/go/src
   root = ~/src
-  root = ~/Projects
