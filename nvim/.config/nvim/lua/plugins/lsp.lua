@@ -47,6 +47,10 @@ return {
       },
       gopls = {},
       tailwindcss = {},
+      tsserver = {
+        filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
+        cmd = { 'typescript-language-server', '--stdio' },
+      },
     }
     local flags = { debounce_text_chages = 150 }
     local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())

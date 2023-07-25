@@ -6,6 +6,14 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
+    opts = {
+      disable_filetype = { 'TelescopePrompt', 'vim' },
+    },
+  },
+  {
+    'windwp/nvim-ts-autotag',
+    event = 'InsertEnter',
+    ft = { 'typescript', 'typescriptreact' },
     opts = {},
   },
   {

@@ -23,10 +23,12 @@ return {
       'hrsh7th/cmp-nvim-lua',
       'saadparwaiz1/cmp_luasnip',
       'L3MON4D3/LuaSnip',
+      'onsails/lspkind-nvim',
     },
     opts = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
+      local lspkind = require('lspkind')
       local custom_cmp = {
         next_expand_jump = function(fallback)
           if cmp.visible() then
@@ -86,6 +88,12 @@ return {
             cmp.config.compare.length,
             cmp.config.compare.order,
           },
+        },
+        formatting = {
+          format = lspkind.cmp_format({
+            with_text = false,
+            maxwidth = 50,
+          }),
         },
       }
     end,
