@@ -14,7 +14,7 @@ return {
         mode = 't',
         desc = 'terminal',
       },
-      { '<leader>ta', '<cmd>FTermTigAll<cr>',    desc = 'tig --all' },
+      { '<leader>ta', '<cmd>FTermTigAll<cr>', desc = 'tig --all' },
       { '<leader>ts', '<cmd>FTermTigStatus<cr>', desc = 'tig status' },
       { '<leader>gl', '<cmd>FTermGitLogP %<cr>', desc = 'git log -p' },
     },
@@ -33,30 +33,30 @@ return {
       local dimensions = opts.dimensions or {}
       vim.api.nvim_create_user_command('FTermTigAll', function()
         fterm
-            :new({
-              cmd = 'tig --all',
-              border = border,
-              dimensions = dimensions,
-            })
-            :toggle()
+          :new({
+            cmd = 'tig --all',
+            border = border,
+            dimensions = dimensions,
+          })
+          :toggle()
       end, { bang = true })
       vim.api.nvim_create_user_command('FTermTigStatus', function()
         fterm
-            :new({
-              cmd = 'tig status',
-              border = border,
-              dimensions = dimensions,
-            })
-            :toggle()
+          :new({
+            cmd = 'tig status',
+            border = border,
+            dimensions = dimensions,
+          })
+          :toggle()
       end, { bang = true })
       vim.api.nvim_create_user_command('FTermGitLogP', function(path)
         fterm
-            :new({
-              cmd = 'tig ' .. vim.fn.expand(path.args),
-              border = border,
-              dimensions = dimensions,
-            })
-            :toggle()
+          :new({
+            cmd = 'tig ' .. vim.fn.expand(path.args),
+            border = border,
+            dimensions = dimensions,
+          })
+          :toggle()
       end, { bang = true, nargs = '?' })
     end,
   },

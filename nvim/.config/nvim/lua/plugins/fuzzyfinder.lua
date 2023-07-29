@@ -5,11 +5,11 @@ return {
   branch = '0.1.x',
   pin = true,
   keys = {
-    { '<C-s>',      utils.extension('repos', 'project'), desc = 'find repos' },
-    { '<C-p>',      utils.custom('files'),               desc = 'find files' },
-    { '<C-g>',      utils.custom('grep'),                desc = 'grep string' },
-    { '<leader>uk', utils.custom('keymaps'),             desc = 'list keymaps' },
-    { '<C-b>',      utils.custom('buffers'),             desc = 'list buffers' },
+    { '<C-s>', utils.extension('repos', 'project'), desc = 'find repos' },
+    { '<C-p>', utils.custom('files'), desc = 'find files' },
+    { '<C-g>', utils.custom('grep'), desc = 'grep string' },
+    { '<leader>uk', utils.custom('keymaps'), desc = 'list keymaps' },
+    { '<C-b>', utils.custom('buffers'), desc = 'list buffers' },
     {
       '<leader>gc',
       utils.custom('git_commits', {
@@ -25,7 +25,7 @@ return {
       desc = 'git log',
     },
     { '<leader>gb', utils.custom('git_branches'), desc = 'git branch' },
-    { '<leader>ps', utils.custom('treesitter'),   desc = 'parse tree' },
+    { '<leader>ps', utils.custom('treesitter'), desc = 'parse tree' },
   },
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
@@ -91,7 +91,7 @@ return {
       extensions = {
         project = {
           base_dirs = {
-            { path = vim.env.HOME .. '/src',   max_depth = 4 },
+            { path = vim.env.HOME .. '/src', max_depth = 4 },
             { path = vim.env.GOPATH .. '/src', max_depth = 4 },
             { path = vim.env.HOME .. '/Projects', max_depth = 4 },
           },

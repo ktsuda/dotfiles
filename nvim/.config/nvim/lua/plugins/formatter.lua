@@ -72,7 +72,7 @@ return {
           '--indent-type',
           'Spaces',
           '--indent-width',
-          4,
+          2,
         },
       }),
       formatting.black,
@@ -84,11 +84,31 @@ return {
       diagnostics.erb_lint,
       formatting.trim_whitespace,
     }
-    local on_attach = function(_, bufnr)
-      vim.api.nvim_buf_set_option(bufnr, 'formatexpr', '')
-      vim.keymap.set('n', '<space>f', function()
-        vim.lsp.buf.format({ timeout_ms = 2000 })
-      end, { buffer = bufnr })
+    local group = vim.api.nvim_create_augroup('lsp_format_on_save', { clear = false })
+    local event = 'BufWritePre'
+    local async = event == 'BufWritePost'
+    local on_attach = function(client, bufnr)
+      if client.supports_method('textDocument/formatting') then
+        vim.api.nvim_buf_set_option(bufnr, 'formatexpr', '')
+        vim.keymap.set('n', '<space>f', function()
+          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+        end, { buffer = bufnr, desc = '[lsp] format' })
+
+        vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
+        vim.api.nvim_create_autocmd(event, {
+          buffer = bufnr,
+          group = group,
+          callback = function()
+            vim.lsp.buf.format({ bufnr = bufnr, async = async })
+          end,
+          desc = '[lsp] format on save',
+        })
+      end
+      if client.supports_method('textDocument/rangeFormatting') then
+        vim.keymap.set('x', '<Leader>f', function()
+          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+        end, { buffer = bufnr, desc = '[lsp] format' })
+      end
     end
     return {
       sources = sources,
