@@ -14,7 +14,7 @@ c.url.searchengines = {
 }
 
 # appearance
-c.tabs.position = "right"
+c.tabs.position = "bottom"
 c.tabs.width = 160
 c.tabs.padding = {"bottom": 4, "left": 4, "right": 4, "top": 4}
 c.window.hide_decoration = False
