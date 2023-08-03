@@ -9,12 +9,7 @@ return {
       opts = {},
     },
     { 'neovim/nvim-lspconfig' },
-    {
-      'hrsh7th/cmp-nvim-lsp',
-      cond = function()
-        return require('lazy.core.config').plugins['nvim-cmp'] ~= nil
-      end,
-    },
+    { 'hrsh7th/cmp-nvim-lsp' },
   },
   config = function()
     local on_attach = function(client, bufnr)
@@ -53,7 +48,7 @@ return {
       },
     }
     local flags = { debounce_text_chages = 150 }
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
     local mason_lspc = require('mason-lspconfig')
     mason_lspc.setup({

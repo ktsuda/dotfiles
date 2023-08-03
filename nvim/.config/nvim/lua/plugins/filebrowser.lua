@@ -4,14 +4,21 @@ return {
     { '<C-e>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
   },
   opts = {
+    disable_netrw = true,
     update_cwd = true,
     sync_root_with_cwd = true,
     update_focused_file = {
       enable = true,
-      update_cwd = true,
+      update_root = false,
+    },
+    diagnostics = {
+      enable = true,
+    },
+    git = {
+      ignore = false,
     },
     view = {
-      adaptive_size = true,
+      width = 48,
       mappings = {
         custom_only = false,
         list = {

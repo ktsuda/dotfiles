@@ -33,20 +33,20 @@ return {
     local sources = {
       formatting.prettierd.with({
         filetypes = {
+          'javascript',
+          'javascriptreact',
           'typescript',
           'typescriptreact',
-          'javascriptreact',
-          'graphql',
+          'vue',
           'html',
           'css',
           'scss',
-          'yaml',
-          'markdown',
           'less',
-          'jsonc',
+          'yaml',
           'json',
-          'javascript',
-          'vue',
+          'jsonc',
+          'markdown',
+          'graphql',
         },
         extra_args = {
           '--no-semi',
@@ -82,31 +82,52 @@ return {
       diagnostics.rubocop,
       formatting.erb_lint,
       diagnostics.erb_lint,
-      formatting.trim_whitespace,
     }
     local group = vim.api.nvim_create_augroup('lsp_format_on_save', { clear = false })
-    local event = 'BufWritePre'
-    local async = event == 'BufWritePost'
+    local formatting_options = {
+      trimTrailingWhitespace = true,
+      insertFinalNewline = false,
+      trimFinalNewlines = true,
+    }
     local on_attach = function(client, bufnr)
-      if client.supports_method('textDocument/formatting') then
+      if client.server_capabilities.documentFormattingProvider then
         vim.api.nvim_buf_set_option(bufnr, 'formatexpr', '')
         vim.keymap.set('n', '<space>f', function()
-          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+          vim.lsp.buf.format({
+            formatting_options = formatting_options,
+            filter = function(_client)
+              return _client.name ~= 'jq'
+            end,
+            bufnr = bufnr,
+            async = true,
+          })
         end, { buffer = bufnr, desc = '[lsp] format' })
 
         vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-        vim.api.nvim_create_autocmd(event, {
+        vim.api.nvim_create_autocmd('BufWritePre', {
           buffer = bufnr,
           group = group,
           callback = function()
-            vim.lsp.buf.format({ bufnr = bufnr, async = async })
+            vim.lsp.buf.format({
+              formatting_options = formatting_options,
+              filter = function(_client)
+                return _client.name ~= 'jq'
+              end,
+              bufnr = bufnr,
+              timeout_ms = 2000,
+              async = false,
+            })
           end,
           desc = '[lsp] format on save',
         })
       end
-      if client.supports_method('textDocument/rangeFormatting') then
-        vim.keymap.set('x', '<Leader>f', function()
-          vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+      if client.server_capabilities.documentRangeFormattingProvider then
+        vim.keymap.set('v', '<Leader>f', function()
+          vim.lsp.buf.format({
+            formatting_options = formatting_options,
+            bufnr = bufnr,
+            async = true,
+          })
         end, { buffer = bufnr, desc = '[lsp] format' })
       end
     end

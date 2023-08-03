@@ -5,7 +5,7 @@ return {
     pin = true,
     cmd = { 'G', 'Git', 'Gdiff' },
     keys = {
-      { '<leader>gs', '<cmd>G<cr>', desc = 'git status' },
+      { '<leader>gs', '<cmd>G<cr>',     desc = 'git status' },
       { '<leader>gd', '<cmd>Gdiff<cr>', desc = 'git diff' },
     },
   },
