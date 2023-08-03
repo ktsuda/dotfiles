@@ -21,7 +21,7 @@ return {
       extensions = {
         'quickfix',
         'fugitive',
-        'nvim-tree',
+        'neo-tree',
         'fzf',
         'lazy',
       },
