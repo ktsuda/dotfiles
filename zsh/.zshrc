@@ -150,6 +150,7 @@ alias gs='git status -sb'
 alias gd='git diff'
 alias ga='git add -N . && git add -p'
 alias gc='git commit -s -v'
+alias gco='git checkout'
 alias gp='git push origin'
 
 alias dp='docker container ls'
