@@ -11,6 +11,27 @@ return {
   },
   opts = function(_, opts)
     return vim.tbl_extend('force', {
+      close_if_last_window = true,
+      sort_function = function(a, b)
+        if a.type == b.type then
+          return a.path < b.path
+        else
+          return a.type < b.type
+        end
+      end,
+      filesystem = {
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_gitignored = true,
+          hide_by_name = {
+            'node_modules',
+            '.git',
+          },
+        },
+        follow_current_file = {
+          enabled = true,
+        },
+      },
       window = {
         mappings = {
           ['o'] = 'open',
