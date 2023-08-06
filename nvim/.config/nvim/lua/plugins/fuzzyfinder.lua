@@ -2,7 +2,7 @@ local utils = require('utils.fuzzyfinder')
 
 return {
   'nvim-telescope/telescope.nvim',
-  branch = '0.1.x',
+  tag = '0.1.2',
   pin = true,
   keys = {
     { '<C-s>',      utils.extension('repos', 'project'), desc = 'find repos' },
@@ -24,7 +24,7 @@ return {
       }),
       desc = 'git log',
     },
-    { '<leader>gb', utils.custom('git_branches'), desc = 'git branch' },
+    { '<leader>gh', utils.custom('git_branches'), desc = 'git branch' },
     { '<leader>ps', utils.custom('treesitter'),   desc = 'parse tree' },
   },
   dependencies = {
