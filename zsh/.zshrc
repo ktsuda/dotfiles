@@ -171,6 +171,7 @@ alias vim='nvim'
 alias vc='nvim --clean'
 alias vimc='nvim --clean'
 alias vimdiff='nvim -d'
+alias m='v $HOME/memo.md'
 
 alias q='goto_repo_root'
 function goto_repo_root() {
