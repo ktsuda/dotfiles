@@ -5,13 +5,13 @@ set wrap-lines = yes
 set vertical-split = false
 
 set main-view = line-number:yes,interval=10 \
-                date:relative-compact \
+                date:default \
                 id:yes \
                 author:abbreviated \
                 commit-title:graph=v2,refs=yes,overflow=yes
 
 set refs-view = line-number:yes,interval=10 \
-                date:relative-compact \
+                date:default \
                 id:yes \
                 author:abbreviated \
                 ref:yes
