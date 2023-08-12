@@ -52,6 +52,7 @@ return {
           '%.git/.*',
           '%.local/.*',
           'node_modules/.*',
+          '.next/.*',
           '%.npm/.*',
           '%.vscode/.*',
           '%.cache/.*',
