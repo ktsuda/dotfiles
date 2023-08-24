@@ -20,6 +20,7 @@ bind diff R !git rebase -i %(commit)
 bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
 bind status C !git commit -s -v
 bind status P !git push
+bind generic <Ctrl-r> refresh
 
 # General colors
 color default 246 235
