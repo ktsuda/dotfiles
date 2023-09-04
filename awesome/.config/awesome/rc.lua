@@ -492,7 +492,7 @@ awful.rules.rules = {
 
   -- Set each app to always map on a specific tag/screen
   { rule = { class = 'Alacritty' },               properties = { screen = 1, tag = tags[1] } },
-  { rule = { class = 'Brave-browser' },           properties = { screen = 2, tag = tags[1] } },
+  { rule = { class = 'Brave-browser' },           properties = { screen = 1, tag = tags[2] } },
   { rule = { class = 'qutebrowser' },             properties = { screen = 1, tag = tags[2] } },
 }
 -- }}}
