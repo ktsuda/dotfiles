@@ -92,7 +92,7 @@ return {
       extensions = {
         project = {
           base_dirs = {
-            { path = vim.env.HOME .. '/src',      max_depth = 4 },
+            { path = vim.env.HOME .. '/src',      max_depth = 5 },
             { path = vim.env.GOPATH .. '/src',    max_depth = 4 },
             { path = vim.env.HOME .. '/Projects', max_depth = 4 },
           },
