@@ -15,7 +15,7 @@ return {
     },
     opts = {
       options = {
-        theme = 'gruvbox_dark',
+        theme = 'nord',
         icons_enabled = true,
       },
       extensions = {

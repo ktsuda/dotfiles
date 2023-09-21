@@ -10,9 +10,9 @@ return {
     end,
   },
   {
-    'ellisonleao/gruvbox.nvim',
+    'arcticicestudio/nord-vim',
     config = function()
-      vim.cmd.colorscheme('gruvbox')
+      vim.cmd.colorscheme('nord')
     end,
   },
 }

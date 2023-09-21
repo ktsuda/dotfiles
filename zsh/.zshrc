@@ -129,7 +129,7 @@ case ${OSTYPE} in
 esac
 
 if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="gruvbox-dark"'
+  alias cat='bat --color=always --theme="Nord"'
 fi
 
 if type rg &>/dev/null; then
@@ -254,7 +254,7 @@ function grep-and-fuzzy-find() {
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
     --bind "alt-q:unbind(change,alt-q)+change-prompt(rg>fzf> )+enable-search+clear-query" \
     --prompt 'rg> ' --delimiter : \
-    --preview 'bat --color=always --theme="gruvbox-dark" {1} -H {2}' \
+    --preview 'bat --color=always --theme="Nord" {1} -H {2}' \
     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
   local ret=$?
   if [ -n "$selected_file" ]; then
