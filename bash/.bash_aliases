@@ -1,0 +1,6 @@
+alias rm='rm -i'
+alias cp='cp -ip'
+alias mv='mv -i'
+alias t='tig'
+alias ta='tig --all'
+alias s='tmux'
