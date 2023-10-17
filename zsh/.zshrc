@@ -136,6 +136,17 @@ if type rg &>/dev/null; then
   alias rg='rg -H --column -n -S --no-heading -uu -g !.git'
 fi
 
+if type pbcopy &>/dev/null; then
+  ;;
+else if xsel &>/dev/null; then
+  alias pbcopy='xsel --clipboard --input'
+else if xclip &>/dev/null; then
+  alias pbcopy='xclip -selection c'
+else
+  echo 'Install xclip or xsel'
+end
+
+
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ll -a'
