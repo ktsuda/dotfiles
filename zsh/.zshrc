@@ -137,9 +137,9 @@ if type rg &>/dev/null; then
 fi
 
 if type pbcopy &>/dev/null; then
-elif xsel &>/dev/null; then
+elif type xsel &>/dev/null; then
   alias pbcopy='xsel --clipboard --input'
-elif xclip &>/dev/null; then
+elif type xclip &>/dev/null; then
   alias pbcopy='xclip -selection c'
 else
   echo 'Install xclip or xsel'
