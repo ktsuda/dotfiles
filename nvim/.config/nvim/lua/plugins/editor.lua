@@ -33,8 +33,4 @@ return {
       cmp.event:on('confirm_done', cmp_ap.on_confirm_done())
     end,
   },
-  {
-    'wakatime/vim-wakatime',
-    event = { 'BufReadPre', 'BufNewFile' },
-  },
 }

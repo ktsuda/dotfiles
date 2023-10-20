@@ -1,5 +1,8 @@
+[user]
+  name = ktsuda
+  email = ktsuda@users.noreply.github.com
 [core]
-  editor = vim
+  editor = nvim
   pager = less -FX
   ignoreCase = false
   excludesFile = ~/.config/git/ignore
@@ -16,8 +19,14 @@
   now = commit --amend --no-edit
   l = log --graph --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
 	clang-format = clang-format-12
+[credential]
+  helper = store
 [init]
   defaultBranch = main
 [clangFormat]
 	binary = clang-format-12
 	style = file
+[ghq]
+  root = ~/Projects
+  root = ~/go/src
+  root = ~/src
