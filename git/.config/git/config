@@ -17,7 +17,7 @@
 [alias]
   fix = commit --amend
   now = commit --amend --no-edit
-  l = log --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(red)%h %C(green)%ad %C(cyan)%cn %C(white)%s %C(yellow)%d%Creset'
+  l = log --graph --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
 	clang-format = clang-format-12
 [credential]
   helper = store
