@@ -115,6 +115,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
+    # family: Hack Nerd Font Mono
     # family: JetBrains Mono
     family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
@@ -134,6 +135,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
+    # family: Hack Nerd Font Mono
     # family: JetBrains Mono
     family: UbuntuMono Nerd Font
     # family: Monofur Nerd Font
@@ -153,6 +155,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
+    # family: Hack Nerd Font Mono
     # family: JetBrains Mono
     family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
@@ -172,6 +175,7 @@ font:
     # family: CodeNewRoman Nerd Font
     # family: RobotoMono Nerd Font
     # family: Hack
+    # family: Hack Nerd Font Mono
     # family: JetBrains Mono
     family: UbuntuMono Nerd Font
     # family: Monofuritalic Nerd Font Mono
@@ -844,7 +848,6 @@ key_bindings:
   - { key: Equals, mods: Control, action: IncreaseFontSize }
   - { key: Plus, mods: Control, action: IncreaseFontSize }
   - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: Return, mods: Alt|Control, action: ToggleFullscreen }
   - { key: L, mods: Control, action: ClearLogNotice }
   - { key: L, mods: Control, chars: "\x0c" }
   - { key: U, mods: Control|Shift, action: ScrollPageUp }
