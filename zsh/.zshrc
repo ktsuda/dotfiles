@@ -136,6 +136,14 @@ if type rg &>/dev/null; then
   alias rg='rg -H --column -n -S --no-heading -uu -g !.git'
 fi
 
+if type dust &>/dev/null; then
+  alias du='dust -X .git'
+fi
+
+if type xh &>/dev/null; then
+  alias wget='xh --download'
+fi
+
 if type pbcopy &>/dev/null; then
 elif type xsel &>/dev/null; then
   alias pbcopy='xsel --clipboard --input'
