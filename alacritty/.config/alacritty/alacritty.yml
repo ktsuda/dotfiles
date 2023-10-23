@@ -856,3 +856,8 @@ key_bindings:
   - { key: D, mods: Control|Shift, action: ScrollPageDown }
   - { key: U, mods: Command|Shift, action: ScrollPageUp }
   - { key: D, mods: Command|Shift, action: ScrollPageDown }
+  - {
+      key: W,
+      mods: Control|Shift,
+      command: { program: 'alacritty', args: ['-e', 'w3m', '-B'] },
+    }
