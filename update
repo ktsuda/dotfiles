@@ -31,8 +31,12 @@ function set_stow_folders() {
                 STOW_FOLDERS=("bash tmux git tig vim")
                 shift
                 ;;
-            --private)
-                STOW_FOLDERS=("bash zsh tmux git-private gh tig nvim alacritty kitty awesome wakatime w3m")
+            --private-macos)
+                STOW_FOLDERS=("zsh tmux git-private gh tig nvim iterm2 alacritty wakatime w3m qutebrowser-mac")
+                shift
+                ;;
+            --private-linux)
+                STOW_FOLDERS=("zsh tmux git-private gh tig nvim alacritty awesome wakatime w3m qutebrowser-linux")
                 shift
                 ;;
             *)
