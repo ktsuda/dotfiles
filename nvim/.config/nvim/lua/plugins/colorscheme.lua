@@ -5,6 +5,10 @@ return {
       return vim.tbl_extend('force', {
         extra_groups = {
           'NormalFloat',
+          'FloatBorder',
+          'FloatTitle',
+          'Pmenu',
+          'WinSeparator',
         },
       }, opts or {})
     end,
