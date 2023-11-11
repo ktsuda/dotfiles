@@ -25,7 +25,6 @@ SAVEHIST=10000
 export VISUAL=nvim
 export EDITOR=nvim
 
-setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 
