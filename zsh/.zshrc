@@ -92,7 +92,7 @@ export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
 
-PROMPT='%n@%m:%~$ '
+PROMPT='%1~ $ '
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
