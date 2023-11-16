@@ -1,18 +1,19 @@
 name: 4glte
+root: ~/Projects
+
 windows:
   - develop:
-      root: ~/src/gitlab.com/idaqs/oai/
+      root: ~/Projects/oai
       panes:
-        - editor: nvim
-  - console:
-      root: ~/src/gitlab.com/idaqs/oai/
+        - nvim
+        -
   - epc:
-      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_epc
+      root: ~/Projects/oai-runner/components/oai_epc
   - enb:
-      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_enb_rfsim
+      root: ~/Projects/oai-runner/components/oai_enb_rfsim
   - lteue:
-      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_lteue_rfsim
+      root: ~/Projects/oai-runner/components/oai_lteue_rfsim
   - server:
-      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_lteue_rfsim
+      root: ~/Projects/oai-runner/components/oai_lteue_rfsim
   - client:
-      root: ~/src/gitlab.com/idaqs/oai-runner/components/oai_epc
+      root: ~/Projects/oai-runner/components/oai_epc
