@@ -103,11 +103,20 @@ zstyle ':vcs_info:git:*' formats '%b'
 case ${OSTYPE} in
   darwin*)
     if type exa &>/dev/null; then
-      alias ls='exa -F -g -s date --time-style long-iso --color=automatic'
+      alias ls='exa -F -g --color=automatic'
+      alias la='ls -a'
+      alias ll='ls -l -s date --time-style long-iso'
+      alias lla='ll -a'
     elif type gls &>/dev/null; then
-      alias ls='gls -X -F -T 2 -C --color=auto'
+      alias ls='gls -X -F -C -T 2 -C --color=auto'
+      alias la='ls -a'
+      alias ll='ls -lrt'
+      alias lla='ll -a'
     else
       alias ls='ls -F -C -G'
+      alias la='ls -a'
+      alias ll='ls -lrt'
+      alias lla='ll -a'
     fi
 
     if type fd &>/dev/null; then
@@ -116,9 +125,15 @@ case ${OSTYPE} in
     ;;
   linux*)
     if type exa &>/dev/null; then
-      alias ls='exa -F -g -s date --time-style long-iso --color=automatic'
+      alias ls='exa -F -g --color=automatic'
+      alias la='ls -a'
+      alias ll='ls -l -s date --time-style long-iso '
+      alias lla='ll -a'
     else
-      alias ls='ls -XFC -T 2 --color=auto'
+      alias ls='ls -X -F -C -T 2 --color=auto'
+      alias la='ls -a'
+      alias ll='ls -lrt'
+      alias lla='ll -a'
     fi
 
     if type fdfind &>/dev/null; then
@@ -151,11 +166,6 @@ elif type xclip &>/dev/null; then
 else
   echo 'Install xclip or xsel'
 fi
-
-
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ll -a'
 
 alias rm='rm -i'
 alias cp='cp -ip'
