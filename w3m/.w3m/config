@@ -1,7 +1,6 @@
 tabstop 4
 indent_incr 4
 pixel_per_char 8
-pixel_per_line 17
 frame 0
 target_self 0
 open_tab_blank 0
@@ -24,12 +23,6 @@ ignore_null_img_alt 1
 view_unseenobject 1
 display_image 0
 pseudo_inlines 1
-auto_image 1
-max_load_image 4
-ext_image_viewer 0
-image_scale 100
-imgdisplay 
-image_map_list 1
 fold_line 0
 show_lnum 0
 show_srch_str 1
@@ -78,7 +71,7 @@ urimethodmap ~/.w3m/urimethodmap, /opt/homebrew/Cellar/w3m/0.5.3_7/etc/w3m/urime
 editor /opt/homebrew/bin/nvim
 mailto_options 1
 mailer 
-extbrowser chrome-cli open
+extbrowser brave-cli open
 extbrowser2 
 extbrowser3 
 extbrowser4 
