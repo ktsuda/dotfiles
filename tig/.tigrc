@@ -1,11 +1,11 @@
 set line-graphics = default
-set commit-order = date # auto default topo date author-date reverse
+set commit-order = author-date # auto default topo date author-date reverse
 set ignore-case = smart-case
 set wrap-lines = yes 
 set vertical-split = false
 
-set main-view = line-number:yes,interval=10 \
-                date:default \
+set main-view = line-number:no,interval=10 \
+                date:relative-compact \
                 id:yes \
                 author:abbreviated \
                 commit-title:graph=v2,refs=yes,overflow=yes
