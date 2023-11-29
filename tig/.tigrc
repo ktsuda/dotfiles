@@ -1,5 +1,5 @@
 set line-graphics = default
-set commit-order = author-date # auto default topo date author-date reverse
+set commit-order = topo # auto default topo date author-date reverse
 set ignore-case = smart-case
 set wrap-lines = yes 
 set vertical-split = false
@@ -22,3 +22,5 @@ bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
 bind status C !git commit -s -v
 bind status P !git push
 bind generic <Ctrl-r> refresh
+bind generic <Ctrl-Y> move-first-line
+bind generic <Ctrl-E> move-last-line
