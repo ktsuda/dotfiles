@@ -108,7 +108,7 @@ case ${OSTYPE} in
       alias ll='ls -l -s date --time-style long-iso'
       alias lla='ll -a'
     elif type gls &>/dev/null; then
-      alias ls='gls -X -F -C -T 2 -C --color=auto'
+      alias ls='gls -X -F -C -T 2 --color=auto'
       alias la='ls -a'
       alias ll='ls -lrt'
       alias lla='ll -a'
