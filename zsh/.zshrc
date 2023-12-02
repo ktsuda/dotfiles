@@ -121,6 +121,7 @@ case ${OSTYPE} in
 
     if type fd &>/dev/null; then
       alias fd='fd --hidden --exclude .git'
+      alias f='${EDITOR} $(fd -t f -t l|$(__fzfcmd))'
     fi
     ;;
   linux*)
@@ -272,29 +273,6 @@ function history-widget() {
 }
 zle -N history-widget
 bindkey "^r" history-widget
-
-function grep-and-fuzzy-find() {
-  local selected_file
-  RG_PREFIX='rg -H --column -n -S -uu -g !.git'
-  selected_file=$(FZF_DEFAULT_COMMAND="$RG_PREFIX $LBUFFER" \
-    fzf --reverse --disabled \
-    --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-    --bind "alt-q:unbind(change,alt-q)+change-prompt(rg>fzf> )+enable-search+clear-query" \
-    --prompt 'rg> ' --delimiter : \
-    --preview 'bat --color=always --theme="Nord" {1} -H {2}' \
-    --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
-  local ret=$?
-  if [ -n "$selected_file" ]; then
-    parts=(${(@s/:/)selected_file})
-    if [ -n "$parts[1]" -a -n "$parts[2]" ]; then
-      nvim "$parts[1]" "+$parts[2]"
-    fi
-  fi
-  zle reset-prompt
-  return $ret
-}
-zle -N grep-and-fuzzy-find
-bindkey "^q" grep-and-fuzzy-find
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
