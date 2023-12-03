@@ -15,10 +15,11 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.updatetime = 50
 vim.o.guicursor = ''
+vim.o.breakindent = true
 vim.o.colorcolumn = '80'
 vim.o.background = 'dark'
 vim.o.completeopt = 'menu,menuone,noselect'
-vim.o.mouse = ''
+vim.o.mouse = 'a'
 vim.o.formatoptions = 'jcroqlmM'
 
 if vim.fn.has('mac') == 1 then
