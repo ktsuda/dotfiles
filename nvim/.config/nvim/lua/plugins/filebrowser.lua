@@ -59,7 +59,7 @@ return {
           ['ss'] = 'order_by_size',
           ['st'] = 'order_by_type',
           ['o'] = 'open',
-          ['P'] = { 'toggle_preview', config = { use_float = false } },
+          ['v'] = { 'toggle_preview', config = { use_float = false } },
           ['I'] = 'toggle_hidden',
           ['C'] = 'close_all_subnodes',
           ['c'] = 'close_node',
@@ -70,6 +70,7 @@ return {
           ['d'] = 'delete',
           ['r'] = 'rename',
           ['<space>'] = { 'toggle_node', nowait = true },
+          ['l'] = 'open',
         },
       },
     }, opts or {})
