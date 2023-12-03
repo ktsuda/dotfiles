@@ -1,3 +1,5 @@
+vim.g.mapleader = ' ' -- <Leader> in a global plugin
+vim.g.maplocalleader = ' ' -- <LocalLeader> in a filetype plugin
 require('core')
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
