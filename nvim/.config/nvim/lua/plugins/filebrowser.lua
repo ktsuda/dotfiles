@@ -5,6 +5,12 @@ return {
     'nvim-lua/plenary.nvim',
     'kyazdani42/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
+    {
+      's1n7ax/nvim-window-picker',
+      event = 'VeryLazy',
+      version = '2.*',
+      opts = {},
+    },
   },
   keys = {
     { '<C-e>', '<cmd>Neotree toggle=true<cr>', desc = 'Neotree' },
