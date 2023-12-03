@@ -64,6 +64,9 @@ bindsym $mod+Shift+q kill
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
+# rofi
+bindsym $mod+p exec --no-startup-id rofi -show combi -run-command "i3-msg exec '{cmd}'" -show-icons
+
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down

@@ -2,4 +2,3 @@
 nvim/.config/nvim/plugin
 .cache/clangd
 compile_commands.json
-.obsidian
