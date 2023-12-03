@@ -15,6 +15,11 @@ return {
     },
   },
   {
+    -- 'gc' to comment visual regions/lines
+    'numToStr/Comment.nvim',
+    opts = {},
+  },
+  {
     'windwp/nvim-ts-autotag',
     event = 'InsertEnter',
     ft = { 'typescript', 'typescriptreact' },
