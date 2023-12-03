@@ -5,33 +5,25 @@ return {
   tag = '0.1.2',
   pin = true,
   keys = {
-    { '<C-s>',      utils.extension('repos', 'project'), desc = 'find repos' },
-    { '<C-p>',      utils.custom('files'),               desc = 'find files' },
-    { '<C-g>',      utils.custom('grep'),                desc = 'grep string' },
-    { '<leader>uk', utils.custom('keymaps'),             desc = 'list keymaps' },
-    { '<C-b>',      utils.custom('buffers'),             desc = 'list buffers' },
-    {
-      '<leader>gc',
-      utils.custom('git_commits', {
-        git_command = {
-          'git',
-          'log',
-          '--all',
-          '--date=short',
-          '--pretty=oneline',
-          '--format=%h %ad %cn %s %d',
-        },
-      }),
-      desc = 'git log',
-    },
-    { '<leader>gh', utils.custom('git_branches'), desc = 'git branch' },
-    { '<leader>ps', utils.custom('treesitter'),   desc = 'parse tree' },
+    { '<C-s>', utils.extension('repos', 'project'), desc = 'search repos' },
+    { '<leader>sr', utils.extension('repos', 'project'), desc = '[s]earch [r]epos' },
+    { '<C-p>', utils.custom('files'), desc = 'search files' },
+    { '<leader>sf', utils.custom('files'), desc = '[s]earch [f]iles' },
+    { '<leader>sg', utils.custom('grep'), desc = '[s]earch string by [g]rep' },
+    { '<leader>sk', utils.custom('keymaps'), desc = '[s]earch [k]eymaps' },
+    { '<leader>sb', utils.custom('buffers'), desc = '[s]earch [b]uffers' },
+    { '<leader>gl', utils.custom('git_log'), desc = '[g]it [l]og' },
+    { '<leader>gb', utils.custom('git_branches'), desc = '[g]it [b]ranch' },
+    { '<leader>/', utils.custom('string'), desc = '[/] search in current buffer' },
   },
   dependencies = {
     { 'nvim-lua/plenary.nvim' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make',
+      cond = function()
+        return vim.fn.executable('make') == 1
+      end,
     },
     { 'nvim-telescope/telescope-project.nvim' },
     { 'nvim-telescope/telescope-file-browser.nvim' },
@@ -40,6 +32,7 @@ return {
     local telescope_actions = require('telescope.actions')
     return {
       defaults = {
+        winblend = 20,
         vimgrep_arguments = {
           'rg',
           '-H',
@@ -92,8 +85,8 @@ return {
       extensions = {
         project = {
           base_dirs = {
-            { path = vim.env.HOME .. '/src',      max_depth = 5 },
-            { path = vim.env.GOPATH .. '/src',    max_depth = 4 },
+            { path = vim.env.HOME .. '/src', max_depth = 5 },
+            { path = vim.env.GOPATH .. '/src', max_depth = 4 },
             { path = vim.env.HOME .. '/Projects', max_depth = 4 },
           },
           hidden_files = true,

@@ -3,44 +3,30 @@ return {
     'ktsuda/vim-fugitive',
     branch = 'signoff',
     pin = true,
-    cmd = { 'G', 'Git', 'Gdiff' },
+    dependencies = {
+      'tpope/vim-rhubarb',
+    },
+    cmd = { 'G', 'Git', 'Gdiff', 'GBrowse' },
     keys = {
-      { '<leader>gs', '<cmd>G<cr>',     desc = 'git status' },
-      { '<leader>gd', '<cmd>Gdiff<cr>', desc = 'git diff' },
+      { '<leader>gs', '<cmd>G<cr>', desc = '[g]it [s]tatus' },
+      { '<leader>gd', '<cmd>Gdiff<cr>', desc = '[g]it [d]iff' },
+      { '<leader>br', '<cmd>GBrowse<cr>', desc = '[b]rowse [r]epo' },
     },
   },
   {
     'lewis6991/gitsigns.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     opts = {
+      signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+      },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
-        local cgs = {
-          next_hunk = function()
-            if vim.wo.diff then
-              return ']c'
-            end
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return '<Ignore>'
-          end,
-          prev_hunk = function()
-            if vim.wo.diff then
-              return '[c'
-            end
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return '<Ignore>'
-          end,
-          blame_line = function()
-            gs.blame_line({ full = true })
-          end,
-          diffthis = function()
-            gs.diffthis('~')
-          end,
-        }
+        local cgs = require('utils.git')
         local function map(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
@@ -50,8 +36,10 @@ return {
         map('n', ']c', cgs.next_hunk, { expr = true })
         map('n', '[c', cgs.prev_hunk, { expr = true })
         -- Actions
-        map({ 'n', 'v' }, '<leader>hs', gs.stage_hunk)
-        map({ 'n', 'v' }, '<leader>hr', gs.reset_hunk)
+        map('n', '<leader>hs', gs.stage_hunk)
+        map('v', '<leader>hs', cgs.stage_hunk)
+        map('n', '<leader>hr', gs.reset_hunk)
+        map('v', '<leader>hr', cgs.reset_hunk)
         map('n', '<leader>hS', gs.stage_buffer)
         map('n', '<leader>hu', gs.undo_stage_hunk)
         map('n', '<leader>hR', gs.reset_buffer)

@@ -101,7 +101,7 @@ return {
             bufnr = bufnr,
             async = true,
           })
-        end, { buffer = bufnr, desc = '[lsp] format' })
+        end, { buffer = bufnr, desc = 'LSP: [f]ormat' })
 
         vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
         vim.api.nvim_create_autocmd('BufWritePre', {
@@ -118,7 +118,7 @@ return {
               async = false,
             })
           end,
-          desc = '[lsp] format on save',
+          desc = 'LSP: format on save',
         })
       end
       if client.server_capabilities.documentRangeFormattingProvider then
@@ -128,7 +128,7 @@ return {
             bufnr = bufnr,
             async = true,
           })
-        end, { buffer = bufnr, desc = '[lsp] format' })
+        end, { buffer = bufnr, desc = 'LSP: [f]ormat' })
       end
     end
     return {

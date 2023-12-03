@@ -19,6 +19,26 @@ function M.custom(builtin, opts)
         opts.search = vim.fn.input('Grep > ')
         builtin = 'grep_string'
       end
+    elseif builtin == 'git_log' then
+      if is_inside_work_tree then
+        opts = {
+          git_command = {
+            'git',
+            'log',
+            '--all',
+            '--date=short',
+            '--pretty=oneline',
+            '--format=%h %ad %cn %s %d',
+          },
+        }
+      end
+      builtin = 'git_commits'
+    elseif builtin == 'string' then
+      opts = require('telescope.themes').get_dropdown({
+        winblend = 20,
+        previewer = false,
+      })
+      builtin = 'current_buffer_fuzzy_find'
     end
     require('telescope.builtin')[builtin](opts)
   end
