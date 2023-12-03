@@ -428,6 +428,35 @@ schemes:
       cyan: '#5fb3b3'
       white: '#d8dee9'
 
+  ### OneDark ###
+  OneDark: &OneDark # Default colors
+    colors:
+      primary:
+        background: '#1e2127'
+        foreground: '#abb2bf'
+
+      # Normal colors
+      normal:
+        black: '#5c6370'
+        red: '#e06c75'
+        green: '#98c379'
+        yellow: '#e5c07b'
+        blue: '#61afef'
+        magenta: '#c678dd'
+        cyan: '#56b6c2'
+        white: '#abb2bf'
+
+      # Bright colors
+      bright:
+        black: '#5c6370'
+        red: '#e06c75'
+        green: '#98c379'
+        yellow: '#e5c07b'
+        blue: '#61afef'
+        magenta: '#c678dd'
+        cyan: '#56b6c2'
+        white: '#ffffff'
+
   ### Palenight ###
   Palenight: &Palenight # Default colors
     primary:
@@ -565,12 +594,13 @@ schemes:
 # *MonokaiPro
 # *Nord
 # *OceanicNext
+# *OneDark
 # *Palenight
 # *SolarizedLight
 # *SolarizedDark
 # *TomorrowNight
 
-colors: *Nord
+colors: *OneDark
 
 #######################################
 ##       END OF COLOR SCHEMES        ##

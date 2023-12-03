@@ -15,7 +15,7 @@ return {
     },
     opts = {
       options = {
-        theme = 'nord',
+        theme = 'onedark',
         icons_enabled = true,
       },
       extensions = {

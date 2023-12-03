@@ -144,7 +144,7 @@ case ${OSTYPE} in
 esac
 
 if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="Nord"'
+  alias cat='bat --color=always --theme="OneHalfDark"'
 fi
 
 if type rg &>/dev/null; then
