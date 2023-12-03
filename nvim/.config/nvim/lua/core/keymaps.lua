@@ -3,7 +3,9 @@ local function map(mode, l, r, opts)
   vim.keymap.set(mode, l, r, opts)
 end
 
-map('n', 'Y', 'y$')
+map({ 'n', 'v' }, '<Space>', '<Nopp>', { silent = true }) -- nowait
+map('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true })
+map('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true })
 map('n', '[q', '<cmd>cprevious<cr>')
 map('n', ']q', '<cmd>cnext<cr>')
 map('n', '<C-h>', '<cmd>bprev<cr>')
