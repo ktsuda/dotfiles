@@ -3,7 +3,7 @@
   email = ktsuda@users.noreply.github.com
 [core]
   editor = nvim
-  pager = less -FX
+  pager = diff-so-fancy | less --tabs=4 -RF
   ignoreCase = false
   excludesFile = ~/.config/git/ignore
 [merge]
@@ -14,11 +14,13 @@
 [diff]
   colorMoved = default
   colorMovedWS = allow-indentation-change
+[interactive]
+  diffFilter = diff-so-fancy --patch
 [alias]
   fix = commit --amend
   now = commit --amend --no-edit
   l = log --graph --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
-	clang-format = clang-format-12
+  clang-format = clang-format-12
 [credential]
   helper = store
 [init]
