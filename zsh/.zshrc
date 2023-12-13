@@ -277,7 +277,7 @@ bindkey "^r" history-widget
 alias ipv4='ipv4_address'
 function ipv4_address() {
   local ipv4_address=$(ifconfig | \
-    awk '$0 ~ /inet\ [0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/{ print $2 }' | \
+    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
     FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
   local ret=$?
   if [ -z "$ipv4_address" ]; then
