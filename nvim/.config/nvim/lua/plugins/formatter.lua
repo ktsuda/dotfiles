@@ -54,7 +54,11 @@ return {
           '--jsx-single-quote',
         },
       }),
-      formatting.clang_format,
+      formatting.clang_format.with({
+        extra_args = {
+          '-style=file',
+        },
+      }),
       formatting.shfmt.with({
         extra_args = {
           '-i',
