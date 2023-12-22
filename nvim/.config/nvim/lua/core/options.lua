@@ -16,11 +16,12 @@ vim.opt.smartcase = true
 vim.opt.updatetime = 50
 vim.opt.guicursor = ''
 vim.opt.breakindent = true
-vim.opt.colorcolumn = '80'
+vim.opt.textwidth = 78
+vim.opt.colorcolumn = '+1'
 vim.opt.background = 'dark'
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.opt.mouse = 'a'
-vim.opt.formatoptions:append({ m = true, M = true })
+vim.opt.formatoptions:append({ m = true, M = true, l = false })
 vim.opt.diffopt:append('vertical')
 vim.opt.spell = true
 vim.opt.spelllang:append('cjk')
