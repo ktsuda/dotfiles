@@ -47,6 +47,7 @@ path=(
   ~/.config/yarn/global/node_modules/bin(N-/)
   ~/.deno/bin(N-/)
   /usr/local/bin(N-/)
+  /usr/local/lib/nodejs/bin(N-/)
   /usr/bin
   /usr/sbin
   /bin
