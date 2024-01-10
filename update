@@ -28,7 +28,7 @@ function set_stow_folders() {
                 shift
                 ;;
             --linux)
-                STOW_FOLDERS=("bash zsh tmux git gh tig nvim")
+                STOW_FOLDERS=("bash tmux git gh tig nvim")
                 shift
                 ;;
             --private-macos)
