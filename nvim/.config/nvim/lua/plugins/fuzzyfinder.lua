@@ -86,7 +86,7 @@ return {
         project = {
           base_dirs = {
             utils.base_dir(vim.env.HOME .. '/src', 5),
-            utils.base_dir(vim.env.GOPATH .. '/src', 4),
+            utils.base_dir((vim.env.GOPATH or '') .. '/src', 4),
             utils.base_dir(vim.env.HOME .. '/Projects', 4),
           },
           hidden_files = true,
