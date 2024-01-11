@@ -185,7 +185,7 @@ font:
     style: Bold
 
   # Point size
-  size: 14.0
+  size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -431,15 +431,15 @@ schemes:
   OneDark: &OneDark # Default colors
     colors:
       primary:
-        background: '#1e2127'
+        background: '#282c34'
         foreground: '#abb2bf'
 
       # Normal colors
       normal:
-        black: '#5c6370'
+        black: '#1e2127'
         red: '#e06c75'
         green: '#98c379'
-        yellow: '#e5c07b'
+        yellow: '#d19a66'
         blue: '#61afef'
         magenta: '#c678dd'
         cyan: '#56b6c2'
@@ -450,7 +450,7 @@ schemes:
         black: '#5c6370'
         red: '#e06c75'
         green: '#98c379'
-        yellow: '#e5c07b'
+        yellow: '#d19a66'
         blue: '#61afef'
         magenta: '#c678dd'
         cyan: '#56b6c2'
