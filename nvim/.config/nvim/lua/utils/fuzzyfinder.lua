@@ -59,4 +59,13 @@ function M.extension(extension, method, opts)
   end
 end
 
+function M.base_dir(path, max_depth)
+  if vim.fn.isdirectory(path) ~= 0 then
+    return {
+      path = path,
+      max_depth = max_depth,
+    }
+  end
+end
+
 return M
