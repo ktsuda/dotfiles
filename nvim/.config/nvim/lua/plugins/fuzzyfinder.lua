@@ -85,9 +85,9 @@ return {
       extensions = {
         project = {
           base_dirs = {
-            utils.base_dir(vim.env.HOME .. '/src', 5),
-            utils.base_dir((vim.env.GOPATH or '') .. '/src', 4),
-            utils.base_dir(vim.env.HOME .. '/Projects', 4),
+            { path = vim.env.HOME .. '/src', max_depth = 5 },
+            { path = (vim.env.GOPATH or (vim.env.HOME .. '/go')) .. '/src', max_depth = 4 },
+            { path = vim.env.HOME .. '/Projects', max_depth = 4 },
           },
           hidden_files = true,
         },
