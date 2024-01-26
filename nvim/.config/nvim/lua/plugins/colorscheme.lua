@@ -2,8 +2,16 @@ return {
   {
     'navarasu/onedark.nvim',
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme('onedark')
+    opts = {
+      style = 'darker',
+    },
+    config = function(_, opts)
+      local onedark_status, onedark = pcall(require, 'onedark')
+      if not onedark_status then
+        return
+      end
+      onedark.setup(opts)
+      onedark.load()
     end,
   },
 }
