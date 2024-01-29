@@ -1,17 +1,15 @@
 return {
   {
-    'navarasu/onedark.nvim',
+    'folke/tokyonight.nvim',
+    lazy = false,
     priority = 1000,
     opts = {
-      style = 'darker',
+      style = 'storm', -- storm, moon, or night
+      light_style = 'day',
     },
     config = function(_, opts)
-      local onedark_status, onedark = pcall(require, 'onedark')
-      if not onedark_status then
-        return
-      end
-      onedark.setup(opts)
-      onedark.load()
+      require('tokyonight').setup(opts)
+      vim.cmd([[ colorscheme tokyonight]])
     end,
   },
 }
