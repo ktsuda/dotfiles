@@ -121,8 +121,8 @@ case ${OSTYPE} in
     fi
 
     if type fd &>/dev/null; then
-      alias fd='fd --hidden --exclude .git'
-      alias f='${EDITOR} $(fd -t f -t l|$(__fzfcmd))'
+      alias fd='fd --hidden --follow --exclude .git'
+      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
     ;;
   linux*)
@@ -140,12 +140,24 @@ case ${OSTYPE} in
 
     if type fdfind &>/dev/null; then
       alias fd='fdfind --hidden --exclude .git'
+      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
     ;;
 esac
 
+if type fzf &>/dev/null; then
+  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+    --color=fg:#c0caf5,bg:#24283b,hl:#ff9e64 \
+    --color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64 \
+    --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff \
+    --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a \
+    --height 60% --reverse +m"
+  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
+    --follow --exclude .git"
+fi
+
 if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="OneHalfDark"'
+  alias cat='bat --color=always --theme="tokyonight_storm"'
 fi
 
 if type rg &>/dev/null; then
@@ -219,13 +231,14 @@ zle -N chdir_parent
 bindkey '^u' chdir_parent
 
 function __fzfcmd() {
-  [ -n "$TMUX_PANE" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } &&
-    echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
+  [ -n "$TMUX_PANE" ] \
+    && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
+    && echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-60%}} -- " \
+    || echo "fzf"
 }
 
 function git-repo-cd() {
-  local selected_dir=$(ghq list --full-path | \
-    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+  local selected_dir=$(ghq list --full-path | $(__fzfcmd))
   local ret=$?
   if [ -z "$selected_dir" ]; then
     zle redisplay
@@ -241,11 +254,9 @@ bindkey "^s" git-repo-cd
 function subdir-cd() {
   local selected_dir
   if type fd &>/dev/null; then
-    local selected_dir=$(fd -t d --hidden | \
-      FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+    local selected_dir=$(fd -t d --hidden | $(__fzfcmd))
   else
-    local selected_dir=$(find . -type d | \
-      FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+    local selected_dir=$(find . -type d | $(__fzfcmd))
   fi
   local ret=$?
   if [ -z "$selected_dir" ]; then
@@ -261,7 +272,7 @@ bindkey "^o" subdir-cd
 
 function history-widget() {
   local selected num
-  selected=($(fc -rl 1 | FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd)))
+  selected=($(fc -rl 1 | $(__fzfcmd)))
   local ret=$?
   if [ -n "$selected" ]; then
     num=$selected[1]
@@ -278,8 +289,7 @@ bindkey "^r" history-widget
 alias ipv4='ipv4_address'
 function ipv4_address() {
   local ipv4_address=$(ifconfig | \
-    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
-    FZF_DEFAULT_OPTS='--height 40% --reverse +m' $(__fzfcmd))
+    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | $(__fzfcmd))
   local ret=$?
   if [ -z "$ipv4_address" ]; then
     return 0
@@ -291,8 +301,7 @@ function ipv4_address() {
 alias sp='pkg-search'
 function pkg-search() {
   local selected_pkg=$(dpkg -l | \
-    awk '/^ii/ { print $2 }' | \
-    FZF_DEFAULT_OTS='--height 40% --reverse +m' $(__fzfcmd))
+    awk '/^ii/ { print $2 }' | $(__fzfcmd))
   local ret=$?
   if [ -z "$selected_pkg" ]; then
     return 0
