@@ -1,0 +1,68 @@
+* {
+  font: "UbuntuMono Nerd Font 14";
+  border: 0;
+  margin: 0;
+  padding: 0;
+  spacing: 0;
+
+  bg: #24283b;
+	fg: #c0caf5;
+	blue: #7aa2f7;
+	blue-alt: #7aa2f7;
+	red: #f7768e;
+  red-alt: #f7768e15;
+
+  background-color: @bg;
+  text-color: @fg;
+}
+
+window {
+  border: 1px;
+  border-color: @blue-alt;
+  border-radius: 0px;
+  padding: 2px;
+  transparency: "real";
+}
+
+mainbox {
+  children: [inputbar, listview];
+}
+
+inputbar {
+  border: 0 0 0 2px;
+  border-color: @blue;
+  border-radius: 0px;
+  children: [entry];
+  margin: 0 0 6px 0;
+}
+
+entry {
+  background-color: @blue-alt;
+  padding: 10px;
+  text-color: @bg;
+}
+
+listview {
+  lines: 10;
+}
+
+element {
+  border: 0 0 0 4px;
+  padding: 4px;
+  children: [element-text];
+}
+
+element selected {
+  border-color: @red;
+  border-radius: 0px;
+}
+
+element-text {
+  padding: 10px;
+}
+
+element-text selected {
+  background-color: @red-alt;
+  text-color: @red;
+}
+
