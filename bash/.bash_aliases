@@ -37,6 +37,7 @@ case ${OSTYPE} in
 
         if type fdfind &> /dev/null; then
             alias fd='fdfind --hidden --exclude .git'
+            alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
         fi
         ;;
 esac
