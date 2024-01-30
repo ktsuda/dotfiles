@@ -42,7 +42,7 @@ case ${OSTYPE} in
 esac
 
 if type bat &> /dev/null; then
-    alias cat='bat --color=always --theme="OneHalfDark"'
+    alias cat='bat --color=always --theme="tokyonight_storm"'
 fi
 
 if type rg &> /dev/null; then
