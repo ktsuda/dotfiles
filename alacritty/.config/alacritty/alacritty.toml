@@ -148,4 +148,4 @@ instance = "Alacritty"
 x = 6
 y = 6
 # }}}
-# vim: set ft=toml st=2 sw=2 sts=2 et :
+# vim: set ft=toml ts=2 sw=2 sts=2 et :
