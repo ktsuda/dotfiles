@@ -129,7 +129,7 @@ function __fzfcmd() {
 
 alias gr='git-repo-cd'
 function git-repo-cd() {
-    local selected_dir=$(ghq list --full-path \  | $(__fzfcmd))
+    local selected_dir=$(ghq list --full-path | $(__fzfcmd))
     local ret=$?
     if [ -z "$selected_dir" ]; then
         return 0
