@@ -4,6 +4,7 @@ return {
   dependencies = {
     {
       'williamboman/mason.nvim',
+      build = ':MasonUpdate',
       cmd = 'Mason',
       opts = {},
     },
@@ -11,15 +12,15 @@ return {
       'jay-babu/mason-null-ls.nvim',
       opts = {
         ensure_installed = {
-          'prettierd',
-          'clang-format',
+          -- 'prettierd',
+          -- 'clang-format',
           'shfmt',
           'stylua',
-          'black',
-          'gofmt',
-          'goimports',
-          'rubocop',
-          'erb-lint',
+          -- 'black',
+          -- 'gofmt',
+          -- 'goimports',
+          -- 'rubocop',
+          -- 'erb-lint',
         },
         automatic_installation = false,
         automatic_setup = false,

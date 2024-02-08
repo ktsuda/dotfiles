@@ -10,17 +10,6 @@ return {
     },
     { 'williamboman/mason-lspconfig.nvim', opts = {} },
     { 'hrsh7th/cmp-nvim-lsp' },
-    {
-      'j-hui/fidget.nvim',
-      opts = {
-        notification = {
-          window = {
-            winblend = 20,
-          },
-        },
-      },
-    },
-    { 'folke/neodev.nvim', opts = {} },
   },
   config = function()
     local on_attach = function(client, bufnr)
@@ -66,7 +55,7 @@ return {
 
     local mason_lspc = require('mason-lspconfig')
     mason_lspc.setup({
-      ensure_installed = vim.tbl_keys(servers),
+      -- ensure_installed = vim.tbl_keys(servers),
     })
     mason_lspc.setup_handlers({
       function(server_name)

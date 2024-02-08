@@ -39,4 +39,15 @@ return {
       },
     },
   },
+  {
+    'j-hui/fidget.nvim',
+    opts = {
+      notification = {
+        window = {
+          winblend = 20,
+        },
+      },
+    },
+  },
+  { 'folke/neodev.nvim', opts = {} },
 }
