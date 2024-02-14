@@ -262,7 +262,7 @@ bindkey "^s" git-repo-cd
 function subdir-cd() {
   local selected_dir
   if type fd &>/dev/null; then
-    local selected_dir=$(fd -t d --hidden | $(__fzfcmd))
+    local selected_dir=$(fd -t d | $(__fzfcmd))
   else
     local selected_dir=$(find . -type d | $(__fzfcmd))
   fi
