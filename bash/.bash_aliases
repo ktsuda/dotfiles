@@ -21,6 +21,10 @@ case ${OSTYPE} in
             alias fd='fd --hidden --exclude .git'
             alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
         fi
+
+        if type duf &> /dev/null; then
+            alias df='duf'
+        fi
         ;;
     linux*)
         if type exa &> /dev/null; then
@@ -38,6 +42,10 @@ case ${OSTYPE} in
         if type fdfind &> /dev/null; then
             alias fd='fdfind --hidden --exclude .git'
             alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+        fi
+
+        if type duf &> /dev/null; then
+            alias df='duf'
         fi
         ;;
 esac
