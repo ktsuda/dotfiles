@@ -33,11 +33,12 @@ return {
         end
         vim.keymap.set('n', l, r, { buffer = bufnr, desc = desc })
       end
-      nmap('gD', vim.lsp.buf.declaration, '[g]oto [D]eclaration')
-      nmap('gd', vim.lsp.buf.definition, '[g]oto [d]efinition')
       nmap('K', vim.lsp.buf.hover)
-      nmap('gi', vim.lsp.buf.implementation, '[g]oto [i]mplementation')
-      nmap('gr', vim.lsp.buf.references, '[g]oto [r]eferences')
+      nmap('<leader>wa', vim.lsp.buf.add_workspace_folder)
+      nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder)
+      nmap('<leader>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end)
     end
     local servers = {
       clangd = {},
