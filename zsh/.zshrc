@@ -124,10 +124,6 @@ case ${OSTYPE} in
       alias fd='fd --hidden --follow --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
-
-    if type duf &>/dev/null; then
-      alias df='duf'
-    fi
     ;;
   linux*)
     if type exa &>/dev/null; then
@@ -145,10 +141,6 @@ case ${OSTYPE} in
     if type fdfind &>/dev/null; then
       alias fd='fdfind --hidden --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
-    fi
-
-    if type duf &>/dev/null; then
-      alias df='duf'
     fi
     ;;
 esac
@@ -180,11 +172,16 @@ if type xh &>/dev/null; then
   alias wget='xh --download'
 fi
 
+if type duf &>/dev/null; then
+  alias df='duf'
+fi
+
 if type taskell &>/dev/null; then
   alias task='taskell ~/taskell.md'
 fi
 
 if type pbcopy &>/dev/null; then
+  :
 elif type xsel &>/dev/null; then
   alias pbcopy='xsel --clipboard --input'
 elif type xclip &>/dev/null; then
