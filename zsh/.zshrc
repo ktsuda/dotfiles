@@ -180,6 +180,10 @@ if type xh &>/dev/null; then
   alias wget='xh --download'
 fi
 
+if type taskell &>/dev/null; then
+  alias task='taskell ~/taskell.md'
+fi
+
 if type pbcopy &>/dev/null; then
 elif type xsel &>/dev/null; then
   alias pbcopy='xsel --clipboard --input'
