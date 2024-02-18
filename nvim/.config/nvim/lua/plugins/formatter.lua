@@ -12,13 +12,10 @@ return {
       opts = {
         ensure_installed = {
           'prettierd',
-          'clang-format',
+          'jq',
+          'markdownlint',
           'shfmt',
           'stylua',
-          'black',
-          'goimports',
-          'rubocop',
-          'erb-lint',
         },
         automatic_installation = false,
         automatic_setup = false,
@@ -42,9 +39,6 @@ return {
           'scss',
           'less',
           'yaml',
-          'json',
-          'jsonc',
-          'markdown',
           'graphql',
         },
         extra_args = {
@@ -53,6 +47,9 @@ return {
           '--jsx-single-quote',
         },
       }),
+      formatting.jq,
+      formatting.markdownlint,
+      diagnostics.markdownlint,
       formatting.clang_format.with({
         extra_args = {
           '-style=file',
@@ -97,9 +94,6 @@ return {
         vim.keymap.set('n', '<space>f', function()
           vim.lsp.buf.format({
             formatting_options = formatting_options,
-            filter = function(_client)
-              return _client.name ~= 'jq'
-            end,
             bufnr = bufnr,
             async = true,
           })
@@ -112,9 +106,6 @@ return {
           callback = function()
             vim.lsp.buf.format({
               formatting_options = formatting_options,
-              filter = function(_client)
-                return _client.name ~= 'jq'
-              end,
               bufnr = bufnr,
               timeout_ms = 2000,
               async = false,
