@@ -42,7 +42,7 @@ return {
     end,
     dependencies = {
       { 'nvim-telescope/telescope.nvim' },
-      { 'tpope/vim-fugitive' },
+      { 'ktsuda/vim-fugitive' },
     },
   },
   {
