@@ -57,9 +57,17 @@ return {
       gopls = {},
       tailwindcss = {},
       tsserver = {
-        filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
+        filetypes = {
+          'typescript',
+          'typescriptreact',
+          'typescript.tsx',
+          'javascript',
+          'javascriptreact',
+          'javascript.jsx',
+        },
         cmd = { 'typescript-language-server', '--stdio' },
       },
+      denols = {},
     }
     -- local flags = { debounce_text_chages = 150 }
     local capabilities = vim.lsp.protocol.make_client_capabilities()
