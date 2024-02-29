@@ -33,7 +33,8 @@ function set_stow_folders() {
                 ;;
             --private-macos)
                 STOW_FOLDERS=("zsh tmux git-private gh tig nvim alacritty bat wakatime taskell w3m zathura ranger amethyst")
-                sed -i "s/action\ =\ \"ToggleFullscreen\"/action\ =\ \"ToggleSimpleFullscreen\"/" $DOTFILES_DIR/alacritty/.config/alacritty/alacritty.toml
+                gsed -i "s/action\ =\ \"ToggleFullscreen\"/action\ =\ \"ToggleSimpleFullscreen\"/" $DOTFILES_DIR/alacritty/.config/alacritty/alacritty.toml
+                gsed -i "s/action\:\ ToggleFullscreen/action\:\ ToggleSimpleFullscreen/" $DOTFILES_DIR/alacritty/.config/alacritty/alacritty.yml
                 shift
                 ;;
             --private-linux)
