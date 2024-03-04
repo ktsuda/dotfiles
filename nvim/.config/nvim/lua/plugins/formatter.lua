@@ -4,84 +4,106 @@ return {
   dependencies = {
     {
       'williamboman/mason.nvim',
+      build = ':MasonUpdate',
       cmd = 'Mason',
       opts = {},
     },
-    {
-      'jay-babu/mason-null-ls.nvim',
-      opts = {
-        ensure_installed = {
-          'prettierd',
-          'jq',
-          'markdownlint',
-          'shfmt',
-          'stylua',
-        },
-        automatic_installation = false,
-        automatic_setup = false,
-      },
-    },
+    { 'jay-babu/mason-null-ls.nvim' },
   },
-  opts = function()
+  config = function()
     local null_ls = require('null-ls')
     local formatting = null_ls.builtins.formatting
     local diagnostics = null_ls.builtins.diagnostics
-    local sources = {
-      formatting.prettierd.with({
-        filetypes = {
-          'javascript',
-          'javascriptreact',
-          'typescript',
-          'typescriptreact',
-          'vue',
-          'html',
-          'css',
-          'scss',
-          'less',
-          'yaml',
-          'graphql',
-        },
-        extra_args = {
-          '--no-semi',
-          '--single-quote',
-          '--jsx-single-quote',
-        },
-      }),
-      formatting.jq,
-      formatting.markdownlint,
-      diagnostics.markdownlint,
-      formatting.clang_format.with({
-        extra_args = {
-          '-style=file',
-        },
-      }),
-      formatting.shfmt.with({
-        extra_args = {
-          '-i',
-          4,
-          '-ci',
-          '-bn',
-          '-sr',
-          '-s',
-        },
-      }),
-      formatting.stylua.with({
-        extra_args = {
-          '--quote-style',
-          'AutoPreferSingle',
-          '--indent-type',
-          'Spaces',
-          '--indent-width',
-          2,
-        },
-      }),
-      formatting.black,
-      formatting.goimports,
-      formatting.rubocop,
-      diagnostics.rubocop,
-      formatting.erb_lint,
-      diagnostics.erb_lint,
-    }
+    require('mason-null-ls').setup({
+      ensure_installed = {
+        'prettierd',
+        'stylua',
+        'jq',
+        'markdownlint',
+        'clang_format',
+        'shfmt',
+        'black',
+        'goimports',
+        'rubocop',
+        'erb_lint',
+      },
+      handlers = {
+        function() end,
+        prettierd = function(_)
+          null_ls.register(formatting.prettierd.with({
+            filetypes = {
+              'javascript',
+              'javascriptreact',
+              'typescript',
+              'typescriptreact',
+              'vue',
+              'html',
+              'css',
+              'scss',
+              'less',
+              'yaml',
+              'graphql',
+            },
+            extra_args = {
+              '--no-semi',
+              '--single-quote',
+              '--jsx-single-quote',
+            },
+          }))
+        end,
+        stylua = function(_)
+          null_ls.register(formatting.stylua.with({
+            extra_args = {
+              '--quote-style',
+              'AutoPreferSingle',
+              '--indent-type',
+              'Spaces',
+              '--indent-width',
+              2,
+            },
+          }))
+        end,
+        jq = function(_)
+          null_ls.register(formatting.jq)
+        end,
+        markdownlint = function(_)
+          null_ls.register(formatting.markdownlint)
+          null_ls.register(diagnostics.markdownlint)
+        end,
+        clang_format = function(_)
+          null_ls.register(formatting.clang_format.with({
+            extra_args = {
+              '-style=file',
+            },
+          }))
+        end,
+        shfmt = function(_)
+          null_ls.register(formatting.shfmt.with({
+            extra_args = {
+              '-i',
+              4,
+              '-ci',
+              '-bn',
+              '-sr',
+              '-s',
+            },
+          }))
+        end,
+        black = function(source_name, methods)
+          require('mason-null-ls').default_setup(source_name, methods)
+        end,
+        goimports = function(source_name, methods)
+          require('mason-null-ls').default_setup(source_name, methods)
+        end,
+        rubocop = function(source_name, methods)
+          require('mason-null-ls').default_setup(source_name, methods)
+        end,
+        erb_lint = function(source_name, methods)
+          require('mason-null-ls').default_setup(source_name, methods)
+        end,
+      },
+    })
+
     local group = vim.api.nvim_create_augroup('lsp_format_on_save', { clear = false })
     local formatting_options = {
       trimTrailingWhitespace = true,
@@ -94,6 +116,9 @@ return {
         vim.keymap.set('n', '<space>f', function()
           vim.lsp.buf.format({
             formatting_options = formatting_options,
+            filter = function(_client)
+              return _client.name ~= 'jq'
+            end,
             bufnr = bufnr,
             async = true,
           })
@@ -106,6 +131,9 @@ return {
           callback = function()
             vim.lsp.buf.format({
               formatting_options = formatting_options,
+              filter = function(_client)
+                return _client.name ~= 'jq'
+              end,
               bufnr = bufnr,
               timeout_ms = 2000,
               async = false,
@@ -124,9 +152,8 @@ return {
         end, { buffer = bufnr, desc = 'LSP: [f]ormat' })
       end
     end
-    return {
-      sources = sources,
+    null_ls.setup({
       on_attach = on_attach,
-    }
+    })
   end,
 }
