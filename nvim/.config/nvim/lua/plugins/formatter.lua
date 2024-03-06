@@ -18,7 +18,6 @@ return {
       ensure_installed = {
         'prettierd',
         'stylua',
-        'jq',
         'markdownlint',
         'clang_format',
         'shfmt',
@@ -62,9 +61,6 @@ return {
               2,
             },
           }))
-        end,
-        jq = function(_)
-          null_ls.register(formatting.jq)
         end,
         markdownlint = function(_)
           null_ls.register(formatting.markdownlint)
@@ -116,9 +112,6 @@ return {
         vim.keymap.set('n', '<space>f', function()
           vim.lsp.buf.format({
             formatting_options = formatting_options,
-            filter = function(_client)
-              return _client.name ~= 'jq'
-            end,
             bufnr = bufnr,
             async = true,
           })
@@ -131,9 +124,6 @@ return {
           callback = function()
             vim.lsp.buf.format({
               formatting_options = formatting_options,
-              filter = function(_client)
-                return _client.name ~= 'jq'
-              end,
               bufnr = bufnr,
               timeout_ms = 2000,
               async = false,
