@@ -56,6 +56,13 @@ return {
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      numhl = true,
+      linehl = true,
+      current_line_blame = true,
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol',
+      },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
         local cgs = require('utils.git')
