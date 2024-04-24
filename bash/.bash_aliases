@@ -1,7 +1,12 @@
 case ${OSTYPE} in
     darwin*)
-        if type exa &> /dev/null; then
-            alias ls='exa -F -g --color=automatic'
+        if type eza &> /dev/null; then
+            alias ls='eza -F -g --color=auto --git-ignore --git'
+            alias la='ls -a'
+            alias ll='ls -l -s date --time-style long-iso'
+            alias lla='ll -a'
+        elif type exa &> /dev/null; then
+            alias ls='exa -F -g --color=auto --git-ignore --git'
             alias la='ls -a'
             alias ll='ls -l -s date --time-style long-iso'
             alias lla='ll -a'
@@ -23,8 +28,13 @@ case ${OSTYPE} in
         fi
         ;;
     linux*)
-        if type exa &> /dev/null; then
-            alias ls='exa -F -g --color=automatic'
+        if type eza &> /dev/null; then
+            alias ls='eza -F -g --color=auto --git-ignore --git'
+            alias la='ls -a'
+            alias ll='ls -l -s date --time-style long-iso '
+            alias lla='ll -a'
+        elif type exa &> /dev/null; then
+            alias ls='exa -F -g --color=auto --git-ignore --git'
             alias la='ls -a'
             alias ll='ls -l -s date --time-style long-iso '
             alias lla='ll -a'
