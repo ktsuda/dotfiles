@@ -17,9 +17,6 @@ font pango:UbuntuMono Nerd Font Mono 9
 # NetworkManager.
 # exec nm-applet # Use nm-connection-editor
 
-# Start fcitx
-exec fcitx-autostart
-
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -35,7 +32,7 @@ set $term alacritty
 set $menu1 j4-dmenu-desktop --
 set $menu2 wofi -d -I -S drun
 
-include /etc/sway/config-vars.d/*
+# include /etc/sway/config-vars.d/*
 
 ### Output configuration
 #
@@ -253,3 +250,4 @@ bar {
 }
 
 include /etc/sway/config.d/*
+include $HOME/.config/sway/config.d/*
