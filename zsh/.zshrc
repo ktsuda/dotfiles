@@ -48,13 +48,13 @@ path=(
   ~/Library/Python/3.9/bin(N-/)
   ~/.config/yarn/global/node_modules/bin(N-/)
   ~/.deno/bin(N-/)
-  /usr/local/bin(N-/)
-  /usr/local/lib/nodejs/bin(N-/)
-  /usr/bin
-  /usr/sbin
   /bin
   /sbin
+  /usr/bin
+  /usr/sbin
+  /usr/local/bin(N-/)
   /usr/local/sbin(N-/)
+  /usr/local/lib/nodejs/bin(N-/)
   /opt/local/bin(N-/)
   /Library/Apple/usr/bin(N-/)
   $path
