@@ -241,11 +241,14 @@ bar {
     # # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
 
-    # colors {
-    #     statusline #ffffff
-    #     background #323232
-    #     inactive_workspace #32323200 #32323200 #5c5c5c
-    # }
+    colors {
+        statusline #a9b1d6
+        background #1d202f
+        focused_workspace #414868 #414868 #7dcfff
+        inactive_workspace #1d202f #1d202f #a9b1d6
+        active_workspace #1d202f #1d202f #7dcfff
+    }
+
     status_command i3status
 }
 
