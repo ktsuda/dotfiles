@@ -1,32 +1,66 @@
-# dotfiles-minimal
+# dotfiles
 
 ## Requirements
 
+### macos
+
 - homebrew
 - stow
-- git
-- iterm2
-- neovim
-- tmux
 - zsh
+- tmux
+- git
+- gh
+- tig
+- nvim
+
+### macos (private)
+
+In addition to macos packages,
+
+- alacritty
+- bat
+- wakatime
+- taskell
+- zathura
+
+### linux
+
+- stow
+- bash
+- tmux
+- git
+- github
+- tig
+- nvim
+
+## linux (private)
+
+In addition to linux packages,
+
+- foot
+- bat
+- wakatime
+- taskell
+- zathura
+- sway
 
 ## Install dotfiles
 
+For linux (private),
+
 ```bash
-git clone https://github.com/ktsuda/dotfiles-minimal
-cd dotfiles-minimal
-./update -U --macos
+git clone https://github.com/ktsuda/dotfiles.git
+cd dotfiles
+./update -U --private-linux
 ```
 
 ## Delete dotfiles
 
 ```bash
-cd dotfiles-minimal
+cd dotfiles
 ./update -D
 ```
 
 ## ToDo
 
-- Support other operating systems
 - Add a script to install dotfiles that does not require the repository itself
-- Get rid of the configurations which are specific to the author
