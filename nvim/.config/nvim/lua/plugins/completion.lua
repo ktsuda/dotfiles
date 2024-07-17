@@ -58,7 +58,7 @@ return {
       local custom_cmp = require('utils.completion')
       return {
         completion = {
-          completeopt = 'menu,menuone,noinsert',
+          completeopt = 'menu,menuone,noselect',
         },
         mapping = {
           ['<C-n>'] = cmp.mapping(custom_cmp.next_expand_jump, { 'i', 's' }),
@@ -69,7 +69,7 @@ return {
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<CR>'] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
+            select = false,
           }),
         },
         sources = {
