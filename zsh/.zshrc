@@ -87,6 +87,11 @@ if type zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
+if type op &>/dev/null; then
+  eval "$(op completion zsh)"
+  compdef _op op
+fi
+
 if [ -x "$HOME/.rbenv/bin/rbenv" ]; then
   eval "$($HOME/.rbenv/bin/rbenv init - zsh)"
 fi
