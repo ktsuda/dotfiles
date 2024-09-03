@@ -242,6 +242,10 @@ if.app-id = 'app.soulver.mac'
 run = 'move-node-to-workspace Editor'
 
 [[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = 'move-node-to-workspace Editor'
+
+[[on-window-detected]]
 if.app-id = 'com.agiletortoise.Drafts-OSX'
 run = 'move-node-to-workspace Editor'
 
