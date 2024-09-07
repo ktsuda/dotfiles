@@ -1,0 +1,26 @@
+return {
+  'WhoIsSethDaniel/mason-tool-installer.nvim',
+  opts = {
+    ensure_installed = {
+      'prettier',
+      'stylua',
+      'goimports',
+      'isort',
+      'black',
+      'rubocop',
+      'shfmt',
+      'clang-format',
+      'erb-formatter',
+      'eslint_d',
+      'markdownlint',
+      'golangci-lint',
+      'pylint',
+      'shellcheck',
+      'cpplint',
+      'erb-lint',
+      'luacheck',
+    },
+    run_on_start = true,
+    debounce_hours = 5,
+  },
+}
