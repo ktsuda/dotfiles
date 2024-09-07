@@ -56,7 +56,7 @@ return {
       },
       gopls = {},
       tailwindcss = {},
-      tsserver = {
+      ts_ls = {
         filetypes = {
           'typescript',
           'typescriptreact',
