@@ -67,6 +67,7 @@ return {
   },
   {
     'laytan/tailwind-sorter.nvim',
+    ft = { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'nvim-lua/plenary.nvim',
