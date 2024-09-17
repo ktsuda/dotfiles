@@ -20,7 +20,7 @@ return {
         'go',
         'javascript',
         'json',
-        'latex',
+        -- 'latex',
         'lua',
         'make',
         'markdown',
