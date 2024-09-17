@@ -18,7 +18,7 @@ return {
       'shellcheck',
       'cpplint',
       'erb-lint',
-      'luacheck',
+      'selene',
     },
     run_on_start = true,
     debounce_hours = 5,
