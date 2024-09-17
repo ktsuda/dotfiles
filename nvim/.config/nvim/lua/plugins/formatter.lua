@@ -41,7 +41,7 @@ return {
           prepend_args = { '--quote-style', 'AutoPreferSingle', '--indent-type', 'Spaces', '--indent-width', 2 },
         },
         shfmt = {
-          prepend_args = { '-i', 4, '-ci', '-bn', '-sr', '-s' },
+          args = { '-i', 4, '-ci', '-bn', '-sr', '-s' },
         },
         clang_format = {
           prepend_args = { '-style=file' },
