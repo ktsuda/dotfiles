@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DOTFILES_DIR=$(dirname $(readlink "$0" || echo "$0"))
+DOTFILES_DIR=$(dirname "$(readlink "$0" || echo "$0")")
 
 DELETE=0
 INSTALL=1
@@ -47,13 +47,13 @@ function set_stow_folders() {
     done
 
     if [[ -z $STOW_FOLDERS ]]; then
-        STOW_FOLDERS=$(ls -d -1 */ | tr '\n' ' ' | sed 's/\///g')
+        STOW_FOLDERS=$(/bin/ls -d -1 -- */ | tr '\n' ' ' | sed 's/\///g')
     fi
 }
 
 function usage() {
     cat << EOF
-usage: $(basename ${0}) [--help] [--update | --delete]
+usage: $(basename "${0}") [--help] [--update | --delete]
                         [--macos] [dirs]
 
 options:
@@ -65,24 +65,24 @@ EOF
 }
 
 function update() {
-    for folder in $(echo $STOW_FOLDERS); do
+    for folder in $STOW_FOLDERS; do
         if [ "${DELETE}" -eq "1" ]; then
-            printf "Deleting %-17s" $folder
-            stow -t $HOME -D $folder 2> /dev/null
+            printf "Deleting %-17s" "$folder"
+            stow -t "$HOME" -D "$folder" 2> /dev/null
         fi
         if [ "${INSTALL}" -eq "1" ]; then
-            printf "Installing %-17s" $folder
-            stow -t $HOME $folder
+            printf "Installing %-17s" "$folder"
+            stow -t "$HOME" "$folder"
         fi
         echo " ...   Done"
     done
 }
 
 function main() {
-    pushd $DOTFILES_DIR > /dev/null
+    pushd "$DOTFILES_DIR" > /dev/null || exit
     set_stow_folders "$@"
     update
-    popd > /dev/null
+    popd > /dev/null || exit
 }
 
-main $@
+main "$@"
