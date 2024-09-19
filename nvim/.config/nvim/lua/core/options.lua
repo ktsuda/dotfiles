@@ -1,3 +1,5 @@
+vim.g.mapleader = ' ' -- <Leader> in a global plugin
+vim.g.maplocalleader = ' ' -- <LocalLeader> in a filetype plugin
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
