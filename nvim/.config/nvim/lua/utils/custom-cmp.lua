@@ -1,6 +1,6 @@
 local M = {}
-local cmp = require('cmp')
-local luasnip = require('luasnip')
+local cmp = package.loaded.cmp
+local luasnip = package.loaded.luasnip
 
 function M.next_expand_jump(fallback)
   if cmp.visible() then

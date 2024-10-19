@@ -1,16 +1,12 @@
 return {
   'nvim-neo-tree/neo-tree.nvim',
+  enabled = true,
   branch = 'v3.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'kyazdani42/nvim-web-devicons',
     'MunifTanjim/nui.nvim',
-    {
-      's1n7ax/nvim-window-picker',
-      event = 'VeryLazy',
-      version = '2.*',
-      opts = {},
-    },
+    's1n7ax/nvim-window-picker',
   },
   keys = {
     { '<C-e>', '<cmd>Neotree toggle=true<cr>', desc = 'Neotree' },
@@ -59,7 +55,7 @@ return {
           ['ss'] = 'order_by_size',
           ['st'] = 'order_by_type',
           ['o'] = 'open',
-          ['v'] = { 'toggle_preview', config = { use_float = false } },
+          ['v'] = { 'toggle_preview', config = { use_float = false, use_image_nvim = true } },
           ['I'] = 'toggle_hidden',
           ['C'] = 'close_all_subnodes',
           ['c'] = 'close_node',

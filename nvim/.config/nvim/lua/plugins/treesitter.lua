@@ -1,11 +1,7 @@
-local utils = require('utils.fuzzyfinder')
-
 return {
   'nvim-treesitter/nvim-treesitter',
+  enabled = true,
   event = { 'BufReadPre', 'BufNewFile' },
-  keys = {
-    { '<leader>pt', utils.custom('treesitter'), desc = '[p]arse [t]ree' },
-  },
   build = function()
     pcall(require('nvim-treesitter.install').update({ with_sync = true }))
   end,
@@ -17,15 +13,15 @@ return {
         'cpp',
         'diff',
         'dockerfile',
-        'go',
+        -- 'go',
         'javascript',
         'json',
         -- 'latex',
         'lua',
         'make',
         'markdown',
-        'python',
-        'ruby',
+        -- 'python',
+        -- 'ruby',
         'tsx',
         'typescript',
         'vim',

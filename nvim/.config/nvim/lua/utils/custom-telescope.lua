@@ -48,7 +48,7 @@ function M.extension(extension, method, opts)
   local params = { extension = extension, method = method, opts = opts }
   return function()
     extension = params.extension
-    method = method.extension
+    method = params.method
     opts = params.opts or {}
     if extension == 'repos' then
       extension = 'project'

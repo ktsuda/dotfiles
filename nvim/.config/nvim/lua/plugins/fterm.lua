@@ -1,6 +1,7 @@
 return {
   {
     'numToStr/FTerm.nvim',
+    enabled = true,
     keys = {
       {
         '<leader>tt',

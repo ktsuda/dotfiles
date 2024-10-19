@@ -37,11 +37,7 @@ vim.opt.whichwrap:append({
 })
 vim.opt.autoread = true
 
-if vim.fn.has('mac') == 1 then
-  vim.opt.clipboard = 'unnamed'
-elseif vim.fn.has('win64') == 1 then
-  vim.opt.clipboard = 'unnamed'
-elseif vim.fn.has('win32') == 1 then
+if vim.fn.has('mac') == 1 or vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
   vim.opt.clipboard = 'unnamed'
 else
   vim.opt.clipboard = 'unnamedplus' -- install xsel or xclip

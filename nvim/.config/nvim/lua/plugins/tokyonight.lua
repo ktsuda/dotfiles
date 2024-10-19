@@ -1,12 +1,17 @@
 return {
   {
     'folke/tokyonight.nvim',
+    enabled = true,
     lazy = false,
     priority = 1000,
     opts = {
       style = 'storm', -- storm, moon, or night
       light_style = 'day',
       transparent = true,
+      styles = {
+        sidebars = 'transparent',
+        floats = 'transparent',
+      },
     },
     config = function(_, opts)
       require('tokyonight').setup(opts)

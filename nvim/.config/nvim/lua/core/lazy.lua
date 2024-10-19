@@ -14,9 +14,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup('plugins', {
-  ui = { border = 'prounded' },
+  -- ui = { border = 'prounded' },
   concurrency = 8,
   change_detectioin = {
     notify = false,
   },
 })
+
+vim.keymap.set('n', '<leader>l', '<cmd>Lazy<cr>', { desc = '[L]azy' })

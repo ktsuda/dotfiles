@@ -1,26 +1,12 @@
 return {
   'neovim/nvim-lspconfig',
+  enabled = true,
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
-    {
-      'williamboman/mason.nvim',
-      build = ':MasonUpdate',
-      cmd = 'Mason',
-      opts = {},
-    },
-    { 'williamboman/mason-lspconfig.nvim' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    {
-      'j-hui/fidget.nvim',
-      opts = {
-        notification = {
-          window = {
-            winblend = 20,
-          },
-        },
-      },
-    },
-    { 'folke/neodev.nvim', opts = {} },
+    'hrsh7th/cmp-nvim-lsp',
+    'williamboman/mason.nvim',
+    'williamboman/mason-lspconfig.nvim',
+    'folke/lazydev.nvim',
   },
   config = function()
     local on_attach = function(client, bufnr)
@@ -40,7 +26,8 @@ return {
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end)
     end
-    local servers = {
+
+    local server_configs = {
       clangd = {},
       pyright = {
         python = {
@@ -51,7 +38,7 @@ return {
         Lua = {
           workspace = { checkThirdParty = false },
           telemetry = { enable = false },
-          diagnostics = { globals = { 'vim' } },
+          -- diagnostics = { globals = { 'vim' } },
         },
       },
       gopls = {},
@@ -75,16 +62,27 @@ return {
 
     local mason_lspc = require('mason-lspconfig')
     mason_lspc.setup({
-      ensure_installed = vim.tbl_keys(servers),
+      ensure_installed = vim.tbl_keys(server_configs),
+      -- automatic_installation = true,
     })
+    local lspconfig = require('lspconfig')
+    -- for server, config in pairs(server_configs) do
+    --   lspconfig[server].setup({
+    --     capabilities = capabilities,
+    --     on_attach = on_attach,
+    --     -- flags = flags,
+    --     settings = config,
+    --     filetypes = (config or {}).filetypes,
+    --   })
+    -- end
     mason_lspc.setup_handlers({
       function(server_name)
-        require('lspconfig')[server_name].setup({
+        lspconfig[server_name].setup({
           capabilities = capabilities,
           on_attach = on_attach,
           -- flags = flags,
-          settings = servers[server_name],
-          filetypes = (servers[server_name] or {}).filetypes,
+          settings = server_configs[server_name],
+          filetypes = (server_configs[server_name] or {}).filetypes,
         })
       end,
     })
