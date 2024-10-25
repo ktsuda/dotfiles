@@ -8,12 +8,13 @@ return {
   opts = {
     options = {
       theme = 'tokyonight',
-      icons_enabled = true,
+      icons_enabled = false,
     },
     extensions = {
       'quickfix',
       'fugitive',
       'neo-tree',
+      'oil',
       'fzf',
       'lazy',
     },
