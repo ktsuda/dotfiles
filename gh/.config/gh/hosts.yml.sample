@@ -1,4 +1,0 @@
-github.com:
-  user: <username>
-  oauth_token: <oauth_token>
-  git_protocol: https
