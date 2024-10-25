@@ -24,19 +24,19 @@ function set_stow_folders() {
                 exit 1
                 ;;
             --macos)
-                STOW_FOLDERS=("zsh tmux git tig nvim")
+                STOW_FOLDERS=("zsh tmux git tig nvim mason-tiny")
                 shift
                 ;;
             --linux)
-                STOW_FOLDERS=("bash tmux git tig nvim")
+                STOW_FOLDERS=("bash tmux git tig nvim mason-tiny")
                 shift
                 ;;
             --private-macos)
-                STOW_FOLDERS=("zsh tmux git-private tig nvim iterm2 bat wakatime zathura aerospace")
+                STOW_FOLDERS=("zsh tmux git-private tig nvim mason iterm2 bat wakatime zathura aerospace")
                 shift
                 ;;
             --private-linux)
-                STOW_FOLDERS=("zsh tmux git-private tig nvim alacritty-linux bat wakatime zathura i3 wofi")
+                STOW_FOLDERS=("zsh tmux git-private tig nvim mason alacritty-linux bat wakatime zathura i3 wofi")
                 shift
                 ;;
             *)
