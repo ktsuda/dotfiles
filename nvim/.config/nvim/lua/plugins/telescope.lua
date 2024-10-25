@@ -4,8 +4,8 @@ return {
   'nvim-telescope/telescope.nvim',
   enabled = true,
   event = 'VeryLazy',
-  tag = '0.1.2',
-  pin = true,
+  tag = '0.1.8',
+  branch = '0.1.x',
   keys = {
     { '<C-p>', utils.custom('files'), desc = 'search files' },
     { '<leader>sf', utils.custom('files'), desc = '[s]earch [f]iles' },
