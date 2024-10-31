@@ -8,6 +8,7 @@ return {
     'MunifTanjim/nui.nvim',
     's1n7ax/nvim-window-picker',
   },
+  cmd = 'Neotree',
   keys = {
     { '<C-e>', '<cmd>Neotree toggle=true<cr>', desc = 'Neotree' },
   },
