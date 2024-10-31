@@ -1,6 +1,6 @@
 return {
   'iamcco/markdown-preview.nvim',
-  enabled = false,
+  enabled = true,
   build = 'cd app && yarn',
   ft = { 'markdown' },
   cond = function()
