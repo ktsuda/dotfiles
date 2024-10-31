@@ -100,6 +100,8 @@ export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
 
+export WAKATIME_HOME="$HOME/.wakatime_home"
+
 PROMPT='%n@%m:%~ $ '
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
@@ -178,7 +180,7 @@ if type bat &>/dev/null; then
 fi
 
 if type rg &>/dev/null; then
-  alias rg='rg -H --column -n -S --no-heading -uu -g !.git'
+  alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
 fi
 
 if type dust &>/dev/null; then
