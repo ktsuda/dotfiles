@@ -72,7 +72,7 @@ function update() {
         fi
         if [ "${INSTALL}" -eq "1" ]; then
             printf "Installing %-17s" "$folder"
-            stow -t "$HOME" "$folder"
+            stow --ignore='\.DS_Store' -t "$HOME" "$folder"
         fi
         echo " ...   Done"
     done
