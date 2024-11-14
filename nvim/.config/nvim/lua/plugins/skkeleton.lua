@@ -1,7 +1,6 @@
 return {
-  'ktsuda/skkeleton',
+  'vim-skk/skkeleton',
   enabled = true,
-  branch = 'revert-to-old-saver',
   keys = {
     { '<C-j>', '<Plug>(skkeleton-toggle)', mode = { 'i', 'c' }, desc = 'SKK' },
   },
