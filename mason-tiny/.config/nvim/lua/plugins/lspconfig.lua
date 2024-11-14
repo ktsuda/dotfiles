@@ -36,6 +36,7 @@ return {
           -- diagnostics = { globals = { 'vim' } },
         },
       },
+      denols = {},
     }
     -- local flags = { debounce_text_chages = 150 }
     local capabilities = vim.lsp.protocol.make_client_capabilities()
