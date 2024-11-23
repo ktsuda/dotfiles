@@ -30,15 +30,21 @@ return {
     local server_configs = {
       clangd = {},
       pyright = {
-        python = {
-          analysis = { typeCheckingMode = 'off' },
+        settings = {
+          python = {
+            analysis = { typeCheckingMode = 'off' },
+          },
         },
+        single_file_support = false,
+        cmd = { 'bash', '-c', 'source ./.venv/bin/activate && ./.venv/bin/pyright-langserver --stdio' },
       },
       lua_ls = {
-        Lua = {
-          workspace = { checkThirdParty = false },
-          telemetry = { enable = false },
-          -- diagnostics = { globals = { 'vim' } },
+        settings = {
+          Lua = {
+            workspace = { checkThirdParty = false },
+            telemetry = { enable = false },
+            -- diagnostics = { globals = { 'vim' } },
+          },
         },
       },
       gopls = {},
@@ -63,27 +69,16 @@ return {
     local mason_lspc = require('mason-lspconfig')
     mason_lspc.setup({
       ensure_installed = vim.tbl_keys(server_configs),
-      -- automatic_installation = true,
     })
     local lspconfig = require('lspconfig')
-    -- for server, config in pairs(server_configs) do
-    --   lspconfig[server].setup({
-    --     capabilities = capabilities,
-    --     on_attach = on_attach,
-    --     -- flags = flags,
-    --     settings = config,
-    --     filetypes = (config or {}).filetypes,
-    --   })
-    -- end
     mason_lspc.setup_handlers({
       function(server_name)
-        lspconfig[server_name].setup({
+        local config = vim.tbl_deep_extend('force', server_configs[server_name] or {}, {
           capabilities = capabilities,
           on_attach = on_attach,
           -- flags = flags,
-          settings = server_configs[server_name],
-          filetypes = (server_configs[server_name] or {}).filetypes,
         })
+        lspconfig[server_name].setup(config)
       end,
     })
   end,
