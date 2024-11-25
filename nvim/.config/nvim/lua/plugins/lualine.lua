@@ -7,8 +7,8 @@ return {
   },
   opts = {
     options = {
-      theme = 'tokyonight',
-      icons_enabled = false,
+      theme = 'everforest',
+      icons_enabled = true,
     },
     extensions = {
       'quickfix',
