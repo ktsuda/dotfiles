@@ -166,10 +166,10 @@ esac
 
 if type fzf &>/dev/null; then
   export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-    --color=fg:#c0caf5,bg:#24283b,hl:#ff9e64 \
-    --color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64 \
-    --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff \
-    --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a \
+    --color=fg:#d3c6aa,bg:#2d353d,hl:#a7c080 \
+    --color=fg+:#d3c6aa,bg+:#425047,hl+:#a7c080 \
+    --color=info:#a7c080,prompt:#e69875,pointer:#d3c6aa \
+    --color=marker:#83c092,spinner:#83c092,header:#83c092 \
     --height 60% --reverse +m"
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
     --follow --exclude .git"
