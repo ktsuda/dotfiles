@@ -176,7 +176,7 @@ if type fzf &>/dev/null; then
 fi
 
 if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="tokyonight_storm"'
+  alias cat='bat --color=always --theme="everforest_dark_medium"'
 fi
 
 if type rg &>/dev/null; then
