@@ -1,0 +1,14 @@
+[window]
+dynamic_padding = false
+opacity = 0.9
+title = "Alacritty"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+[window.padding]
+x = 6
+y = 6
+
+# vim: set ft=toml ts=2 sw=2 sts=2 et :

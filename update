@@ -36,7 +36,7 @@ function set_stow_folders() {
                 shift
                 ;;
             --private-linux)
-                STOW_FOLDERS=("zsh ripgrep tmux git-private tig nvim mason alacritty-linux bat wakatime zathura i3 wofi")
+                STOW_FOLDERS=("zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-linux bat wakatime zathura w3m i3 wofi")
                 shift
                 ;;
             *)
