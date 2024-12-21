@@ -23,54 +23,90 @@ function set_stow_folders() {
                 usage
                 exit 1
                 ;;
-            --macos)
-                STOW_FOLDERS=("zsh tmux git tig nvim mason-tiny")
+            -p | --private)
+                reset
+                private
                 shift
                 ;;
-            --linux)
-                STOW_FOLDERS=("bash tmux git tig nvim mason-tiny")
+            -s | --shared)
+                reset
+                shared
                 shift
                 ;;
-            --private-macos)
-                STOW_FOLDERS=("zsh ripgrep tmux git-private tig nvim mason iterm2 bat wakatime zathura w3m eza")
-                shift
-                ;;
-            --private-linux)
-                STOW_FOLDERS=("zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-linux bat wakatime zathura w3m i3 wofi")
-                shift
+            -a | --all)
+                all
+                exit 1
                 ;;
             *)
-                STOW_FOLDERS+="$1 "
+                STOW_FOLDERS+=("$1")
                 shift
                 ;;
         esac
     done
 
-    if [[ -z $STOW_FOLDERS ]]; then
-        STOW_FOLDERS=$(/bin/ls -d -1 -- */ | tr '\n' ' ' | sed 's/\///g')
+    if [[ ${#STOW_FOLDERS[@]} -eq 0 ]]; then
+        STOW_FOLDERS=($(/bin/ls -d -- */ | sed 's/\///g'))
     fi
+}
+
+function all() {
+    ALL_FOLDERS="$(/bin/ls -d -- */ | tr '\n' ' ' | sed 's/\///g')"
+    echo "$ALL_FOLDERS"
+}
+
+function reset() {
+    STOW_FOLDERS=()
+}
+
+function shared() {
+    case ${OSTYPE} in
+        darwin*)
+            STOW_FOLDERS=(zsh tmux git tig nvim mason-tiny)
+            ;;
+        linux-gnu*)
+            STOW_FOLDERS=(bash tmux git tig nvim mason-tiny)
+            ;;
+        *)
+            reset
+            ;;
+    esac
+}
+
+function private() {
+    case ${OSTYPE} in
+        darwin*)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim mason iterm2 bat wakatime zathura w3m eza)
+            ;;
+        linux-gnu*)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-linux bat wakatime zathura w3m i3 wofi eza)
+            ;;
+        *)
+            reset
+            ;;
+    esac
 }
 
 function usage() {
     cat << EOF
-usage: $(basename "${0}") [--help] [--update | --delete]
-                        [--macos] [dirs]
+usage: $(basename "${0}") [--help] [--list] [--update | --delete]
+                        [--private | --shared] [dirs]
 
 options:
-    --help, -h        print this
-    --update, -U      update/install dotfiles
-    --delete, -D      delete dotfiles
-    --macos           select dotfiles for macos
+    --help,    -h     print this
+    --delete,  -D     delete dotfiles
+    --private, -p     select dotfiles for a private host
+    --shared,  -s     select dotfiles for a shared host
+
 EOF
 }
 
 function update() {
-    for folder in $STOW_FOLDERS; do
-        if [ "${DELETE}" -eq "1" ]; then
+    for folder in "${STOW_FOLDERS[@]}"; do
+        if [[ ${DELETE} -eq 1 ]]; then
             printf "Deleting %-17s" "$folder"
             stow -t "$HOME" -D "$folder" 2> /dev/null
         fi
-        if [ "${INSTALL}" -eq "1" ]; then
+        if [[ ${INSTALL} -eq 1 ]]; then
             printf "Installing %-17s" "$folder"
             stow --ignore='\.DS_Store' -t "$HOME" "$folder"
         fi

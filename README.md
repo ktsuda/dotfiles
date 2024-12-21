@@ -2,56 +2,48 @@
 
 ## Requirements
 
-### macos
+### common
 
-- homebrew
 - stow
 - zsh
+- ripgrep
 - tmux
 - git
-- gh
 - tig
 - nvim
-
-### macos (private)
-
-In addition to macos packages,
-
-- alacritty
 - bat
 - wakatime
-- taskell
 - zathura
+- w3m
+- eza
+
+### macos only
+
+- homebrew
+- iterm2
 
 ### linux
 
-- stow
-- bash
-- tmux
-- git
-- github
-- tig
-- nvim
-
-## linux (private)
-
-In addition to linux packages,
-
-- foot
-- bat
-- wakatime
-- taskell
-- zathura
-- sway
+- alacritty
+- i3
+- wofi
 
 ## Install dotfiles
 
-For linux (private),
+### shared host
 
 ```bash
 git clone https://github.com/ktsuda/dotfiles.git
 cd dotfiles
-./update -U --private-linux
+./update -s
+```
+
+### private host
+
+```bash
+git clone https://github.com/ktsuda/dotfiles.git
+cd dotfiles
+./update -p
 ```
 
 ## Delete dotfiles
