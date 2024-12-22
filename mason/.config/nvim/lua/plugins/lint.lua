@@ -16,8 +16,6 @@ return {
       python = { 'pylint' },
       ruby = { 'rubocop' },
       sh = { 'shellcheck' },
-      c = { 'cpplint' },
-      cpp = { 'cpplint' },
       erb = { 'erb_lint' },
       lua = { 'selene' },
     }

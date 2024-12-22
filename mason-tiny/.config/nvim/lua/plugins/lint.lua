@@ -8,8 +8,6 @@ return {
     lint.linters_by_ft = {
       markdown = { 'markdownlint' },
       sh = { 'shellcheck' },
-      c = { 'cpplint' },
-      cpp = { 'cpplint' },
       lua = { 'selene' },
     }
 
