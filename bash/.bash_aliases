@@ -171,16 +171,31 @@ function ipv4_address() {
 
 alias sp='pkg-search'
 function pkg-search() {
-    local selected_pkg=$(dpkg -l \
-        | awk '/^ii/ { print $2 }' | $(__fzfcmd))
-    local ret=$?
-    if [ -z "$selected_pkg" ]; then
-        return 0
-    fi
-    apt-cache depends $selected_pkg
-    echo
-    apt-cache rdepends $selected_pkg
-    return $ret
+    case ${OSTYPE} in
+        linux*)
+            local selected_pkg=$(dpkg -l \
+                | awk '/^ii/ { print $2 }' | $(__fzfcmd))
+            local ret=$?
+            if [ -z "$selected_pkg" ]; then
+                return 0
+            fi
+            apt-cache depends $selected_pkg
+            echo
+            apt-cache rdepends $selected_pkg
+            return $ret
+            ;;
+        darwin*)
+            local selected_formula=$(brew list --formula | $(__fzfcmd))
+            local ret=$?
+            if [ -z "$selected_formula" ]; then
+                return 0
+            fi
+            brew deps $selected_formula
+            echo
+            brew uses --recursive $selected_formula
+            return $ret
+            ;;
+    esac
 }
 
 function custom_tmux_session() {

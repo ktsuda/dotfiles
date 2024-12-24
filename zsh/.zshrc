@@ -328,16 +328,34 @@ function ipv4_address() {
 
 alias sp='pkg-search'
 function pkg-search() {
-  local selected_pkg=$(dpkg -l | \
-    awk '/^ii/ { print $2 }' | $(__fzfcmd))
-  local ret=$?
-  if [ -z "$selected_pkg" ]; then
-    return 0
-  fi
-  apt-cache depends $selected_pkg
-  echo
-  apt-cache rdepends $selected_pkg
-  return $ret
+  case ${OSTYPE} in
+    linux*)
+      local selected_pkg=$(dpkg -l | \
+        awk '/^ii/ { print $2 }' | $(__fzfcmd))
+      local ret=$?
+      if [ -z "$selected_pkg" ]; then
+        return 0
+      fi
+      apt-cache depends $selected_pkg
+      echo
+      apt-cache rdepends $selected_pkg
+      return $ret
+      ;;
+    darwin*)
+      local selected_formula=$(brew list -1 | $(__fzfcmd))
+      local ret=$?
+      if [ -z "$selected_formula" ]; then
+          return 0
+      fi
+      echo "${selected_formula} depends on..."
+      brew deps $selected_formula 2>/dev/null
+      echo
+      echo "${selected_formula} is used by..."
+      brew uses --eval-all $selected_formula 2>/dev/null
+      echo
+      return $ret
+      ;;
+  esac
 }
 
 function custom_tmux_session() {
