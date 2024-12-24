@@ -24,8 +24,19 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-export VISUAL=nvim
-export EDITOR=nvim
+# Set the default editor
+if type nvim &>/dev/null; then
+  EDITOR='nvim'
+elif type vim &>/dev/null; then
+  EDITOR='vim'
+elif type vi &>/dev/null; then
+  EDITOR='vi'
+else
+  EDITOR='nano'
+fi
+
+export VISUAL=${EDITOR}
+export EDITOR
 
 setopt auto_pushd
 setopt pushd_ignore_dups
