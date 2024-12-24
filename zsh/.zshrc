@@ -359,7 +359,7 @@ function pkg-search() {
 }
 
 function custom_tmux_session() {
-  if [[ "$#" -ge 1 ]]; then
+  if [[ $# -ge 1 ]]; then
     ID="$1"
     if [[ -n $TMUX ]]; then
       tmux new-session -d -s"$ID"
@@ -368,8 +368,8 @@ function custom_tmux_session() {
       tmux new-session -s"$ID"
     fi
   else
-    ID="`tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1`"
-    if [[ -z "$ID" ]]; then
+    ID=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+    if [[ -z $ID ]]; then
       tmux new-session -s "default"
       return
     fi
@@ -382,11 +382,11 @@ function custom_tmux_session() {
 }
 
 function custom_send_to_session() {
-  if [[ "$#" -lt 1 ]]; then
+  if [[ $# -lt 1 ]]; then
     return
   fi
-  ID="`tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1`"
-  if [[ -z "$ID" ]]; then
+  ID=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+  if [[ -z $ID ]]; then
     tmux new-session -s "default" tmux new-window -t "default" "$*"
     return
   fi
