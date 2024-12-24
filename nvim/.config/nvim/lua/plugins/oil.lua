@@ -17,8 +17,8 @@ return {
     default_file_explorer = true,
     columns = {
       'icon',
-      'permissions',
-      'size',
+      -- 'permissions',
+      -- 'size',
       -- 'mtime',
     },
     watch_for_changes = true,
