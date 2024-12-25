@@ -1,5 +1,5 @@
 # Alacritty configuration file
-
+[general]
 import = [
   "~/.config/alacritty/tokyonight.toml",
   "~/.config/alacritty/font.toml",
