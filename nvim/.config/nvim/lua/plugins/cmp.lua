@@ -27,9 +27,9 @@ return {
         completeopt = 'menu,menuone,noselect',
       },
       mapping = {
-        ['<C-n>'] = cmp.mapping(custom_cmp.next_expand_jump, { 'i', 's' }),
-        ['<C-p>'] = cmp.mapping(custom_cmp.prev_expand_jump, { 'i', 's' }),
-        ['<C-g>'] = cmp.mapping.abort(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-g>'] = cmp.mapping.close(),
         ['<C-Space>'] = cmp.mapping(custom_cmp.complete_common, { 'i', 's' }),
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -37,11 +37,14 @@ return {
           behavior = cmp.ConfirmBehavior.Replace,
           select = false,
         }),
+        ['<Tab>'] = cmp.mapping(custom_cmp.next_expand_jump, { 'i', 's' }),
+        ['<iS-Tab>'] = cmp.mapping(custom_cmp.prev_expand_jump, { 'i', 's' }),
       },
       sources = {
-        { name = 'nvim_lua' },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'nvim_lua' },
         { name = 'path' },
       },
       snippet = {
@@ -50,18 +53,18 @@ return {
         end,
       },
       sorting = {
+        priority_weight = 1.0,
         comparators = {
-          cmp.config.compare.offset,
-          cmp.config.compare.exact,
-          cmp.config.compare.sort_text,
-          cmp.config.compare.score,
+          cmp.config.compare.locality,
           cmp.config.compare.recently_used,
-          cmp.config.compare.kind,
-          cmp.config.compare.length,
+          cmp.config.compare.score,
+          cmp.config.compare.offset,
           cmp.config.compare.order,
         },
       },
       formatting = {
+        fields = { 'kind', 'abbr' },
+        expandable_indicator = true,
         format = lspkind.cmp_format({
           with_text = false,
           maxwidth = 50,
