@@ -1,9 +1,6 @@
 return {
   'nvim-tree/nvim-tree.lua',
   enabled = false,
-  dependencies = {
-    'kyazdani42/nvim-web-devicons',
-  },
   keys = {
     { '<C-e>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
   },
@@ -29,7 +26,6 @@ return {
       local function keymap_opts(desc)
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
-      api.config.mappings.default_on_attach(bufnr)
       vim.keymap.set('n', '<CR>', api.node.open.edit, keymap_opts('Open'))
       vim.keymap.set('n', 'o', api.node.open.edit, keymap_opts('Open'))
       vim.keymap.set('n', 'l', api.node.open.preview, keymap_opts('Open Preview'))
