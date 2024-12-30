@@ -33,6 +33,11 @@ function set_stow_folders() {
                 shared
                 shift
                 ;;
+            -d | --develop)
+                reset
+                develop
+                shift
+                ;;
             -a | --all)
                 all
                 exit 1
@@ -79,6 +84,20 @@ function private() {
             ;;
         linux-gnu*)
             STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-linux bat wakatime zathura w3m i3 wofi eza)
+            ;;
+        *)
+            reset
+            ;;
+    esac
+}
+
+function develop() {
+    case ${OSTYPE} in
+        darwin*)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim-tiny alacritty alacritty-macos iterm2 bat wakatime zathura w3m eza)
+            ;;
+        linux-gnu*)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim-tiny alacritty alacritty-linux bat wakatime zathura w3m i3 wofi eza)
             ;;
         *)
             reset
