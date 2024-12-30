@@ -5,15 +5,7 @@ import = [
   "~/.config/alacritty/font.toml",
   "~/.config/alacritty/keyboard.toml",
   "~/.config/alacritty/window.toml",
+  "~/.config/alacritty/misc.toml",
 ]
-
-[env]
-TERM = "xterm-256color"
-
-[scrolling]
-history = 5000
-
-[mouse]
-hide_when_typing = true
 
 # vim: set ft=toml ts=2 sw=2 sts=2 et :

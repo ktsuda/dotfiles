@@ -1,0 +1,10 @@
+# Alacritty configuration file
+import = [
+  "~/.config/alacritty/tokyonight.toml",
+  "~/.config/alacritty/font.toml",
+  "~/.config/alacritty/keyboard.toml",
+  "~/.config/alacritty/window.toml",
+  "~/.config/alacritty/misc.toml",
+]
+
+# vim: set ft=toml ts=2 sw=2 sts=2 et :
