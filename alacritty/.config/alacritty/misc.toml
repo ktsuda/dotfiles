@@ -7,4 +7,7 @@ history = 5000
 [mouse]
 hide_when_typing = true
 
+[colors]
+transparent_background_colors = true
+
 # vim: set ft=toml ts=2 sw=2 sts=2 et :
