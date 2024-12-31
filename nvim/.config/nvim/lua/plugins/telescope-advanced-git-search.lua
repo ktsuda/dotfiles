@@ -1,6 +1,6 @@
 return {
   'aaronhallaert/advanced-git-search.nvim',
-  enabled = false,
+  enabled = true,
   -- keymaps: https://github.com/aaronhallaert/advanced-git-search.nvim?tab=readme-ov-file#keymaps-1
   keys = {
     { '<leader>gl', '<cmd>Telescope advanced_git_search diff_commit_file<cr>', desc = '[g]it [l]og' },
