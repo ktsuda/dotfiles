@@ -66,10 +66,10 @@ function reset() {
 function shared() {
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS=(zsh tmux git tig nvim mason-tiny)
+            STOW_FOLDERS=(zsh tmux git tig nvim mason)
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(bash tmux git tig nvim mason-tiny)
+            STOW_FOLDERS=(bash tmux git tig nvim mason)
             ;;
         *)
             reset
@@ -94,10 +94,10 @@ function private() {
 function develop() {
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim-tiny alacritty alacritty-macos iterm2 bat wakatime zathura w3m eza)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-macos iterm2 bat wakatime zathura w3m eza)
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim-tiny alacritty alacritty-linux bat wakatime zathura w3m i3 wofi eza)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim mason alacritty alacritty-linux bat wakatime zathura w3m i3 wofi eza)
             ;;
         *)
             reset
@@ -115,6 +115,7 @@ options:
     --delete,  -D     delete dotfiles
     --private, -p     select dotfiles for a private host
     --shared,  -s     select dotfiles for a shared host
+    --develop, -d     select dotfiles for a dev host
 
 EOF
 }
