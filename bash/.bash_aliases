@@ -23,7 +23,7 @@ case ${OSTYPE} in
         fi
 
         if type fd &> /dev/null; then
-            alias fd='fd --hidden --exclude .git'
+            alias fd='fd --hidden --follow --exclude .git'
             alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
         fi
         ;;
@@ -68,7 +68,7 @@ if type bat &> /dev/null; then
 fi
 
 if type rg &> /dev/null; then
-    alias rg='rg -H --column -n -S --no-heading -uu -g !.git'
+    alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
 fi
 
 if type dust &> /dev/null; then
@@ -185,14 +185,17 @@ function pkg-search() {
             return $ret
             ;;
         darwin*)
-            local selected_formula=$(brew list --formula | $(__fzfcmd))
+            local selected_formula=$(brew list -1 | $(__fzfcmd))
             local ret=$?
             if [ -z "$selected_formula" ]; then
                 return 0
             fi
-            brew deps $selected_formula
+            echo "${selected_formula} depends on..."
+            brew deps $selected_formula 2> /dev/null
             echo
-            brew uses --recursive $selected_formula
+            echo "${selected_formula} is used by..."
+            brew uses --recursive $selected_formula 2> /dev/null
+            echo
             return $ret
             ;;
     esac
