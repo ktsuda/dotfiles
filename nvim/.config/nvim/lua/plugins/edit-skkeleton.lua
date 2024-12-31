@@ -1,11 +1,12 @@
 return {
   'vim-skk/skkeleton',
   enabled = true,
+  event = { 'InsertEnter', 'CmdlineEnter' },
   keys = {
     { '<C-j>', '<Plug>(skkeleton-toggle)', mode = { 'i', 'c' }, desc = 'SKK' },
   },
   dependencies = {
-    { 'vim-denops/denops.vim' },
+    'vim-denops/denops.vim',
   },
   config = function()
     vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false })

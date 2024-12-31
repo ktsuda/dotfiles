@@ -14,7 +14,7 @@ return {
     { '<leader>sb', utils.custom('buffers'), desc = '[s]earch [b]uffers' },
     { '<leader>gb', utils.custom('git_branches'), desc = '[g]it [b]ranch' },
     { '<leader>/', utils.custom('string'), desc = '[/] search in current buffer' },
-    { '<leader>pt', utils.custom('treesitter'), desc = '[p]arse [t]ree' },
+    { '<leader>sh', utils.custom('help_tags'), desc = '[s]earch [h]elptags' },
   },
   dependencies = {
     'nvim-lua/plenary.nvim',

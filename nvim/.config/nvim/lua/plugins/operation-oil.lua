@@ -49,3 +49,4 @@ return {
     case_insensitive = true,
   },
 }
+

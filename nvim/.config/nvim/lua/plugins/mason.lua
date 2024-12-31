@@ -4,7 +4,5 @@ return {
   event = 'VeryLazy',
   build = ':MasonUpdate',
   cmd = { 'Mason', 'MasonInstall', 'MasonInstallAll', 'MasonUpdate' },
-  opts = {
-    max_concurrent_installers = 10,
-  },
+  opts = {},
 }
