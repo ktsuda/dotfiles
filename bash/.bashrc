@@ -164,3 +164,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 [ -f "$HOME/.bash_aliases" ] && . $HOME/.bash_aliases
+[ -f "$HOME/.fzf.bash" ] && . $HOME/.fzf.bash
