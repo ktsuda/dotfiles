@@ -124,14 +124,14 @@ zstyle ':vcs_info:git:*' formats '%b'
 case ${OSTYPE} in
   darwin*)
     if type eza &>/dev/null; then
-      alias ls='eza -F -g --color=auto --git-ignore --git'
+      alias ls='eza -F -g --color=auto'
       alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso '
+      alias ll='ls -l -s date --time-style long-iso --git'
       alias lla='ll -a'
     elif type exa &>/dev/null; then
-      alias ls='exa -F -g --color=auto --git-ignore --git'
+      alias ls='exa -F -g --color=auto'
       alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso'
+      alias ll='ls -l -s date --time-style long-iso --git'
       alias lla='ll -a'
     elif type gls &>/dev/null; then
       alias ls='gls -X -F -C -T 2 --color=auto'
@@ -152,14 +152,14 @@ case ${OSTYPE} in
     ;;
   linux*)
     if type eza &>/dev/null; then
-      alias ls='eza -F -g --color=auto --git-ignore --git'
+      alias ls='eza -F -g --color=auto'
       alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso '
+      alias ll='ls -l -s date --time-style long-iso --git'
       alias lla='ll -a'
     elif type exa &>/dev/null; then
-      alias ls='exa -F -g --color=auto --git-ignore --git'
+      alias ls='exa -F -g --color=auto'
       alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso '
+      alias ll='ls -l -s date --time-style long-iso --git'
       alias lla='ll -a'
     else
       alias ls='ls -X -F -C -T 2 --color=auto'
