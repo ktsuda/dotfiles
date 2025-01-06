@@ -78,10 +78,20 @@ case ${OSTYPE} in
 esac
 
 typeset -U fpath
+  
+if type brew &>/dev/null; then
+  fpath=(
+    $(brew --prefix)/share/zsh-completions(N-/)
+    $(brew --prefix)/share/zsh/site-functions(N-/)
+    $(brew --prefix)/share/zsh-syntax-highlighting(N-/)
+    $fpath
+  )
+  if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
+fi
 
 fpath=(
-  /opt/homebrew/share/zsh-completions(N-/)
-  /opt/homebrew/share/zsh/site-functions(N-/)
   ~/.config/zsh/zsh-completions(N-/)
   $fpath
 )
