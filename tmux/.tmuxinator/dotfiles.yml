@@ -1,8 +1,9 @@
-name: dotfiles
-root: ~/src/github.com/ktsuda/dotfiles/
+project_name: dotfiles
+project_root: ~/src/github.com/ktsuda/dotfiles/
 windows:
-  - develop:
+  - editor:
       layout: main-vertical
       panes:
         - nvim
-        - git status
+        - tig
+        - git fetch -p
