@@ -145,8 +145,8 @@ function __fzfcmd() {
         || echo "fzf"
 }
 
-alias gr='git-repo-cd'
-function git-repo-cd() {
+alias gr='git_repo_cd'
+function git_repo_cd() {
     local selected_dir=$(ghq list --full-path | $(__fzfcmd))
     local ret=$?
     if [ -z "$selected_dir" ]; then
@@ -169,8 +169,8 @@ function ipv4_address() {
     return $ret
 }
 
-alias sp='pkg-search'
-function pkg-search() {
+alias sp='pkg_search'
+function pkg_search() {
     case ${OSTYPE} in
         linux*)
             local selected_pkg=$(dpkg -l \

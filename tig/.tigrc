@@ -1,7 +1,7 @@
 set line-graphics = default
 set commit-order = topo # auto default topo date author-date reverse
 set ignore-case = smart-case
-set wrap-lines = yes 
+set wrap-lines = yes
 set vertical-split = false
 
 set main-view = line-number:no,interval=10 \

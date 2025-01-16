@@ -78,7 +78,7 @@ case ${OSTYPE} in
 esac
 
 typeset -U fpath
-  
+
 if type brew &>/dev/null; then
   fpath=(
     $(brew --prefix)/share/zsh-completions(N-/)
@@ -96,8 +96,7 @@ fpath=(
   $fpath
 )
 
-# git clone https://github.com/zsh-users/zsh-autosuggestions \
-#   ~/.zsh/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
 if [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
@@ -125,7 +124,7 @@ export WAKATIME_HOME="$HOME/.wakatime_home"
 
 PROMPT='%n@%m:%~ $ '
 autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
+function precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
@@ -307,7 +306,7 @@ function __fzfcmd() {
     || echo "fzf"
 }
 
-function git-repo-cd() {
+function git_repo_cd() {
   local selected_dir=$(ghq list --full-path | $(__fzfcmd))
   local ret=$?
   if [ -z "$selected_dir" ]; then
@@ -318,10 +317,10 @@ function git-repo-cd() {
   zle reset-prompt
   return $ret
 }
-zle -N git-repo-cd
-bindkey "^s" git-repo-cd
+zle -N git_repo_cd
+bindkey "^s" git_repo_cd
 
-function subdir-cd() {
+function subdir_cd() {
   local selected_dir
   if type fd &>/dev/null; then
     local selected_dir=$(fd -t d | $(__fzfcmd))
@@ -337,10 +336,10 @@ function subdir-cd() {
   zle reset-prompt
   return $ret
 }
-zle -N subdir-cd
-bindkey "^o" subdir-cd
+zle -N subdir_cd
+bindkey "^o" subdir_cd
 
-function history-widget() {
+function history_widget() {
   local selected num
   selected=($(fc -rl 1 | $(__fzfcmd)))
   local ret=$?
@@ -353,8 +352,8 @@ function history-widget() {
   zle reset-prompt
   return $ret
 }
-zle -N history-widget
-bindkey "^r" history-widget
+zle -N history_widget
+bindkey "^r" history_widget
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
@@ -368,8 +367,8 @@ function ipv4_address() {
   return $ret
 }
 
-alias sp='pkg-search'
-function pkg-search() {
+alias sp='pkg_search'
+function pkg_search() {
   case ${OSTYPE} in
     linux*)
       local selected_pkg=$(dpkg -l | \
@@ -387,7 +386,7 @@ function pkg-search() {
       local selected_formula=$(brew list -1 | $(__fzfcmd))
       local ret=$?
       if [ -z "$selected_formula" ]; then
-          return 0
+        return 0
       fi
       echo "${selected_formula} depends on..."
       brew deps $selected_formula 2>/dev/null

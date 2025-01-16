@@ -20,14 +20,14 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # Set the default editor
-if type nvim &>/dev/null; then
-  EDITOR='nvim'
-elif type vim &>/dev/null; then
-  EDITOR='vim'
-elif type vi &>/dev/null; then
-  EDITOR='vi'
+if type nvim &> /dev/null; then
+    EDITOR='nvim'
+elif type vim &> /dev/null; then
+    EDITOR='vim'
+elif type vi &> /dev/null; then
+    EDITOR='vi'
 else
-  EDITOR='nano'
+    EDITOR='nano'
 fi
 
 export VISUAL=${EDITOR}

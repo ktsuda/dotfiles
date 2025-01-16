@@ -23,7 +23,7 @@ return {
       python = { 'isort', 'black' },
       ruby = { 'rubocop' },
       sh = { 'shfmt' },
-      zsh = { 'shfmt' },
+      zsh = { 'beautysh' },
       c = { 'clang_format' },
       cpp = { 'clang_format' },
       objc = { 'clang_format' },
@@ -42,6 +42,9 @@ return {
       },
       shfmt = {
         args = { '-i', 4, '-ci', '-bn', '-sr', '-s' },
+      },
+      beautysh = {
+        prepend_args = { '-i', 2, '-s', 'fnpar' },
       },
       clang_format = {
         prepend_args = { '-style=file' },
