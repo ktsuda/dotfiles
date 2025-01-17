@@ -1,12 +1,12 @@
-name: 4glte
-root: ~/Projects
-
+project_name: 4g
+project_root: ~/Projects
 windows:
   - develop:
       root: ~/Projects/oai
       panes:
         - nvim
-        -
+        - tig
+        - git fetch -p
   - epc:
       root: ~/Projects/oai-runner/components/oai_epc
   - enb:

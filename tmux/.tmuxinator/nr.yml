@@ -1,12 +1,12 @@
-name: 5gnr
-root: ~/Projects
-
+project_name: 5g
+project_root: ~/Projects
 windows:
   - develop:
       root: ~/Projects/oai
       panes:
         - nvim
-        -
+        - tig
+        - git fetch -p
   - 5gc:
       root: ~/Projects/oai-runner/components/oai_5gc
   - gnb:
