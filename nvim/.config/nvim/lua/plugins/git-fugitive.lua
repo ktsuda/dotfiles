@@ -1,5 +1,5 @@
 return {
-  'ktsuda/vim-fugitive',
+  'tpope/vim-fugitive',
   enabled = true,
   branch = 'signoff',
   pin = true,
