@@ -32,7 +32,26 @@ M.on_init = function(client, _)
 end
 
 M.server_configs = {
-  clangd = {},
+  clangd = {
+    cmd = {
+      -- see clangd --help-hidden
+      'clangd',
+      '--background-index',
+      -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
+      -- to add more checks, create .clang-tidy file in the root directory
+      -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
+      '--clang-tidy',
+      '--completion-style=bundled',
+      '--cross-file-rename',
+      '--header-insertion=iwyu',
+    },
+    init_options = {
+      clangdFileStatus = true, -- Provides information about activity on clangd’s per-file worker thread
+      usePlaceholders = true,
+      completeUnimported = true,
+      semanticHighlighting = true,
+    },
+  },
   pyright = {
     settings = {
       python = {
@@ -83,7 +102,6 @@ M.server_configs = {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { 'markdown', 'plaintext' },
   snippetSupport = true,
   preselectSupport = true,
   insertReplaceSupport = true,
