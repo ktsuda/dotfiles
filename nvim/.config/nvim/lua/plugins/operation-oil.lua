@@ -10,7 +10,7 @@ return {
       function()
         require('oil').toggle_float()
       end,
-      desc = 'oil',
+      desc = 'Oil: Toggle oil',
     },
   },
   opts = {

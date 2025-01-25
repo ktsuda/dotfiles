@@ -11,6 +11,6 @@ return {
     vim.g.mkdp_auto_start = 0
     vim.g.mkdp_auto_close = 1
     vim.g.mkdp_refresh_slow = 0
-    vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, {})
+    vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, { desc = 'MarkdownPreview: Open preview window' })
   end,
 }

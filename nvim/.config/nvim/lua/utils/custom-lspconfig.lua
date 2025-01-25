@@ -4,25 +4,30 @@ M.on_attach = function(client, bufnr)
   vim.lsp.set_log_level('off')
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
-  local function nmap(l, r, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-    vim.keymap.set('n', l, r, { buffer = bufnr, desc = desc })
-  end
-  nmap('K', vim.lsp.buf.hover)
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, 'Add a workspace folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, 'Remove a workspace folder')
-  nmap('<leader>wl', function()
+
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'LSP: Show hover' })
+  vim.keymap.set(
+    'n',
+    '<leader>wa',
+    vim.lsp.buf.add_workspace_folder,
+    { buffer = bufnr, desc = 'LSP: Add a workspace folder' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>wr',
+    vim.lsp.buf.remove_workspace_folder,
+    { buffer = bufnr, desc = 'LSP: Remove a workspace folder' }
+  )
+  vim.keymap.set('n', '<leader>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, 'List workspace folders')
-  nmap('gD', vim.lsp.buf.declaration, 'Go to declaration')
-  nmap('gd', vim.lsp.buf.definition, 'Go to definition')
-  nmap('gi', vim.lsp.buf.implementation, 'Go to implementation')
-  nmap('<leader>sh', vim.lsp.buf.signature_help, 'Show signature help')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Go to type definition')
-  nmap('gr', vim.lsp.buf.references, 'Show references')
-  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'Code action' })
+  end, { buffer = bufnr, desc = 'LSP: List workspace folders' })
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'LSP: Go to declaration' })
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'LSP: Go to definition' })
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = bufnr, desc = 'LSP: Go to implementation' })
+  vim.keymap.set('n', '<leader>sh', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP: Show signature help' })
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { buffer = bufnr, desc = 'LSP: Go to type definition' })
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = bufnr, desc = 'LSP: Show references' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'LSP: Code action' })
 end
 
 M.on_init = function(client, _)

@@ -2,7 +2,7 @@ return {
   'nvim-tree/nvim-tree.lua',
   enabled = false,
   keys = {
-    { '<C-e>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree' },
+    { '<C-e>', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTree: Toggle tree' },
   },
   opts = {
     disable_netrw = true,
@@ -24,7 +24,7 @@ return {
     on_attach = function(bufnr)
       local api = require('nvim-tree.api')
       local function keymap_opts(desc)
-        return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        return { desc = 'NvimTree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
       vim.keymap.set('n', '<CR>', api.node.open.edit, keymap_opts('Open'))
       vim.keymap.set('n', 'o', api.node.open.edit, keymap_opts('Open'))

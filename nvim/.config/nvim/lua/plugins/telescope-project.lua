@@ -4,8 +4,8 @@ return {
   'nvim-telescope/telescope-project.nvim',
   enabled = true,
   keys = {
-    { '<C-s>', utils.extension('repos', 'project'), desc = 'search repos' },
-    { '<leader>sr', utils.extension('repos', 'project'), desc = '[s]earch [r]epos' },
+    { '<C-s>', utils.extension('repos', 'project'), desc = 'Telescope: Search repos' },
+    { '<leader>sr', utils.extension('repos', 'project'), desc = 'Telescope: Search repos' },
   },
   dependencies = {
     'nvim-telescope/telescope.nvim',

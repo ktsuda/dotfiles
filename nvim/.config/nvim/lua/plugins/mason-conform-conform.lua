@@ -65,6 +65,6 @@ return {
         async = false,
         timeout_ms = 500,
       })
-    end, { desc = 'Conform: [f]ormat' })
+    end, { desc = 'Conform: Format buffer' })
   end,
 }

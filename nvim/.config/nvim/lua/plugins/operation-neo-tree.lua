@@ -10,7 +10,7 @@ return {
   },
   cmd = 'Neotree',
   keys = {
-    { '<C-e>', '<cmd>Neotree toggle=true<cr>', desc = 'Neotree' },
+    { '<C-e>', '<cmd>Neotree toggle=true<cr>', desc = 'Neotree: Toggle neotree' },
   },
   opts = function(_, opts)
     return vim.tbl_extend('force', {

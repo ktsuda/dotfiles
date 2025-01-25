@@ -1,16 +1,11 @@
-local function map(mode, l, r, opts)
-  opts = opts or {}
-  vim.keymap.set(mode, l, r, opts)
-end
-
-map({ 'n', 'v' }, '<Space>', '<Nopp>', { silent = true }) -- nowait
-map('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true })
-map('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true })
-map('n', '[q', '<cmd>cprevious<cr>')
-map('n', ']q', '<cmd>cnext<cr>')
-map('n', '<C-h>', '<cmd>bprev<cr>')
-map('n', '<C-l>', '<cmd>bnext<cr>')
-map('n', '<leader>d', vim.diagnostic.open_float)
-map('n', '[d', vim.diagnostic.goto_prev)
-map('n', ']d', vim.diagnostic.goto_next)
-map('n', '<leader>q', vim.diagnostic.setloclist)
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true }) -- nowait
+vim.keymap.set('n', 'j', 'v:count == 0 ? "gj" : "j"', { expr = true, silent = true, desc = 'Motion: Move up' })
+vim.keymap.set('n', 'k', 'v:count == 0 ? "gk" : "k"', { expr = true, silent = true, desc = 'Motion: Move down' })
+vim.keymap.set('n', '[q', '<cmd>cprevious<cr>', { desc = 'Quickfix: Previous quickfix' })
+vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix: Next quickfix' })
+vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { desc = 'Buffer: Previous buffer' })
+vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { desc = 'Buffer: Next buffer' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Diagnostic: Open diagnostic float' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic: Previous diagnostic' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic: Next diagnostic' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic: Set loclist' })

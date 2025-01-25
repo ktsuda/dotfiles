@@ -2,7 +2,7 @@ return {
   'mbbill/undotree',
   enabled = false,
   keys = {
-    { '<leader>ut', '<cmd>UndotreeToggle<cr>', desc = 'Undotree' },
+    { '<leader>ut', '<cmd>UndotreeToggle<cr>', desc = 'Undotree: Toggle undotree' },
   },
   dependencies = {
     'hrsh7th/nvim-cmp',

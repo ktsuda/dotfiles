@@ -5,9 +5,9 @@ return {
   pin = true,
   cmd = { 'G', 'Git', 'Gdiff', 'GBrowse' },
   keys = {
-    { '<leader>gs', '<cmd>0G<cr>', desc = '[g]it [s]tatus' },
-    { '<leader>gd', '<cmd>Gdiff<cr>', desc = '[g]it [d]iff' },
-    { '<leader>br', '<cmd>GBrowse<cr>', desc = '[b]rowse [r]epo' },
+    { '<leader>gs', '<cmd>0G<cr>', desc = 'Fugitive: Git status' },
+    { '<leader>gd', '<cmd>Gdiff<cr>', desc = 'Fugitive: Git diff' },
+    { '<leader>br', '<cmd>GBrowse<cr>', desc = 'Fugitive: Browse repo' },
   },
   dependencies = {
     'tpope/vim-rhubarb',
