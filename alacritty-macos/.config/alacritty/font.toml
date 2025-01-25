@@ -2,19 +2,19 @@
 size = 14.0
 
 [font.bold]
-family = "UbuntuMono Nerd Font"
+family = "HackGen Console NF"
 style = "Bold"
 
 [font.bold_italic]
-family = "UbuntuMono Nerd Font"
+family = "HackGen Console NF"
 style = "Bold"
 
 [font.italic]
-family = "UbuntuMono Nerd Font"
+family = "HackGen Console NF"
 style = "Regular"
 
 [font.normal]
-family = "UbuntuMono Nerd Font"
+family = "HackGen Console NF"
 style = "Regular"
 
 [font.offset]
