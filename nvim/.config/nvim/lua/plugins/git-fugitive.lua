@@ -1,7 +1,6 @@
 return {
   'tpope/vim-fugitive',
   enabled = true,
-  branch = 'signoff',
   pin = true,
   cmd = { 'G', 'Git', 'Gdiff', 'GBrowse' },
   keys = {
