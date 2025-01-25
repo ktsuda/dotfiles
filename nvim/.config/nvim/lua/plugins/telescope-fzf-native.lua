@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope-fzf-native.nvim',
-  enabled = false,
+  enabled = true,
   build = 'make',
   event = 'VeryLazy',
   dependencies = {
