@@ -44,4 +44,3 @@ return {
     require('nvim-tree').setup(opts)
   end,
 }
-

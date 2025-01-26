@@ -5,7 +5,11 @@ return {
   version = '^1.0.0',
   enabled = true,
   keys = {
-    { '<leader>sa', utils.extension('live_grep_args', 'live_grep_args'), desc = 'Telescope: Search string by grep args' },
+    {
+      '<leader>sa',
+      utils.extension('live_grep_args', 'live_grep_args'),
+      desc = 'Telescope: Search string by grep args',
+    },
   },
   dependencies = {
     'nvim-telescope/telescope.nvim',

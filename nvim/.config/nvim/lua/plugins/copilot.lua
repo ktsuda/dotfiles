@@ -7,7 +7,13 @@ return {
       'i',
       '<C-l>',
       'copilot#Accept("<CR>")',
-      { silent = true, expr = true, script = true, replace_keycodes = false, desc = 'Copilot: Accept the current suggestion' }
+      {
+        silent = true,
+        expr = true,
+        script = true,
+        replace_keycodes = false,
+        desc = 'Copilot: Accept the current suggestion',
+      }
     )
     vim.keymap.set('i', '<C-j>', '<Plug>(copilot-next)', { desc = 'Copilot: Move to the next suggestion' })
     vim.keymap.set('i', '<C-k>', '<Plug>(copilot-previous)', { desc = 'Copilot: Move to the previous suggestion' })

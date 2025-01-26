@@ -4,7 +4,11 @@ return {
   -- keymaps: https://github.com/aaronhallaert/advanced-git-search.nvim?tab=readme-ov-file#keymaps-1
   keys = {
     { '<leader>gl', '<cmd>Telescope advanced_git_search diff_commit_file<cr>', desc = 'AdvancedGitSearch: Git log' },
-    { '<leader>gf', '<cmd>Telescope advanced_git_search search_log_content_file<cr>', desc = 'AdvancedGitSearch: Git search' },
+    {
+      '<leader>gf',
+      '<cmd>Telescope advanced_git_search search_log_content_file<cr>',
+      desc = 'AdvancedGitSearch: Git search',
+    },
   },
   dependencies = {
     'nvim-telescope/telescope.nvim',

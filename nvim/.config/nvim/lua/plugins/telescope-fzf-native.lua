@@ -27,4 +27,3 @@ return {
     pcall(telescope.load_extension, 'fzf')
   end,
 }
-
