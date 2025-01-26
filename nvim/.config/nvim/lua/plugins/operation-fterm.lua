@@ -1,6 +1,6 @@
 return {
   'numToStr/FTerm.nvim',
-  enabled = false,
+  enabled = true,
   keys = {
     {
       '<leader>tt',
@@ -21,12 +21,12 @@ return {
   cmd = { 'FTermTigAll', 'FTermTigStatus', 'FTermGitLogP' },
   opts = {
     border = 'single',
-    blend = 20,
+    blend = 24,
     dimensions = {
-      height = 0.5,
-      width = 1.0,
+      height = 0.8,
+      width = 0.8,
       x = 0.5,
-      y = 1.0,
+      y = 0.5,
     },
   },
   config = function(_, opts)
