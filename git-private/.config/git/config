@@ -1,34 +1,36 @@
 [user]
-  name = ktsuda
-  email = ktsuda@users.noreply.github.com
+    name = ktsuda
+    email = ktsuda@users.noreply.github.com
 [core]
-  editor = nvim
-  pager = diff-so-fancy | less --tabs=4 -RF
-  ignoreCase = false
-  excludesFile = ~/.config/git/ignore
+    editor = nvim
+    pager = diff-so-fancy | less --tabs=4 -RF
+    ignoreCase = false
+    excludesFile = ~/.config/git/ignore
 [merge]
-  conflictStyle = diff3
+    conflictStyle = diff3
 [push]
-  default = simple
-  autoSetupRemote = true
+    default = simple
+    autoSetupRemote = true
 [diff]
-  colorMoved = default
-  colorMovedWS = allow-indentation-change
+    colorMoved = default
+    colorMovedWS = allow-indentation-change
 [interactive]
-  diffFilter = diff-so-fancy --patch
+    diffFilter = diff-so-fancy --patch
 [alias]
-  fix = commit --amend
-  now = commit --amend --no-edit
-  l = log --graph --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
-  clang-format = clang-format-12
+    fix = commit --amend
+    now = commit --amend --no-edit
+    l = log --graph --date-order --all --abbrev-commit --date=iso --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
+    clang-format = clang-format-12
 [credential]
-  helper = store
+    helper = store
 [init]
-  defaultBranch = main
+    defaultBranch = main
 [clangFormat]
-	binary = clang-format-12
-	style = file
+    binary = clang-format-12
+    style = file
 [ghq]
-  root = ~/Projects
-  root = ~/go/src
-  root = ~/src
+    root = ~/Projects
+    root = ~/go/src
+    root = ~/src
+
+# vim:set ts=4 sw=4 sts=4 et:
