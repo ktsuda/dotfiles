@@ -19,7 +19,7 @@ set refs-view = line-number:yes,interval=10 \
 bind main R !git rebase -i %(commit)
 bind diff R !git rebase -i %(commit)
 bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
-bind status C !git commit -s -v
+bind status C !git commit -v
 bind status P !git push
 bind generic <Ctrl-r> refresh
 bind generic <Ctrl-Y> move-first-line

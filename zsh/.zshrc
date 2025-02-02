@@ -259,7 +259,7 @@ alias gb='git branch -av'
 alias gs='git status -sb'
 alias gd='git diff'
 alias ga='git add -N . && git add -p'
-alias gc='git commit -s -v'
+alias gc='git commit -v'
 alias gco='git checkout'
 alias gp='git push origin'
 
