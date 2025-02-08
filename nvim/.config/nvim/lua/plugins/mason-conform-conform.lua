@@ -16,7 +16,7 @@ return {
       less = { 'prettier' },
       yaml = { 'prettier' },
       json = { 'prettier' },
-      markdown = { 'prettier' },
+      markdown = { 'markdownlint' },
       graphql = { 'prettier' },
       lua = { 'stylua' },
       go = { 'goimports' },

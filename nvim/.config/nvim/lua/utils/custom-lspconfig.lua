@@ -89,7 +89,23 @@ M.server_configs = {
     },
   },
   gopls = {},
-  tailwindcss = {},
+  tailwindcss = {
+    filetypes = {
+      'erb',
+      'eruby',
+      'haml',
+      'html',
+      'css',
+      'less',
+      'sass',
+      'scss',
+      'javascript',
+      'javascriptreact',
+      'typescript',
+      'typescriptreact',
+      'vue',
+    },
+  },
   ts_ls = {
     filetypes = {
       'typescript',
