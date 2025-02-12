@@ -437,6 +437,8 @@ function custom_send_to_session() {
 if type tmux > /dev/null 2>&1; then
   alias s='custom_tmux_session'
   alias a='custom_send_to_session'
+elif type zellij > /dev/null 2>&1; then
+  alias s='zellij'
 elif type screen > /dev/null 2>&1; then
   alias s='screen'
 else

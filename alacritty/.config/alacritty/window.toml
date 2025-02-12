@@ -2,6 +2,7 @@
 dynamic_padding = false
 opacity = 0.9
 title = "Alacritty"
+option_as_alt = "Both"
 
 [window.class]
 general = "Alacritty"
