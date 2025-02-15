@@ -165,3 +165,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 [ -f "$HOME/.bash_aliases" ] && . $HOME/.bash_aliases
 [ -f "$HOME/.fzf.bash" ] && . $HOME/.fzf.bash
+
+case ${OSTYPE} in
+    darwin*)
+        export STM32CubeMX_PATH="/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources"
+        ;;
+esac

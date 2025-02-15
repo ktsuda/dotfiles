@@ -445,6 +445,12 @@ else
   ;
 fi
 
+case ${OSTYPE} in
+  darwin*)
+    export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
+    ;;
+esac
+
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
