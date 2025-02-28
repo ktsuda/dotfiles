@@ -9,3 +9,4 @@ vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Diagnostic
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic: Previous diagnostic' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic: Next diagnostic' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic: Set loclist' })
+vim.keymap.set('n', '<leader>xx', '<cmd>so %<cr>', { desc = 'Execute the current file' })
