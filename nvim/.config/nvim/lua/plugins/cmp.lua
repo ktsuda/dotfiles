@@ -11,6 +11,7 @@ return {
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-nvim-lsp',
+    'zbirenbaum/copilot-cmp',
   },
   opts = function()
     return {}
@@ -42,6 +43,7 @@ return {
       },
       sources = {
         { name = 'nvim_lsp' },
+        { name = 'copilot' },
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'nvim_lua' },
