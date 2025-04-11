@@ -1,0 +1,20 @@
+# /Users/ken/.tmuxinator/vdes.yml
+
+name: vdes
+root: ~/src/github.com/ktsuda/vdes-signal-processing
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - main:
+      pre:
+        - make
+      layout: main-vertical
+      # left : right = 70 : 30
+      panes:
+        - nvim
+        - make ci
+  - git:
+      panes:
+        - tig --all
