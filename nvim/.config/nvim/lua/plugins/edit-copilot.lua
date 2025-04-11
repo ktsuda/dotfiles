@@ -1,15 +1,37 @@
 return {
-  'zbirenbaum/copilot.lua',
-  enabled = true,
-  cmd = 'Copilot',
-  event = 'InsertEnter',
-  config = {
-    panel = {
-      enabled = false,
+  {
+    'zbirenbaum/copilot.lua',
+    enabled = false,
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      panel = {
+        enabled = false,
+      },
+      suggestion = {
+        enabled = false,
+      },
+      copilot_node_command = 'node',
     },
-    suggestion = {
-      enabled = false,
-    },
-    copilot_node_command = 'node',
+  },
+  {
+    'github/copilot.vim',
+    enabled = true,
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      vim.keymap.set('i', '<C-l>', 'copilot#Accept("<CR>")', {
+        silent = true,
+        expr = true,
+        script = true,
+        replace_keycodes = false,
+        desc = 'Copilot: Accept the current suggestion',
+      })
+      vim.keymap.set('i', '<C-j>', '<Plug>(copilot-next)', { desc = 'Copilot: Move to the next suggestion' })
+      vim.keymap.set('i', '<C-k>', '<Plug>(copilot-previous)', { desc = 'Copilot: Move to the previous suggestion' })
+      vim.keymap.set('i', '<C-o>', '<Plug>(copilot-dismiss)', { desc = 'Copilot: Dismiss the current suggestion' })
+      vim.keymap.set('i', '<C-s>', '<Plug>(copilot-suggest)', { desc = 'Copilot: Suggest a new completion' })
+      vim.g.copilot_no_tab_map = true
+    end,
   },
 }
