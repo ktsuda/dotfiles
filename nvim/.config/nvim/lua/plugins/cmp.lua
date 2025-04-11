@@ -72,6 +72,13 @@ return {
           maxwidth = 50,
         }),
       },
+      window = {
+        completion = cmp.config.window.bordered({
+          winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+          col_offset = -3,
+          side_padding = 0,
+        }),
+      },
     })
 
     cmp.setup.cmdline({ '/', '?' }, {
