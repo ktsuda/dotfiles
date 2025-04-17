@@ -6,7 +6,23 @@ vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix: Next quickfix' }
 vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { desc = 'Buffer: Previous buffer' })
 vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { desc = 'Buffer: Next buffer' })
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Diagnostic: Open diagnostic float' })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic: Previous diagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic: Next diagnostic' })
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  jump = { float = true },
+})
+vim.keymap.set('n', '[d', function()
+  vim.diagnostic.jump({
+    count = -1,
+  })
+end, { desc = 'Diagnostic: Previous diagnostic' })
+vim.keymap.set('n', ']d', function()
+  vim.diagnostic.jump({
+    count = 1,
+  })
+end, { desc = 'Diagnostic: Next diagnostic' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic: Set loclist' })
 vim.keymap.set('n', '<leader>xx', '<cmd>so %<cr>', { desc = 'Execute the current file' })
