@@ -6,14 +6,6 @@ vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix: Next quickfix' }
 vim.keymap.set('n', '<C-h>', '<cmd>bprev<cr>', { desc = 'Buffer: Previous buffer' })
 vim.keymap.set('n', '<C-l>', '<cmd>bnext<cr>', { desc = 'Buffer: Next buffer' })
 vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Diagnostic: Open diagnostic float' })
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = true,
-  jump = { float = true },
-})
 vim.keymap.set('n', '[d', function()
   vim.diagnostic.jump({
     count = -1,
