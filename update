@@ -78,7 +78,7 @@ function private() {
             STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim alacritty alacritty-macos iterm2 bat wakatime zathura w3m-macos eza clang-format)
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim alacritty alacritty-linux bat wakatime zathura w3m-linux i3 wofi eza clang-format)
+            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim alacritty alacritty-linux bat wakatime zathura w3m-linux xmonad eza clang-format)
             ;;
         *)
             reset
