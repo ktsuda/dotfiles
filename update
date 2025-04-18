@@ -45,7 +45,7 @@ function set_stow_folders() {
     done
 
     if [[ ${#STOW_FOLDERS[@]} -eq 0 ]]; then
-        STOW_FOLDERS=($(/bin/ls -d -- */ | sed 's/\///g'))
+        mapfile -t STOW_FOLDERS < <(/bin/ls -d -- */ | sed 's/\///g')
     fi
 }
 
