@@ -251,8 +251,10 @@ myLogHook = return ()
 --
 -- By default, do nothing.
 myStartupHook = do
+    spawnOnce "xss-lock -- i3lock &"
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
+    spawnOnce "fcitx5 -dr &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
