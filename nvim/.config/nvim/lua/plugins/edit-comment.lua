@@ -23,11 +23,11 @@ return {
     ignore = '^$',
     toggler = {
       line = '<leader>cc',
-      block = '<leader>bc',
+      block = '<leader>cb',
     },
     opleader = {
       line = '<leader>cc',
-      block = '<leader>bc',
+      block = '<leader>cb',
     },
     mappings = {
       basic = true,
