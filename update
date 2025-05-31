@@ -61,10 +61,10 @@ function reset() {
 function shared() {
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS=(zsh tmux git tig nvim)
+            STOW_FOLDERS=(zsh ripgrep tmux git tig nvim clang-format)
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(bash tmux git tig nvim)
+            STOW_FOLDERS=(bash ripgrep tmux git tig nvim clang-format)
             ;;
         *)
             reset
