@@ -117,7 +117,6 @@ M.server_configs = {
     },
     cmd = { 'typescript-language-server', '--stdio' },
   },
-  denols = {},
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
