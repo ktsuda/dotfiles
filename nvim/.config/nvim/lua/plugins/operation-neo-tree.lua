@@ -24,11 +24,18 @@ return {
       end,
       filesystem = {
         filtered_items = {
-          hide_dotfiles = false,
+          hide_dotfiles = true,
           hide_gitignored = true,
           hide_by_name = {
             'node_modules',
             '.git',
+          },
+          never_show = {
+            '.DS_Store',
+            'thumbs.db',
+          },
+          always_show_by_pattern = {
+            '.config',
           },
         },
         follow_current_file = {
