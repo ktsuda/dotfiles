@@ -39,7 +39,7 @@ return {
           select = false,
         }),
         ['<Tab>'] = cmp.mapping(custom_cmp.next_expand_jump, { 'i', 's' }),
-        ['<iS-Tab>'] = cmp.mapping(custom_cmp.prev_expand_jump, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(custom_cmp.prev_expand_jump, { 'i', 's' }),
       },
       sources = {
         { name = 'nvim_lsp' },
