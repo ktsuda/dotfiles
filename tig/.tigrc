@@ -24,3 +24,5 @@ bind status P !git push
 bind generic <Ctrl-r> refresh
 bind generic <Ctrl-Y> move-first-line
 bind generic <Ctrl-E> move-last-line
+
+source ~/.config/tig/tokyonight-storm.tigrc
