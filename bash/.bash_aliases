@@ -109,6 +109,7 @@ alias ga='git add -N . && git add -p'
 alias gc='git commit -v'
 alias gco='git checkout'
 alias gp='git push origin'
+alias gfp='git fetch -p'
 
 alias dp='docker container ls'
 alias di='docker image ls'
