@@ -9,7 +9,7 @@ return {
     'vim-denops/denops.vim',
   },
   config = function()
-    vim.keymap.set({ 'i', 'c' }, '<C-Space>', '<Plug>(skkeleton-toggle)', { noremap = false, desc = 'SKK: Toggle skk' })
+    vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false, desc = 'SKK: Toggle skk' })
     vim.cmd([[
       call skkeleton#config({
         \   'eggLikeNewline': v:true,
