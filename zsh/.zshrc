@@ -255,6 +255,7 @@ alias cp='cp -ip'
 alias mv='mv -i'
 
 alias gl='git l'
+alias gla='git l --all'
 alias gb='git branch -av'
 alias gs='git status -sb'
 alias gd='git diff'
