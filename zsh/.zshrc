@@ -91,6 +91,10 @@ if type brew &>/dev/null; then
   fi
 fi
 
+if type uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
 fpath=(
   ~/.config/zsh/zsh-completions(N-/)
   $fpath
