@@ -91,10 +91,6 @@ if type brew &>/dev/null; then
   fi
 fi
 
-if type uv &>/dev/null; then
-  eval "$(uv generate-shell-completion zsh)"
-fi
-
 fpath=(
   ~/.config/zsh/zsh-completions(N-/)
   $fpath
@@ -118,6 +114,10 @@ fi
 
 if [ -x "$HOME/.rbenv/bin/rbenv" ]; then
   eval "$($HOME/.rbenv/bin/rbenv init - zsh)"
+fi
+
+if type uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
 fi
 
 export GOPATH="$HOME/go"
