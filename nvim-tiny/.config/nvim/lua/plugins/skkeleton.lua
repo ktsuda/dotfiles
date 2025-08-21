@@ -13,7 +13,7 @@ return {
     vim.cmd([[
       call skkeleton#config({
         \   'eggLikeNewline': v:true,
-        \   'globalDictionaries': ['~/.local/share/nvim/skk/SKK-JISYO.L', '~/.local/share/nvim/skk/SKK-JISYO.edict2'],
+        \   'globalDictionaries': ['~/.local/share/nvim/skk/SKK-JISYO.L', '~/.local/share/nvim/skk/SKK-JISYO.edict'],
         \ })
     ]])
   end,
