@@ -8,11 +8,11 @@ return {
   branch = '0.1.x',
   keys = {
     { '<C-p>', utils.custom('files'), desc = 'Telescope: Search files' },
-    { '<leader>fg', utils.custom('grep'), desc = 'Telescope: Search string by grep' },
-    { '<leader>fk', utils.custom('keymaps'), desc = 'Telescope: Search keymaps' },
-    { '<leader>fb', utils.custom('buffers'), desc = 'Telescope: Search buffers' },
+    { '<leader>sg', utils.custom('grep'), desc = 'Telescope: Search string by grep' },
+    { '<leader>sk', utils.custom('keymaps'), desc = 'Telescope: Search keymaps' },
+    { '<leader>sb', utils.custom('buffers'), desc = 'Telescope: Search buffers' },
     { '<leader>/', utils.custom('string'), desc = 'Telescope: Search in current buffer' },
-    { '<leader>fh', utils.custom('help_tags'), desc = 'Telescope: Search helptags' },
+    { '<leader>sh', utils.custom('help_tags'), desc = 'Telescope: Search helptags' },
   },
   dependencies = {
     'nvim-lua/plenary.nvim',

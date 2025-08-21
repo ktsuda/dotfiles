@@ -6,7 +6,12 @@ return {
   enabled = true,
   keys = {
     {
-      '<leader>fa',
+      '<leader>sa',
+      utils.extension('live_grep_args', 'live_grep_args'),
+      desc = 'Telescope: Search string by grep args',
+    },
+    {
+      '<C-g>',
       utils.extension('live_grep_args', 'live_grep_args'),
       desc = 'Telescope: Search string by grep args',
     },
