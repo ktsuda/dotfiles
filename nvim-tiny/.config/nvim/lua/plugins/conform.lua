@@ -26,7 +26,7 @@ return {
       scss = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'prettierd', 'prettier', stop_after_first = true },
       json = { 'prettierd', 'prettier', stop_after_first = true },
-      -- markdown = { 'markdownlint' },
+      markdown = { 'markdownlint' },
       lua = { 'stylua' },
       go = { 'goimports' },
       python = { 'isort', 'black' },
