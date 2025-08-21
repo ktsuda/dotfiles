@@ -33,9 +33,9 @@ return {
       ruby = { 'rubocop' },
       sh = { 'shfmt' },
       zsh = { 'beautysh' },
-      c = { 'clang_format' },
-      cpp = { 'clang_format' },
-      cuda = { 'clang_format' },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
+      cuda = { 'clang-format' },
       ['*'] = { 'trim_whitespace', 'trim_newlines' },
     },
     formatters = {
@@ -51,7 +51,7 @@ return {
       beautysh = {
         prepend_args = { '-i', 2, '-s', 'fnpar' },
       },
-      clang_format = {
+      ['clang-format'] = {
         prepend_args = { '-style=file' },
       },
     },

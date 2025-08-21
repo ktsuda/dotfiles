@@ -23,10 +23,10 @@ return {
     end,
   },
   {
-    'ktsuda/mason-conform.nvim',
+    'zapling/mason-conform.nvim',
     enabled = true,
     event = 'VeryLazy',
-    branch = 'mapping',
+    branch = 'main',
     dependencies = {
       'williamboman/mason.nvim',
       'stevearc/conform.nvim',
