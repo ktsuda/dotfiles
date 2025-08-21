@@ -16,7 +16,7 @@ return {
       'neovim/nvim-lspconfig',
     },
     config = function()
-      local lsp = require('lsp.servers')
+      local lsp = require('utils.lsp-servers')
       require('mason-lspconfig').setup({
         ensure_installed = lsp.names,
       })

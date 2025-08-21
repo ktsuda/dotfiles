@@ -7,8 +7,8 @@ return {
     { 'gd', vim.lsp.buf.definition, mode = 'n', desc = 'LSP: Go to definition' },
   },
   config = function()
-    local lsp = require('lsp.servers')
-    for i, server_name in ipairs(lsp.names) do
+    local lsp = require('utils.lsp-servers')
+    for _, server_name in ipairs(lsp.names) do
       vim.lsp.enable(server_name)
     end
   end,
