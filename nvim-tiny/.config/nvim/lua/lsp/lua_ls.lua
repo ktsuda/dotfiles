@@ -16,7 +16,10 @@ return {
         preloadFileSize = 10000,
       },
       telemetry = { enable = false },
-      ['diagnostics.globals'] = { 'vim' },
+      diagnostics = {
+        globals = { 'vim' },
+        disable = { 'missing-fields' },
+      },
     },
   },
 }
