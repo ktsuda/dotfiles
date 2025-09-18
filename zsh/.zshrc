@@ -190,32 +190,7 @@ esac
 
 if type fzf &>/dev/null; then
   if [ -z "$FZF_DEFAULT_OPTS" ]; then
-    # export FZF_DEFAULT_OPTS="\
-    #   --highlight-line \
-    #   --info=inline-right \
-    #   --ansi \
-    #   --layout=reverse \
-    #   --border=none \
-    #   --height 60% \
-    #   --no-multi \
-    #   --color=bg+:#2e3c64 \
-    #   --color=bg:#1f2335 \
-    #   --color=border:#29a4bd \
-    #   --color=fg:#c0caf5 \
-    #   --color=gutter:#1f2335 \
-    #   --color=header:#ff9e64 \
-    #   --color=hl+:#2ac3de \
-    #   --color=hl:#2ac3de \
-    #   --color=info:#545c7e \
-    #   --color=marker:#ff007c \
-    #   --color=pointer:#ff007c \
-    #   --color=prompt:#2ac3de \
-    #   --color=query:#c0caf5:regular \
-    #   --color=scrollbar:#29a4bd \
-    #   --color=separator:#ff9e64 \
-    #   --color=spinner:#ff007c \
-    #   "
-    export FZF_DEFAULT_OPTS="\
+    FZF_DEFAULT_OPTS="\
       --highlight-line \
       --info=inline-right \
       --ansi \
@@ -223,6 +198,17 @@ if type fzf &>/dev/null; then
       --border=none \
       --height 60% \
       --no-multi \
+      "
+    ## tokyonight
+    # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+    #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
+    #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
+    #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
+    #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
+    #   --color=spinner:#ff007c \
+    #   "
+    ## neosolarized
+    export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
       --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
       --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
       --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
