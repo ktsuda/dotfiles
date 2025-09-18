@@ -1,7 +1,7 @@
 # Alacritty configuration file
 [general]
 import = [
-  "~/.config/alacritty/tokyonight.toml",
+  "~/.config/alacritty/solarized-dark.toml",
   "~/.config/alacritty/font.toml",
   "~/.config/alacritty/keyboard.toml",
   "~/.config/alacritty/window.toml",
