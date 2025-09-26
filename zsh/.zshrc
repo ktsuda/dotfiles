@@ -266,6 +266,7 @@ alias gc='git commit -v'
 alias gco='git checkout'
 alias gp='git push origin'
 alias gfp='git fetch -p'
+alias grc='git rebase --continue'
 
 alias dp='docker container ls'
 alias di='docker image ls'
