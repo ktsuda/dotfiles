@@ -18,3 +18,4 @@ vim.keymap.set('n', ']d', function()
 end, { desc = 'Diagnostic: Next diagnostic' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostic: Set loclist' })
 vim.keymap.set('n', '<leader>xx', '<cmd>so %<cr>', { desc = 'Execute the current file' })
+

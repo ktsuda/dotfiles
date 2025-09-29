@@ -10,6 +10,11 @@ return {
       utils.extension('live_grep_args', 'live_grep_args'),
       desc = 'Telescope: Search string by grep args',
     },
+    {
+      '<C-g>',
+      utils.extension('live_grep_args', 'live_grep_args'),
+      desc = 'Telescope: Search string by grep args',
+    },
   },
   dependencies = {
     'nvim-telescope/telescope.nvim',

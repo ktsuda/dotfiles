@@ -1,6 +1,6 @@
 return {
   'numToStr/Comment.nvim',
-  enabled = true,
+  enabled = false,
   keys = {
     { '<leader>cc', '<Plug>(comment_toggle_linewise)', mode = { 'v' }, desc = 'Comment: Toggle linewise' },
     { '<leader>cb', '<Plug>(comment_toggle_blockwise)', mode = { 'v' }, desc = 'Comment: Toggle blockwise' },

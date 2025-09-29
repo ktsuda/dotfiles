@@ -44,4 +44,8 @@ function M.diffthis()
   gs.diffthis('~')
 end
 
+function M.setqflist()
+  gs.setqfflist('all')
+end
+
 return M
