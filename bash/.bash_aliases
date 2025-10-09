@@ -53,18 +53,37 @@ case ${OSTYPE} in
 esac
 
 if type fzf &> /dev/null; then
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-        --color=fg:#c0caf5,bg:#24283b,hl:#ff9e64 \
-        --color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64 \
-        --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff \
-        --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a \
-        --height 60% --reverse +m"
+    if [ -z "$FZF_DEFAULT_OPTS" ]; then
+      FZF_DEFAULT_OPTS="\
+        --highlight-line \
+        --info=inline-right \
+        --ansi \
+        --layout=reverse \
+        --border=none \
+        --height 60% \
+        --no-multi \
+        "
+      ## tokyonight
+      # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+      #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
+      #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
+      #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
+      #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
+      #   --color=spinner:#ff007c \
+      #   "
+      ## neosolarized
+      export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+        --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
+        --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
+        --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
+        "
+    fi
     export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
         --follow --exclude .git"
 fi
 
 if type bat &> /dev/null; then
-    alias cat='bat --color=always --theme="tokyonight_storm"'
+    alias cat='bat --color=always --theme="Solarized (dark)"'
 fi
 
 if type rg &> /dev/null; then
