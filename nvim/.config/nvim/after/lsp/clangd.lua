@@ -11,6 +11,8 @@ return {
     '--cross-file-rename',
     '--header-insertion=iwyu',
   },
+  filetypes = { 'c', 'cpp' },
+  root_markers = { '.git' },
   init_options = {
     clangdFileStatus = true, -- Provides information about activity on clangd’s per-file worker thread
     usePlaceholders = true,

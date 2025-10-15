@@ -201,12 +201,12 @@ if type fzf &>/dev/null; then
       "
     ## tokyonight
     # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-    #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
-    #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
-    #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
-    #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
-    #   --color=spinner:#ff007c \
-    #   "
+      #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
+      #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
+      #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
+      #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
+      #   --color=spinner:#ff007c \
+      #   "
     ## neosolarized
     export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
       --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
@@ -454,6 +454,12 @@ case ${OSTYPE} in
   darwin*)
     export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
     export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin
+    ;;
+esac
+
+case ${OSTYPE} in
+  linux*)
+    export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
     ;;
 esac
 
