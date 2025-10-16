@@ -15,11 +15,32 @@ return {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',
     },
-    config = function()
+    opts = function()
       local lsp = require('utils.lsp-servers')
-      require('mason-lspconfig').setup({
-        ensure_installed = lsp.names,
-      })
+
+      return { ensure_installed = lsp.names }
+    end,
+  },
+  {
+    'jay-babu/mason-nvim-dap.nvim',
+    enabled = true,
+    event = 'VeryLazy',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'mfussenegger/nvim-dap',
+    },
+    opts = function()
+      local adapters = {}
+      local cdap = require('utils.custom-dap')
+
+      for adapter, _ in pairs(cdap.adapters or {}) do
+        table.insert(adapters, adapter)
+      end
+
+      return {
+        handlers = {},
+        ensure_installed = adapters,
+      }
     end,
   },
   {

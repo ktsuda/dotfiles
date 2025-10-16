@@ -15,7 +15,7 @@ return {
       root_markers = { '.git' },
       capabilities = require('cmp_nvim_lsp').default_capabilities(),
     })
-    for _, server_name in ipairs(lsp.names) do
+    for _, server_name in ipairs(lsp.names or {}) do
       vim.lsp.enable(server_name)
     end
   end,
