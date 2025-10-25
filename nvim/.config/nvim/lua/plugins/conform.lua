@@ -40,16 +40,19 @@ return {
     },
     formatters = {
       prettier = {
-        prepend_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
+        prepend_args = { '--no-semi', '--single-quote', '--jsx-single-quote', '--print-width=120' },
+      },
+      prettierd = {
+        prepend_args = { '--no-semi', '--single-quote', '--jsx-single-quote', '--print-width=120' },
       },
       stylua = {
-        prepend_args = { '--quote-style', 'AutoPreferSingle', '--indent-type', 'Spaces', '--indent-width', 2 },
+        prepend_args = { '--quote-style', 'AutoPreferSingle', '--indent-type', 'Spaces', '--indent-width', '2' },
       },
       shfmt = {
-        args = { '-i', 4, '-ci', '-bn', '-sr', '-s' },
+        args = { '-i', '4', '-ci', '-bn', '-sr', '-s' },
       },
       beautysh = {
-        prepend_args = { '-i', 2, '-s', 'fnpar' },
+        prepend_args = { '-i', '2', '-s', 'fnpar' },
       },
       ['clang-format'] = {
         prepend_args = { '-style=file' },
