@@ -114,10 +114,40 @@ function update() {
     done
 }
 
+function create_symlink() {
+    ORIG_PATH="$(readlink -f "$0")"
+    if [[ ! -d ${HOME}/bin ]]; then
+        mkdir -p "${HOME}/bin"
+    fi
+    if [[ ${DELETE} -eq 1 ]]; then
+        printf "Deleting %-17s" "${0##*/}"
+        if test -h $0; then
+            echo " ...   Do nothing"
+        else
+            rm -f "${HOME}/bin/${0##*/}"
+            echo " ...   Done"
+        fi
+    fi
+    if [[ ${INSTALL} -eq 1 ]]; then
+        printf "Installing %-17s" "${0##*/}"
+        if [[ ! -f ${HOME}/bin/${0##*/} ]]; then
+            ln -s "${ORIG_PATH}" "${HOME}/bin/${0##*/}"
+            echo " ...   Symlink created"
+        elif test -h $0; then
+            echo " ...   Symlink already exists"
+        elif test -h "${HOME}/bin/${0##*/}"; then
+            echo " ...   Symlink already exists"
+        else
+            echo " ...   Done"
+        fi
+    fi
+}
+
 function main() {
     pushd "$DOTFILES_DIR" > /dev/null || exit
     set_stow_folders "$@"
     update
+    create_symlink
     popd > /dev/null || exit
 }
 
