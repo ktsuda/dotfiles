@@ -1,6 +1,6 @@
 return {
   'nvim-mini/mini.files',
-  enabble = false,
+  enabled = false,
   version = false,
   keys = {
     {
