@@ -7,7 +7,7 @@ return {
   },
   opts = {
     options = {
-      theme = 'NeoSolarized',
+      theme = 'auto',
       icons_enabled = true,
     },
     extensions = {
