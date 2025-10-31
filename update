@@ -24,18 +24,14 @@ function set_stow_folders() {
                 exit 1
                 ;;
             -p | --private)
-                reset
+                set_default
                 private
                 shift
                 ;;
             -s | --shared)
-                reset
+                set_default
                 shared
                 shift
-                ;;
-            -a | --all)
-                all
-                exit 1
                 ;;
             *)
                 STOW_FOLDERS+=("$1")
@@ -45,26 +41,30 @@ function set_stow_folders() {
     done
 
     if [[ ${#STOW_FOLDERS[@]} -eq 0 ]]; then
-        mapfile -t STOW_FOLDERS < <(/bin/ls -d -- */ | sed 's/\///g')
+        set_all
     fi
-}
-
-function all() {
-    ALL_FOLDERS="$(/bin/ls -d -- */ | tr '\n' ' ' | sed 's/\///g')"
-    echo "$ALL_FOLDERS"
 }
 
 function reset() {
     STOW_FOLDERS=()
 }
 
+function set_default() {
+    STOW_FOLDERS=(bash zsh ripgrep tmux tig clang-format)
+}
+
+function set_all() {
+    mapfile -t STOW_FOLDERS < <(/bin/ls -d -- */ | sed 's/\///g')
+}
+
 function shared() {
+    STOW_FOLDERS+=(git nvim-tiny)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS=(zsh ripgrep tmux git tig nvim-tiny clang-format)
+            STOW_FOLDERS+=()
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(bash ripgrep tmux git tig nvim-tiny clang-format)
+            STOW_FOLDERS+=()
             ;;
         *)
             reset
@@ -73,12 +73,13 @@ function shared() {
 }
 
 function private() {
+    STOW_FOLDERS+=(git-private nvim ranger alacritty wakatime bat eza zathura)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim ranger alacritty alacritty-macos iterm2 bat wakatime zathura w3m-macos eza clang-format)
+            STOW_FOLDERS+=(alacritty-macos iterm2 w3m-macos)
             ;;
         linux-gnu*)
-            STOW_FOLDERS=(zsh ripgrep tmux git-private tig nvim ranger alacritty alacritty-linux bat wakatime zathura w3m-linux xmonad rofi nitrogen eza clang-format btop)
+            STOW_FOLDERS+=(alacritty-linux w3m-linux xmonad rofi nitrogen btop)
             ;;
         *)
             reset
@@ -100,46 +101,70 @@ options:
 EOF
 }
 
-function update() {
-    for folder in "${STOW_FOLDERS[@]}"; do
-        if [[ ${DELETE} -eq 1 ]]; then
-            printf "Deleting %-17s" "$folder"
-            stow -t "$HOME" -D "$folder" 2> /dev/null
+function restore_file() {
+    if [[ $# -lt 1 ]]; then
+        echo "Pass at least one dotfile name: $1 ($#)"
+        exit 1
+    fi
+
+    FILENAME="$1"
+
+    if [[ -f ${HOME}/${FILENAME}.backup ]]; then
+        if [[ -L ${HOME}/${FILENAME} ]]; then
+            /bin/rm -f "${HOME}/${FILENAME}"
         fi
-        if [[ ${INSTALL} -eq 1 ]]; then
-            printf "Installing %-17s" "$folder"
-            stow --ignore='\.DS_Store' -t "$HOME" "$folder"
-        fi
-        echo " ...   Done"
-    done
+        /bin/mv -f "${HOME}/${FILENAME}.backup" "${HOME}/${FILENAME}"
+    fi
 }
 
-function create_symlink() {
-    ORIG_PATH="$(readlink -f "$0")"
-    if [[ ! -d ${HOME}/bin ]]; then
-        mkdir -p "${HOME}/bin"
+function backup_file() {
+    if [[ $# -lt 1 ]]; then
+        echo "Pass at least one dotfile name"
+        exit 1
     fi
+
+    FILENAME="$1"
+
+    if [[ -e ${HOME}/${FILENAME} ]]; then
+        if [[ ! -L ${HOME}/${FILENAME} ]]; then
+            /bin/mv -f "${HOME}/${FILENAME}" "${HOME}/${FILENAME}.backup"
+        fi
+    fi
+}
+
+function restore_all() {
+    restore_file ".bashrc"
+    restore_file ".profile"
+    restore_file ".bash_aliases"
+    restore_file ".zshrc"
+    restore_file ".zshenv"
+}
+
+function backup_all() {
+    backup_file ".bashrc"
+    backup_file ".profile"
+    backup_file ".bash_aliases"
+    backup_file ".zshrc"
+    backup_file ".zshenv"
+}
+
+function update() {
     if [[ ${DELETE} -eq 1 ]]; then
-        printf "Deleting %-17s" "${0##*/}"
-        if test -h $0; then
-            echo " ...   Do nothing"
-        else
-            rm -f "${HOME}/bin/${0##*/}"
+        for folder in "${STOW_FOLDERS[@]}"; do
+            restore_all
+            printf "Deleting   %-17s" "$folder"
+            stow -t "$HOME" -D "$folder" 2> /dev/null
             echo " ...   Done"
-        fi
+        done
     fi
+
     if [[ ${INSTALL} -eq 1 ]]; then
-        printf "Installing %-17s" "${0##*/}"
-        if [[ ! -f ${HOME}/bin/${0##*/} ]]; then
-            ln -s "${ORIG_PATH}" "${HOME}/bin/${0##*/}"
-            echo " ...   Symlink created"
-        elif test -h $0; then
-            echo " ...   Symlink already exists"
-        elif test -h "${HOME}/bin/${0##*/}"; then
-            echo " ...   Symlink already exists"
-        else
+        for folder in "${STOW_FOLDERS[@]}"; do
+            backup_all
+            printf "Installing %-17s" "$folder"
+            stow --ignore='\.DS_Store' -t "$HOME" "$folder"
             echo " ...   Done"
-        fi
+        done
     fi
 }
 
@@ -147,7 +172,6 @@ function main() {
     pushd "$DOTFILES_DIR" > /dev/null || exit
     set_stow_folders "$@"
     update
-    create_symlink
     popd > /dev/null || exit
 }
 
