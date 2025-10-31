@@ -154,6 +154,7 @@ function update() {
             restore_all
             printf "Deleting   %-17s" "$folder"
             stow -t "$HOME" -D "$folder" 2> /dev/null
+            rm -f "$HOME/.git-credentials"
             echo " ...   Done"
         done
     fi
