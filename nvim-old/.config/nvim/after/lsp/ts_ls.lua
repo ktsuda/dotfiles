@@ -1,5 +1,4 @@
 return {
-  cmd = { 'typescript-language-server', '--stdio' },
   filetypes = {
     'typescript',
     'typescriptreact',
@@ -8,5 +7,5 @@ return {
     'javascriptreact',
     'javascript.jsx',
   },
-  root_markers = { '.git' },
+  cmd = { 'typescript-language-server', '--stdio' },
 }

@@ -25,9 +25,10 @@ vim.diagnostic.config({
     },
     numhl = {
       [vim.diagnostic.severity.WARN] = 'WarningMsg',
-    },
+    }
   },
   jump = {
     float = true,
   },
 })
+

@@ -58,7 +58,7 @@ function set_all() {
 }
 
 function shared() {
-    STOW_FOLDERS+=(git nvim-tiny)
+    STOW_FOLDERS+=(git nvim)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=()
