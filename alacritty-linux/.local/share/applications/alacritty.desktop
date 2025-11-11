@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Alacritty
+Exec=/home/oai/.cargo/bin/alacritty
+Icon=
+Type=Application
+Terminal=false
+Comment=Alacritty Terminal Emulator
