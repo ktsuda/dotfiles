@@ -1,7 +1,7 @@
-# Alacritty configuration file
 [general]
+# Alacritty configuration file
 import = [
-  "~/.config/alacritty/solarized-dark.toml",
+  "~/.config/alacritty/catppuccin-mocha.toml",
   "~/.config/alacritty/font.toml",
   "~/.config/alacritty/keyboard.toml",
   "~/.config/alacritty/window.toml",
