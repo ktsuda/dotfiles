@@ -77,6 +77,13 @@ case ${OSTYPE} in
     ;;
 esac
 
+case ${OSTYPE} in
+  linux*)
+    eval "$(ssh-agent -s)"
+    ;;
+esac
+
+
 typeset -U fpath
 
 if type brew &>/dev/null; then
