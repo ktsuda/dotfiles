@@ -221,10 +221,18 @@ if type fzf &>/dev/null; then
       #   --color=spinner:#ff007c \
       #   "
     ## neosolarized
+    # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+      #   --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
+      #   --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
+      #   --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
+      #   "
+    ## catppuccin
     export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-      --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
-      --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
-      --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
+      --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
+      --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+      --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+      --color=selected-bg:#45475A \
+      --color=border:#6C7086,label:#CDD6F4 \
       "
   fi
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
@@ -232,7 +240,7 @@ if type fzf &>/dev/null; then
 fi
 
 if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="Solarized (dark)"'
+  alias cat='bat --color=always --theme="catppuccin_mocha"'
 fi
 
 if type rg &>/dev/null; then

@@ -26,4 +26,4 @@ configuration {
     kb-mode-complete: "Control+o";
 }
 
-@theme "tokyonight.rasi"
+@theme "catppuccin-mocha.rasi"
