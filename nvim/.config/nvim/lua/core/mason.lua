@@ -1,12 +1,12 @@
 local function load()
   vim.pack.add({
-    { src = 'https://github.com/kylechui/nvim-surround' },
+    { src = 'https://github.com/williamboman/mason.nvim' },
   })
 
-  require('nvim-surround').setup()
+  require('mason').setup()
 end
 
-local group = vim.api.nvim_create_augroup('my.surround', {})
+local group = vim.api.nvim_create_augroup('my.mason', {})
 
 local cmd = {
   group = group,

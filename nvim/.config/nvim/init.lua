@@ -1,10 +1,15 @@
-require('core')
+vim.loader.enable() -- cache
 
-require('plugins.completion')
-require('plugins.formatter')
-require('plugins.lsp')
-require('plugins.linter')
-require('plugins.mason')
+require('core.builtin')
+require('core.options')
+require('core.keymaps')
+require('core.diagnostic')
+require('core.mason')
+
+require('plugins.cmp')
+require('plugins.conform')
+require('plugins.lspconfig')
+require('plugins.lint')
 
 require('plugins.operation')
 require('plugins.edit')

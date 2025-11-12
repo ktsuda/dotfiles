@@ -49,9 +49,13 @@ vim.keymap.set('n', '<C-p>', function()
   tb.find_files(opts)
 end, { desc = 'Find files' })
 
-vim.keymap.set('n', '<leader>sg', function()
+vim.keymap.set('n', '<leader>sa', function()
   tb.live_grep(opts)
 end, { desc = 'Grep string' })
+
+vim.keymap.set('n', '<leader>sw', function()
+  tb.grep_string(opts)
+end, { desc = 'Grep string under cursor' })
 
 vim.keymap.set('n', '<leader>sk', tb.keymaps, { desc = 'Search keymaps' })
 vim.keymap.set('n', '<leader>sb', tb.buffers, { desc = 'Search buffers' })
