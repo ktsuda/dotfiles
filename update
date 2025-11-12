@@ -76,10 +76,10 @@ function private() {
     STOW_FOLDERS+=(git-private nvim ranger alacritty wakatime bat eza zathura)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(alacritty-macos iterm2 w3m-macos)
+            STOW_FOLDERS+=(alacritty-macos iterm2 w3m w3m-macos)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(alacritty-linux w3m-linux xmonad rofi nitrogen btop)
+            STOW_FOLDERS+=(alacritty-linux w3m w3m-linux xmonad rofi nitrogen btop)
             ;;
         *)
             reset
