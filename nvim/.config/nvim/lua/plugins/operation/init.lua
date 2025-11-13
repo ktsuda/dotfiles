@@ -1,4 +1,5 @@
-require('plugins.operation.neo-tree')
+-- require('plugins.operation.neo-tree')
+require('plugins.operation.oil')
 -- require('plugins.operation.bufferline')
 -- require('plugins.operation.lualine')
 
