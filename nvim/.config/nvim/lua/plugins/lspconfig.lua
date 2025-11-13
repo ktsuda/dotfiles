@@ -13,6 +13,9 @@ local function load()
 
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show hover' })
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
+  vim.keymap.set('n', 'gh', function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  end, { desc = 'Inlay hints' })
 
   vim.api.nvim_create_autocmd('LspAttach', {
     group = group,
