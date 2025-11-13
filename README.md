@@ -5,28 +5,35 @@
 ### common
 
 - stow
+- bash
 - zsh
 - ripgrep
 - tmux
 - git
 - tig
 - nvim
-- bat
+
+### private
+
+- ranger
+- alacritty
 - wakatime
+- bat
+- eza
 - zathura
 - w3m
-- eza
 
-### macos only
+#### macos only
 
 - homebrew
 - iterm2
 
-### linux
+#### linux
 
-- alacritty
-- i3
-- wofi
+- xmonad
+- rofi
+- nitrogen
+- btop
 
 ## Install dotfiles
 
@@ -55,4 +62,4 @@ cd dotfiles
 
 ## ToDo
 
-- Add a script to install dotfiles that does not require the repository itself
+- Add a script that allows us to install dotfiles by downloading it
