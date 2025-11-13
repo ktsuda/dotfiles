@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(bash zsh ripgrep tmux tig clang-format)
+    STOW_FOLDERS=(bash zsh ripgrep tmux tig)
 }
 
 function set_all() {
