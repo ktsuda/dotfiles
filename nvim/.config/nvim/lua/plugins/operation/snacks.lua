@@ -24,8 +24,6 @@ s.setup({
     git_status = true,
     git_untracked = true,
     follow_file = true,
-    hidden = true,
-    ignored = true,
   },
 })
 
