@@ -7,7 +7,7 @@ require('plugins.edit.surround')
 require('plugins.edit.skkeleton')
 
 -- git
-require('plugins.edit.fugitive')
+-- require('plugins.edit.fugitive')
 -- require('plugins.edit.gitsigns')
 
 -- markdown

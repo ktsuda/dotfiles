@@ -28,5 +28,6 @@ vim.keymap.set('n', '<C-s>', function()
   load()
   t.extensions.project.project({
     display_type = 'full',
+    hide_workspace = true,
   })
 end, { desc = 'Search repos' })
