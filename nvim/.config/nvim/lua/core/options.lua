@@ -26,6 +26,7 @@ vim.opt.formatoptions:append({ m = true, M = true, l = false })
 vim.opt.diffopt:append('vertical')
 vim.opt.autoread = true
 vim.opt.shadafile = "NONE"
+vim.opt.splitbelow = true
 vim.lazydraw = true
 
 if vim.fn.has('mac') == 1 or vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
