@@ -1,8 +1,11 @@
 local M = {}
 
 M.servers = {
-  'lua_ls',
   'clangd',
+  -- 'gopls',
+  'lua_ls',
+  'pyright',
+  -- 'tailwindcss',
   'ts_ls',
 }
 
