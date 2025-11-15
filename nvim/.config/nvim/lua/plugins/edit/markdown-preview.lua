@@ -10,7 +10,7 @@ local function load()
   vim.g.mkdp_auto_close = 1
   vim.g.mkdp_refresh_slow = 0
 
-  vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreview, { desc = 'Open markdown preview' })
+  vim.keymap.set('n', '<leader>mp', vim.cmd.MarkdownPreviewToggle, { desc = 'Toggle markdown preview' })
 end
 
 local group = vim.api.nvim_create_augroup('my.markdown-preview', {})
@@ -18,10 +18,10 @@ local group = vim.api.nvim_create_augroup('my.markdown-preview', {})
 local cmd = {
   group = group,
   once = true,
-  pattern = 'markdown',
+  pattern = { '*.md', '*.markdown', '*.mkd' },
   callback = load,
 }
 
-local events = { 'FileType' }
+local events = { 'InsertEnter', 'CmdlineEnter' }
 
 vim.api.nvim_create_autocmd(events, cmd)
