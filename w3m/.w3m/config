@@ -72,6 +72,7 @@ editor /opt/homebrew/bin/nvim
 mailto_options 1
 mailer 
 extbrowser brave-cli open
+extbrowser2 open -a "Brave Browser.app"
 extbrowser2 
 extbrowser3 
 extbrowser4 
