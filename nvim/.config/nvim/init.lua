@@ -13,4 +13,5 @@ require('plugins.lint')
 
 require('plugins.operation')
 require('plugins.edit')
+-- require('plugins.claude')
 require('plugins.color')
