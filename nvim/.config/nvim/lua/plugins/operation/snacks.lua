@@ -50,15 +50,25 @@ vim.keymap.set('n', '<C-s>', function()
   })
 end)
 
-local grep_opts = {
-  hidden = true,
-  ignored = true,
-}
-
 vim.keymap.set('n', '<leader>sa', function()
-  p.grep(grep_opts)
+  p.git_grep({
+    format = 'file',
+    live = true,
+    supports_live = true,
+    untracked = true,
+    submodlues = true,
+  })
 end)
 
 vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
-  p.grep_word(grep_opts)
+  p.git_grep({
+    format = 'file',
+    search = function(picker)
+      return picker:word()
+    end,
+    live = true,
+    supports_live = true,
+    untracked = true,
+    submodlues = true,
+  })
 end)
