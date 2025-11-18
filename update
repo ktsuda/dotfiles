@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(bash zsh ripgrep tmux tig nvim)
+    STOW_FOLDERS=(bash zsh ripgrep tmux git tig nvim)
 }
 
 function set_all() {
@@ -58,7 +58,7 @@ function set_all() {
 }
 
 function shared() {
-    STOW_FOLDERS+=(git)
+    STOW_FOLDERS+=()
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=()
@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(git-private ranger alacritty wakatime bat eza zathura w3m)
+    STOW_FOLDERS+=(ranger alacritty wakatime bat eza zathura w3m)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(alacritty-macos iterm2)

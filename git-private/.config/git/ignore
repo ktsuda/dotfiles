@@ -1,5 +1,0 @@
-.DS_Store
-nvim/.config/nvim/plugin
-.cache
-
-**/.claude/settings.local.json
