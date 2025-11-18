@@ -1,7 +1,6 @@
 local group = vim.api.nvim_create_augroup('my.lint', { clear = true })
 
 local function load()
-  print('Load nvim-lint')
   vim.pack.add({
     { src = 'https://github.com/mfussenegger/nvim-lint' },
     { src = 'https://github.com/rshkarin/mason-nvim-lint' },
