@@ -40,6 +40,7 @@ vim.keymap.set('n', '<leader>gl', p.git_log_file)
 vim.keymap.set('n', '<leader>gb', p.git_branches)
 vim.keymap.set('n', '<leader>gs', p.git_status)
 vim.keymap.set('n', '<leader>gd', p.git_diff)
+vim.keymap.set('n', '<leader>go', s.lazygit.open)
 
 vim.keymap.set('n', '<C-s>', function()
   p.projects({
