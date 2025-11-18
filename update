@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(ranger alacritty wakatime bat eza zathura w3m)
+    STOW_FOLDERS+=(lazygit ranger alacritty wakatime bat eza zathura w3m)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(alacritty-macos iterm2)
