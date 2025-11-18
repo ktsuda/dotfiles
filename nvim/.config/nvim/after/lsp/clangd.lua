@@ -8,7 +8,6 @@ return {
     -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
     '--clang-tidy',
     '--completion-style=bundled',
-    '--cross-file-rename',
     '--header-insertion=iwyu',
   },
   filetypes = { 'c', 'cpp' },
