@@ -9,6 +9,7 @@ require('plugins.edit.skkeleton')
 -- git
 -- require('plugins.edit.fugitive')
 -- require('plugins.edit.gitsigns')
+require('plugins.edit.gitsigns')
 
 -- markdown
 require('plugins.edit.markdown-preview')
