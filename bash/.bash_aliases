@@ -137,18 +137,28 @@ alias dn='docker network ls'
 alias drmp='docker rm $(dp -q -f "status=exited")'
 alias drmi='docker rmi $(di -q -f "dangling=true")'
 
-alias t='tig'
-alias ta='tig --all'
-alias ts='tig status'
-alias tx='tmuxinator'
+if type lazygit &> /dev/null; then
+  alias l='lazygit'
+fi
+
+if type tig &> /dev/null; then
+  alias t='tig'
+  alias ta='tig --all'
+  alias ts='tig status'
+fi
+
+if type tmuxinator &> /dev/null; then
+  alias tx='tmuxinator'
+fi
 
 alias r='ranger'
 
-alias v='nvim'
-alias vim='nvim'
-alias vc='nvim --clean'
-alias vimc='nvim --clean'
-alias vimdiff='nvim -d'
+#alias v='nvim'
+alias v="${EDITOR}"
+#alias vim='nvim'
+#alias vc='nvim --clean'
+#alias vimc='nvim --clean'
+#alias vimdiff='nvim -d'
 alias m='v $HOME/memo.md'
 
 alias q='goto_repo_root'
