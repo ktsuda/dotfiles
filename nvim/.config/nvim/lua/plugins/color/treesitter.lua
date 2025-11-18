@@ -1,9 +1,9 @@
 local function load()
   vim.pack.add({
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'master' },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
   })
 
-  -- pcall(require('nvim-treesitter.install').update({ with_sync = true }))
+  pcall(require('nvim-treesitter.install').update({ with_sync = true }))
 
   require('nvim-treesitter.configs').setup({
     ensure_installed = {
