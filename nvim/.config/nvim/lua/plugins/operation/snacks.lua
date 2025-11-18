@@ -71,3 +71,7 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
     submodlues = true,
   })
 end)
+
+require('snacks.toggle').inlay_hints():map('gh')
+require('snacks.toggle').line_number():map('<leader>l')
+require('snacks.toggle').zoom():map('<leader>z')
