@@ -15,7 +15,6 @@ local function load()
       documentation = { auto_show = true, auto_show_delay_ms = 500 },
       menu = { auto_show = true },
     },
-    statusline = { enabled = true },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
       providers = {
