@@ -1,6 +1,8 @@
 local function load()
   vim.pack.add({
     { src = 'https://github.com/dhruvasagar/vim-table-mode' },
+  }, {
+    load = true,
   })
 
   vim.g.table_mode_corner = '|'

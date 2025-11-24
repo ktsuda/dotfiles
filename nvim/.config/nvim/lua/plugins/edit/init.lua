@@ -12,6 +12,6 @@ require('plugins.edit.skkeleton')
 require('plugins.edit.gitsigns')
 
 -- markdown
--- require('plugins.edit.markdown-preview')
-require('plugins.edit.peek')
+require('plugins.edit.markdown-preview')
+-- require('plugins.edit.peek')
 require('plugins.edit.markdown-table-mode')
