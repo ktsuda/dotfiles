@@ -1,6 +1,19 @@
 local function load()
   vim.pack.add({
-    { src = 'https://github.com/L3MON4D3/LuaSnip' },
+    {
+      src = 'https://github.com/L3MON4D3/LuaSnip',
+      name = 'luasnip',
+      version = 'v2.4.1',
+      data = {
+        on_changed = function(event)
+          local name, kind, path = event.data.spec.name, event.data.kind, event.data.path
+
+          if name == 'luasnip' and (kind == 'install' or kind == 'update') then
+            vim.system({ 'make', 'install_jsregexp' }, { cwd = path })
+          end
+        end,
+      },
+    },
     { src = 'https://github.com/rafamadriz/friendly-snippets' },
     { src = 'https://github.com/Saghen/blink.cmp' },
     { src = 'https://github.com/giuxtaposition/blink-cmp-copilot' },
@@ -90,6 +103,17 @@ local function load()
 end
 
 local group = vim.api.nvim_create_augroup('my.cmp', {})
+
+vim.api.nvim_create_autocmd('PackChanged', {
+  group = group,
+  callback = function(event)
+    local spec = event.data.spec
+
+    if spec.data and spec.data.on_changed then
+      spec.data.on_changed(event)
+    end
+  end,
+})
 
 local cmd = {
   group = group,

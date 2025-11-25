@@ -4,13 +4,13 @@ vim.pack.add({
     version = 'main',
     data = {
       on_changed = function(event)
-        if event.data.kind == 'install' and event.data.kind == 'update' then
+        if event.data.kind == 'install' or event.data.kind == 'update' then
           pcall(require('nvim-treesitter').update())
         end
       end,
     },
   },
-}, { load = false })
+})
 
 local group = vim.api.nvim_create_augroup('my.treesitter', { clear = true })
 
@@ -25,13 +25,31 @@ vim.api.nvim_create_autocmd('PackChanged', {
 })
 
 local pattern = {
-  'lua',
   'c',
   'cpp',
-  'markdown',
-  'go',
+  'javascript',
+  'typescript',
+  'tsx',
   'python',
+  -- 'go',
+  'lua',
+  -- 'ruby',
+  'sh',
+  'zsh',
+  -- 'latex',
+  'make',
+  'cmake',
+  'dockerfile',
   'json',
+  'yaml',
+  'toml',
+  'xml',
+  'markdown',
+  'vim',
+  'vimdoc',
+  'tmux',
+  'rasi',
+  'zathurarc',
 }
 
 vim.api.nvim_create_autocmd('FileType', {
@@ -48,10 +66,14 @@ vim.api.nvim_create_autocmd('FileType', {
     })
 
     local lang = event.match
-    -- local already_installed = vim.api.nvim_get_runtime_file(('parser/%s.so'):format(lang), true)
-    local already_installed = ts.get_installed()
-    -- if not next(already_installed) then
-    if not vim.tbl_contains(already_installed, lang) then
+
+    -- local already_installed = ts.get_installed()
+    -- if not vim.tbl_contains(already_installed, lang) then
+    --   ts.install(lang, { force = false, summary = true })
+    -- end
+
+    local already_installed = vim.api.nvim_get_runtime_file(('parser/%s.so'):format(lang), true)
+    if not next(already_installed) then
       ts.install(lang, { force = false, summary = true })
     end
 
@@ -61,15 +83,3 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end,
 })
-
--- local cmd = {
---   group = group,
---   once = true,
---   callback = function()
---     vim.cmd([[:packadd 'nvim-treesitreesitter tter']])
---   end,
--- }
---
--- local events = { 'BufReadPre', 'BufNewFile' }
---
--- vim.api.nvim_create_autocmd(events, cmd)
