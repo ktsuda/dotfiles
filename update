@@ -148,15 +148,29 @@ function backup_all() {
     backup_file ".zshenv"
 }
 
+function credential() {
+    printf "Deleting   %-17s ...   " "password? (y/N)"
+    read input
+    if [[ -z $input ]]; then
+        credential
+    elif [[ $input = 'n' ]] || [[ $input == 'N' ]]; then
+        :
+    elif [[ $input = 'y' ]] || [[ $input == 'Y' ]]; then
+        rm -f "$HOME/.git-credentials"
+    else
+        credential
+    fi
+}
+
 function update() {
     if [[ ${DELETE} -eq 1 ]]; then
         for folder in "${STOW_FOLDERS[@]}"; do
             restore_all
             printf "Deleting   %-17s" "$folder"
             stow -t "$HOME" -D "$folder" 2> /dev/null
-            rm -f "$HOME/.git-credentials"
             echo " ...   Done"
         done
+        credential
     fi
 
     if [[ ${INSTALL} -eq 1 ]]; then
