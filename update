@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(nvim lazygit ranger alacritty bat eza zathura w3m)
+    STOW_FOLDERS+=(nvim lazygit ranger alacritty bat eza zathura w3m fish)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(alacritty-macos iterm2)
