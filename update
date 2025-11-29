@@ -73,13 +73,13 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wezterm nvim lazygit ranger bat eza zathura w3m fish)
+    STOW_FOLDERS+=(nvim lazygit ranger bat eza zathura w3m)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(iterm2)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(xmonad rofi nitrogen btop)
+            STOW_FOLDERS+=(wezterm xmonad rofi nitrogen btop)
             ;;
         *)
             reset
