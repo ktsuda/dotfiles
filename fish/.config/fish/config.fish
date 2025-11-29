@@ -51,6 +51,7 @@ fish_add_path -g /usr/local/sbin
 fish_add_path -g /usr/local/lib/nodejs/bin
 fish_add_path -g /opt/local/bin
 fish_add_path -g /Library/Apple/usr/bin
+fish_add_path -g /home/linuxbrew/.linuxbrew/bin
 
 # Homebrew setup for macOS
 if test (uname) = Darwin

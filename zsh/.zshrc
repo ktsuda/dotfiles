@@ -68,6 +68,7 @@ path=(
   /usr/local/lib/nodejs/bin(N-/)
   /opt/local/bin(N-/)
   /Library/Apple/usr/bin(N-/)
+  /home/linuxbrew/.linuxbrew/bin(N-/)
   $path
 )
 
