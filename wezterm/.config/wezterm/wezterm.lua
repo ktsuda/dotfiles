@@ -9,8 +9,9 @@ config.font = wezterm.font('UbuntuMono Nerd Font')
 config.font_size = 13.0
 config.color_scheme = 'Catppuccin Mocha'
 
--- Set the appearance of the tab bar
+-- Set the appearance
 config.hide_tab_bar_if_only_one_tab = true
+config.window_background_opacity = 0.8
 
 -- Finally, return the configuration to wezterm:
 return config
