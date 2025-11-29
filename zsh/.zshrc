@@ -72,6 +72,9 @@ path=(
 )
 
 case ${OSTYPE} in
+  linux*)
+    test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    ;;
   darwin*)
     eval "$(/opt/homebrew/bin/brew shellenv)"
     ;;
