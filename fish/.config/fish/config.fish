@@ -303,11 +303,11 @@ bind \cu chdir_parent
 # fzf command helper
 function __fzfcmd
     if set -q TMUX_PANE
-        and test "$FZF_TMUX" != "0"
+        and test "$FZF_TMUX" != 0
         or set -q FZF_TMUX_OPTS
         echo "fzf-tmux $FZF_TMUX_OPTS -- "
     else
-        echo "fzf"
+        echo fzf
     end
 end
 
@@ -403,7 +403,7 @@ function custom_tmux_session
     else
         set -l ID (tmux list-sessions 2>/dev/null | eval (__fzfcmd) | cut -d: -f1)
         if test -z "$ID"
-            tmux new-session -s "default"
+            tmux new-session -s default
             return
         end
         if set -q TMUX
@@ -421,7 +421,7 @@ function custom_send_to_session
     end
     set -l ID (tmux list-sessions 2>/dev/null | eval (__fzfcmd) | cut -d: -f1)
     if test -z "$ID"
-        tmux new-session -s "default"tmux new-window -t "default" "$argv"
+        tmux new-session -s defaulttmux new-window -t default "$argv"
         return
     end
     tmux new-window -t "$ID" "$argv"
