@@ -20,7 +20,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "~/.cargo/bin/alacritty"
+myTerminal      = "/home/linuxbrew/.linuxbrew/bin/wezterm"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
