@@ -22,7 +22,7 @@ local function load()
       sh = { 'shfmt' },
       zsh = { 'beautysh' },
       python = { 'isort', 'black' },
-      -- markdown = { 'markdownlint' },
+      markdown = { 'markdownlint' },
       -- go = { 'goimports' },
       -- ruby = { 'rubocop' },
       -- ['*'] = { 'trim_whitespace', 'trim_newlines' },

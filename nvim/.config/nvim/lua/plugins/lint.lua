@@ -29,6 +29,7 @@ local function load()
 
   lint.linters.pylint.cmd = 'python3'
   lint.linters.pylint.args = { '-m', 'pylint', '-f', 'json' }
+  lint.linters.markdownlint.args = { '--disable', 'MD033', '--' }
 
   require('mason-nvim-lint').setup({
     automatic_installation = true,

@@ -6,8 +6,6 @@ local function load()
   })
 
   vim.g.table_mode_corner = '|'
-  vim.g.table_mode_disable_mappings = 1
-  vim.g.table_mode_disable_tableize_mappings = 1
   vim.g.table_mode_delimiter = '\t'
 
   vim.keymap.set('n', '<leader>mt', ':TableModeToggle<cr>', { desc = 'Toggle markdown table mode' })
