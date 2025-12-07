@@ -79,7 +79,7 @@ function private() {
             STOW_FOLDERS+=(iterm2)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(wezterm xmonad rofi nitrogen btop)
+            STOW_FOLDERS+=(alacritty xmonad rofi nitrogen btop)
             ;;
         *)
             reset
