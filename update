@@ -150,12 +150,12 @@ function backup_all() {
 
 function credential() {
     printf "Deleting   %-17s ...   " "password? (y/N)"
-    read input
+    read -r input
     if [[ -z $input ]]; then
         credential
-    elif [[ $input = 'n' ]] || [[ $input == 'N' ]]; then
+    elif [[ $input == 'n' ]] || [[ $input == 'N' ]]; then
         :
-    elif [[ $input = 'y' ]] || [[ $input == 'Y' ]]; then
+    elif [[ $input == 'y' ]] || [[ $input == 'Y' ]]; then
         rm -f "$HOME/.git-credentials"
     else
         credential
