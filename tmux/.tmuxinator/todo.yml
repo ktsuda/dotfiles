@@ -1,0 +1,9 @@
+project_name: todo
+project_root: ~/src/github.com/ktsuda/todotxt
+windows:
+  - todo:
+      layout: main-vertical
+      panes:
+        - TODOTXT_DIR=~/src/github.com/ktsuda/todotxt torudo
+        - NVIM_LISTEN_ADDRESS=/tmp/nvim.sock nvim
+        - 
