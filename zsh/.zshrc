@@ -137,6 +137,10 @@ if type uv &>/dev/null; then
   eval "$(uv generate-shell-completion zsh)"
 fi
 
+if type direnv &>/dev/null; then
+  eval "$(direnv hook zsh)"
+fi
+
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
