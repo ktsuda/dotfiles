@@ -2,38 +2,48 @@
 
 ## Requirements
 
+- stow (apt, brew)
+- rust (rustup, brew)
+- go (script, brew) 
+
 ### common
 
-- stow
-- bash
-- zsh
-- ripgrep
-- tmux
-- git
-- tig
-- nvim
+- git (apt, brew)
+- tmux (apt, brew)
+- ripgrep (cargo)
+- fd-find (cargo)
 
-### private
+### shared
 
-- ranger
-- alacritty
-- wakatime
-- bat
-- eza
-- zathura
-- w3m
+- vim (apt, brew)
 
-#### macos only
+#### darwin
 
-- homebrew
-- iterm2
+- zsh (brew)
 
 #### linux
 
-- xmonad
-- rofi
-- nitrogen
-- btop
+- bash (apt)
+
+### private
+
+- zsh (apt, brew)
+- nvim (script, brew)
+- lazygit (go)
+- zathura (apt, brew)
+- btop (apt, brew, cargo)
+- tree-sitter-cli (cargo)
+
+#### darwin
+
+- iterm2 (brew)
+
+#### linux
+
+- alacritty (cargo)
+- xmonad (apt)
+- rofi (apt)
+- nitrogen (apt)
 
 ## Install dotfiles
 
@@ -59,7 +69,3 @@ cd dotfiles
 cd dotfiles
 ./update -D
 ```
-
-## ToDo
-
-- Add a script that allows us to install dotfiles by downloading it
