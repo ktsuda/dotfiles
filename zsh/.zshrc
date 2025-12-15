@@ -120,33 +120,46 @@ fi
 
 autoload -Uz compinit; compinit
 
-if type zoxide &>/dev/null; then
-  eval "$(zoxide init zsh)"
-fi
-
-if type op &>/dev/null; then
+# 1Password
+function _op() {
+  unfunction "$0"
   eval "$(op completion zsh)"
-  compdef _op op
-fi
+  $0 "$@"
+}
+compdef _op op
 
-if [ -x "$HOME/.rbenv/bin/rbenv" ]; then
+# Ruby
+function _rbenv() {
+  unfunction "$0"
   eval "$($HOME/.rbenv/bin/rbenv init - zsh)"
-fi
+  $0 "$@"
+}
+compdef _rbenv rbenv
 
-if type uv &>/dev/null; then
+# Python
+function _uv() {
+  unfunction "$0"
   eval "$(uv generate-shell-completion zsh)"
-fi
+  $0 "$@"
+}
+compdef _uv uv
 
-if type direnv &>/dev/null; then
+# direnv
+function _direnv() {
+  unfunction "$0"
   eval "$(direnv hook zsh)"
-fi
+  $0 "$@"
+}
+compdef _direnv direnv
 
+# golang
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
 
 export WAKATIME_HOME="$HOME/.wakatime_home"
 
+# prompt
 PROMPT='%n@%m:%~ $ '
 autoload -Uz vcs_info
 function precmd_vcs_info() { vcs_info }
@@ -155,19 +168,10 @@ setopt prompt_subst
 RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
+# aliases
 case ${OSTYPE} in
   darwin*)
-    if type eza &>/dev/null; then
-      alias ls='eza -F -g --color=auto'
-      alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso --git'
-      alias lla='ll -a'
-    elif type exa &>/dev/null; then
-      alias ls='exa -F -g --color=auto'
-      alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso --git'
-      alias lla='ll -a'
-    elif type gls &>/dev/null; then
+    if type gls &>/dev/null; then
       alias ls='gls -X -F -C -T 2 --color=auto'
       alias la='ls -a'
       alias ll='ls -lrt'
@@ -185,22 +189,10 @@ case ${OSTYPE} in
     fi
     ;;
   linux*)
-    if type eza &>/dev/null; then
-      alias ls='eza -F -g --color=auto'
-      alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso --git'
-      alias lla='ll -a'
-    elif type exa &>/dev/null; then
-      alias ls='exa -F -g --color=auto'
-      alias la='ls -a'
-      alias ll='ls -l -s date --time-style long-iso --git'
-      alias lla='ll -a'
-    else
-      alias ls='ls -X -F -C -T 2 --color=auto'
-      alias la='ls -a'
-      alias ll='ls -lrt'
-      alias lla='ll -a'
-    fi
+    alias ls='ls -X -F -C -T 2 --color=auto'
+    alias la='ls -a'
+    alias ll='ls -lrt'
+    alias lla='ll -a'
 
     if type fdfind &>/dev/null; then
       alias fd='fdfind --hidden --exclude .git'
@@ -220,20 +212,7 @@ if type fzf &>/dev/null; then
       --height 60% \
       --no-multi \
       "
-    ## tokyonight
-    # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-      #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
-      #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
-      #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
-      #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
-      #   --color=spinner:#ff007c \
-      #   "
-    ## neosolarized
-    # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-      #   --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
-      #   --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
-      #   --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
-      #   "
+
     ## catppuccin
     export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
       --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
@@ -243,32 +222,13 @@ if type fzf &>/dev/null; then
       --color=border:#6C7086,label:#CDD6F4 \
       "
   fi
+
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
     --follow --exclude .git"
 fi
 
-if type bat &>/dev/null; then
-  alias cat='bat --color=always --theme="catppuccin_mocha"'
-fi
-
 if type rg &>/dev/null; then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
-fi
-
-if type dust &>/dev/null; then
-  alias du='dust -X .git'
-fi
-
-if type xh &>/dev/null; then
-  alias wget='xh --download'
-fi
-
-if type duf &>/dev/null; then
-  alias df='duf'
-fi
-
-if type taskell &>/dev/null; then
-  alias task='taskell ~/taskell.md'
 fi
 
 if type pbcopy &>/dev/null; then
@@ -297,10 +257,6 @@ alias gp='git push origin'
 alias gfp='git fetch -p'
 alias grc='git rebase --continue'
 
-alias dp='docker container ls'
-alias di='docker image ls'
-alias dv='docker volume ls'
-alias dn='docker network ls'
 alias drmp='docker rm $(dp -q -f "status=exited")'
 alias drmi='docker rmi $(di -q -f "dangling=true")'
 
@@ -308,24 +264,16 @@ if type lazygit &> /dev/null; then
   alias l='lazygit'
 fi
 
-if type tig &> /dev/null; then
-  alias t='tig'
-  alias ta='tig --all'
-  alias ts='tig status'
-fi
-
 if type tmuxinator &> /dev/null; then
   alias tx='tmuxinator'
 fi
 
-alias r='ranger'
+alias v="${EDITOR}"
+alias vim="${EDITOR}"
 
-alias v='nvim'
-alias vim='nvim'
-alias vc='nvim --clean'
-alias vimc='nvim --clean'
-alias vimdiff='nvim -d'
-alias m='v $HOME/memo.md'
+if type nvim &>/dev/null; then
+  alias vimdiff='nvim -d'
+fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 
@@ -342,7 +290,7 @@ function chdir_parent() {
   zle accept-line
 }
 zle -N chdir_parent
-bindkey '^u' chdir_parent
+bindkey '^q' chdir_parent
 
 function __fzfcmd() {
   [ -n "$TMUX_PANE" ] \
@@ -482,20 +430,7 @@ function custom_send_to_session() {
 if type tmux > /dev/null 2>&1; then
   alias s='custom_tmux_session'
   alias sa='custom_send_to_session'
-elif type zellij > /dev/null 2>&1; then
-  alias s='zellij'
-elif type screen > /dev/null 2>&1; then
-  alias s='screen'
-else
-  ;
 fi
-
-case ${OSTYPE} in
-  darwin*)
-    export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
-    export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin
-    ;;
-esac
 
 case ${OSTYPE} in
   linux*)
