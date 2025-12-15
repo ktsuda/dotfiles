@@ -142,15 +142,18 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# zoxide
-if type zoxide &> /dev/null; then
-    eval "$(zoxide init bash)"
-fi
-
-# rbenv
+# Ruby
 [ -x "$HOME/.rbenv/bin/rbenv" ] && eval "$($HOME/.rbenv/bin/rbenv init - bash)"
 
-# gopath
+# Python
+[ -x "$HOME/.cargo/bin/uv" ] && eval "$($HOME/.cargo/bin/uv generate-shell-completion bash)"
+
+# direnv
+if type direnv &> /dev/null; then
+    eval "$(direnv hook bash)"
+fi
+
+# golang
 [ -d "$HOME/go" ] && export GOPATH="$HOME/go"
 [ -d "$HOME/go/bin" ] && export GOBIN="$HOME/go/bin"
 export GO11MODULE="auto"
@@ -159,16 +162,19 @@ export GO11MODULE="auto"
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+export WAKATIME_HOME="$HOME/.wakatime_home"
+
+case ${OSTYPE} in
+    linux*)
+        export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
+        ;;
+esac
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 [ -f "$HOME/.bash_aliases" ] && . $HOME/.bash_aliases
-[ -f "$HOME/.fzf.bash" ] && . $HOME/.fzf.bash
 
-case ${OSTYPE} in
-    darwin*)
-        export STM32CubeMX_PATH="/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources"
-        ;;
-esac
+stty -ixon

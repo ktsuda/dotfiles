@@ -1,16 +1,8 @@
+#!/usr/bin/env bash
+
 case ${OSTYPE} in
     darwin*)
-        if type eza &> /dev/null; then
-            alias ls='eza -F -g --color=auto'
-            alias la='ls -a'
-            alias ll='ls -l -s date --time-style long-iso --git'
-            alias lla='ll -a'
-        elif type exa &> /dev/null; then
-            alias ls='exa -F -g --color=auto'
-            alias la='ls -a'
-            alias ll='ls -l -s date --time-style long-iso --git'
-            alias lla='ll -a'
-        elif type gls &> /dev/null; then
+        if type gls &> /dev/null; then
             alias ls='gls -X -F -C -T 2 --color=auto'
             alias la='ls -a'
             alias ll='ls -lrt'
@@ -28,22 +20,10 @@ case ${OSTYPE} in
         fi
         ;;
     linux*)
-        if type eza &> /dev/null; then
-            alias ls='eza -F -g --color=auto'
-            alias la='ls -a'
-            alias ll='ls -l -s date --time-style long-iso --git'
-            alias lla='ll -a'
-        elif type exa &> /dev/null; then
-            alias ls='exa -F -g --color=auto'
-            alias la='ls -a'
-            alias ll='ls -l -s date --time-style long-iso --git'
-            alias lla='ll -a'
-        else
-            alias ls='ls -X -F -C -T 2 --color=auto'
-            alias la='ls -a'
-            alias ll='ls -lrt'
-            alias lla='ll -a'
-        fi
+        alias ls='ls -X -F -C -T 2 --color=auto'
+        alias la='ls -a'
+        alias ll='ls -lrt'
+        alias lla='ll -a'
 
         if type fdfind &> /dev/null; then
             alias fd='fdfind --hidden --exclude .git'
@@ -54,56 +34,32 @@ esac
 
 if type fzf &> /dev/null; then
     if [ -z "$FZF_DEFAULT_OPTS" ]; then
-      FZF_DEFAULT_OPTS="\
-        --highlight-line \
-        --info=inline-right \
-        --ansi \
-        --layout=reverse \
-        --border=none \
-        --height 60% \
-        --no-multi \
-        "
-      ## tokyonight
-      # export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-      #   --color=bg+:#2e3c64,bg:#1f2335,border:#29a4bd,fg:#c0caf5 \
-      #   --color=gutter:#1f2335,header:#ff9e64,hl+:#2ac3de,hl:#2ac3de \
-      #   --color=info:#545c7e,marker:#ff007c,pointer:#ff007c,prompt:#2ac3de \
-      #   --color=query:#c0caf5:regular,scrollbar:#29a4bd,separator:#ff9e64 \
-      #   --color=spinner:#ff007c \
-      #   "
-      ## neosolarized
-      export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-        --color=bg+:#073642,bg:#002b36,spinner:#719e07,hl:#586e75 \
-        --color=fg:#839496,header:#586e75,info:#cb4b16,pointer:#719e07 \
-        --color=marker:#719e07,fg+:#839496,prompt:#719e07,hl+:#719e07 \
-        "
+        FZF_DEFAULT_OPTS="\
+            --highlight-line \
+            --info=inline-right \
+            --ansi \
+            --layout=reverse \
+            --border=none \
+            --height 60% \
+            --no-multi \
+            "
+
+        ## catppuccin
+        export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+            --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
+            --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+            --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+            --color=selected-bg:#45475A \
+            --color=border:#6C7086,label:#CDD6F4 \
+            "
     fi
+
     export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
         --follow --exclude .git"
 fi
 
-if type bat &> /dev/null; then
-    alias cat='bat --color=always --theme="Solarized (dark)"'
-fi
-
 if type rg &> /dev/null; then
     alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
-fi
-
-if type dust &> /dev/null; then
-    alias du='dust -X .git'
-fi
-
-if type xh &> /dev/null; then
-    alias wget='xh --download'
-fi
-
-if type duf &> /dev/null; then
-    alias df='duf'
-fi
-
-if type taskell &> /dev/null; then
-    alias task='taskell ~/taskell.md'
 fi
 
 if type pbcopy &> /dev/null; then
@@ -129,37 +85,27 @@ alias gc='git commit -v'
 alias gco='git checkout'
 alias gp='git push origin'
 alias gfp='git fetch -p'
+alias grc='git rebase --continue'
 
-alias dp='docker container ls'
-alias di='docker image ls'
-alias dv='docker volume ls'
-alias dn='docker network ls'
 alias drmp='docker rm $(dp -q -f "status=exited")'
 alias drmi='docker rmi $(di -q -f "dangling=true")'
 
 if type lazygit &> /dev/null; then
-  alias l='lazygit'
-fi
-
-if type tig &> /dev/null; then
-  alias t='tig'
-  alias ta='tig --all'
-  alias ts='tig status'
+    alias l='lazygit'
 fi
 
 if type tmuxinator &> /dev/null; then
-  alias tx='tmuxinator'
+    alias tx='tmuxinator'
 fi
 
-alias r='ranger'
-
-#alias v='nvim'
 alias v="${EDITOR}"
-#alias vim='nvim'
-#alias vc='nvim --clean'
-#alias vimc='nvim --clean'
-#alias vimdiff='nvim -d'
-alias m='v $HOME/memo.md'
+alias vim="${EDITOR}"
+
+if type nvim &> /dev/null; then
+    alias vimdiff='nvim -d'
+fi
+
+alias rmhist='history -c && rm -f ~/.bash_history && exit'
 
 alias q='goto_repo_root'
 function goto_repo_root() {
@@ -168,6 +114,14 @@ function goto_repo_root() {
     fi
 }
 
+function chdir_parent() {
+    builtin cd .. || return
+    READLINE_LINE=""
+    READLINE_POINT=0
+    builtin kill -SIGINT $$
+}
+bind -x '"\C-q":chdir_parent'
+
 function __fzfcmd() {
     [ -n "$TMUX_PANE" ] \
         && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
@@ -175,28 +129,51 @@ function __fzfcmd() {
         || echo "fzf"
 }
 
-alias gr='git_repo_cd'
 function git_repo_cd() {
-    local selected_dir=$(ghq list --full-path | $(__fzfcmd))
-    local ret=$?
-    if [ -z "$selected_dir" ]; then
-        return 0
-    fi
-    eval "builtin cd -- ${selected_dir}"
-    return $ret
+    local selected_dir
+
+    selected_dir=$(ghq list --full-path | $(__fzfcmd)) || return
+    [[ -z $selected_dir ]] && return 0
+    builtin cd -- "${selected_dir}" || return
+    READLINE_LINE=""
+    READLINE_POINT=0
+    builtin kill -SIGINT $$
 }
+bind -x '"\C-s":git_repo_cd'
+
+function subdir_cd() {
+    local selected_dir
+
+    selected_dir=$(fd -t d | $(__fzfcmd)) || return
+    [[ -z $selected_dir ]] && return 0
+    builtin cd -- "${selected_dir}" || return
+    READLINE_LINE=""
+    READLINE_POINT=0
+    builtin kill -SIGINT $$
+}
+bind -x '"\C-o":subdir_cd'
+
+history_widget() {
+    local selected num
+
+    selected=$(fc -rl 1 | $(__fzfcmd)) || return
+    [[ -z $selected ]] && return 0
+    num=${selected%%[[:space:]]*}
+
+    tmp=$(fc -ln "$num" "$num")
+    READLINE_LINE=${tmp#"${tmp%%[![:space:]]*}"}
+    READLINE_POINT=${#READLINE_LINE}
+}
+bind -x '"\C-r":history_widget'
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
-    local ipv4_address=$(ifconfig \
+    local ipv4_address
+    ipv4_address=$(ifconfig \
         | awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' \
-        | $(__fzfcmd))
-    local ret=$?
-    if [ -z "$ipv4_address" ]; then
-        return 0
-    fi
+        | $(__fzfcmd)) || return
+    [[ -z $ipv4_address ]] && return 0
     echo "$ipv4_address"
-    return $ret
 }
 
 alias sp='pkg_search'
@@ -268,9 +245,5 @@ function custom_send_to_session() {
 
 if type tmux > /dev/null 2>&1; then
     alias s='custom_tmux_session'
-    alias a='custom_send_to_session'
-elif type screen > /dev/null 2>&1; then
-    alias s='screen'
-else
-    :
+    alias sa='custom_send_to_session'
 fi
