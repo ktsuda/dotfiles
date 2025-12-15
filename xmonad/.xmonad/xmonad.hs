@@ -261,8 +261,10 @@ myStartupHook = do
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 ~/.config/xmobar/xmobar.config"
+    -- spawn "pkill -x xmobar >/dev/null 2>&1 || true"
+    xmproc <- mapM (\i -> spawnPipe (xmobarCmd i)) [0, 1]
     xmonad $ docks defaults
 
 -- A structure containing your configuration settings, overriding
@@ -293,6 +295,10 @@ defaults = def {
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
+
+-- xmobar command
+xmobarCmd :: Int -> String
+xmobarCmd i = "xmobar -x " ++ show i ++ " ~/.config/xmobar/xmobar.config"
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
