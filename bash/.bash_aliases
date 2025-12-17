@@ -16,7 +16,7 @@ case ${OSTYPE} in
 
         if type fd &> /dev/null; then
             alias fd='fd --hidden --follow --exclude .git'
-            alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+            alias f='${EDITOR} $(fd -t f -t l | eval "$(__fzfcmd)")'
         fi
         ;;
     linux*)
@@ -27,7 +27,7 @@ case ${OSTYPE} in
 
         if type fdfind &> /dev/null; then
             alias fd='fdfind --hidden --exclude .git'
-            alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+            alias f='${EDITOR} $(fd -t f -t l | eval "$(__fzfcmd)")'
         fi
         ;;
 esac
@@ -98,8 +98,8 @@ if type tmuxinator &> /dev/null; then
     alias tx='tmuxinator'
 fi
 
-alias v="${EDITOR}"
-alias vim="${EDITOR}"
+alias v="\${EDITOR}"
+alias vim="\${EDITOR}"
 
 if type nvim &> /dev/null; then
     alias vimdiff='nvim -d'
@@ -110,17 +110,23 @@ alias rmhist='history -c && rm -f ~/.bash_history && exit'
 alias q='goto_repo_root'
 function goto_repo_root() {
     if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-        cd $(git rev-parse --show-toplevel)
+        cd "$(git rev-parse --show-toplevel)" || return 0
     fi
 }
 
-function chdir_parent() {
-    builtin cd .. || return
-    READLINE_LINE=""
-    READLINE_POINT=0
-    builtin kill -SIGINT $$
+# git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git ~/.ble
+# cd ~/.ble
+# make install PREFIX=~/.local
+if [ -f "$HOME/.local/share/blesh/ble.sh" ]; then
+    source -- "$HOME/.local/share/blesh/ble.sh"
+fi
+
+function ble/widget/chdir_parent {
+    builtin cd .. || return 0
+    ble/widget/insert-string ""
+    ble/textarea#invalidate
 }
-bind -x '"\C-q":chdir_parent'
+ble-bind -m emacs -f C-q chdir_parent
 
 function __fzfcmd() {
     [ -n "$TMUX_PANE" ] \
@@ -129,49 +135,55 @@ function __fzfcmd() {
         || echo "fzf"
 }
 
-function git_repo_cd() {
-    local selected_dir
+function ble/widget/git_repo_cd {
+    local selected_dir ret
 
-    selected_dir=$(ghq list --full-path | $(__fzfcmd)) || return
+    selected_dir=$(ghq list --full-path | eval "$(__fzfcmd)")
+    ret=$?
+    ble/textarea#invalidate
+    (( ret == 0 )) || return 0
     [[ -z $selected_dir ]] && return 0
-    builtin cd -- "${selected_dir}" || return
-    READLINE_LINE=""
-    READLINE_POINT=0
-    builtin kill -SIGINT $$
+    builtin cd -- "${selected_dir}" || return 0
+    ble/widget/insert-string ""
 }
-bind -x '"\C-s":git_repo_cd'
+ble-bind -m emacs -f C-s git_repo_cd
 
-function subdir_cd() {
-    local selected_dir
+function ble/widget/subdir_cd {
+    local selected_dir ret
 
-    selected_dir=$(fd -t d | $(__fzfcmd)) || return
+    selected_dir=$(fd -t d | eval "$(__fzfcmd)")
+    ret=$?
+    ble/textarea#invalidate
+    (( ret == 0 )) || return 0
     [[ -z $selected_dir ]] && return 0
-    builtin cd -- "${selected_dir}" || return
-    READLINE_LINE=""
-    READLINE_POINT=0
-    builtin kill -SIGINT $$
+    builtin cd -- "${selected_dir}" || return 0
+    ble/widget/insert-string ""
 }
-bind -x '"\C-o":subdir_cd'
+ble-bind -m emacs -f C-o subdir_cd
 
-history_widget() {
+function ble/widget/history_widget {
     local selected num
 
-    selected=$(fc -rl 1 | $(__fzfcmd)) || return
+    selected=$(builtin history | eval "$(__fzfcmd)")
+    ret=$?
+    ble/textarea#invalidate
+    (( ret == 0 )) || return 0
     [[ -z $selected ]] && return 0
-    num=${selected%%[[:space:]]*}
-
-    tmp=$(fc -ln "$num" "$num")
-    READLINE_LINE=${tmp#"${tmp%%[![:space:]]*}"}
-    READLINE_POINT=${#READLINE_LINE}
+    if [[ $selected =~ ^[[:space:]]*[0-9]+[[:space:]]+(.*)$ ]]; then
+        cmd=${BASH_REMATCH[1]}
+    else
+        cmd=$slected
+    fi
+    ble/widget/insert-string "${cmd}"
 }
-bind -x '"\C-r":history_widget'
+ble-bind -m emacs -f C-r history_widget
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
     local ipv4_address
     ipv4_address=$(ifconfig \
         | awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' \
-        | $(__fzfcmd)) || return
+        | eval "$(__fzfcmd)") || return
     [[ -z $ipv4_address ]] && return 0
     echo "$ipv4_address"
 }
@@ -181,7 +193,7 @@ function pkg_search() {
     case ${OSTYPE} in
         linux*)
             local selected_pkg=$(dpkg -l \
-                | awk '/^ii/ { print $2 }' | $(__fzfcmd))
+                | awk '/^ii/ { print $2 }' | eval "$(__fzfcmd)")
             local ret=$?
             if [ -z "$selected_pkg" ]; then
                 return 0
@@ -192,7 +204,7 @@ function pkg_search() {
             return $ret
             ;;
         darwin*)
-            local selected_formula=$(brew list -1 | $(__fzfcmd))
+            local selected_formula=$(brew list -1 | eval "$(__fzfcmd)")
             local ret=$?
             if [ -z "$selected_formula" ]; then
                 return 0
@@ -218,7 +230,7 @@ function custom_tmux_session() {
             tmux new-session -s"$ID"
         fi
     else
-        ID=$(tmux list-sessions 2> /dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+        ID=$(tmux list-sessions 2> /dev/null | eval "$(__fzfcmd) -0" | cut -d: -f1)
         if [[ -z $ID ]]; then
             tmux new-session -s "default"
             return
@@ -235,7 +247,7 @@ function custom_send_to_session() {
     if [[ $# -lt 1 ]]; then
         return
     fi
-    ID=$(tmux list-sessions 2> /dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+    ID=$(tmux list-sessions 2> /dev/null | eval "$(__fzfcmd) -0" | cut -d: -f1)
     if [[ -z $ID ]]; then
         tmux new-session -s "default" tmux new-window -t "default" "$*"
         return
