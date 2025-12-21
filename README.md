@@ -9,6 +9,7 @@
 ### common
 
 - git (apt, brew)
+- tig (apt, brew)
 - tmux (apt, brew)
 - ripgrep (cargo)
 - fd-find (cargo)

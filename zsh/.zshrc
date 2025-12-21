@@ -241,6 +241,11 @@ else
   echo 'Install xclip or xsel'
 fi
 
+if type tig &> /dev/null; then
+  alias t='tig'
+  alias ta='tig --all'
+fi
+
 alias rm='rm -i'
 alias cp='cp -ip'
 alias mv='mv -i'

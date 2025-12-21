@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(ripgrep tmux git)
+    STOW_FOLDERS=(ripgrep tmux git tig)
 }
 
 function set_all() {
