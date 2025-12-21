@@ -147,7 +147,7 @@ function ble/widget/git_repo_cd {
     selected_dir=$(ghq list --full-path | eval "$(__fzfcmd)")
     ret=$?
     ble/textarea#invalidate
-    (( ret == 0 )) || return 0
+    ((ret == 0)) || return 0
     [[ -z $selected_dir ]] && return 0
     builtin cd -- "${selected_dir}" || return 0
     ble/widget/insert-string ""
@@ -160,7 +160,7 @@ function ble/widget/subdir_cd {
     selected_dir=$(fd -t d | eval "$(__fzfcmd)")
     ret=$?
     ble/textarea#invalidate
-    (( ret == 0 )) || return 0
+    ((ret == 0)) || return 0
     [[ -z $selected_dir ]] && return 0
     builtin cd -- "${selected_dir}" || return 0
     ble/widget/insert-string ""
@@ -168,17 +168,17 @@ function ble/widget/subdir_cd {
 ble-bind -m emacs -f C-o subdir_cd
 
 function ble/widget/history_widget {
-    local selected num
+    local selected ret
 
     selected=$(builtin history | eval "$(__fzfcmd)")
     ret=$?
     ble/textarea#invalidate
-    (( ret == 0 )) || return 0
+    ((ret == 0)) || return 0
     [[ -z $selected ]] && return 0
     if [[ $selected =~ ^[[:space:]]*[0-9]+[[:space:]]+(.*)$ ]]; then
         cmd=${BASH_REMATCH[1]}
     else
-        cmd=$slected
+        cmd=$selected
     fi
     ble/widget/insert-string "${cmd}"
 }
@@ -196,30 +196,32 @@ function ipv4_address() {
 
 alias sp='pkg_search'
 function pkg_search() {
+    local selected_pkg ret
+
     case ${OSTYPE} in
         linux*)
-            local selected_pkg=$(dpkg -l \
+            selected_pkg=$(dpkg -l \
                 | awk '/^ii/ { print $2 }' | eval "$(__fzfcmd)")
-            local ret=$?
-            if [ -z "$selected_pkg" ]; then
+            ret=$?
+            if [ -z "${selected_pkg}" ]; then
                 return 0
             fi
-            apt-cache depends $selected_pkg
+            apt-cache depends "${selected_pkg}"
             echo
-            apt-cache rdepends $selected_pkg
+            apt-cache rdepends "${selected_pkg}"
             return $ret
             ;;
         darwin*)
-            local selected_formula=$(brew list -1 | eval "$(__fzfcmd)")
-            local ret=$?
+            selected_formula=$(brew list -1 | eval "$(__fzfcmd)")
+            ret=$?
             if [ -z "$selected_formula" ]; then
                 return 0
             fi
             echo "${selected_formula} depends on..."
-            brew deps $selected_formula 2> /dev/null
+            brew deps "${selected_formula}" 2> /dev/null
             echo
             echo "${selected_formula} is used by..."
-            brew uses --recursive $selected_formula 2> /dev/null
+            brew uses --recursive "${selected_formula}" 2> /dev/null
             echo
             return $ret
             ;;
