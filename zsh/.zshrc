@@ -128,6 +128,14 @@ function _op() {
 }
 compdef _op op
 
+# fzf fuzzy completion
+function _fzf() {
+  unfunction "$0"
+  FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source <($HOME/.fzf/bin/fzf --zsh)
+  $0 "$@"
+}
+compdef _fzf fzf
+
 # Ruby
 function _rbenv() {
   unfunction "$0"

@@ -145,6 +145,9 @@ if ! shopt -oq posix; then
     fi
 fi
 
+# fzf fuzzy completion
+[ -x "$HOME/.fzf/bin/fzf" ] && FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= eval "$($HOME/.fzf/bin/fzf --bash)"
+
 # Ruby
 [ -x "$HOME/.rbenv/bin/rbenv" ] && eval "$($HOME/.rbenv/bin/rbenv init - bash)"
 
