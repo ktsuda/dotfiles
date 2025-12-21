@@ -17,7 +17,6 @@ local function load()
     javascriptreact = { 'eslint_d' },
     typescriptreact = { 'eslint_d' },
     markdown = { 'markdownlint' },
-    sh = { 'shellcheck' },
   }
 
   vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
