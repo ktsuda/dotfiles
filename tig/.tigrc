@@ -1,0 +1,28 @@
+set line-graphics = default
+set commit-order = topo # auto default topo date author-date reverse
+set ignore-case = smart-case
+set wrap-lines = yes
+set vertical-split = auto
+
+set main-view = line-number:no,interval=10 \
+                date:relative-compact \
+                id:yes \
+                author:abbreviated \
+                commit-title:graph=v2,refs=yes,overflow=yes
+
+set refs-view = line-number:yes,interval=10 \
+                date:default \
+                id:yes \
+                author:abbreviated \
+                ref:yes
+
+bind main R !git rebase -i %(commit)
+bind diff R !git rebase -i %(commit)
+bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
+bind status C !git commit -v
+bind status P !git push
+bind generic <Ctrl-r> refresh
+bind generic <Ctrl-Y> move-first-line
+bind generic <Ctrl-E> move-last-line
+
+source ~/.config/tig/tokyonight-storm.tigrc
