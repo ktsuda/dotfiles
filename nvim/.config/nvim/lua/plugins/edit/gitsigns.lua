@@ -32,8 +32,8 @@ local function load()
         end)
         return '<Ignore>'
       end, { expr = true, desc = 'Gitsigns: Previous hunk' })
-      vim.keymap.set('n', '<leader>hs', gs.stage_hunk, { desc = 'Gitsigns: Stage hunk' })
-      vim.keymap.set('x', '<leader>hs', function()
+      vim.keymap.set('n', '<leader>gs', gs.stage_hunk, { desc = 'Gitsigns: Stage hunk' })
+      vim.keymap.set('x', '<leader>gs', function()
         gs.stage_hunk({
           vim.fn.line('.'),
           vim.fn.line('v'),
@@ -52,15 +52,15 @@ local function load()
       vim.keymap.set('n', '<leader>hb', function()
         gs.blame_line({ full = true })
       end, { desc = 'Gitsigns: Blame line' })
-      vim.keymap.set('n', '<leader>hd', gs.diffthis, { desc = 'Gitsigns: Diff this' })
-      vim.keymap.set('n', '<leader>hD', function()
+      vim.keymap.set('n', '<leader>gd', gs.diffthis, { desc = 'Gitsigns: Diff this' })
+      vim.keymap.set('n', '<leader>gD', function()
         gs.diffthis('~')
       end, { desc = 'Gitsigns: Diff this' })
-      vim.keymap.set('n', '<leader>hq', gs.setqflist, { desc = 'Gitsigns: Set quickfix list' })
-      vim.keymap.set('n', '<leader>hQ', function()
+      vim.keymap.set('n', '<leader>gq', gs.setqflist, { desc = 'Gitsigns: Set quickfix list' })
+      vim.keymap.set('n', '<leader>gQ', function()
         gs.setqfflist('all')
       end, { desc = 'Gitsigns: Set quickfix list' })
-      vim.keymap.set({ 'o', 'x' }, 'ih', gs.select_hunk, { desc = 'Gitsigns: Select hunk' })
+      vim.keymap.set({ 'o', 'x' }, '<leader>ih', gs.select_hunk, { desc = 'Gitsigns: Select hunk' })
     end,
   })
 end

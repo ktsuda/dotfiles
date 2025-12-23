@@ -36,8 +36,6 @@ vim.keymap.set('n', '<leader>sk', p.keymaps)
 vim.keymap.set('n', '<leader>sb', p.buffers)
 vim.keymap.set('n', '<leader>sh', p.help)
 vim.keymap.set('n', '<leader>gl', s.lazygit.open)
-vim.keymap.set('n', '<leader>gs', s.lazygit.open)
-vim.keymap.set('n', '<leader>gd', s.lazygit.open)
 vim.keymap.set('n', '<C-g>', s.lazygit.open)
 
 vim.keymap.set('n', '<C-s>', function()
