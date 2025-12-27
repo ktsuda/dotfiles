@@ -270,8 +270,8 @@ alias gp='git push origin'
 alias gfp='git fetch -p'
 alias grc='git rebase --continue'
 
-alias drmp='docker rm $(dp -q -f "status=exited")'
-alias drmi='docker rmi $(di -q -f "dangling=true")'
+alias drmp='docker rm $(docker ps -q -f "status=exited")'
+alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
 if type lazygit &> /dev/null; then
   alias l='lazygit'
