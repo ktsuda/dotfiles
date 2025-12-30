@@ -29,14 +29,29 @@ s.setup({
 
 local p = require('snacks.picker')
 
-vim.keymap.set('n', '<C-p>', p.smart)
-vim.keymap.set('n', '<C-e>', p.explorer)
+local opts = {}
+local is_inside_work_tree = vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1] == 'true'
+if is_inside_work_tree then
+  opts = { cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1] }
+end
+
 vim.keymap.set('n', '<leader>/', p.lines)
 vim.keymap.set('n', '<leader>sk', p.keymaps)
 vim.keymap.set('n', '<leader>sb', p.buffers)
 vim.keymap.set('n', '<leader>sh', p.help)
-vim.keymap.set('n', '<leader>gl', s.lazygit.open)
+vim.keymap.set('n', '<leader>gl', p.git_log_file)
+vim.keymap.set('n', '<leader>gc', p.git_log)
+vim.keymap.set('n', '<leader>gs', p.git_status)
+vim.keymap.set('n', '<leader>go', s.lazygit.open)
 vim.keymap.set('n', '<C-g>', s.lazygit.open)
+
+vim.keymap.set('n', '<C-p>', function()
+  p.smart(opts)
+end)
+
+vim.keymap.set('n', '<C-e>', function()
+  p.explorer(opts)
+end)
 
 vim.keymap.set('n', '<C-s>', function()
   p.projects({

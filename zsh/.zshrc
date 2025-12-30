@@ -202,7 +202,10 @@ case ${OSTYPE} in
     alias ll='ls -lrt'
     alias lla='ll -a'
 
-    if type fdfind &>/dev/null; then
+    if type fd &>/dev/null; then
+      alias fd='fd --hidden --follow --exclude .git'
+      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+    elif type fdfind &>/dev/null; then
       alias fd='fdfind --hidden --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi

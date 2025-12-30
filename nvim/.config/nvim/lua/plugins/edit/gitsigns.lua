@@ -32,8 +32,8 @@ local function load()
         end)
         return '<Ignore>'
       end, { expr = true, desc = 'Gitsigns: Previous hunk' })
-      vim.keymap.set('n', '<leader>gs', gs.stage_hunk, { desc = 'Gitsigns: Stage hunk' })
-      vim.keymap.set('x', '<leader>gs', function()
+      vim.keymap.set('n', '<leader>hs', gs.stage_hunk, { desc = 'Gitsigns: Stage hunk' })
+      vim.keymap.set('x', '<leader>hs', function()
         gs.stage_hunk({
           vim.fn.line('.'),
           vim.fn.line('v'),
