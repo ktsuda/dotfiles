@@ -153,12 +153,9 @@ function _uv() {
 compdef _uv uv
 
 # direnv
-function _direnv() {
-  unfunction "$0"
+if type direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
-  $0 "$@"
-}
-compdef _direnv direnv
+fi
 
 # golang
 export GOPATH="$HOME/go"
