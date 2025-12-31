@@ -251,6 +251,8 @@ myLogHook = return ()
 --
 -- By default, do nothing.
 myStartupHook = do
+    spawnOnce "autocutsel -fork -selection PRIMARY" -- install autocutsel
+    spawnOnce "autocutsel -fork -selection CLIPBOARD" -- install autocutsel
     spawnOnce "xss-lock -- i3lock &"
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
