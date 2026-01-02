@@ -24,20 +24,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
-# Set the default editor
-if type nvim &>/dev/null; then
-  EDITOR='nvim'
-elif type vim &>/dev/null; then
-  EDITOR='vim'
-elif type vi &>/dev/null; then
-  EDITOR='vi'
-else
-  EDITOR='nano'
-fi
-
-export VISUAL=${EDITOR}
-export EDITOR
-
+setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
 
@@ -96,7 +83,7 @@ esac
 
 typeset -U fpath
 
-if type brew &>/dev/null; then
+if (( $+commands[brew] )); then
   fpath=(
     $(brew --prefix)/share/zsh-completions(N-/)
     $(brew --prefix)/share/zsh/site-functions(N-/)
@@ -119,6 +106,20 @@ if [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
 fi
 
 autoload -Uz compinit; compinit
+
+# Set the default editor
+if (( $+commands[nvim] )); then
+  EDITOR='nvim'
+elif (( $+commands[vim] )); then
+  EDITOR='vim'
+elif (( $+commands[vi] )); then
+  EDITOR='vi'
+else
+  EDITOR='nano'
+fi
+
+export VISUAL=${EDITOR}
+export EDITOR
 
 # 1Password
 function _op() {
@@ -153,7 +154,7 @@ function _uv() {
 compdef _uv uv
 
 # direnv
-if type direnv &> /dev/null; then
+if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
 
@@ -176,7 +177,7 @@ zstyle ':vcs_info:git:*' formats '%b'
 # aliases
 case ${OSTYPE} in
   darwin*)
-    if type gls &>/dev/null; then
+    if (( $+commands[gls] )); then
       alias ls='gls -X -F -C -T 2 --color=auto'
       alias la='ls -a'
       alias ll='ls -lrt'
@@ -188,7 +189,7 @@ case ${OSTYPE} in
       alias lla='ll -a'
     fi
 
-    if type fd &>/dev/null; then
+    if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
@@ -199,17 +200,17 @@ case ${OSTYPE} in
     alias ll='ls -lrt'
     alias lla='ll -a'
 
-    if type fd &>/dev/null; then
+    if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
-    elif type fdfind &>/dev/null; then
+    elif (( $+commands[fdfind] )); then
       alias fd='fdfind --hidden --exclude .git'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
     ;;
 esac
 
-if type fzf &>/dev/null; then
+if (( $+commands[fzf] )); then
   if [ -z "$FZF_DEFAULT_OPTS" ]; then
     FZF_DEFAULT_OPTS="\
       --highlight-line \
@@ -235,21 +236,21 @@ if type fzf &>/dev/null; then
     --follow --exclude .git"
 fi
 
-if type rg &>/dev/null; then
+if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
 fi
 
-if type pbcopy &>/dev/null; then
+if (( $+commands[pbcopy] )); then
   :
-elif type xclip &>/dev/null; then
+elif (( $+commands[xclip] )); then
   alias pbcopy='xclip -selection c'
-elif type xsel &>/dev/null; then
+elif (( $+commands[xsel] )); then
   alias pbcopy='xsel --clipboard --input'
 else
   echo 'Install xclip or xsel'
 fi
 
-if type tig &> /dev/null; then
+if (( $+commands[tig] )); then
   alias t='tig'
   alias ta='tig --all'
 fi
@@ -273,18 +274,18 @@ alias grc='git rebase --continue'
 alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
-if type lazygit &> /dev/null; then
+if (( $+commands[lazygit] )); then
   alias l='lazygit'
 fi
 
-if type tmuxinator &> /dev/null; then
+if (( $+commands[tmuxinator] )); then
   alias tx='tmuxinator'
 fi
 
 alias v="${EDITOR}"
 alias vim="${EDITOR}"
 
-if type nvim &>/dev/null; then
+if (( $+commands[nvim] )); then
   alias vimdiff='nvim -d'
 fi
 
@@ -328,7 +329,7 @@ bindkey "^s" git_repo_cd
 
 function subdir_cd() {
   local selected_dir
-  if type fd &>/dev/null; then
+  if (( $+commands[fd] )); then
     local selected_dir=$(fd -t d | $(__fzfcmd))
   else
     local selected_dir=$(find . -type d | $(__fzfcmd))
@@ -440,7 +441,7 @@ function custom_send_to_session() {
   tmux new-window -t "$ID" "$*"
 }
 
-if type tmux > /dev/null 2>&1; then
+if (( $+commands[tmux] )); then
   alias s='custom_tmux_session'
   alias sa='custom_send_to_session'
 fi
