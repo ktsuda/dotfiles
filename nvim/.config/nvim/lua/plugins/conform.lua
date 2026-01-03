@@ -29,7 +29,10 @@ local function load()
     },
     formatters = {
       prettier = {
-        prepend_args = { '--no-semi', '--single-quote', '--jsx-single-quote', '--print-width=120' },
+        prepend_args = { '--print-width=120' },
+      },
+      prettierd = {
+        prepend_args = { '--print-width=120' },
       },
       stylua = {
         prepend_args = { '--quote-style', 'AutoPreferSingle', '--indent-type', 'Spaces', '--indent-width', '2' },
