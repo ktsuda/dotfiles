@@ -1,0 +1,10 @@
+require('plugins.cmp')
+require('plugins.conform')
+require('plugins.lspconfig')
+require('plugins.lint')
+
+require('plugins.operation')
+require('plugins.edit')
+-- require('plugins.claude')
+require('plugins.color')
+require('plugins.wakatime')
