@@ -14,6 +14,6 @@ local cmd = {
   callback = load,
 }
 
-local events = { 'BufReadPre', 'BufNewFile' }
+local events = { 'BufReadPre', 'BufNewFile', 'BufEnter' }
 
 vim.api.nvim_create_autocmd(events, cmd)
