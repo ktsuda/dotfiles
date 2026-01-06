@@ -44,49 +44,49 @@ local function load()
     prompts = {
       Explain = {
         prompt = p.explain,
-        mapping = '<leader>ae',
+        mapping = '<leader>ae', -- [e]xplain
         description = 'Explain the code',
       },
       Review = {
         prompt = p.review,
-        mapping = '<leader>ar',
+        mapping = '<leader>ar', -- [r]eview
         description = 'Review the code',
       },
       Fix = {
         prompt = p.fix,
-        mapping = '<leader>af',
+        mapping = '<leader>af', -- [f]ix
         description = 'Fix the code',
       },
       Optimize = {
         prompt = p.optimize,
-        mapping = '<leader>ao',
+        mapping = '<leader>ao', -- [o]ptimize
         description = 'Optimize the code',
       },
       Docs = {
         prompt = p.docs,
-        mapping = '<leader>ad',
+        mapping = '<leader>ad', -- [d]ocument
         description = 'Create the documents about the code',
       },
       Tests = {
         prompt = p.tests,
-        mapping = '<leader>at',
+        mapping = '<leader>at', -- [t]est
         description = 'Write tests for the code',
       },
       FixDiagnostic = {
         prompt = p.fix_diagnostic,
         mapping = '<leader>au',
-        description = 'Fix the code',
+        description = 'Fix the code', -- [u]pdate
         selection = cc_select.diagnostics,
       },
       Commit = {
         prompt = p.commit,
-        mapping = '<leader>am',
+        mapping = '<leader>am', -- commit [m]essage
         description = 'Make the commit message',
         selection = cc_select.gitdiff,
       },
       CommitStaged = {
         prompt = p.commit_staged,
-        mapping = '<leader>as',
+        mapping = '<leader>as', -- message for [s]taged commit
         description = 'Make the commit message about the staged modification',
         selection = function(source)
           return cc_select.gitdiff(source, true)
@@ -94,8 +94,8 @@ local function load()
       },
       Translate = {
         prompt = p.translate,
-        mapping = '<leader>at',
-        description = 'Translate to English',
+        mapping = '<leader>al',
+        description = 'Translate to English', -- trans[l]ate
         selection = cc_select.selected_text,
       },
     },
