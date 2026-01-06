@@ -35,70 +35,84 @@ local function load()
     },
   })
 
+  local p = require('utils.prompt')
   local cc_select = require('CopilotChat.select')
 
   require('CopilotChat').setup({
     show_help = true,
+    system_prompt = p.global_system,
     prompts = {
       Explain = {
-        prompt = '/COPILOT_EXPLAIN コードを日本語で説明してください',
+        prompt = p.explain,
         mapping = '<leader>ae',
-        description = 'コードの説明をお願いする',
+        description = 'Explain the code',
       },
       Review = {
-        prompt = '/COPILOT_REVIEW コードを日本語でレビューしてください。',
+        prompt = p.review,
         mapping = '<leader>ar',
-        description = 'コードのレビューをお願いする',
+        description = 'Review the code',
       },
       Fix = {
-        prompt = '/COPILOT_FIX このコードには問題があります。バグを修正したコードを表示してください。説明は日本語で、コード内のコメントは英語でお願いします。',
+        prompt = p.fix,
         mapping = '<leader>af',
-        description = 'コードの修正をお願いする',
+        description = 'Fix the code',
       },
       Optimize = {
-        prompt = '/COPILOT_REFACTOR 選択したコードを最適化し、パフォーマンスと可読性を向上させてください。説明は日本語で、コード内のコメントは英語でお願いします。',
+        prompt = p.optimize,
         mapping = '<leader>ao',
-        description = 'コードの最適化をお願いする',
+        description = 'Optimize the code',
       },
       Docs = {
-        prompt = '/COPILOT_GENERATE 選択したコードに関するドキュメントコメントを英語で生成してください。',
+        prompt = p.docs,
         mapping = '<leader>ad',
-        description = 'コードのドキュメント作成をお願いする',
+        description = 'Create the documents about the code',
       },
       Tests = {
-        prompt = '/COPILOT_TESTS 選択したコードの詳細なユニットテストを書いてください。説明は日本語で、コード内のコメントは英語でお願いします。',
+        prompt = p.tests,
         mapping = '<leader>at',
-        description = 'テストコード作成をお願いする',
+        description = 'Write tests for the code',
       },
       FixDiagnostic = {
-        prompt = 'コードの診断結果に従って問題を修正してください。修正内容の説明は日本語で、コード内のコメントは英語でお願いします。',
+        prompt = p.fix_diagnostic,
         mapping = '<leader>au',
-        description = 'コードの修正をお願いする',
+        description = 'Fix the code',
         selection = cc_select.diagnostics,
       },
       Commit = {
-        prompt = '実装差分に対するコミットメッセージを英語で記述してください。',
-        mapping = '<leader>ac',
-        description = 'コミットメッセージの作成をお願いする',
+        prompt = p.commit,
+        mapping = '<leader>am',
+        description = 'Make the commit message',
         selection = cc_select.gitdiff,
       },
       CommitStaged = {
-        prompt = 'ステージ済みの変更に対するコミットメッセージを英語で記述してください。',
+        prompt = p.commit_staged,
         mapping = '<leader>as',
-        description = 'ステージ済みのコミットメッセージの作成をお願いする',
+        description = 'Make the commit message about the staged modification',
         selection = function(source)
           return cc_select.gitdiff(source, true)
         end,
       },
+      Translate = {
+        prompt = p.translate,
+        mapping = '<leader>at',
+        description = 'Translate to English',
+        selection = cc_select.selected_text,
+      },
     },
+
     model = 'gpt-5-mini',
     temperature = 0.5,
+
     window = {
       layout = 'vertical',
       width = 0.5,
     },
+
     auto_insert_mode = true,
   })
+
+  vim.keymap.set('n', '<leader>ac', '<cmd>CopilotChat<cr>', { desc = 'Chat with Copilot' })
+  vim.opt.splitright = true
 end
 
 local group = vim.api.nvim_create_augroup('my.copilot', {})
