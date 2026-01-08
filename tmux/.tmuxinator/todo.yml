@@ -1,10 +1,10 @@
 name: todo
-root: ~/src/github.com/ktsuda/todotxt
+root: ~/src/github.com/ktsuda/torudo
 
 windows:
   - todo:
       layout: main-vertical
       panes:
-        - TODOTXT_DIR=~/src/github.com/ktsuda/todotxt torudo
+        - TODOTXT_DIR=~/src/github.com/ktsuda/todotxt cargo run
         - NVIM_LISTEN_ADDRESS=/tmp/nvim.sock nvim
         - #empty
