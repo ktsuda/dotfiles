@@ -7,6 +7,7 @@ M.servers = {
   'pyright',
   -- 'tailwindcss',
   'ts_ls',
+  'rust_analyzer',
 }
 
 return M

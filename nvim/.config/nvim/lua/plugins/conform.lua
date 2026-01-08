@@ -25,6 +25,7 @@ local function load()
       markdown = { 'markdownlint' },
       -- go = { 'goimports' },
       -- ruby = { 'rubocop' },
+      rust = { 'rustfmt' },
       -- ['*'] = { 'trim_whitespace', 'trim_newlines' },
     },
     formatters = {
@@ -59,6 +60,10 @@ local function load()
 
   require('mason-conform').setup({
     automatic_installation = true,
+    ignore_install = {
+      'clang-format',
+      'rustfmt',
+    },
   })
 end
 
