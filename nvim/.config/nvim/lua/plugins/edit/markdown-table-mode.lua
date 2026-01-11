@@ -11,7 +11,7 @@ local function load()
   vim.keymap.set('n', '<leader>mt', ':TableModeToggle<cr>', { desc = 'Toggle markdown table mode' })
   vim.keymap.set({ 'n', 'v', 'x' }, '<leader>mc', ':Tableize<cr>', { desc = 'Tableize' })
 
-  vim.cmd('TableModeEnable')
+  vim.cmd('silent TableModeEnable')
 end
 
 local group = vim.api.nvim_create_augroup('my.markdown-table-mode', {})
