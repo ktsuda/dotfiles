@@ -63,6 +63,9 @@ local function load()
     ignore_install = {
       'clang-format',
       'rustfmt',
+      'isort',
+      'black',
+      'beautysh',
     },
   })
 end
