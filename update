@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(ripgrep git tig)
+    STOW_FOLDERS=(ripgrep git tig nvim)
 }
 
 function set_all() {
@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(zsh nvim lazygit zathura btop wezterm)
+    STOW_FOLDERS+=(zsh lazygit zathura btop wezterm)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(iterm2)
