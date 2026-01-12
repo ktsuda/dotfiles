@@ -8,6 +8,7 @@ return {
     { key = 'Tab', mods = 'SHIFT|CTRL', action = act.ActivateTabRelative(-1) },
     { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
     -- { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
+    { key = 'Enter', mods = 'SUPER', action = act.ToggleFullScreen },
     -- { key = '!', mods = 'CTRL', action = act.ActivateTab(0) },
     -- { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
     -- { key = '\"', mods = 'ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },

@@ -15,14 +15,15 @@ config.colors = { tab_bar = { inactive_tab_edge = 'none' } }
 wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
   local background = '#494d64'
   local foreground = '#1e1e2e'
-  local edge_background = 'none'
 
   if tab.is_active then
     background = '#c6a0f6'
     foreground = '#181926'
   end
 
+  local edge_background = 'none'
   local edge_foreground = background
+
   local title = ' ' .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. ' '
 
   return {
