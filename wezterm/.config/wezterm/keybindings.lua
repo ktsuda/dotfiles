@@ -124,13 +124,14 @@ return {
     -- { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
     -- { key = 'r', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
     -- { key = 'r', mods = 'SUPER', action = act.ReloadConfiguration },
+    { key = 'r', mods = 'LEADER', action = act.ReloadConfiguration },
     -- { key = 't', mods = 'SHIFT|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
     -- { key = 't', mods = 'SUPER', action = act.SpawnTab 'CurrentPaneDomain' },
     { key = 'c', mods = 'LEADER', action = act.SpawnTab('CurrentPaneDomain') },
     -- { key = 'u', mods = 'SHIFT|CTRL', action = act.CharSelect{ copy_on_select = true, copy_to =  'ClipboardAndPrimarySelection' } },
     -- { key = 'v', mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
     -- { key = 'v', mods = 'SUPER', action = act.PasteFrom 'Clipboard' },
-    { key = ']', mods = 'LEADER', action = act.PasteFrom 'Clipboard' },
+    { key = ']', mods = 'LEADER', action = act.PasteFrom('Clipboard') },
     -- { key = 'w', mods = 'SHIFT|CTRL', action = act.CloseCurrentTab{ confirm = true } },
     -- { key = 'w', mods = 'SUPER', action = act.CloseCurrentTab{ confirm = true } },
     -- { key = 'x', mods = 'SHIFT|CTRL', action = act.ActivateCopyMode },
@@ -168,6 +169,7 @@ return {
       mods = 'LEADER',
       action = act.ActivateKeyTable({ name = 'resize_mode', timeout_milliseconds = 1000 }),
     },
+    { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'WORKSPACES', title = 'Select workspace' }) },
   },
 
   key_tables = {
