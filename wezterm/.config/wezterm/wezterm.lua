@@ -18,18 +18,19 @@ config.window_background_opacity = 1
 
 config.show_new_tab_button_in_tab_bar = false
 config.show_close_tab_button_in_tabs = false
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
-  local title = ' ' .. wezterm.truncate_right(tab.active_pane.title, max_width - 2) .. ' '
+  local title_txt = theme.tab_title(tab)
+  local title = wezterm.truncate_right(title_txt, max_width - 2)
   return theme.format_status(tab.is_active, title)
 end)
 
 wezterm.on('update-right-status', function(window, pane)
-  local date = wezterm.strftime('%Y-%m-%d %H:%M')
-  local title = ' ' .. date .. ' '
-  local hostname = ' ' .. wezterm.hostname() .. ' '
-  local status_table = theme.merge_tables(theme.format_status(false, title), theme.format_status(false, hostname))
+  local date = wezterm.strftime('%Y-%m-%d %H:%M:%S')
+  local hostname = '@' .. wezterm.hostname()
+  local workspace = wezterm.mux.get_active_workspace()
+  local status_table = theme.merge_tables(date, hostname, workspace)
   window:set_right_status(wezterm.format(status_table))
 end)
 

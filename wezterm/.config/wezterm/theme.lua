@@ -2,23 +2,37 @@ local M = {}
 
 local wezterm = require('wezterm')
 
-function M.merge_tables(t1, t2)
-  local merged = {}
-  for _, v in ipairs(t1) do
-    table.insert(merged, v)
-  end
-  for _, v in ipairs(t2) do
-    table.insert(merged, v)
-  end
-  return merged
-end
-
-M.color_scheme = 'Catppuccin Mocha' -- or Macchiato, Frappe, Latte
-
 local ctp_fg = '#494d64'
 local ctp_bg = '#1e1e2e'
 local ctp_crust = '#181926'
 local ctp_mauve = '#c6a0f6'
+
+function M.tab_title(tab_info)
+  local title = tab_info.tab_title
+
+  if title and #title > 0 then
+    return title
+  end
+
+  return tab_info.active_pane.title
+end
+
+function M.merge_tables(...)
+  local merged = {}
+
+  for i = 1, select('#', ...) do
+    local arg = (select(i, ...))
+    local obj = M.format_status(false, arg)
+
+    for _, v in ipairs(obj) do
+      table.insert(merged, v)
+    end
+  end
+
+  return merged
+end
+
+M.color_scheme = 'Catppuccin Mocha' -- or Macchiato, Frappe, Latte
 
 M.colors = {
   tab_bar = {
@@ -49,7 +63,7 @@ function M.format_status(bool, text)
     { Text = ' ' },
     { Foreground = { Color = fg } },
     { Background = { Color = bg } },
-    { Text = text },
+    { Text = ' ' .. text .. ' ' },
     { Foreground = { Color = edge_fg } },
     { Background = { Color = edge_bg } },
     { Text = ' ' },

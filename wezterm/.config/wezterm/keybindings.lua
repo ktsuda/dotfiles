@@ -124,7 +124,7 @@ return {
     -- { key = 'p', mods = 'SHIFT|CTRL', action = act.ActivateCommandPalette },
     -- { key = 'r', mods = 'SHIFT|CTRL', action = act.ReloadConfiguration },
     -- { key = 'r', mods = 'SUPER', action = act.ReloadConfiguration },
-    { key = 'r', mods = 'LEADER', action = act.ReloadConfiguration },
+    { key = 'R', mods = 'LEADER', action = act.ReloadConfiguration },
     -- { key = 't', mods = 'SHIFT|CTRL', action = act.SpawnTab 'CurrentPaneDomain' },
     -- { key = 't', mods = 'SUPER', action = act.SpawnTab 'CurrentPaneDomain' },
     { key = 'c', mods = 'LEADER', action = act.SpawnTab('CurrentPaneDomain') },
@@ -169,7 +169,31 @@ return {
       mods = 'LEADER',
       action = act.ActivateKeyTable({ name = 'resize_mode', timeout_milliseconds = 1000 }),
     },
-    { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'WORKSPACES', title = 'Select workspace' }) },
+    { key = 's', mods = 'LEADER', action = act.ShowLauncherArgs({ flags = 'WORKSPACES', title = 'Select workspace' }) },
+    {
+      key = 'A',
+      mods = 'LEADER',
+      action = act.PromptInputLine({
+        description = 'Enter new name for tab: ',
+        action = wezterm.action_callback(function(window, pane, line)
+          if line then
+            window:active_tab():set_title(line)
+          end
+        end),
+      }),
+    },
+    {
+      key = '.',
+      mods = 'LEADER',
+      action = act.PromptInputLine({
+        description = 'Enter new workspace name: ',
+        action = wezterm.action_callback(function(window, pane, line)
+          if line then
+            wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+          end
+        end),
+      }),
+    },
   },
 
   key_tables = {
