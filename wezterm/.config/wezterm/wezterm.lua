@@ -16,6 +16,7 @@ config.colors = theme.colors
 config.window_frame = theme.window_frame
 config.window_background_opacity = 1
 
+config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.show_close_tab_button_in_tabs = false
 config.hide_tab_bar_if_only_one_tab = false
