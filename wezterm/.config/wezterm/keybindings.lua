@@ -1,6 +1,11 @@
 local wezterm = require('wezterm')
 local act = wezterm.action
 
+--- wezterm hierarchy:
+---   - workspaces ($: rename, N/P: switch)
+---     - tabs (A: rename, n/p: switch)
+---       - panes (hjkl: switch)
+
 return {
   keys = {
     { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
@@ -37,7 +42,7 @@ return {
     { key = '-', mods = 'CTRL', action = act.DecreaseFontSize },
     -- { key = '-', mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
     -- { key = '-', mods = 'SUPER', action = act.DecreaseFontSize },
-    -- { key = '0', mods = 'CTRL', action = act.ResetFontSize },
+    { key = '0', mods = 'CTRL', action = act.ResetFontSize },
     -- { key = '0', mods = 'SHIFT|CTRL', action = act.ResetFontSize },
     -- { key = '0', mods = 'SUPER', action = act.ResetFontSize },
     -- { key = '1', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
@@ -183,7 +188,7 @@ return {
       }),
     },
     {
-      key = '.',
+      key = '$',
       mods = 'LEADER',
       action = act.PromptInputLine({
         description = 'Enter new workspace name: ',
@@ -194,6 +199,8 @@ return {
         end),
       }),
     },
+    { key = 'N', mods = 'LEADER', action = act.SwitchWorkspaceRelative(1) },
+    { key = 'P', mods = 'LEADER', action = act.SwitchWorkspaceRelative(-1) },
   },
 
   key_tables = {
