@@ -38,7 +38,7 @@ M.colors = {
 }
 
 function M.format_status(bool, text)
-  local fg = colors.text
+  local fg = colors.overlay_1
   local bg = colors.surface_1
 
   if bool then
@@ -56,9 +56,9 @@ function M.format_status(bool, text)
     { Foreground = { Color = fg } },
     { Background = { Color = bg } },
     { Text = ' ' .. text .. ' ' },
-    { Foreground = { Color = edge_fg } },
-    { Background = { Color = edge_bg } },
-    { Text = wezterm.nerdfonts.ple_right_hard_divider_inverse },
+    { Foreground = { Color = edge_bg } },
+    { Background = { Color = edge_fg } },
+    { Text = wezterm.nerdfonts.pl_right_hard_divider },
   }
 end
 
