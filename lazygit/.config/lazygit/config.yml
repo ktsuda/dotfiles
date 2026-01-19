@@ -25,12 +25,12 @@ keybinding:
     nextItem: <down>
     prevItem-alt: k
     nextItem-alt: j
-    prevPage: ','
+    prevPage: ","
     nextPage: .
     scrollLeft: H
     scrollRight: L
     gotoTop: <
-    gotoBottom: '>'
+    gotoBottom: ">"
     gotoTop-alt: <home>
     gotoBottom-alt: <end>
     toggleRangeSelect: v
@@ -53,7 +53,7 @@ keybinding:
     prevMatch: "N"
     startSearch: /
     optionMenu: <disabled>
-    optionMenu-alt1: '?'
+    optionMenu-alt1: "?"
     select: <space>
     goInto: <enter>
     confirm: <enter>
@@ -71,7 +71,7 @@ keybinding:
     scrollDownMain-alt1: J
     scrollUpMain-alt2: <c-u>
     scrollDownMain-alt2: <c-d>
-    executeShellCommand: ':'
+    executeShellCommand: ":"
     createRebaseOptionsMenu: m
 
     # 'Files' appended for legacy reasons
@@ -81,11 +81,11 @@ keybinding:
     pullFiles: p
     refresh: R
     createPatchOptionsMenu: <c-p>
-    nextTab: ']'
-    prevTab: '['
+    nextTab: "]"
+    prevTab: "["
     nextScreenMode: +
     prevScreenMode: _
-    cyclePagers: '|'
+    cyclePagers: "|"
     undo: z
     redo: Z
     filteringMenu: <c-s>
@@ -94,10 +94,10 @@ keybinding:
     copyToClipboard: <c-o>
     openRecentRepos: <c-r>
     submitEditorText: <enter>
-    extrasMenu: '@'
+    extrasMenu: "@"
     toggleWhitespaceInDiffView: <c-w>
-    increaseContextInDiffView: '}'
-    decreaseContextInDiffView: '{'
+    increaseContextInDiffView: "}"
+    decreaseContextInDiffView: "{"
     increaseRenameSimilarityThreshold: )
     decreaseRenameSimilarityThreshold: (
     openDiffTool: <c-t>
@@ -119,11 +119,11 @@ keybinding:
     toggleStagedAll: a
     viewResetOptions: D
     fetch: f
-    toggleTreeView: '`'
+    toggleTreeView: "`"
     openMergeOptions: M
     openStatusFilter: <c-b>
     copyFileInfoToClipboard: "y"
-    collapseAll: '-'
+    collapseAll: "-"
     expandAll: =
   branches:
     createPullRequest: o
@@ -131,7 +131,7 @@ keybinding:
     copyPullRequestURL: <c-y>
     checkoutBranchByName: c
     forceCheckoutBranch: F
-    checkoutPreviousBranch: '-'
+    checkoutPreviousBranch: "-"
     rebaseBranch: r
     renameBranch: R
     mergeIntoCurrentBranch: M
@@ -170,7 +170,7 @@ keybinding:
     openInBrowser: o
     viewBisectOptions: b
     startInteractiveRebase: i
-    selectCommitsOfCurrentBranch: '*'
+    selectCommitsOfCurrentBranch: "*"
   amendAttribute:
     resetAuthor: a
     setAuthor: A
@@ -190,3 +190,26 @@ keybinding:
     bulkMenu: b
   commitMessage:
     commitMenu: <c-o>
+
+gui:
+  # Use the mocha catppuccin theme
+  theme:
+    activeBorderColor:
+      - "#89b4fa"
+      - bold
+    inactiveBorderColor:
+      - "#a6adc8"
+    optionsTextColor:
+      - "#89b4fa"
+    selectedLineBgColor:
+      - "#313244"
+    cherryPickedCommitBgColor:
+      - "#45475a"
+    cherryPickedCommitFgColor:
+      - "#89b4fa"
+    unstagedChangesColor:
+      - "#f38ba8"
+    defaultFgColor:
+      - "#cdd6f4"
+    searchingActiveBorderColor:
+      - "#f9e2af"
