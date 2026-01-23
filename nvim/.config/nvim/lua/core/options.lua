@@ -29,6 +29,7 @@ vim.opt.shadafile = "NONE"
 vim.opt.splitbelow = true
 vim.opt.mouse = 'a'
 vim.lazydraw = true
+vim.opt.winborder = 'single'
 
 if vim.fn.has('mac') == 1 or vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
   vim.opt.clipboard = 'unnamed'

@@ -1,6 +1,17 @@
-vim.lsp.enable('clangd')
-vim.lsp.enable('luals')
-vim.lsp.enable('ts_ls')
+vim.pack.add({
+  { src = 'https://github.com/neovim/nvim-lspconfig' },
+  { src = 'https://github.com/mason-org/mason-lspconfig.nvim' },
+})
+
+local lsp_servers = {
+  'clangd',
+  'lua_ls',
+  'ts_ls',
+}
+
+for _, server_name in ipairs(lsp_servers or {}) do
+  vim.lsp.enable(server_name)
+end
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp', {}),
@@ -16,4 +27,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Go to references' })
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Go to implementation' })
   end,
+})
+
+require('mason-lspconfig').setup({
+  ensure_installed = lsp_servers,
 })

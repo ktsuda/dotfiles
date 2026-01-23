@@ -26,10 +26,24 @@ local function load()
     fuzzy = { implementation = 'lua' },
     completion = {
       documentation = { auto_show = true, auto_show_delay_ms = 500 },
-      menu = { auto_show = true },
+      menu = {
+        auto_show = true,
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind' },
+          },
+        },
+      },
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+      default = {
+        'lsp',
+        'path',
+        'snippets',
+        'buffer',
+        'copilot',
+      },
       providers = {
         copilot = {
           name = 'copilot',
@@ -46,41 +60,6 @@ local function load()
             return items
           end,
         },
-      },
-    },
-    appearance = {
-      kind_icons = {
-        Copilot = '',
-        Text = '󰉿',
-        Method = '󰊕',
-        Function = '󰊕',
-        Constructor = '󰒓',
-
-        Field = '󰜢',
-        Variable = '󰆦',
-        Property = '󰖷',
-
-        Class = '󱡠',
-        Interface = '󱡠',
-        Struct = '󱡠',
-        Module = '󰅩',
-
-        Unit = '󰪚',
-        Value = '󰦨',
-        Enum = '󰦨',
-        EnumMember = '󰦨',
-
-        Keyword = '󰻾',
-        Constant = '󰏿',
-
-        Snippet = '󱄽',
-        Color = '󰏘',
-        File = '󰈔',
-        Reference = '󰬲',
-        Folder = '󰉋',
-        Event = '󱐋',
-        Operator = '󰪚',
-        TypeParameter = '󰬛',
       },
     },
     keymap = {

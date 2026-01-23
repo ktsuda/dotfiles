@@ -1,5 +1,6 @@
 vim.pack.add({
   { src = 'https://github.com/stevearc/conform.nvim' },
+  { src = 'https://github.com/zapling/mason-conform.nvim', version = 'main' },
 })
 
 require('conform').setup({
@@ -35,5 +36,13 @@ require('conform').setup({
     beautysh = {
       prepend_args = { '-i', '2', '-s', 'fnpar' },
     },
+  },
+})
+
+require('mason-conform').setup({
+  automatic_installation = true,
+  ignore_install = {
+    'clang-format',
+    'beautysh',
   },
 })
