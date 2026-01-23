@@ -7,5 +7,6 @@ require('plugin.conform')
 require('plugin.lint')
 require('plugin.blink')
 require('plugin.copilot')
+require('plugin.chat')
 
 pcall(require, 'plugin.wakatime')
