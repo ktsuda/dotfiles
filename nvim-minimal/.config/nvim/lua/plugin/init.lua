@@ -5,4 +5,4 @@ require('plugin.undotree')
 require('plugin.conform')
 require('plugin.copilot')
 
-require('plugin.wakatime')
+pcall(require, 'plugin.wakatime')

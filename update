@@ -78,7 +78,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(zsh lazygit zathura btop wezterm nvim)
+    STOW_FOLDERS+=(zsh lazygit zathura btop wezterm nvim wakatime)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(iterm2 tmux)
