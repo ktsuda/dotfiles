@@ -21,7 +21,7 @@ vim.opt.wildmenu = true
 vim.opt.wrap = false
 vim.opt.textwidth = 78
 vim.opt.colorcolumn = '+1'
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert' }
 vim.opt.formatoptions:append({ m = true, M = true, l = false })
 vim.opt.diffopt:append('vertical')
 vim.opt.autoread = true
