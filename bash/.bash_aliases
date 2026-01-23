@@ -120,19 +120,10 @@ function goto_repo_root() {
     fi
 }
 
-# git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git ~/.ble
-# cd ~/.ble
-# make install PREFIX=~/.local
-if [ -f "$HOME/.local/share/blesh/ble.sh" ]; then
-    source -- "$HOME/.local/share/blesh/ble.sh"
-fi
-
-function ble/widget/chdir_parent {
+alias ..='chdir_parent'
+function chdir_parent {
     builtin cd .. || return 0
-    ble/widget/insert-string ""
-    ble/textarea#invalidate
 }
-ble-bind -m emacs -f C-q chdir_parent
 
 function __fzfcmd() {
     [ -n "$TMUX_PANE" ] \
@@ -141,48 +132,37 @@ function __fzfcmd() {
         || echo "fzf"
 }
 
-function ble/widget/git_repo_cd {
+alias r='git_repo_cd'
+function git_repo_cd {
     local selected_dir ret
 
     selected_dir=$(ghq list --full-path | eval "$(__fzfcmd)")
     ret=$?
-    ble/textarea#invalidate
     ((ret == 0)) || return 0
     [[ -z $selected_dir ]] && return 0
     builtin cd -- "${selected_dir}" || return 0
-    ble/widget/insert-string ""
 }
-ble-bind -m emacs -f C-s git_repo_cd
 
-function ble/widget/subdir_cd {
+alias o='subdir_cd'
+function subdir_cd {
     local selected_dir ret
 
     selected_dir=$(fd -t d | eval "$(__fzfcmd)")
     ret=$?
-    ble/textarea#invalidate
     ((ret == 0)) || return 0
     [[ -z $selected_dir ]] && return 0
     builtin cd -- "${selected_dir}" || return 0
-    ble/widget/insert-string ""
 }
-ble-bind -m emacs -f C-o subdir_cd
 
-function ble/widget/history_widget {
-    local selected ret
-
-    selected=$(builtin history | eval "$(__fzfcmd)")
+alias f='git_file_open'
+function git_file_open() {
+    local selected_file ret
+    selected_file=$(git ls-files | eval "$(__fzfcmd)")
     ret=$?
-    ble/textarea#invalidate
     ((ret == 0)) || return 0
-    [[ -z $selected ]] && return 0
-    if [[ $selected =~ ^[[:space:]]*[0-9]+[[:space:]]+(.*)$ ]]; then
-        cmd=${BASH_REMATCH[1]}
-    else
-        cmd=$selected
-    fi
-    ble/widget/insert-string "${cmd}"
+    [[ -z $selected_file ]] && return 0
+    ${EDITOR} "${selected_file}"
 }
-ble-bind -m emacs -f C-r history_widget
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
