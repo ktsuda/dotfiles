@@ -2,6 +2,8 @@
 
 M = {}
 
+M.color_scheme = 'Catppuccin Mocha' -- or Macchiato, Frappe, Latte
+
 M.rosewater = '#f5e0dc'
 M.flamingo = '#f2cdcd'
 M.pink = '#f5c2e7'

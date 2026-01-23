@@ -1,3 +1,4 @@
+-- wezterm config file
 local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 
@@ -23,7 +24,7 @@ config.hide_tab_bar_if_only_one_tab = false
 wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_width)
   local title_txt = theme.tab_title(tab)
   local title = tab.tab_index .. ': ' .. wezterm.truncate_right(title_txt, max_width - 2)
-  return theme.format_status(tab.is_active, title)
+  return theme.format_tab(tab.is_active, title)
 end)
 
 wezterm.on('update-status', function(window, pane)
@@ -31,8 +32,10 @@ wezterm.on('update-status', function(window, pane)
   local hostname = '@' .. wezterm.hostname()
   local workspace = '[' .. wezterm.mux.get_active_workspace() .. ']'
 
-  local left_status = theme.format_status(false, workspace)
-  local right_status = theme.merge_tables(date, hostname)
+  local left_status = theme.format_farleft_status(workspace)
+  local right_status = theme.merge_tables(
+		theme.format_status(date),
+		theme.format_farright_status(hostname))
 
   window:set_left_status(wezterm.format(left_status))
   window:set_right_status(wezterm.format(right_status))
