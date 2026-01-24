@@ -7,6 +7,7 @@ local lsp_servers = {
   'clangd',
   'lua_ls',
   'ts_ls',
+  'tailwindcss',
 }
 
 for _, server_name in ipairs(lsp_servers or {}) do
