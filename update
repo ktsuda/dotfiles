@@ -78,13 +78,13 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(zsh lazygit zathura btop wezterm nvim wakatime)
+    STOW_FOLDERS+=(zsh lazygit zathura btop nvim-minimal wakatime)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(iterm2 tmux)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(alacritty xmonad rofi nitrogen)
+            STOW_FOLDERS+=(alacritty tmux xmonad rofi nitrogen)
             ;;
         *)
             reset
@@ -93,13 +93,13 @@ function private() {
 }
 
 function minimal() {
-    STOW_FOLDERS+=(zsh lazygit wezterm nvim-minimal)
+    STOW_FOLDERS+=(zsh lazygit nvim-minimal)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(iterm2)
+            STOW_FOLDERS+=(iterm2 tmux)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(xmonad rofi nitrogen)
+            STOW_FOLDERS+=(wezterm xmonad rofi nitrogen)
             ;;
         *)
             reset
