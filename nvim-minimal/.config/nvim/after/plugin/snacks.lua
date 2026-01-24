@@ -51,4 +51,8 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
   })
 end)
 
+vim.keymap.set('n', '<C-e>', function()
+  p.explorer(opts)
+end)
+
 t.zoom():map('<leader>z')
