@@ -10,6 +10,7 @@ end
 
 vim.keymap.set('n', '<leader>/', p.lines)
 vim.keymap.set('n', '<leader>sk', p.keymaps)
+vim.keymap.set('n', '<C-b>', p.buffers)
 vim.keymap.set('n', '<leader>sh', p.help)
 vim.keymap.set('n', '<leader>gl', p.git_log_file)
 vim.keymap.set('n', '<leader>gs', p.git_status)
