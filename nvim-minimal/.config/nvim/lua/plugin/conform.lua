@@ -40,6 +40,9 @@ require('conform').setup({
     beautysh = {
       prepend_args = { '-i', '2', '-s', 'fnpar' },
     },
+    markdownlint = {
+      prepend_args = { '--config', vim.fn.expand('~/.config/markdownlint/config.json') },
+    },
   },
 })
 
