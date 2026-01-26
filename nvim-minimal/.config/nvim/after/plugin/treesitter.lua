@@ -2,6 +2,8 @@ require('nvim-treesitter').setup({
   install_dir = vim.fs.joinpath(vim.fn.stdpath('data'), '/site'),
 })
 
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
 local pattern = {
   'c',
   'cpp',

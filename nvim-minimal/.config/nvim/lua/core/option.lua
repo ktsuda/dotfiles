@@ -1,8 +1,29 @@
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = 'yes:2'
 vim.opt.colorcolumn = '+1'
-vim.opt.smartindent = true
 vim.opt.winborder = 'single'
+vim.opt.colorcolumn = '+1'
+vim.opt.textwidth = 120
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.expandtab = true
+
+-- default: 'jcroql'
+vim.opt.formatoptions = {
+  t = true,
+  c = true,
+  r = true,
+  o = false,
+  q = false,
+  l = true,
+  n = true,
+  j = true,
+  p = true,
+  m = true,
+  B = true,
+  [']'] = true,
+}
 
 if vim.fn.has('mac') == 1 or vim.fn.has('win64') == 1 or vim.fn.has('win32') == 1 then
   vim.opt.clipboard = 'unnamed'
