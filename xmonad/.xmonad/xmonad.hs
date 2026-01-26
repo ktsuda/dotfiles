@@ -13,6 +13,9 @@ import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
+import System.IO (hPutStrLn)
+import XMonad.Hooks.DynamicLog
+import XMonad.Layout.IndependentScreens (countScreens, marshallPP, withScreens, onCurrentScreen)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -143,8 +146,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
     --
-    [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+    [((m .|. modm, k), windows $ onCurrentScreen f i)
+        | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     ++
 
@@ -241,7 +244,18 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+myLogHook h = do
+    nScreens <- countScreens
+    mapM_ (\s -> dynamicLogWithPP $ marshallPP s (myPP h s)) [0 .. nScreens -1]
+
+myPP h s = xmobarPP
+    { ppOutput = \str -> hPutStrLn (h !! fromIntegral s) str
+    , ppCurrent = xmobarColor "#f9e2af" ""
+    , ppVisible = xmobarColor "#cdd6f4" ""
+    , ppHidden = xmobarColor "#a6adc8" ""
+    , ppHiddenNoWindows = xmobarColor "#6c7086" ""
+    , ppTitle = xmobarColor "#a6e3a1" "" . shorten 50
+    }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -267,8 +281,9 @@ myStartupHook = do
 main :: IO ()
 main = do
     -- spawn "pkill -x xmobar >/dev/null 2>&1 || true"
-    xmproc <- mapM (\i -> spawnPipe (xmobarCmd i)) [0, 1]
-    xmonad $ docks defaults
+    nScreens <- countScreens
+    xmproc <- mapM (\i -> spawnPipe (xmobarCmd i)) [0 .. fromIntegral nScreens - 1]
+    xmonad $ docks (defaults nScreens xmproc)
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -276,14 +291,14 @@ main = do
 --
 -- No need to modify this.
 --
-defaults = def {
+defaults n h = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        workspaces         = myWorkspaces,
+        workspaces         = withScreens n myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
@@ -295,7 +310,7 @@ defaults = def {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = myLogHook h,
         startupHook        = myStartupHook
     }
 
