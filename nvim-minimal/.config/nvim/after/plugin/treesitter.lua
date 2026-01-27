@@ -23,6 +23,7 @@ local pattern = {
   'markdown',
   'vim',
   'vimdoc',
+  'regex',
 }
 
 vim.api.nvim_create_autocmd('FileType', {

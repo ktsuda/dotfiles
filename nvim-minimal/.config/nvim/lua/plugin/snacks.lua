@@ -4,6 +4,9 @@ vim.pack.add({
 
 local s = require('snacks')
 s.setup({
+  notifier = {
+    enabled = true,
+  },
   picker = {
     hidden = true,
     ignore = true,
