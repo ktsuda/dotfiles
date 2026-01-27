@@ -1,0 +1,23 @@
+font-family = UbuntuMono Nerd Font
+font-size = 16
+
+theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+background-opacity = 0.85
+background-blur=16
+macos-titlebar-style = hidden
+mouse-hide-while-typing = true
+
+window-width=138
+window-padding-x = 10
+window-padding-y = 10
+grapheme-width-method=unicode
+
+quick-terminal-position = "bottom"
+quick-terminal-screen = "main"
+quick-terminal-animation-duration = 0
+
+# keybind = clear:
+keybind = global:alt+Space=toggle_quick_terminal
+
+keybind = performable:ctrl+r=reload_config
+keybind = performable:cmd+r=reload_config

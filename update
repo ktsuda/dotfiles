@@ -81,7 +81,7 @@ function private() {
     STOW_FOLDERS+=(zsh lazygit zathura btop nvim-minimal wakatime)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(iterm2 tmux)
+            STOW_FOLDERS+=(ghostty tmux)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(alacritty tmux xmonad rofi nitrogen)
