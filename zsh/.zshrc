@@ -320,7 +320,7 @@ function git_repo_cd() {
     zle redisplay
     return 0
   fi
-  eval "builtin cd -- ${selected_dir}"
+  eval 'builtin cd -- "${selected_dir}"'
   zle reset-prompt
   return $ret
 }
@@ -339,7 +339,7 @@ function subdir_cd() {
     zle redisplay
     return 0
   fi
-  eval "builtin cd -- ${selected_dir}"
+  eval 'builtin cd -- "${selected_dir}"'
   zle reset-prompt
   return $ret
 }

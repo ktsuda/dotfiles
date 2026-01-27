@@ -23,7 +23,7 @@ end)
 
 vim.keymap.set('n', '<C-s>', function()
   p.projects({
-    dev = { '~/src', '~/go', '~/Projects' },
+    dev = { '~/src', '~/go', '~/Projects', '~/Library/Mobile Documents/iCloud~md~obsidian/' },
     patterns = { '.git' },
     max_depth = 5,
     recent = true,

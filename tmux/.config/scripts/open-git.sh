@@ -10,7 +10,16 @@ if [[ $url == *github.com* ]] || [[ $url == *gitlab.com* ]] || [[ $url == *gitla
     url="${url/:/\/}"
     url="https://$url"
   fi
-  xdg-open "$url" > /dev/null 2>&1|| exit
+  case ${OSTYPE} in
+    darwin*)
+      open "$url" > /dev/null 2>&1|| exit
+      ;;
+    linux*)
+      xdg-open "$url" > /dev/null 2>&1|| exit
+      ;;
+    *)
+      echo "${OSTYPE} is not supported."
+  esac
 else
   echo "This repo is not hosted on GitHub."
 fi
