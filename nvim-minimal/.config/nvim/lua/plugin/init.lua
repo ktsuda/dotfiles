@@ -10,5 +10,6 @@ require('plugin.blink')
 require('plugin.copilot')
 require('plugin.chat')
 require('plugin.markdown-preview')
+require('plugin.skkeleton')
 
 pcall(require, 'plugin.wakatime')
