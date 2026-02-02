@@ -452,6 +452,14 @@ case ${OSTYPE} in
     ;;
 esac
 
+if (( $+commands[claude] )); then
+  if [[ -f ~/.config/claude/env ]]; then
+    source ~/.config/claude/env
+  else
+    echo "No env file for claude. Exitting..."
+  fi
+fi
+
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
 fi
