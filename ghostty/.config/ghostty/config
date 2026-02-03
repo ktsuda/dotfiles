@@ -1,21 +1,61 @@
+# font
 font-family = UbuntuMono Nerd Font
-font-size = 16
+font-size = 12
 
+# appearance
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 macos-titlebar-style = hidden
 mouse-hide-while-typing = true
+gtk-custom-css = tab-style.css
 
-window-width=138
-window-padding-x = 10
-window-padding-y = 10
+# options
+window-padding-x = 4
+window-padding-y = 4
+window-decoration = none
+gtk-wide-tabs = false
+gtk-tabs-location = top
 grapheme-width-method=unicode
+macos-non-native-fullscreen = true
 
-quick-terminal-position = "bottom"
-quick-terminal-screen = "main"
+quick-terminal-position = bottom
+quick-terminal-screen = main
 quick-terminal-animation-duration = 0
 
-# keybind = clear:
-keybind = global:alt+Space=toggle_quick_terminal
+copy-on-select = clipboard
+mouse-hide-while-typing = true
+confirm-close-surface = true
 
-keybind = performable:ctrl+r=reload_config
-keybind = performable:cmd+r=reload_config
+shell-integration = detect
+
+# keymaps
+keybind = clear
+
+keybind = ctrl+t>c=new_tab
+keybind = ctrl+t>n=next_tab
+keybind = ctrl+t>p=previous_tab
+keybind = ctrl+t>shift+k=close_tab
+
+keybind = ctrl+t>shift+a=prompt_surface_title
+
+keybind = ctrl+t>l=goto_split:right
+keybind = ctrl+t>h=goto_split:left
+keybind = ctrl+t>j=goto_split:down
+keybind = ctrl+t>k=goto_split:up
+
+keybind = ctrl+t>shift+l=resize_split:right,100
+keybind = ctrl+t>shift+h=resize_split:left,100
+keybind = ctrl+t>shift+j=resize_split:down,100
+keybind = ctrl+t>shift+k=resize_split:up,100
+keybind = ctrl+t>m=equalize_splits
+
+keybind = ctrl+t>-=new_split:down
+keybind = ctrl+t>;=new_split:right
+
+keybind = ctrl+t>z=toggle_split_zoom
+
+keybind = ctrl+t>r=reload_config
+
+keybind = ctrl+t>u=jump_to_prompt:-1
+keybind = ctrl+t>d=jump_to_prompt:1
+
+keybind = global:alt+Space=toggle_quick_terminal
