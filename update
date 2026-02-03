@@ -33,11 +33,6 @@ function set_stow_folders() {
                 shared
                 shift
                 ;;
-            -m | --minimal)
-                set_default
-                minimal
-                shift
-                ;;
             *)
                 STOW_FOLDERS+=("$1")
                 shift
@@ -55,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(ripgrep git tig)
+    STOW_FOLDERS=(ripgrep git tig nvim-minimal lazygit zsh)
 }
 
 function set_all() {
@@ -63,13 +58,13 @@ function set_all() {
 }
 
 function shared() {
-    STOW_FOLDERS+=(vim tmux nvim-minimal)
+    STOW_FOLDERS+=(tmux)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(zsh)
+            STOW_FOLDERS+=(iterm2)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(bash)
+            STOW_FOLDERS+=()
             ;;
         *)
             reset
@@ -78,28 +73,13 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(zsh lazygit zathura btop nvim-minimal braindrop wakatime)
+    STOW_FOLDERS+=(ghostty zathura btop braindrop wakatime)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty tmux)
+            STOW_FOLDERS+=(iterm2)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(alacritty tmux xmonad rofi nitrogen)
-            ;;
-        *)
-            reset
-            ;;
-    esac
-}
-
-function minimal() {
-    STOW_FOLDERS+=(zsh lazygit nvim-minimal)
-    case ${OSTYPE} in
-        darwin*)
-            STOW_FOLDERS+=(iterm2 tmux)
-            ;;
-        linux-gnu*)
-            STOW_FOLDERS+=(wezterm xmonad rofi nitrogen)
+            STOW_FOLDERS+=(xmonad rofi nitrogen)
             ;;
         *)
             reset
@@ -117,7 +97,6 @@ options:
     --delete,  -D     delete dotfiles
     --private, -p     select dotfiles for a private host
     --shared,  -s     select dotfiles for a shared host
-    --minimal, -m     select dotfiles for minimal config
 
 EOF
 }
