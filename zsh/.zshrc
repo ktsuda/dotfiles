@@ -278,10 +278,6 @@ if (( $+commands[lazygit] )); then
   alias l='lazygit'
 fi
 
-if (( $+commands[tmuxinator] )); then
-  alias tx='tmuxinator'
-fi
-
 alias v="${EDITOR}"
 alias vim="${EDITOR}"
 

@@ -1,9 +1,0 @@
-name: diary
-root: ~/src/github.com/ktsuda/diary
-
-windows:
-  - todo:
-      layout: main-horizontal
-      panes:
-        - #empty
-        - make preview

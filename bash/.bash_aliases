@@ -100,10 +100,6 @@ if type lazygit &> /dev/null; then
     alias l='lazygit'
 fi
 
-if type tmuxinator &> /dev/null; then
-    alias tx='tmuxinator'
-fi
-
 alias v="\${EDITOR}"
 alias vim="\${EDITOR}"
 
