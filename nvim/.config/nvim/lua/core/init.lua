@@ -1,5 +1,4 @@
-require('core.builtin')
-require('core.options')
-require('core.keymaps')
+require('core.option')
+require('core.remap')
 require('core.diagnostic')
 require('core.mason')
