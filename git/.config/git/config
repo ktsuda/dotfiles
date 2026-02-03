@@ -29,9 +29,9 @@
     binary = clang-format-12
     style = file
 [ghq]
+    root = ~/Library/Mobile Documents/iCloud~md~obsidian
     root = ~/Projects
     root = ~/go/src
     root = ~/src
-    root = ~/Library/Mobile Documents/iCloud~md~obsidian
 
 # vim:set ts=4 sw=4 sts=4 et:
