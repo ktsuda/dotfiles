@@ -290,7 +290,7 @@ alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 alias q='goto_repo_root'
 function goto_repo_root() {
   if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-    cd $(git rev-parse --show-toplevel)
+    cd "$(git rev-parse --show-toplevel)"
   fi
 }
 
