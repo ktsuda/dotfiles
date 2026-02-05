@@ -36,5 +36,6 @@ keybind = cmd+enter=toggle_fullscreen
 
 keybind = cmd+p=toggle_command_palette
 keybind = ctrl+shift+p=toggle_command_palette
+keybind = cmd+q=quit
 
 # vim: ft=ghostty
