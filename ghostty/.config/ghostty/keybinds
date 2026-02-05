@@ -1,0 +1,40 @@
+keybind = clear
+
+keybind = cmd+n=new_window
+
+keybind = ctrl+t>c=new_tab
+keybind = cmd+t=new_tab
+keybind = ctrl+t>n=next_tab
+keybind = ctrl+t>p=previous_tab
+keybind = ctrl+t>shift+k=close_tab
+
+keybind = ctrl+t>shift+a=prompt_surface_title
+
+keybind = ctrl+t>l=goto_split:right
+keybind = ctrl+t>h=goto_split:left
+keybind = ctrl+t>j=goto_split:down
+keybind = ctrl+t>k=goto_split:up
+
+keybind = ctrl+t>shift+l=resize_split:right,100
+keybind = ctrl+t>shift+h=resize_split:left,100
+keybind = ctrl+t>shift+j=resize_split:down,100
+keybind = ctrl+t>shift+k=resize_split:up,100
+keybind = ctrl+t>m=equalize_splits
+
+keybind = ctrl+t>-=new_split:down
+keybind = ctrl+t>;=new_split:right
+
+keybind = ctrl+t>z=toggle_split_zoom
+
+keybind = ctrl+t>r=reload_config
+
+keybind = ctrl+t>u=jump_to_prompt:-1
+keybind = ctrl+t>d=jump_to_prompt:1
+
+keybind = global:alt+Space=toggle_quick_terminal
+keybind = cmd+enter=toggle_fullscreen
+
+keybind = cmd+p=toggle_command_palette
+keybind = ctrl+shift+p=toggle_command_palette
+
+# vim: ft=ghostty
