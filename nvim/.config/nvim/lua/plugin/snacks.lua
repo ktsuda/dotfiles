@@ -17,11 +17,4 @@ s.setup({
       },
     },
   },
-  explorer = {
-    replace_netrw = true,
-    diagnostics = true,
-    git_status = true,
-    git_untracked = true,
-    follow_file = true,
-  },
 })

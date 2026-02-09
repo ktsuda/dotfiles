@@ -1,4 +1,5 @@
 require('plugin.snacks')
+require('plugin.oil')
 require('plugin.catppuccin')
 require('plugin.treesitter')
 require('plugin.undotree')
