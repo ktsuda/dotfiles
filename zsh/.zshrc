@@ -300,7 +300,7 @@ function chdir_parent() {
   zle accept-line
 }
 zle -N chdir_parent
-bindkey '^q' chdir_parent
+bindkey '^u' chdir_parent
 
 function __fzfcmd() {
   [ -n "$TMUX_PANE" ] \
