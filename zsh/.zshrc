@@ -158,6 +158,11 @@ if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
 fi
 
+# zoxide
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init --cmd cd zsh)"
+fi
+
 # golang
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
