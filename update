@@ -177,7 +177,7 @@ function update() {
         for folder in "${STOW_FOLDERS[@]}"; do
             backup_all
             printf "Installing %-17s" "$folder"
-            stow --ignore='\.DS_Store' -t "$HOME" "$folder"
+            stow --ignore='\.DS_Store' --dotfiles -t "$HOME" -S "$folder"
             echo " ...   Done"
         done
     fi
