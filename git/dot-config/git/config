@@ -6,6 +6,7 @@
     pager = cat
     ignoreCase = false
     excludesFile = ~/.config/git/ignore
+    quotepath = false
 [merge]
     conflictStyle = diff3
 [push]
