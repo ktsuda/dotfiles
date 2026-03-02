@@ -24,3 +24,8 @@ bind status P !git push
 bind generic <Ctrl-r> refresh
 bind generic <Ctrl-Y> move-first-line
 bind generic <Ctrl-E> move-last-line
+
+color cursor black cyan bold
+color cursor-blur black cyan
+color title-focus black blue bold
+color title-blur black blue
