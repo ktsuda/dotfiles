@@ -8,7 +8,7 @@ font-size = 16
 grapheme-width-method=unicode
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 mouse-hide-while-typing = true
-background-opacity = 0.9
+background-opacity = 0.8
 background-opacity-cells = true
 background-blur = true
 unfocused-split-opacity = 0.9
@@ -16,7 +16,6 @@ split-divider-color = #c6a0f6
 
 # window
 
-# window-decoration = none
 window-decoration = auto
 window-theme = dark
 window-height = 40
@@ -30,23 +29,8 @@ bell-features = no-system,no-audio,attention,border
 desktop-notifications = true
 term = xterm-256color
 
-quick-terminal-position = bottom
-quick-terminal-screen = main
-quick-terminal-animation-duration = 0
-quick-terminal-autohide = false
-quick-terminal-space-behavior = move
-quick-terminal-size = 50%
-
-macos-non-native-fullscreen = true
-macos-window-shadow = true
-
-gtk-single-instance = detect
-gtk-tabs-location = top
-gtk-titlebar-hide-when-maximized = true
-gtk-toolbar-style = flat
-gtk-titlebar-style = tabs
-gtk-wide-tabs = false
-gtk-custom-css = tab-style.css
+# os specific
+config-file = ?"./extra"
 
 # keybinds
 

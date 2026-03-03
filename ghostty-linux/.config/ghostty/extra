@@ -1,0 +1,8 @@
+gtk-single-instance = detect
+gtk-tabs-location = top
+gtk-titlebar-hide-when-maximized = true
+gtk-toolbar-style = flat
+gtk-titlebar-style = tabs
+gtk-wide-tabs = false
+gtk-custom-css = tab-style.css
+

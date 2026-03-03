@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(ripgrep git tig tmux)
+    STOW_FOLDERS=(ripgrep git tig)
 }
 
 function set_all() {
@@ -58,7 +58,7 @@ function set_all() {
 }
 
 function shared() {
-    STOW_FOLDERS+=(vim)
+    STOW_FOLDERS+=(vim tmux)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(iterm2 zsh)
@@ -76,10 +76,10 @@ function private() {
     STOW_FOLDERS+=(ghostty zathura btop braindrop wakatime nvim lazygit zsh)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=()
+            STOW_FOLDERS+=(ghostty-mac tmux)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(xmonad rofi nitrogen)
+            STOW_FOLDERS+=(ghostty-linux xmonad rofi nitrogen)
             ;;
         *)
             reset
