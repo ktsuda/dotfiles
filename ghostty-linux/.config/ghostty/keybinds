@@ -1,6 +1,6 @@
 keybind = clear
 
-keybind = ctrl+n=new_window
+keybind = ctrl+shift+n=new_window
 
 keybind = ctrl+t>c=new_tab
 keybind = ctrl+t>n=next_tab
