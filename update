@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(ghostty zathura btop braindrop wakatime nvim lazygit zsh)
+    STOW_FOLDERS+=(ghostty wakatime nvim lazygit zsh)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(ghostty-mac tmux)
