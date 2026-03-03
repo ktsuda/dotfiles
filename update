@@ -64,7 +64,7 @@ function shared() {
             STOW_FOLDERS+=(iterm2 zsh)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(bash)
+            STOW_FOLDERS+=(alacritty bash)
             ;;
         *)
             reset
