@@ -101,7 +101,6 @@ if type lazygit &> /dev/null; then
 fi
 
 alias v="\${EDITOR}"
-alias vim="\${EDITOR}"
 
 if type nvim &> /dev/null; then
     alias vimdiff='nvim -d'

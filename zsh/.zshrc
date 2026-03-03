@@ -284,7 +284,6 @@ if (( $+commands[lazygit] )); then
 fi
 
 alias v="${EDITOR}"
-alias vim="${EDITOR}"
 
 if (( $+commands[nvim] )); then
   alias vimdiff='nvim -d'
