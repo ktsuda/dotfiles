@@ -4,20 +4,17 @@ vim.pack.add({
 
 require('oil').setup({
   keymaps = {
-    ['g?'] = { 'actions.show_help', mode = 'n' },
+    ['<C-h>'] = { 'actions.show_help', mode = 'n' },
     ['<CR>'] = { 'actions.select', mode = 'n' },
-    ['l'] = { 'actions.select', mode = 'n' },
+    ['<C-f>'] = { 'actions.select', mode = 'n' },
     [';'] = { 'actions.select', opts = { vertical = true }, mode = 'n' },
     ['-'] = { 'actions.select', opts = { horizontal = true }, mode = 'n' },
-    ['t'] = { 'actions.select', opts = { tab = true }, mode = 'n' },
-    ['V'] = { 'actions.preview', mode = 'n' },
-    ['q'] = { 'actions.close', mode = 'n' },
+    ['<C-p>'] = { 'actions.preview', mode = 'n' },
     ['<Esc>'] = { 'actions.close', mode = 'n' },
     ['<C-l>'] = { 'actions.refresh', mode = 'n' },
-    ['h'] = { 'actions.parent', mode = 'n' },
-    ['_'] = { 'actions.open_cwd', mode = 'n' },
-    ['`'] = { 'actions.cd', mode = 'n' },
-    ['g~'] = { 'actions.cd', opts = { scope = 'tab' }, mode = 'n' },
+    ['<BS>'] = { 'actions.parent', mode = 'n' },
+    ['gh'] = { 'actions.open_cwd', mode = 'n' },
+    ['gc'] = { 'actions.cd', mode = 'n' },
     ['gs'] = { 'actions.change_sort', mode = 'n' },
     ['gx'] = { 'actions.open_external', mode = 'n' },
     ['I'] = { 'actions.toggle_hidden', mode = 'n' },
@@ -33,4 +30,5 @@ require('oil').setup({
       { 'name', 'asc' },
     },
   },
+  delete_to_trash = true,
 })
