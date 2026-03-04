@@ -1,8 +1,5 @@
 vim.g.mapleader = ' '
 
--- explorer
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
-
 -- playground
 vim.keymap.set('n', '<leader>i', vim.cmd.InspectTree)
 
