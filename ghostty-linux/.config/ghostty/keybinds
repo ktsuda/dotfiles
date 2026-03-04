@@ -30,9 +30,6 @@ keybind = ctrl+t>r=reload_config
 keybind = ctrl+t>u=jump_to_prompt:-1
 keybind = ctrl+t>d=jump_to_prompt:1
 
-keybind = global:alt+Space=toggle_quick_terminal
-keybind = ctrl+shift+enter=toggle_fullscreen
-
 keybind = ctrl+shift+p=toggle_command_palette
 keybind = ctrl+shift+q=quit
 
