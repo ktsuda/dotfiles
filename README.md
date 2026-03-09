@@ -2,49 +2,45 @@
 
 ## Requirements
 
-- stow (apt, brew)
-- rust (rustup, brew)
-- go (script, brew) 
+### darwin
 
-### common
+```bash
+brew install stow rust golang ghostty vim git tig fzf tmux zsh
+cargo install ripgrep fd-find
+```
 
-- git (apt, brew)
-- tig (apt, brew)
-- tmux (apt, brew)
-- ripgrep (cargo)
-- fd-find (cargo)
+### linux
 
-### shared
+```bash
+apt install -y curl stow golang vim git tig fzf
+snap install ghostty
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo install ripgrep fd-find
+```
 
-- vim (apt, brew)
+## Shared
 
-#### darwin
+### linux
 
-- zsh (brew)
+```bash
+apt install -y bash
+```
 
-#### linux
+## Private
 
-- bash (apt)
+### darwin
 
-### private
+```bash
+brew install nvim lazygit
+cargo install tree-sitter-cli
+```
 
-- zsh (apt, brew)
-- nvim (script, brew)
-- lazygit (go)
-- zathura (apt, brew)
-- btop (apt, brew, cargo)
-- tree-sitter-cli (cargo)
+### linux
 
-#### darwin
-
-- iterm2 (brew)
-
-#### linux
-
-- alacritty (cargo)
-- xmonad (apt)
-- rofi (apt)
-- nitrogen (apt)
+```bash
+apt install -y nvim xmonad rofi nitrogen zsh
+cargo install tree-sitter-cli
+```
 
 ## Install dotfiles
 
