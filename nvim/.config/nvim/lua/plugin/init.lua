@@ -13,6 +13,7 @@ require('plugin.copilot')
 require('plugin.comment')
 require('plugin.markdown-preview')
 require('plugin.vim-table-mode')
+require('plugin.markdown-toc')
 require('plugin.skkeleton')
 
 pcall(require, 'plugin.wakatime')
