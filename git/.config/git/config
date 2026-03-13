@@ -15,8 +15,6 @@
 [diff]
     colorMoved = default
     colorMovedWS = allow-indentation-change
-[interactive]
-    diffFilter = diff-so-fancy --patch
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit
