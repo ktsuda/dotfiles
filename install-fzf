@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+sudo apt-get update
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install

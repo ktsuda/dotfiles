@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+sudo apt update
+sudo apt install -y curl
+
+# rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# rust cli tools
+$HOME/.cargo/bin/cargo install ripgrep # rg
+$HOME/.cargo/bin/cargo install fd-find # fd
+$HOME/.cargo/bin/cargo install tree-sitter-cli

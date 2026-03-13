@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+GOLANG_VERSION="1.24.3"
+GOLANG_FILENAME="go$GOLANG_VERSION.linux-amd64.tar.gz"
+
+sudo apt update
+mkdir -p $HOME/Projects
+cd $HOME/Projects
+wget https://go.dev/dl/$GOLANG_FILENAME
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf $GOLANG_FILENAME
+rm -f $GOLANG_FILENAME
+
+export GOROOT="/usr/local/go"
+export GOPATH="$HOME/go"
+export GOBIN="$GOPATH/bin"
+export GO11MODULE="auto"
+
+# duf
+if [ ! -x "$GOBIN/duf" ] > /dev/null 2>&1; then
+    $GOROOT/bin/go install github.com/muesli/duf@latest
+    $GOROOT/bin/go install github.com/jesseduffield/lazygit@latest
+    $GOROOT/bin/go install github.com/x-motemen/ghq@latest
+fi

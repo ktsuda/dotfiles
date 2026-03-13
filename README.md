@@ -5,41 +5,29 @@
 ### darwin
 
 ```bash
-brew install stow rust golang ghostty vim git tig fzf tmux zsh
-cargo install ripgrep fd-find
+brew install stow rust golang ghostty vim git tig fzf tmux zsh nvim lazygit
+cargo install ripgrep fd-find tree-sitter-cli
 ```
 
 ### linux
 
 ```bash
-apt install -y curl stow golang vim git tig fzf
+apt install -y curl stow vim tig tmux zsh clang
 snap install ghostty
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-cargo install ripgrep fd-find
-```
 
-## Shared
-
-### linux
-
-```bash
-apt install -y bash
+./install-git
+./install-fzf
+./install-golang
+./install-rust
+./install-neovim
 ```
 
 ## Private
 
-### darwin
-
-```bash
-brew install nvim lazygit
-cargo install tree-sitter-cli
-```
-
 ### linux
 
 ```bash
-apt install -y nvim xmonad rofi nitrogen zsh
-cargo install tree-sitter-cli
+apt install -y xmonad rofi nitrogen
 ```
 
 ## Install dotfiles
