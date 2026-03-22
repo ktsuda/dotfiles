@@ -429,20 +429,33 @@ function custom_tmux_session() {
   fi
 }
 
-function custom_send_to_session() {
-  if [[ $# -lt 1 ]]; then
-    return
-  fi
-  ID=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
-  if [[ -z $ID ]]; then
-    tmux new-session -s "default" tmux new-window -t "default" "$*"
-    return
-  fi
-  tmux new-window -t "$ID" "$*"
+function sesh_sessions() {
+  exec </dev/tty
+  exec <&1
+  local session
+  session=$(sesh list --icons | \
+    $(__fzfcmd) --height 40% --reverse --border-label ' sesh ' --border --prompt '>  ' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
+    --preview-window 'right:55%' \
+    --preview 'sesh preview {}'
+  )
+  zle reset-prompt > /dev/null 2>&1 || true
+  [[ -z "$session" ]] && return
+  sesh connect $session
 }
 
+zle -N sesh_sessions
+bindkey '^s' sesh_sessions
+#bindkey -M emacs '\es' sesh_sessions
+#bindkey -M vicmd '\es' sesh_sessions
+#bindkey -M viins '\es' sesh_sessions
+
 if (( $+commands[tmux] )); then
-  alias s='custom_tmux_session'
+  if (( $+commands[sesh] )); then
+    alias s='sesh_sessions'
+  else
+    alias s='custom_tmux_session'
+  fi
   alias sa='custom_send_to_session'
 fi
 

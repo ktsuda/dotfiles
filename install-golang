@@ -21,4 +21,5 @@ if [ ! -x "$GOBIN/duf" ] > /dev/null 2>&1; then
     $GOROOT/bin/go install github.com/muesli/duf@latest
     $GOROOT/bin/go install github.com/jesseduffield/lazygit@latest
     $GOROOT/bin/go install github.com/x-motemen/ghq@latest
+    $GOROOT/bin/go install github.com/joshmedeski/sesh/v2@latest
 fi
