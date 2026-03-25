@@ -321,7 +321,7 @@ function git_repo_cd() {
     return 0
   fi
   eval 'builtin cd -- "${selected_dir}"'
-  zle reset-prompt
+  zle reset-prompt > /dev/null 2>&1 || true
   return $ret
 }
 zle -N git_repo_cd
@@ -340,7 +340,7 @@ function subdir_cd() {
     return 0
   fi
   eval 'builtin cd -- "${selected_dir}"'
-  zle reset-prompt
+  zle reset-prompt > /dev/null 2>&1 || true
   return $ret
 }
 zle -N subdir_cd
@@ -356,7 +356,7 @@ function history_widget() {
       zle vi-fetch-history -n $num
     fi
   fi
-  zle reset-prompt
+  zle reset-prompt > /dev/null 2>&1 || true
   return $ret
 }
 zle -N history_widget
@@ -407,36 +407,55 @@ function pkg_search() {
 }
 
 function custom_tmux_session() {
+  exec </dev/tty
+  exec <&1
+  local session
   if [[ $# -ge 1 ]]; then
-    ID="$1"
+    session="$1"
     if [[ -n $TMUX ]]; then
-      tmux new-session -d -s"$ID"
-      tmux switch-client -t "$ID"
+      tmux new-session -d -s"$session"
+      tmux switch-client -t "$session"
     else
-      tmux new-session -s"$ID"
+      tmux new-session -s"$session"
     fi
   else
-    ID=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
-    if [[ -z $ID ]]; then
+    session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+    if [[ -z "$session" ]]; then
       tmux new-session -s "default"
       return
     fi
     if [[ -n $TMUX ]]; then
-      tmux switch-client -t "$ID"
+      tmux switch-client -t "$session"
     else
-      tmux attach-session -t "$ID"
+      tmux attach-session -t "$session"
     fi
   fi
+}
+
+function custom_tmux_send_to() {
+  exec </dev/tty
+  exec <&1
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: sa <command>"
+    return
+  fi
+  local session
+  session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+  if [[ -z "$session" ]]; then
+    tmux new-session -s "default" tmux new-window -t "default" "$*"
+    return
+  fi
+  tmux new-window -t "$session" "$*"
 }
 
 function sesh_sessions() {
   exec </dev/tty
   exec <&1
   local session
-  session=$(sesh list --icons | \
-    $(__fzfcmd) --height 40% --reverse --border-label ' sesh ' --border --prompt '>  ' \
-    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' \
-    --preview-window 'right:55%' \
+  session=$(sesh list --icons | $(__fzfcmd) \
+    --no-sort --ansi \
+    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
+    --preview-window 'right:55%:noborder' \
     --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
@@ -444,19 +463,35 @@ function sesh_sessions() {
   sesh connect $session
 }
 
-zle -N sesh_sessions
-bindkey '^s' sesh_sessions
-#bindkey -M emacs '\es' sesh_sessions
-#bindkey -M vicmd '\es' sesh_sessions
-#bindkey -M viins '\es' sesh_sessions
+function custom_sesh_send_to() {
+  exec </dev/tty
+  exec <&1
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: sa <command>"
+    return
+  fi
+  local session
+  session=$(sesh list -t --icons | $(__fzfcmd) \
+    --no-sort --ansi \
+    --preview-window 'right:55%:noborder' \
+    --preview 'sesh preview {}'
+  )
+  zle reset-prompt > /dev/null 2>&1 || true
+  if [[ -z "$session" ]]; then
+    sesh connect --command "$*" "default"
+    return
+  fi
+  tmux new-window -t "$ID" "$*"
+}
 
 if (( $+commands[tmux] )); then
   if (( $+commands[sesh] )); then
     alias s='sesh_sessions'
+    alias sa='custom_sesh_send_to'
   else
     alias s='custom_tmux_session'
+    alias sa='custom_tmux_send_to'
   fi
-  alias sa='custom_send_to_session'
 fi
 
 case ${OSTYPE} in
