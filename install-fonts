@@ -47,3 +47,7 @@ find "$fonts_dir" -name '*Windows Compatible*' -delete
 
 fc-cache -fv
 
+# catppuccin mocha theme
+curl -L https://raw.githubusercontent.com/catppuccin/gnome-terminal/v1.0.0/install.py | python3 -
+# uninstallation
+# curl -L https://raw.githubusercontent.com/catppuccin/gnome-terminal/v1.0.0/uninstall.py | python3 -
