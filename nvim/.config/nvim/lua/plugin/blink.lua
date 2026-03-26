@@ -15,7 +15,6 @@ vim.pack.add({
   },
   { src = 'https://github.com/rafamadriz/friendly-snippets' },
   { src = 'https://github.com/Saghen/blink.cmp' },
-  { src = 'https://github.com/giuxtaposition/blink-cmp-copilot' },
 })
 
 require('luasnip.loaders.from_vscode').lazy_load()
@@ -42,24 +41,6 @@ require('blink.cmp').setup({
       'path',
       'snippets',
       'buffer',
-      'copilot',
-    },
-    providers = {
-      copilot = {
-        name = 'copilot',
-        module = 'blink-cmp-copilot',
-        score_offset = 100,
-        async = true,
-        transform_items = function(_, items)
-          local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
-          local kind_idx = #CompletionItemKind + 1
-          CompletionItemKind[kind_idx] = 'Copilot'
-          for _, item in ipairs(items) do
-            item.kind = kind_idx
-          end
-          return items
-        end,
-      },
     },
   },
   keymap = {
