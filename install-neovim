@@ -27,3 +27,6 @@ curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L \
   -o $HOME/.local/share/nvim/skk/SKK-JISYO.L
 curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.edict2 \
   -o $HOME/.local/share/nvim/skk/SKK-JISYO.edict2
+
+# install deno
+curl -fsSL https://deno.land/install.sh | sh

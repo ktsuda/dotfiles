@@ -20,6 +20,7 @@ snap install ghostty
 ./install-golang
 ./install-rust
 ./install-neovim
+./install-nodejs
 ```
 
 ## Private

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 GOLANG_VERSION="1.24.3"
 GOLANG_FILENAME="go$GOLANG_VERSION.linux-amd64.tar.gz"
 
