@@ -13,7 +13,7 @@ cargo install ripgrep fd-find tree-sitter-cli
 
 ```bash
 apt install -y curl stow vim tmux zsh clang
-snap install ghostty
+snap install ghostty --classic
 
 ./install-git
 ./install-fzf
