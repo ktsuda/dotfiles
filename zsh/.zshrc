@@ -240,6 +240,10 @@ if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
 fi
 
+if (( $+commands[wt] )); then
+  eval "$(command wt config shell init zsh)"
+fi
+
 if (( $+commands[pbcopy] )); then
   :
 elif (( $+commands[xclip] )); then
