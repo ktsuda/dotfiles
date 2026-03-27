@@ -1,4 +1,19 @@
-bindkey -e
+bindkey -v
+export KEYTIMEOUT=1
+
+function zle-keymap-select () {
+  case $KEYMAP in
+    viins|main) echo -ne '\e[5 q' ;;
+    vicmd)      echo -ne '\e[2 q' ;;
+  esac
+}
+zle -N zle-keymap-select
+
+function zle-line-init {
+  zle -K viins
+  echo -ne "\e[5 q"
+}
+zle -N zle-line-init
 
 umask 022
 
