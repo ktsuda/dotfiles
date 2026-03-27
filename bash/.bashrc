@@ -132,7 +132,6 @@ esac
 [ -d "/usr/local/lib/nodejs/bin" ] && PATH="/usr/local/lib/nodejs/bin:$PATH"
 [ -d "/opt/local/bin" ] && PATH="/opt/local/bin:$PATH"
 [ -d "/Library/Apple/usr/bin" ] && PATH="/Library/Apple/usr/bin:$PATH"
-[ -d "/home/linuxbrew/.linuxbrew/bin" ] && PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
