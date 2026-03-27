@@ -30,3 +30,6 @@ curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.edict
 
 # install deno
 curl -fsSL https://deno.land/install.sh | sh
+
+# install beautysh
+pip install beautysh
