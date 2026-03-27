@@ -6,7 +6,7 @@
 
 ```bash
 brew install stow rust golang ghostty vim git tig fzf tmux zsh nvim lazygit
-cargo install ripgrep fd-find tree-sitter-cli
+cargo install ripgrep fd-find tree-sitter-cli zoxide du-dust alacritty
 ```
 
 ### linux
