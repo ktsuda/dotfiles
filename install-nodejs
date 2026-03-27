@@ -5,12 +5,12 @@ set -e
 NODEJS_VERSION="v24.11.1"
 NODEJS_FILENAME="node-$NODEJS_VERSION-linux-x64.tar.xz"
 
-# sudo apt update
-# mkdir -p $HOME/Projects
+sudo apt update
+mkdir -p $HOME/Projects
 cd $HOME/Projects
-# wget https://nodejs.org/dist/$NODEJS_VERSION/$NODEJS_FILENAME
-# sudo rm -rf /usr/local/lib/nodejs
-# sudo mkdir -p /usr/local/lib/nodejs
-# sudo tar --strip-components 1 -xJvf $NODEJS_FILENAME -C /usr/local/lib/nodejs
+wget https://nodejs.org/dist/$NODEJS_VERSION/$NODEJS_FILENAME
+sudo rm -rf /usr/local/lib/nodejs
+sudo mkdir -p /usr/local/lib/nodejs
+sudo tar --strip-components 1 -xJvf $NODEJS_FILENAME -C /usr/local/lib/nodejs
 sudo chown -R $(id -un):$(id -gn) /usr/local/lib/nodejs
 rm -f $NODEJS_FILENAME
