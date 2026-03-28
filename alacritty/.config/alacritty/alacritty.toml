@@ -4,6 +4,7 @@ import = [
   "~/.config/alacritty/catppuccin-mocha.toml",
   "~/.config/alacritty/font.toml",
   "~/.config/alacritty/keyboard.toml",
+  "~/.config/alacritty/mouse.toml",
   "~/.config/alacritty/window.toml",
   "~/.config/alacritty/misc.toml",
 ]

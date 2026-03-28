@@ -1,0 +1,17 @@
+[[mouse.bindings]]
+mouse = "Middle"
+mods = "None"
+action = "PasteSelection"
+
+[[mouse.bindings]]
+mouse = "Right"
+mods = "Shift"
+action = "Paste"
+
+[[mouse.bindings]]
+mouse = "Middle"
+action = "None"
+
+[[mouse.bindings]]
+mouse = "Right"
+action = "None"
