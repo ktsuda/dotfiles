@@ -1,7 +1,7 @@
 bindkey -v
 export KEYTIMEOUT=1
 
-function zle-keymap-select () {
+function zle-keymap-select() {
   case $KEYMAP in
     viins|main) echo -ne '\e[5 q' ;;
     vicmd)      echo -ne '\e[2 q' ;;
@@ -9,7 +9,7 @@ function zle-keymap-select () {
 }
 zle -N zle-keymap-select
 
-function zle-line-init {
+function zle-line-init() {
   zle -K viins
   echo -ne "\e[5 q"
 }
@@ -467,10 +467,10 @@ function sesh_sessions() {
   exec <&1
   local session
   session=$(sesh list --icons | $(__fzfcmd) \
-    --no-sort --ansi \
-    --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
-    --preview-window 'right:55%:noborder' \
-    --preview 'sesh preview {}'
+      --no-sort --ansi \
+      --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
+      --preview-window 'right:55%:noborder' \
+      --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
   [[ -z "$session" ]] && return
@@ -486,9 +486,9 @@ function custom_sesh_send_to() {
   fi
   local session
   session=$(sesh list -t --icons | $(__fzfcmd) \
-    --no-sort --ansi \
-    --preview-window 'right:55%:noborder' \
-    --preview 'sesh preview {}'
+      --no-sort --ansi \
+      --preview-window 'right:55%:noborder' \
+      --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
   if [[ -z "$session" ]]; then
