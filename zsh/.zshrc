@@ -231,6 +231,8 @@ if (( $+commands[fzf] )); then
       --highlight-line \
       --info=inline-right \
       --ansi \
+      --no-sort \
+      --exit-0 \
       --layout=reverse \
       --border=none \
       --height 60% \
@@ -433,7 +435,7 @@ function custom_tmux_session() {
       tmux new-session -s"$session"
     fi
   else
-    session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+    session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
     if [[ -z "$session" ]]; then
       tmux new-session -s "default"
       return
@@ -454,7 +456,7 @@ function custom_tmux_send_to() {
     return
   fi
   local session
-  session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) -0 | cut -d: -f1)
+  session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
   if [[ -z "$session" ]]; then
     tmux new-session -s "default" tmux new-window -t "default" "$*"
     return
@@ -467,7 +469,6 @@ function sesh_sessions() {
   exec <&1
   local session
   session=$(sesh list --icons | $(__fzfcmd) \
-      --no-sort --ansi \
       --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
       --preview-window 'right:55%:noborder' \
       --preview 'sesh preview {}'
@@ -486,7 +487,6 @@ function custom_sesh_send_to() {
   fi
   local session
   session=$(sesh list -t --icons | $(__fzfcmd) \
-      --no-sort --ansi \
       --preview-window 'right:55%:noborder' \
       --preview 'sesh preview {}'
   )
