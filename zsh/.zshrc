@@ -330,94 +330,101 @@ function __fzfcmd() {
 }
 
 function git_repo_cd() {
-  local selected_dir=$(ghq list --full-path | $(__fzfcmd))
-  local ret=$?
+  exec </dev/tty
+  exec <&1
+  local selected_dir
+  selected_dir=$(ghq list --full-path | $(__fzfcmd))
   if [ -z "$selected_dir" ]; then
-    zle redisplay
-    return 0
+    zle redisplay > /dev/null 2>&1 || true
+    return
   fi
   eval 'builtin cd -- "${selected_dir}"'
   zle reset-prompt > /dev/null 2>&1 || true
-  return $ret
 }
 zle -N git_repo_cd
 bindkey "^s" git_repo_cd
 
 function subdir_cd() {
+  exec </dev/tty
+  exec <&1
   local selected_dir
   if (( $+commands[fd] )); then
-    local selected_dir=$(fd -t d | $(__fzfcmd))
+    selected_dir=$(fd -t d | $(__fzfcmd))
   else
-    local selected_dir=$(find . -type d | $(__fzfcmd))
+    selected_dir=$(find . -type d | $(__fzfcmd))
   fi
-  local ret=$?
   if [ -z "$selected_dir" ]; then
-    zle redisplay
-    return 0
+    zle redisplay > /dev/null 2>&1 || true
+    return
   fi
   eval 'builtin cd -- "${selected_dir}"'
   zle reset-prompt > /dev/null 2>&1 || true
-  return $ret
 }
 zle -N subdir_cd
 bindkey "^o" subdir_cd
 
 function history_widget() {
+  exec </dev/tty
+  exec <&1
   local selected num
   selected=($(fc -rl 1 | $(__fzfcmd)))
-  local ret=$?
-  if [ -n "$selected" ]; then
-    num=$selected[1]
-    if [ -n "$num" ]; then
-      zle vi-fetch-history -n $num
-    fi
+  if [ -z "$selected" ]; then
+    zle redisplay > /dev/null 2>&1 || true
+    return
   fi
+  num=$selected[1]
+  [[ -z "$num" ]] && return
   zle reset-prompt > /dev/null 2>&1 || true
-  return $ret
+  zle vi-fetch-history -n $num
 }
 zle -N history_widget
 bindkey "^r" history_widget
 
 alias ipv4='ipv4_address'
 function ipv4_address() {
-  local ipv4_address=$(ifconfig | \
+  exec </dev/tty
+  exec <&1
+  local ipv4_address
+  ipv4_address=$(ifconfig | \
     awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | $(__fzfcmd))
-  local ret=$?
   if [ -z "$ipv4_address" ]; then
-    return 0
+    zle redisplay > /dev/null 2>&1 || true
+    return
   fi
+  zle reset-prompt > /dev/null 2>&1 || true
   echo "$ipv4_address"
-  return $ret
 }
 
 alias sp='pkg_search'
 function pkg_search() {
+  exec </dev/tty
+  exec <&1
+  local selected
   case ${OSTYPE} in
     linux*)
-      local selected_pkg=$(dpkg -l | \
-        awk '/^ii/ { print $2 }' | $(__fzfcmd))
-      local ret=$?
-      if [ -z "$selected_pkg" ]; then
-        return 0
+      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | $(__fzfcmd))
+      if [ -z "$selected" ]; then
+        zle redisplay > /dev/null 2>&1 || true
+        return
       fi
-      apt-cache depends $selected_pkg
+      zle reset-prompt > /dev/null 2>&1 || true
+      apt-cache depends $selected
       echo
-      apt-cache rdepends $selected_pkg
-      return $ret
+      apt-cache rdepends $selected
       ;;
     darwin*)
-      local selected_formula=$(brew list -1 | $(__fzfcmd))
-      local ret=$?
-      if [ -z "$selected_formula" ]; then
-        return 0
+      selected=$(brew list -1 | $(__fzfcmd))
+      if [ -z "$selected" ]; then
+        zle redisplay > /dev/null 2>&1 || true
+        return
       fi
-      echo "${selected_formula} depends on..."
-      brew deps $selected_formula 2>/dev/null
+      zle reset-prompt > /dev/null 2>&1 || true
+      echo "${selected} depends on..."
+      brew deps $selected 2>/dev/null
       echo
-      echo "${selected_formula} is used by..."
-      brew uses --eval-all $selected_formula 2>/dev/null
+      echo "${selected} is used by..."
+      brew uses --eval-all $selected 2>/dev/null
       echo
-      return $ret
       ;;
   esac
 }
@@ -436,6 +443,7 @@ function custom_tmux_session() {
     fi
   else
     session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
+    zle reset-prompt > /dev/null 2>&1 || true
     if [[ -z "$session" ]]; then
       tmux new-session -s "default"
       return
@@ -453,10 +461,12 @@ function custom_tmux_send_to() {
   exec <&1
   if [[ $# -lt 1 ]]; then
     echo "Usage: sa <command>"
+    zle redisplay > /dev/null 2>&1 || true
     return
   fi
   local session
   session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
+  zle reset-prompt > /dev/null 2>&1 || true
   if [[ -z "$session" ]]; then
     tmux new-session -s "default" tmux new-window -t "default" "$*"
     return
@@ -474,7 +484,10 @@ function sesh_sessions() {
       --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
-  [[ -z "$session" ]] && return
+  if [[ -z "$session" ]]; then
+    sesh connect "default"
+    return
+  fi
   sesh connect $session
 }
 
