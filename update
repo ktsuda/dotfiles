@@ -152,7 +152,7 @@ function credential() {
     printf "Deleting   %-17s ...   " "password? (y/N)"
     read -r input
     if [[ -z $input ]]; then
-        credential
+        :
     elif [[ $input == 'n' ]] || [[ $input == 'N' ]]; then
         :
     elif [[ $input == 'y' ]] || [[ $input == 'Y' ]]; then
