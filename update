@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(ghostty alacritty tmux vim ripgrep git tig lazygit zsh nvim)
+    STOW_FOLDERS=(ghostty alacritty tmux vim ripgrep git tig lazygit worktrunk zsh nvim)
 }
 
 function set_all() {
