@@ -20,8 +20,6 @@
     now = commit --amend --no-edit
     l = log --graph --date-order --abbrev-commit --date=relative --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
     clang-format = clang-format-12
-[credential]
-    helper = store
 [init]
     defaultBranch = main
 [clangFormat]
