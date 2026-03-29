@@ -10,4 +10,7 @@ hide_when_typing = true
 [colors]
 transparent_background_colors = true
 
+[selection]
+save_to_clipboard = true
+
 # vim: set ft=toml ts=2 sw=2 sts=2 et :
