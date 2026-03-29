@@ -16,15 +16,5 @@ set refs-view = line-number:yes,interval=10 \
                 author:abbreviated \
                 ref:yes
 
-bind main R !git rebase -i %(commit)
-bind diff R !git rebase -i %(commit)
-bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
-bind status C !git commit -v
-bind status P !git push
-bind generic <Ctrl-r> refresh
-bind generic <Ctrl-Y> move-first-line
-bind generic <Ctrl-E> move-last-line
-
-color cursor black cyan bold
-color title-focus black blue bold
-color title-blur black blue
+source ~/.config/tig/color.tigrc
+source ~/.config/tig/keybind.tigrc
