@@ -9,29 +9,23 @@ grapheme-width-method=unicode
 theme = dark:Catppuccin Mocha,light:Catppuccin Latte
 mouse-hide-while-typing = true
 background-opacity = 0.8
-background-opacity-cells = true
-background-blur = true
-unfocused-split-opacity = 0.9
+unfocused-split-opacity = 0.5
 split-divider-color = #c6a0f6
 
 # window
 
-window-decoration = auto
-window-theme = dark
-window-height = 40
-window-width = 135
-window-padding-balance = true
+window-decoration = none
 
-confirm-close-surface = true
+# behaviour
+
 copy-on-select = clipboard
 shell-integration = detect
-bell-features = no-system,no-audio,attention,border
-desktop-notifications = true
 term = xterm-256color
 
 # os specific
-config-file = ?"./extra"
 
+config-file = ?"./extra"
+ 
 # keybinds
 
 config-file = ?"./keybinds"

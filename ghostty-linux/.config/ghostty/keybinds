@@ -1,36 +1,72 @@
 keybind = clear
-
-keybind = ctrl+shift+n=new_window
-
-keybind = ctrl+t>c=new_tab
-keybind = ctrl+t>n=next_tab
+keybind = ctrl+t>shift+r=reload_config
+keybind = ctrl+t>,=text:nvim ~/.config/ghostty/config
+keybind = chain=text:\n
+# keybind = copy=copy_to_clipboard:mixed
+# keybind = paste=paste_from_clipboard
+# keybind = ctrl+insert=copy_to_clipboard:mixed
+# keybind = shift+insert=paste_from_selection
+keybind = ctrl+shift+c=copy_to_clipboard:mixed
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = ctrl+==increase_font_size:1
+keybind = ctrl++=increase_font_size:1
+keybind = ctrl+-=decrease_font_size:1
+keybind = ctrl+0=reset_font_size
+keybind = ctrl+t>shift+s=write_screen_file:copy,plain
+keybind = ctrl+t>s=text:nvim --clean -c 'terminal cat\x20
+keybind = chain=write_screen_file:paste,vt
+keybind = chain=text:'\n
+keybind = shift+arrow_left=adjust_selection:left
+keybind = shift+arrow_right=adjust_selection:right
+keybind = shift+arrow_up=adjust_selection:up
+keybind = shift+arrow_down=adjust_selection:down
+# keybind = shift+page_up=scroll_page_up
+# keybind = shift+page_down=scroll_page_down
+# keybind = shift+home=scroll_to_top
+# keybind = shift+end=scroll_to_bottom
 keybind = ctrl+t>p=previous_tab
-keybind = ctrl+t>shift+k=close_tab
-
-keybind = ctrl+t>shift+a=prompt_surface_title
-
-keybind = ctrl+t>l=goto_split:right
-keybind = ctrl+t>h=goto_split:left
-keybind = ctrl+t>j=goto_split:down
-keybind = ctrl+t>k=goto_split:up
-
-keybind = ctrl+t>shift+l=resize_split:right,100
-keybind = ctrl+t>shift+h=resize_split:left,100
-keybind = ctrl+t>shift+j=resize_split:down,100
-keybind = ctrl+t>shift+k=resize_split:up,100
-keybind = ctrl+t>m=equalize_splits
-
-keybind = ctrl+t>-=new_split:down
+keybind = ctrl+t>n=next_tab
+keybind = ctrl+shift+n=new_window
+keybind = ctrl+t>x=close_tab:this
+keybind = ctrl+t>q=quit
+# keybind = alt+f4=close_window
+keybind = ctrl+t>c=new_tab
+# keybind = ctrl+shift+arrow_left=previous_tab
+# keybind = ctrl+shift+arrow_right=next_tab
+# keybind = ctrl+page_up=previous_tab
+# keybind = ctrl+page_down=next_tab
 keybind = ctrl+t>;=new_split:right
-
-keybind = ctrl+t>z=toggle_split_zoom
-
-keybind = ctrl+t>r=reload_config
-
+keybind = ctrl+t>-=new_split:down
+# keybind = super+ctrl+[=goto_split:previous
+# keybind = super+ctrl+]=goto_split:next
+keybind = ctrl+t>k=goto_split:up
+keybind = ctrl+t>j=goto_split:down
+keybind = ctrl+t>h=goto_split:left
+keybind = ctrl+t>l=goto_split:right
+keybind = ctrl+t>r=activate_key_table:resize
+keybind = resize/k=resize_split:up,10
+keybind = resize/j=resize_split:down,10
+keybind = resize/h=resize_split:left,10
+keybind = resize/l=resize_split:right,10
+keybind = resize/ctrl+[=deactivate_key_table
+keybind = resize/catch_all=ignore
+keybind = ctrl+t>m=equalize_splits
 keybind = ctrl+t>u=jump_to_prompt:-1
 keybind = ctrl+t>d=jump_to_prompt:1
-
-keybind = ctrl+shift+p=toggle_command_palette
-keybind = ctrl+shift+q=quit
-
-# vim: ft=ghostty
+keybind = ctrl+t>/=start_search
+keybind = escape=end_search
+# keybind = ctrl+t>w=search_selection
+keybind = ctrl+t>shift+i=inspector:toggle
+# keybind = ctrl+t>shift+a=select_all
+keybind = ctrl+t>digit_1=goto_tab:1
+keybind = ctrl+t>digit_2=goto_tab:2
+keybind = ctrl+t>digit_3=goto_tab:3
+keybind = ctrl+t>digit_4=goto_tab:4
+keybind = ctrl+t>digit_5=goto_tab:5
+keybind = ctrl+t>digit_6=goto_tab:6
+keybind = ctrl+t>digit_7=goto_tab:7
+keybind = ctrl+t>digit_8=goto_tab:8
+# keybind = alt+9=last_tab
+# keybind = ctrl+enter=toggle_fullscreen
+keybind = ctrl+t>z=toggle_split_zoom
+keybind = ctrl+t>o=toggle_command_palette
