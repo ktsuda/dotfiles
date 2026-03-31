@@ -6,13 +6,10 @@ git:
     - git log --graph --all --color=always --abbrev-commit --pretty=format:'%C(cyan)%as %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset' --
   ignoreWhitespaceInDiffView: true
   diffContextSize: 5
-
 refresher:
   refreshInterval: 60
   fetchInterval: 300
-
 disableStartupPopups: true
-
 keybinding:
   universal:
     quit: q
@@ -73,10 +70,8 @@ keybinding:
     scrollDownMain-alt2: <c-d>
     executeShellCommand: ":"
     createRebaseOptionsMenu: m
-
     # 'Files' appended for legacy reasons
     pushFiles: P
-
     # 'Files' appended for legacy reasons
     pullFiles: p
     refresh: R
@@ -190,7 +185,12 @@ keybinding:
     bulkMenu: b
   commitMessage:
     commitMenu: <c-o>
-
+customCommands:
+  - key: "c"
+    context: "files"
+    command: "wt step commit --stage none"
+    description: "wt step commit (staged only)"
+    output: terminal
 gui:
   # Use the mocha catppuccin theme
   theme:
