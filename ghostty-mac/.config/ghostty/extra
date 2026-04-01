@@ -1,3 +1,5 @@
+window-decoration = auto
+
 quick-terminal-position = bottom
 quick-terminal-screen = main
 quick-terminal-animation-duration = 0

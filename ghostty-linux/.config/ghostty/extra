@@ -1,2 +1,4 @@
+window-decoration = none
+
 gtk-wide-tabs = false
 gtk-custom-css = tab-style.css
