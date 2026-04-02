@@ -101,7 +101,7 @@ keybinding:
     recentRepos: <enter>
     allBranchesLogGraph: a
   files:
-    commitChanges: c
+    commitChanges: <disabled>
     commitChangesWithoutHook: w
     amendLastCommit: A
     commitChangesWithEditor: C
