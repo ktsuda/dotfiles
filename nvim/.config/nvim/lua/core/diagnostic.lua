@@ -24,6 +24,6 @@ vim.diagnostic.config({
     },
   },
   jump = {
-    float = true,
+    on_jump = true,
   },
 })
