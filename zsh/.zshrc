@@ -79,17 +79,9 @@ case ${OSTYPE} in
     ;;
 esac
 
-case ${OSTYPE} in
-  linux*)
-    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-      ssh-agent -s > ~/.ssh/ssh-agent-env
-    fi
-    if [ -f ~/.ssh/ssh-agent-env ]; then
-      . ~/.ssh/ssh-agent-env > /dev/null
-      ssh-add > /dev/null 2>&1
-    fi
-    ;;
-esac
+if [[ -f "~/.config/zsh/zsh-agent/zsh-agent.zsh" ]]; then
+  . ~/.config/zsh/zsh-agent/zsh-agent.zsh
+fi
 
 typeset -U fpath
 
