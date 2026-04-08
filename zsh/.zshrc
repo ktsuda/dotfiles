@@ -436,10 +436,7 @@ function custom_tmux_session() {
   else
     session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
     zle reset-prompt > /dev/null 2>&1 || true
-    if [[ -z "$session" ]]; then
-      tmux new-session -s "default"
-      return
-    fi
+    [[ -z "$session" ]] && return
     if [[ -n $TMUX ]]; then
       tmux switch-client -t "$session"
     else
@@ -459,10 +456,7 @@ function custom_tmux_send_to() {
   local session
   session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
   zle reset-prompt > /dev/null 2>&1 || true
-  if [[ -z "$session" ]]; then
-    tmux new-session -s "default" tmux new-window -t "default" "$*"
-    return
-  fi
+  [[ -z "$session" ]] && return
   tmux new-window -t "$session" "$*"
 }
 
@@ -476,10 +470,7 @@ function sesh_sessions() {
       --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
-  if [[ -z "$session" ]]; then
-    sesh connect "default"
-    return
-  fi
+  [[ -z "$session" ]] && return
   sesh connect $session
 }
 
@@ -496,10 +487,7 @@ function custom_sesh_send_to() {
       --preview 'sesh preview {}'
   )
   zle reset-prompt > /dev/null 2>&1 || true
-  if [[ -z "$session" ]]; then
-    sesh connect --command "$*" "default"
-    return
-  fi
+  [[ -z "$session" ]] && return
   tmux new-window -t "$ID" "$*"
 }
 
