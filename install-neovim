@@ -20,7 +20,9 @@ fi
 cd $HOME/Projects/neovim
 make distclean
 make CMAKE_BUILD_TYPE=Release
-cd build && cpack -G DEB && sudo dpkg -i nvim-linux-x86_64.deb
+cd build && cpack -G DEB
+sudo apt-get -y uninstall neovim neovim-runtime
+sudo dpkg -i nvim-linux-x86_64.deb
 
 mkdir -p $HOME/.local/share/nvim/skk
 curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L \

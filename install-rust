@@ -3,7 +3,11 @@
 set -e
 
 sudo apt update
-sudo apt install -y curl
+sudo apt install -y \
+    curl \
+    pkg-config \
+    libfreetype6-dev \
+    libfontconfig1-dev
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
