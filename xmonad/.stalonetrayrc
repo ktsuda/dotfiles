@@ -1,0 +1,15 @@
+background "#1e1e2e"
+decorations none
+dockapp_mode none
+geometry 1x1-0+0
+grow_gravity NE
+icon_gravity NE
+icon_size 16
+kludges force_icons_size
+no_shrink false
+transparent false
+sticky true
+# window_strut none
+window_type desktop
+window_layer top
+skip_taskbar true

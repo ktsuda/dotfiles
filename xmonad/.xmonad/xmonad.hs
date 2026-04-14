@@ -221,7 +221,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , className =? "Barrier"        --> doFloat
+    , className =? "Deskflow"        --> doFloat
     , className =? "Rofi"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
@@ -271,6 +271,9 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
     spawnOnce "fcitx5 -dr &"
+    -- spawnOnce "flatpak run org.deskflow.deskflow"
+    spawnOnce "nm-applet &"
+    spawnOnce "stalonetray &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
