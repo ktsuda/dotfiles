@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wakatime zsh-private)
+    STOW_FOLDERS+=(wakatime)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(ghostty-mac iterm2 tig-mac)

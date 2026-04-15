@@ -81,10 +81,6 @@ case ${OSTYPE} in
     ;;
 esac
 
-if [[ -f "~/.config/zsh/zsh-agent/zsh-agent.zsh" ]]; then
-  . ~/.config/zsh/zsh-agent/zsh-agent.zsh
-fi
-
 typeset -U fpath
 
 if (( $+commands[brew] )); then
