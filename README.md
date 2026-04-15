@@ -12,7 +12,7 @@ cargo install ripgrep fd-find tree-sitter-cli zoxide du-dust alacritty
 ### linux
 
 ```bash
-apt install -y curl stow vim tmux zsh clang alacritty
+apt install -y curl stow vim tmux zsh clang
 snap install ghostty --classic
 
 ./install-git

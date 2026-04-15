@@ -1,3 +1,4 @@
+[general]
 # Alacritty configuration file
 import = [
   "~/.config/alacritty/catppuccin-mocha.toml",
