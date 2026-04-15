@@ -271,7 +271,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
     spawnOnce "fcitx5 -dr &"
-    -- spawnOnce "flatpak run org.deskflow.deskflow"
+    spawnOnce "flatpak run org.deskflow.deskflow"
     spawnOnce "nm-applet &"
     spawnOnce "stalonetray &"
 
