@@ -11,6 +11,7 @@ require('plugin.lint')
 require('plugin.blink')
 require('plugin.surround')
 require('plugin.comment')
+require('plugin.flash')
 require('plugin.markdown')
 require('plugin.skkeleton')
 
