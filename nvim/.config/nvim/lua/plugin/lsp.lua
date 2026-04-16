@@ -23,10 +23,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
     end
 
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Show hover' })
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Go to references' })
+    -- stylua: ignore start
+    vim.keymap.set('n', 'K',  vim.lsp.buf.hover,          { desc = 'Show hover' })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition,     { desc = 'Go to definition' })
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references,     { desc = 'Go to references' })
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Go to implementation' })
+    -- stylua: ignore end
   end,
 })
 
