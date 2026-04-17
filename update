@@ -95,8 +95,8 @@ usage: $(basename "${0}") [--help] [--list] [--update | --delete]
 options:
     --help,    -h     print this
     --delete,  -D     delete dotfiles
-    --private, -p     select dotfiles for a private host
     --shared,  -s     select dotfiles for a shared host
+    --private, -p     select dotfiles for a private host
 
 EOF
 }
@@ -149,7 +149,7 @@ function update() {
         for folder in "${STOW_FOLDERS[@]}"; do
             restore_all
             printf "Deleting   %-17s" "$folder"
-            stow -t "$HOME" -D "$folder" 2> /dev/null
+            stow --dotfiles -t "$HOME" -D "$folder" 2> /dev/null
             echo " ...   Done"
         done
     fi
@@ -158,7 +158,7 @@ function update() {
         for folder in "${STOW_FOLDERS[@]}"; do
             backup_all
             printf "Installing %-17s" "$folder"
-            stow --ignore='\.DS_Store' -t "$HOME" -S "$folder"
+            stow --ignore='\.DS_Store' --dotfiles -t "$HOME" -S "$folder"
             echo " ...   Done"
         done
     fi

@@ -12,7 +12,7 @@ cargo install ripgrep fd-find tree-sitter-cli zoxide du-dust alacritty
 ### linux
 
 ```bash
-apt install -y curl stow vim tmux zsh clang
+apt install -y curl vim tmux zsh clang
 snap install ghostty --classic
 
 ./install-git
@@ -35,20 +35,25 @@ apt install -y xmonad rofi nitrogen
 
 ## Install dotfiles
 
-### shared host
+### Install stow
+
+apt install -y build-essential perl texinfo
 
 ```bash
-git clone https://github.com/ktsuda/dotfiles.git
-cd dotfiles
-./update -s
+git clone --branch v2.4.1 https://github.com/aspiers/stow
+cd stow
+autoreconf -iv
+./configure && make
+sudo make install
 ```
 
-### private host
+### symlink dotfiles
 
 ```bash
 git clone https://github.com/ktsuda/dotfiles.git
 cd dotfiles
-./update -p
+./update -s # for shared host
+./update -p # for private host
 ```
 
 ## Delete dotfiles
