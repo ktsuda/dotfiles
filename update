@@ -142,13 +142,13 @@ function backup_file() {
 }
 
 function restore_all() {
-    restore_file ".bash_aliases" 
+    restore_file ".bash_aliases"
     restore_file ".zshrc"
     restore_file ".zshenv"
 }
 
 function backup_all() {
-    backup_file ".bash_aliases" 
+    backup_file ".bash_aliases"
     backup_file ".zshrc"
     backup_file ".zshenv"
 }
