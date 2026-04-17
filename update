@@ -33,6 +33,10 @@ function set_stow_folders() {
                 shared
                 shift
                 ;;
+            -c | --console)
+                console
+                shift
+                ;;
             *)
                 STOW_FOLDERS+=("$1")
                 shift
@@ -47,6 +51,10 @@ function set_stow_folders() {
 
 function reset() {
     STOW_FOLDERS=()
+}
+
+function console() {
+    STOW_FOLDERS=(console git worktrunk)
 }
 
 function set_default() {
@@ -95,6 +103,7 @@ usage: $(basename "${0}") [--help] [--list] [--update | --delete]
 options:
     --help,    -h     print this
     --delete,  -D     delete dotfiles
+    --console, -c     select dotfiles for legacy console
     --shared,  -s     select dotfiles for a shared host
     --private, -p     select dotfiles for a private host
 
