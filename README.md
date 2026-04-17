@@ -21,6 +21,7 @@ snap install ghostty --classic
 ./install-rust
 ./install-neovim
 ./install-nodejs
+./install-fonts
 
 chsh -s /usr/bin/zsh "$USER"
 ```
