@@ -1,22 +1,5 @@
 bindkey -e
 
-# bindkey -v
-# export KEYTIMEOUT=1
-# 
-# function zle-keymap-select() {
-#   case $KEYMAP in
-#     viins|main) echo -ne '\e[5 q' ;;
-#     vicmd)      echo -ne '\e[2 q' ;;
-#   esac
-# }
-# zle -N zle-keymap-select
-# 
-# function zle-line-init() {
-#   zle -K viins
-#   echo -ne "\e[5 q"
-# }
-# zle -N zle-line-init
-
 umask 022
 
 case ${OSTYPE} in
@@ -180,6 +163,13 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
 # aliases
+function __fzfcmd() {
+  [ -n "$TMUX_PANE" ] \
+    && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
+    && echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-60%}} -- " \
+    || echo "fzf ${FZF_DEFAULT_OPTS}"
+}
+
 case ${OSTYPE} in
   darwin*)
     if (( $+commands[gls] )); then
@@ -241,6 +231,11 @@ if (( $+commands[fzf] )); then
 
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
     --follow --exclude .git"
+
+  if (( $+commands[tmux] )); then
+    export FZF_TMUX=1
+    export FZF_TMUX_OPTS="${FZF_DEFAULT_OPTS} -p"
+  fi
 fi
 
 if (( $+commands[rg] )); then
@@ -311,13 +306,6 @@ function chdir_parent() {
 }
 zle -N chdir_parent
 bindkey '^u' chdir_parent
-
-function __fzfcmd() {
-  [ -n "$TMUX_PANE" ] \
-    && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
-    && echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-60%}} -- " \
-    || echo "fzf"
-}
 
 function git_repo_cd() {
   exec </dev/tty
@@ -434,7 +422,10 @@ function custom_tmux_session() {
   else
     session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
     zle reset-prompt > /dev/null 2>&1 || true
-    [[ -z "$session" ]] && return
+    if [[ -z "$session" ]]; then
+      tmux new-session -s"default"
+      return
+    fi
     if [[ -n $TMUX ]]; then
       tmux switch-client -t "$session"
     else
