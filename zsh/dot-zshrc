@@ -163,6 +163,39 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
 # aliases
+if (( $+commands[fzf] )); then
+  if [ -z "$FZF_DEFAULT_OPTS" ]; then
+    FZF_DEFAULT_OPTS="\
+      --highlight-line \
+      --info=inline-right \
+      --ansi \
+      --no-sort \
+      --exit-0 \
+      --layout=reverse \
+      --border=none \
+      --height 60% \
+      --no-multi \
+      "
+
+    ## catppuccin
+    export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
+      --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
+      --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+      --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+      --color=selected-bg:#45475A \
+      --color=border:#6C7086,label:#CDD6F4 \
+      "
+  fi
+
+  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
+    --follow --exclude .git"
+
+  if (( $+commands[tmux] )); then
+    FZF_TMUX=1
+    FZF_TMUX_OPTS="${FZF_DEFAULT_OPTS} -p"
+  fi
+fi
+
 function __fzfcmd() {
   [ -n "$TMUX_PANE" ] \
     && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
@@ -204,39 +237,6 @@ case ${OSTYPE} in
     fi
     ;;
 esac
-
-if (( $+commands[fzf] )); then
-  if [ -z "$FZF_DEFAULT_OPTS" ]; then
-    FZF_DEFAULT_OPTS="\
-      --highlight-line \
-      --info=inline-right \
-      --ansi \
-      --no-sort \
-      --exit-0 \
-      --layout=reverse \
-      --border=none \
-      --height 60% \
-      --no-multi \
-      "
-
-    ## catppuccin
-    export FZF_DEFAULT_OPTS=" ${FZF_DEFAULT_OPTS} \
-      --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
-      --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
-      --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
-      --color=selected-bg:#45475A \
-      --color=border:#6C7086,label:#CDD6F4 \
-      "
-  fi
-
-  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
-    --follow --exclude .git"
-
-  if (( $+commands[tmux] )); then
-    export FZF_TMUX=1
-    export FZF_TMUX_OPTS="${FZF_DEFAULT_OPTS} -p"
-  fi
-fi
 
 if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'

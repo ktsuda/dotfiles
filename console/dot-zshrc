@@ -163,6 +163,30 @@ RPROMPT=\$vcs_info_msg_0_
 zstyle ':vcs_info:git:*' formats '%b'
 
 # aliases
+if (( $+commands[fzf] )); then
+  if [ -z "$FZF_DEFAULT_OPTS" ]; then
+    FZF_DEFAULT_OPTS="\
+      --highlight-line \
+      --info=inline-right \
+      --ansi \
+      --no-sort \
+      --exit-0 \
+      --layout=reverse \
+      --border=none \
+      --height 60% \
+      --no-multi \
+      "
+  fi
+
+  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
+    --follow --exclude .git"
+
+  if (( $+commands[tmux] )); then
+    FZF_TMUX=1
+    FZF_TMUX_OPTS="${FZF_DEFAULT_OPTS} -p"
+  fi
+fi
+
 function __fzfcmd() {
   [ -n "$TMUX_PANE" ] \
     && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
@@ -204,30 +228,6 @@ case ${OSTYPE} in
     fi
     ;;
 esac
-
-if (( $+commands[fzf] )); then
-  if [ -z "$FZF_DEFAULT_OPTS" ]; then
-    FZF_DEFAULT_OPTS="\
-      --highlight-line \
-      --info=inline-right \
-      --ansi \
-      --no-sort \
-      --exit-0 \
-      --layout=reverse \
-      --border=none \
-      --height 60% \
-      --no-multi \
-      "
-  fi
-
-  export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
-    --follow --exclude .git"
-
-  if (( $+commands[tmux] )); then
-    export FZF_TMUX = 1
-    export FZF_TMUX_OPTS = "${FZF_DEFAULT_OPTS} -p"
-  fi
-fi
 
 if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
@@ -440,9 +440,45 @@ function custom_tmux_send_to() {
   tmux new-window -t "$session" "$*"
 }
 
+function sesh_sessions() {
+  exec </dev/tty
+  exec <&1
+  local session
+  session=$(sesh list --icons | $(__fzfcmd) \
+      --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
+      --preview-window 'right:55%:noborder' \
+      --preview 'sesh preview {}'
+  )
+  zle reset-prompt > /dev/null 2>&1 || true
+  [[ -z "$session" ]] && return
+  sesh connect $session
+}
+
+function custom_sesh_send_to() {
+  exec </dev/tty
+  exec <&1
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: sa <command>"
+    return
+  fi
+  local session
+  session=$(sesh list -t --icons | $(__fzfcmd) \
+      --preview-window 'right:55%:noborder' \
+      --preview 'sesh preview {}'
+  )
+  zle reset-prompt > /dev/null 2>&1 || true
+  [[ -z "$session" ]] && return
+  tmux new-window -t "$ID" "$*"
+}
+
 if (( $+commands[tmux] )); then
-  alias s='custom_tmux_session'
-  alias sa='custom_tmux_send_to'
+  if (( $+commands[sesh] )); then
+    alias s='sesh_sessions'
+    alias sa='custom_sesh_send_to'
+  else
+    alias s='custom_tmux_session'
+    alias sa='custom_tmux_send_to'
+  fi
 fi
 
 case ${OSTYPE} in
