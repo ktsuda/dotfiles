@@ -11,10 +11,10 @@ configuration {
     display-keys: "keys:";
     
     //adding vim keybindings
-    kb-row-up: "Up,Control+k";
+    kb-row-up: "Up,Control+p,Control+k";
     kb-row-left: "Left,Control+h";
     kb-row-right: "Right,Control+l";
-    kb-row-down: "Down,Control+j";
+    kb-row-down: "Down,Control+n,Control+j";
 
     kb-accept-entry: "Control+z,Control+y,Return,KP_Enter";
 
@@ -26,4 +26,4 @@ configuration {
     kb-mode-complete: "Control+o";
 }
 
-@theme "catppuccin-mocha.rasi"
+@theme "catppuccin-default.rasi"
