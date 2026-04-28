@@ -18,3 +18,5 @@ set refs-view = line-number:yes,interval=10 \
 
 source ~/.config/tig/color.tigrc
 source ~/.config/tig/keybind.tigrc
+
+# vim: set ft=conf:
