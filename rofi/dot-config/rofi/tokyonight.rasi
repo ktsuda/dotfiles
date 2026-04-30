@@ -5,7 +5,7 @@
     primary: #C5C8C6;
     kl: #7aa2f7;
     black: #000000;
-    font: "UbuntuMono Nerd Font 14";
+    font: "NotoMono Nerd Font 14";
     background-color: @bg;
     border: 0px;
 

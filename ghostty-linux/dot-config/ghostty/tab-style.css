@@ -37,6 +37,6 @@ tabbar tabbox tab:selected {
 }
 
 tabbar tabbox tab label {
-  font-family: "UbuntuMono Nerd Font";
-  font-size: 16px;
+  font-family: "NotoMono Nerd Font";
+  font-size: 14px;
 }

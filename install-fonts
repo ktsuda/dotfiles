@@ -24,6 +24,7 @@ set -e
 # )
 
 declare -a fonts=(
+    Noto
     UbuntuMono
 )
 

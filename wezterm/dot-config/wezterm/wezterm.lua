@@ -6,8 +6,8 @@ config.automatically_reload_config = true
 config.use_ime = true
 
 -- font
-config.font = wezterm.font_with_fallback({ 'UbuntuMono Nerd Font', 'monospace' })
-config.font_size = 16.0
+config.font = wezterm.font_with_fallback({ 'NotoMono Nerd Font', 'monospace' })
+config.font_size = 14.0
 
 -- theme
 local theme = require('theme')
