@@ -3,9 +3,35 @@
 set -e
 
 curl -fsSL https://claude.ai/install.sh | bash
+
+## Install rtk
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+# Setup:
+#   $ rtk init -g
+#   $ rtk init --show
+
+## Install genshijin:
+#   /plugin install genshijin
+#
+# Example:
+#   /genshijin          # 通常モード（デフォルト）
+#   /genshijin 丁寧     # ビジネス向け
+#   /genshijin 極限     # 最大圧縮
+#   /genshijin-commit   # Conventional Commits 形式の簡潔コミットメッセージ生成
+#   /genshijin-review   # 1行PRコメント
+#   /genshijin-help     # 全モード・サブスキル リファレンスカード
+
+## Install caveman
+curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+# Example:
+#   /caveman-commit                          # Terse commit messages
+#   /caveman-review                          # One-line PR comments
+#   /caveman-help                            # Quick-ref card
+#   /caveman-stats                           # Real session token usage (USD)
+#   /caveman:compress <file>                 # Rewrites a memory file into caveman-speak
+#   /cavecrew-investigator/builder/reveiwer  # Caveman subagents for Claude Code
   
 # Start using Claude Code:
-#
 #   $ cd your-project
 #   $ claude
 #   $ claude doctor
