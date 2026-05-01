@@ -18,7 +18,7 @@
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit
-    l = log --graph --date-order --abbrev-commit --date=relative --pretty=format:'%C(cyan)%ad %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset'
+    l = log --graph --date-order --abbrev-commit --date=short --pretty=format:'%C("#89dceb")%ad %C("#cba6f7")%h %C("#a6e3a1")%cn %C("#cdd6f4")%s %C("#f9e2af")%d%Creset'
     clang-format = clang-format-12
 [init]
     defaultBranch = main
