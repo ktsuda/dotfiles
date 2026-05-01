@@ -81,7 +81,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wakatime btop)
+    STOW_FOLDERS+=(wakatime btop claude)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(ghostty-mac iterm2 tig-mac)
