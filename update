@@ -54,11 +54,11 @@ function reset() {
 }
 
 function console() {
-    STOW_FOLDERS=(console git worktrunk)
+    STOW_FOLDERS=(console git worktrunk jj)
 }
 
 function set_default() {
-    STOW_FOLDERS=(ghostty alacritty tmux vim ripgrep git tig lazygit worktrunk zsh nvim)
+    STOW_FOLDERS=(ghostty alacritty tmux vim ripgrep git tig lazygit worktrunk jj zsh nvim)
 }
 
 function set_all() {

@@ -146,6 +146,11 @@ if (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd cd zsh)"
 fi
 
+# jujutsu
+if (( $+commands[jj] )); then
+  source <(jj util completion zsh)
+fi
+
 # golang
 export GOPATH="$HOME/go"
 export GOBIN="$HOME/go/bin"
