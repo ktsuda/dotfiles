@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+curl -fsSL https://claude.ai/install.sh | bash
+  
+# Start using Claude Code:
+#
+#   $ cd your-project
+#   $ claude
+#   $ claude doctor
