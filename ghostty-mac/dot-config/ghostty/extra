@@ -5,7 +5,7 @@ quick-terminal-screen = main
 quick-terminal-animation-duration = 0
 quick-terminal-autohide = false
 quick-terminal-space-behavior = move
-quick-terminal-size = 50%
+quick-terminal-size = 100%
 
 macos-non-native-fullscreen = true
 macos-window-shadow = true
