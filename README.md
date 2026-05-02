@@ -5,7 +5,7 @@
 ### darwin
 
 ```bash
-brew install stow rust golang ghostty vim git tig fzf tmux zsh nvim lazygit btop
+brew install stow rust golang ghostty vim git tig fzf tmux zsh nvim lazygit lazyjj btop
 cargo install ripgrep fd-find tree-sitter-cli zoxide du-dust alacritty
 ```
 
