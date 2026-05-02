@@ -251,6 +251,21 @@ if (( $+commands[wt] )); then
   eval "$(command wt config shell init zsh)"
 fi
 
+function jj_ai_desc() {
+  DIFF=$(git diff --color=never)
+  MSG=$(echo "$DIFF" | \
+    CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
+    "Write a concise, one-line commit message for this diff. Output only the text." \
+    --no-session-persistence --model=haiku \
+    --tools='' --disable-slash-commands \
+    --setting-sources='' --system-prompt='')
+  jj desc -m "$MSG"
+}
+
+if (( $+commands[jj] )); then
+  alias jjc='jj_ai_desc'
+fi
+
 if (( $+commands[pbcopy] )); then
   :
 elif (( $+commands[xclip] )); then
