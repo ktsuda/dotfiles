@@ -30,7 +30,21 @@ curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.
 #   /caveman-stats                           # Real session token usage (USD)
 #   /caveman:compress <file>                 # Rewrites a memory file into caveman-speak
 #   /cavecrew-investigator/builder/reveiwer  # Caveman subagents for Claude Code
-  
+
+## Install ticktick mcp
+claude mcp add --transport http ticktick https://mcp.ticktick.com/
+# Authorization:
+#   /mcp
+# Examples:
+#   "What tasks do I have today?"
+#   "List all my high-priority tasks for this week."
+#   "What tasks did I complete last week?"
+#   "What unfinished tasks are left in my exam prep list?"
+#   "Create a task: Finish the presentation deck, today at 3 PM, high priority."
+#   "Buy some plants today, visit the park this weekend to see flowers, and celebrate my friend's birthday next Tuesday. Add all of these to my Life list."
+#   "Complete the tasks 'Buy milk' and 'Buy daily essentials' in my Personal list."
+#   "Move 'Go camping' to my Outdoor Activities list."
+
 # Start using Claude Code:
 #   $ cd your-project
 #   $ claude
