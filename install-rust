@@ -21,4 +21,5 @@ $HOME/.cargo/bin/cargo install eza # eza
 $HOME/.cargo/bin/cargo install du-dust # dust
 $HOME/.cargo/bin/cargo install alacritty # alacritty
 $HOME/.cargo/bin/cargo install worktrunk # wt
-$HOME/.cargo/bin/cargo install --locked jj jj-cli # jj
+$HOME/.cargo/bin/cargo install --locked --bin jj jj-cli # jj
+$HOME/.cargo/bin/cargo install --locked lazyjj # lazyjj
