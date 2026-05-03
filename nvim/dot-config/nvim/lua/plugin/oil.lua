@@ -18,6 +18,7 @@ require('oil').setup({
     ['gv']    = { 'actions.preview',       mode = 'n' },
     ['<Esc>'] = { 'actions.close',         mode = 'n' },
     ['q']     = { 'actions.close',         mode = 'n' },
+    ['<C-e>'] = { 'actions.close',         mode = 'n' },
     ['<C-g>'] = { 'actions.refresh',       mode = 'n' },
     ['g.']    = { 'actions.open_cwd',      mode = 'n' },
     ['gc']    = { 'actions.cd',            mode = 'n' },
