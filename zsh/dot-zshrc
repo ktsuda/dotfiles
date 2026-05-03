@@ -295,8 +295,13 @@ alias grc='git rebase --continue'
 alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
-if (( $+commands[lazygit] )); then
+
+if (( $+commands[lazyjj] )); then
+  alias l='lazyjj'
+elif (( $+commands[lazygit] )); then
   alias l='lazygit'
+else
+  alias l='ls'
 fi
 
 alias v="${EDITOR}"

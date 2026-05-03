@@ -1,0 +1,6 @@
+grapheme-width-method=unicode
+theme = Catppuccin Mocha
+mouse-hide-while-typing = true
+background-opacity = 0.8
+unfocused-split-opacity = 0.5
+split-divider-color = #c6a0f6
