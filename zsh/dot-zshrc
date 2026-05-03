@@ -307,6 +307,14 @@ fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
 alias q='goto_repo_root'
 function goto_repo_root() {
   if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then

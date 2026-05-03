@@ -84,7 +84,7 @@ function private() {
     STOW_FOLDERS+=(wakatime btop claude)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty-mac iterm2)
+            STOW_FOLDERS+=(ghostty-mac iterm2 yazi)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(ghostty-linux xmonad rofi nitrogen)
