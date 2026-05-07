@@ -196,7 +196,7 @@ if (( $+commands[fzf] )); then
   fi
 
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
-    --follow --exclude .git"
+    --follow --exclude .git --exlude .jj"
 
   if (( $+commands[tmux] )); then
     FZF_TMUX=1
@@ -226,7 +226,7 @@ case ${OSTYPE} in
     fi
 
     if (( $+commands[fd] )); then
-      alias fd='fd --hidden --follow --exclude .git'
+      alias fd='fd --hidden --follow --exclude .git --exclude .jj'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
     ;;
@@ -237,10 +237,10 @@ case ${OSTYPE} in
     alias lla='ll -a'
 
     if (( $+commands[fd] )); then
-      alias fd='fd --hidden --follow --exclude .git'
+      alias fd='fd --hidden --follow --exclude .git --exclude .jj'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     elif (( $+commands[fdfind] )); then
-      alias fd='fdfind --hidden --exclude .git'
+      alias fd='fdfind --hidden --exclude .git --exclude .jj'
       alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
     fi
     ;;
@@ -297,7 +297,6 @@ alias grc='git rebase --continue'
 
 alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
-
 
 if (( $+commands[lazyjj] )); then
   alias l='lazyjj'
