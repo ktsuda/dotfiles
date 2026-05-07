@@ -69,7 +69,7 @@ function shared() {
     STOW_FOLDERS+=()
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty-mac iterm2)
+            STOW_FOLDERS+=(ghostty-mac)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(ghostty-linux)
@@ -84,7 +84,7 @@ function private() {
     STOW_FOLDERS+=(wakatime btop)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty-mac iterm2 yazi)
+            STOW_FOLDERS+=(ghostty-mac yazi)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(ghostty-linux xmonad rofi nitrogen)
