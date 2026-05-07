@@ -71,9 +71,12 @@ if (( $+commands[brew] )); then
     $(brew --prefix)/share/zsh-completions(N-/)
     $(brew --prefix)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh-syntax-highlighting(N-/)
+    $(brew --prefix)/share/zsh-f-sy-h(N-/)
     $fpath
   )
-  if [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  if [ -f "$(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
+    source $(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
+  elif [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
     source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
 fi
