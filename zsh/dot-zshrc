@@ -162,13 +162,24 @@ export GO11MODULE="auto"
 export WAKATIME_HOME="$HOME/.wakatime_home"
 
 # prompt
-PROMPT='%n@%m:%~ $ '
-autoload -Uz vcs_info
-function precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
+function _jj_prompt_info() {
+  jj log -G -r @ -T '
+    self.change_id().shortest(3)
+    ++ if(self.local_bookmarks(), "on " ++ self.local_bookmarks())
+    ++ if(self.conflict(), "💥")
+  ' --no-pager 2>/dev/null
+}
+
+function _vcs_status() {
+  if jj root >/dev/null 2>&1; then
+    echo -n "%F{#cba6f7}.jj%f %F{#fab387}$(_jj_prompt_info)%f"
+  elif git rev-parse --show-toplevel >/dev/null 2>&1; then
+    echo -n "%F{#cba6f7}.git%f %F{#a6e3a1}$(git branch --show-current)%f"
+  fi
+}
+
 setopt prompt_subst
-RPROMPT=\$vcs_info_msg_0_
-zstyle ':vcs_info:git:*' formats '%b'
+PROMPT='%2d%F{#cba6f7}$(_vcs_status)%f %# '
 
 # aliases
 if (( $+commands[fzf] )); then
@@ -257,10 +268,10 @@ fi
 function jj_ai_desc() {
   DIFF=$(git diff --color=never)
   MSG=$(echo "$DIFF" | \
-    CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
-    "Write a concise, one-line commit message for this diff. Output only the text." \
-    --no-session-persistence --model=haiku \
-    --tools='' --disable-slash-commands \
+      CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
+      "Write a concise, one-line commit message for this diff. Output only the text." \
+      --no-session-persistence --model=haiku \
+      --tools='' --disable-slash-commands \
     --setting-sources='' --system-prompt='')
   jj desc -m "$MSG"
 }
@@ -295,6 +306,22 @@ alias gp='git push origin'
 alias gfp='git fetch -p'
 alias grc='git rebase --continue'
 
+function _jj_log_oneliner() {
+  jj log -G -T '
+    self.change_id().shortest(3)
+    ++ " " ++ self.author().name()
+    ++ " " ++ self.author().timestamp().format("%Y-%m-%d %H:%M:%S")
+    ++ if(self.local_bookmarks(), " " ++ self.local_bookmarks())
+    ++ if(self.description(), " " ++ self.description().first_line())
+    ++ " " ++ self.commit_id().shortest(3) ++ "\n"
+  ' --no-pager "$@" 2>/dev/null
+}
+alias jl='_jj_log_oneliner -n 20'
+alias jla='_jj_log_oneliner'
+alias jci='jj commit --interactive'
+alias jp='jj git push'
+alias jfp='jj git fetch'
+
 alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
@@ -314,12 +341,13 @@ fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	command yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+alias y='yazi-cwd'
+function yazi-cwd() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  command yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd < "$tmp"
+  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
 }
 
 alias q='goto_repo_root'
