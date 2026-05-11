@@ -1,6 +1,7 @@
 require('plugin.snacks')
 require('plugin.oil')
 require('plugin.catppuccin')
+require('plugin.highlight')
 require('plugin.treesitter')
 require('plugin.undotree')
 require('plugin.gitsigns')
