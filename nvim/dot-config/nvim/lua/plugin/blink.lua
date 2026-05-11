@@ -14,7 +14,7 @@ vim.pack.add({
     },
   },
   { src = 'https://github.com/rafamadriz/friendly-snippets' },
-  { src = 'https://github.com/Saghen/blink.cmp' },
+  { src = 'https://github.com/Saghen/blink.cmp', version = 'v1.10.2' },
 })
 
 require('luasnip.loaders.from_vscode').lazy_load()
