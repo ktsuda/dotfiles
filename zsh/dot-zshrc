@@ -261,6 +261,11 @@ if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
 fi
 
+if (( $+commands[tig] )); then
+  alias t='tig'
+  alias ta='tig --all'
+fi
+
 if (( $+commands[wt] )); then
   eval "$(command wt config shell init zsh)"
 fi
