@@ -7,13 +7,13 @@ set vertical-split = auto
 set main-view = line-number:no,interval=10 \
                 date:relative-compact \
                 id:yes \
-                author:abbreviated \
+                author:email-user \
                 commit-title:graph=v2,refs=yes,overflow=yes
 
 set refs-view = line-number:yes,interval=10 \
                 date:default \
                 id:yes \
-                author:abbreviated \
+                author:email-user \
                 ref:yes
 
 source ~/.config/tig/color.tigrc
