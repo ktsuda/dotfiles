@@ -199,19 +199,7 @@ if (( $+commands[fzf] )); then
 
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
     --follow --exclude .git --exlude .jj"
-
-  if (( $+commands[tmux] )); then
-    FZF_TMUX=1
-    FZF_TMUX_OPTS="${FZF_DEFAULT_OPTS} -p"
-  fi
 fi
-
-function __fzfcmd() {
-  [ -n "$TMUX_PANE" ] \
-    && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } \
-    && echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-60%}} -- " \
-    || echo "fzf ${FZF_DEFAULT_OPTS}"
-}
 
 case ${OSTYPE} in
   darwin*)
@@ -229,7 +217,7 @@ case ${OSTYPE} in
 
     if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
     fi
     ;;
   linux*)
@@ -240,10 +228,10 @@ case ${OSTYPE} in
 
     if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
     elif (( $+commands[fdfind] )); then
       alias fd='fdfind --hidden --exclude .git --exclude .jj'
-      alias f='${EDITOR} $(fd -t f -t l | $(__fzfcmd))'
+      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
     fi
     ;;
 esac
@@ -322,11 +310,11 @@ alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
 if (( $+commands[lazyjj] )); then
-  alias l='lazyjj'
-elif (( $+commands[lazygit] )); then
-  alias l='lazygit'
-else
-  alias l='ls'
+  alias lj='lazyjj'
+fi
+
+if (( $+commands[lazygit] )); then
+  alias lg='lazygit'
 fi
 
 alias v="${EDITOR}"
@@ -365,7 +353,7 @@ function git_repo_cd() {
   exec </dev/tty
   exec <&1
   local selected_dir
-  selected_dir=$(ghq list --full-path | $(__fzfcmd))
+  selected_dir=$(ghq list --full-path | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
   if [ -z "$selected_dir" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -381,9 +369,9 @@ function subdir_cd() {
   exec <&1
   local selected_dir
   if (( $+commands[fd] )); then
-    selected_dir=$(fd -t d | $(__fzfcmd))
+    selected_dir=$(fd -t d | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
   else
-    selected_dir=$(find . -type d | $(__fzfcmd))
+    selected_dir=$(find . -type d | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
   fi
   if [ -z "$selected_dir" ]; then
     zle redisplay > /dev/null 2>&1 || true
@@ -399,7 +387,7 @@ function history_widget() {
   exec </dev/tty
   exec <&1
   local selected num
-  selected=($(fc -rl 1 | $(__fzfcmd)))
+  selected=($(fc -rl 1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort'))
   if [ -z "$selected" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -418,7 +406,8 @@ function ipv4_address() {
   exec <&1
   local ipv4_address
   ipv4_address=$(ifconfig | \
-    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | $(__fzfcmd))
+    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
+    fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
   if [ -z "$ipv4_address" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -434,7 +423,8 @@ function pkg_search() {
   local selected
   case ${OSTYPE} in
     linux*)
-      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | $(__fzfcmd))
+      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | fzf \
+        --tmux center,90%,90% --border --bind 'ctrl-c:abort')
       if [ -z "$selected" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
@@ -445,7 +435,8 @@ function pkg_search() {
       apt-cache rdepends $selected
       ;;
     darwin*)
-      selected=$(brew list -1 | $(__fzfcmd))
+      selected=$(brew list -1 | fzf \
+        --tmux center,90%,90% --border --bind 'ctrl-c:abort')
       if [ -z "$selected" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
@@ -474,7 +465,11 @@ function custom_tmux_session() {
       tmux new-session -s"$session"
     fi
   else
-    session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
+    session=$(tmux list-sessions 2>/dev/null | fzf \
+      --tmux center,90%,90% --border \
+      --delimiter : --nth 1 \
+      --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
+      cut -d: -f1)
     zle reset-prompt > /dev/null 2>&1 || true
     if [[ -z "$session" ]]; then
       tmux new-session -s"default"
@@ -497,7 +492,11 @@ function custom_tmux_send_to() {
     return
   fi
   local session
-  session=$(tmux list-sessions 2>/dev/null | $(__fzfcmd) | cut -d: -f1)
+  session=$(tmux list-sessions 2>/dev/null | fzf \
+    --tmux center,90%,90% --border \
+    --delimiter : --nth 1 \
+    --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
+    cut -d: -f1)
   zle reset-prompt > /dev/null 2>&1 || true
   [[ -z "$session" ]] && return
   tmux new-window -t "$session" "$*"
@@ -507,7 +506,8 @@ function sesh_sessions() {
   exec </dev/tty
   exec <&1
   local session
-  session=$(sesh list --icons | $(__fzfcmd) \
+  session=$(sesh list --icons | fzf \
+      --tmux center,90%,90% --border \
       --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
       --preview-window 'right:55%:noborder' \
       --preview 'sesh preview {}'
@@ -525,7 +525,8 @@ function custom_sesh_send_to() {
     return
   fi
   local session
-  session=$(sesh list -t --icons | $(__fzfcmd) \
+  session=$(sesh list -t --icons | fzf \
+      --tmux center,90%,90% --border \
       --preview-window 'right:55%:noborder' \
       --preview 'sesh preview {}'
   )
