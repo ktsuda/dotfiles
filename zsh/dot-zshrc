@@ -331,11 +331,11 @@ alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
 
 if (( $+commands[lazyjj] )); then
-  alias l='lazyjj'
-elif (( $+commands[lazygit] )); then
-  alias l='lazygit'
-else
-  alias l='ls'
+  alias lj='lazyjj'
+fi
+
+if (( $+commands[lazygit] )); then
+  alias lg='lazygit'
 fi
 
 alias v="${EDITOR}"
