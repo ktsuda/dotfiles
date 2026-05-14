@@ -39,7 +39,9 @@ apt install -y xmonad rofi nitrogen
 
 ### Install stow
 
+```bash
 apt install -y build-essential perl texinfo
+```
 
 ```bash
 git clone --branch v2.4.1 https://github.com/aspiers/stow
