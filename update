@@ -81,13 +81,13 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wakatime btop tig)
+    STOW_FOLDERS+=(wakatime btop)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty-mac yazi tig-mac)
+            STOW_FOLDERS+=(ghostty-mac yazi)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(ghostty-linux xmonad rofi nitrogen tig-linux)
+            STOW_FOLDERS+=(ghostty-linux xmonad rofi nitrogen)
             ;;
         *)
             reset
