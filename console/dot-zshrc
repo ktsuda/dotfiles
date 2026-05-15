@@ -217,7 +217,11 @@ case ${OSTYPE} in
 
     if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
+      alias f='\
+        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
+        [[ -n $SELECTED ]] && \
+        ${EDITOR} ${SELECTED} \
+        '
     fi
     ;;
   linux*)
@@ -228,10 +232,18 @@ case ${OSTYPE} in
 
     if (( $+commands[fd] )); then
       alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
+      alias f='\
+        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
+        [[ -n $SELECTED ]] && \
+        ${EDITOR} ${SELECTED} \
+        '
     elif (( $+commands[fdfind] )); then
       alias fd='fdfind --hidden --exclude .git --exclude .jj'
-      alias f='SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && [[ -n $SELECTED ]] && ${EDITOR} ${SELECTED}'
+      alias f='\
+        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
+        [[ -n $SELECTED ]] && \
+        ${EDITOR} ${SELECTED} \
+        '
     fi
     ;;
 esac
@@ -256,7 +268,8 @@ function jj_ai_desc() {
       "Write a concise, one-line commit message for this diff. Output only the text." \
       --no-session-persistence --model=haiku \
       --tools='' --disable-slash-commands \
-    --setting-sources='' --system-prompt='')
+      --setting-sources='' --system-prompt=''
+  )
   jj desc -m "$MSG"
 }
 
@@ -406,8 +419,9 @@ function ipv4_address() {
   exec <&1
   local ipv4_address
   ipv4_address=$(ifconfig | \
-    awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
-    fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+      awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
+      fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' \
+    )
   if [ -z "$ipv4_address" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -423,8 +437,7 @@ function pkg_search() {
   local selected
   case ${OSTYPE} in
     linux*)
-      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | fzf \
-        --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
       if [ -z "$selected" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
@@ -435,8 +448,7 @@ function pkg_search() {
       apt-cache rdepends $selected
       ;;
     darwin*)
-      selected=$(brew list -1 | fzf \
-        --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+      selected=$(brew list -1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
       if [ -z "$selected" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
@@ -465,11 +477,12 @@ function custom_tmux_session() {
       tmux new-session -s"$session"
     fi
   else
-    session=$(tmux list-sessions 2>/dev/null | fzf \
-      --tmux center,90%,90% --border \
-      --delimiter : --nth 1 \
-      --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
-      cut -d: -f1)
+    session=$(\
+        tmux list-sessions 2>/dev/null | \
+        fzf --tmux center,90%,90% --border --delimiter : --nth 1 \
+        --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
+        cut -d: -f1 \
+      )
     zle reset-prompt > /dev/null 2>&1 || true
     if [[ -z "$session" ]]; then
       tmux new-session -s"default"
@@ -492,11 +505,12 @@ function custom_tmux_send_to() {
     return
   fi
   local session
-  session=$(tmux list-sessions 2>/dev/null | fzf \
-    --tmux center,90%,90% --border \
-    --delimiter : --nth 1 \
-    --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
-    cut -d: -f1)
+  session=$(\
+      tmux list-sessions 2>/dev/null | \
+      fzf --tmux center,90%,90% --border --delimiter : --nth 1 \
+      --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
+      cut -d: -f1 \
+    )
   zle reset-prompt > /dev/null 2>&1 || true
   [[ -z "$session" ]] && return
   tmux new-window -t "$session" "$*"
@@ -506,12 +520,12 @@ function sesh_sessions() {
   exec </dev/tty
   exec <&1
   local session
-  session=$(sesh list --icons | fzf \
-      --tmux center,90%,90% --border \
+  session=$(\
+      sesh list --icons | \
+      fzf --tmux center,90%,90% --border \
       --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
-      --preview-window 'right:55%:noborder' \
-      --preview 'sesh preview {}'
-  )
+      --preview-window 'right:55%:noborder' --preview 'sesh preview {}' \
+    )
   zle reset-prompt > /dev/null 2>&1 || true
   [[ -z "$session" ]] && return
   sesh connect $session
@@ -525,11 +539,10 @@ function custom_sesh_send_to() {
     return
   fi
   local session
-  session=$(sesh list -t --icons | fzf \
-      --tmux center,90%,90% --border \
-      --preview-window 'right:55%:noborder' \
-      --preview 'sesh preview {}'
-  )
+  session=$(\
+      sesh list -t --icons | \
+      fzf --tmux center,90%,90% --border --preview-window 'right:55%:noborder' --preview 'sesh preview {}' \
+    )
   zle reset-prompt > /dev/null 2>&1 || true
   [[ -z "$session" ]] && return
   tmux new-window -t "$ID" "$*"
