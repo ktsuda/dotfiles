@@ -56,7 +56,6 @@ sudo make install
 ```bash
 git clone https://github.com/ktsuda/dotfiles.git
 cd dotfiles
-./update -c # for console
 ./update -s # for shared host
 ./update -p # for private host
 ```
