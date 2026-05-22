@@ -52,6 +52,5 @@ require('mason-conform').setup({
   automatic_installation = true,
   ignore_install = {
     'clang-format',
-    'beautysh',
   },
 })
