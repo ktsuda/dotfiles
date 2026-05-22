@@ -2,27 +2,8 @@
 
 set -e
 
-sudo apt-get update
-sudo apt-get -y install lua-lpeg lua-mpack lua-inspect luarocks
-sudo apt-get -y install ninja-build gettext unzip curl build-essential xclip
-sudo apt-get -y install python3-venv python3-pip python3-neovim
-
-mkdir -p $HOME/Projects
-if [ -d "$HOME/Projects/neovim" ]; then
-  cd $HOME/Projects/neovim
-  git clean -df
-  git fetch -p
-  git checkout master
-else
-  cd $HOME/Projects
-  git clone --branch master https://github.com/neovim/neovim
-fi
-cd $HOME/Projects/neovim
-make distclean
-make CMAKE_BUILD_TYPE=Release
-cd build && cpack -G DEB
-sudo apt-get -y uninstall neovim neovim-runtime
-sudo dpkg -i nvim-linux-x86_64.deb
+bob install latest
+bob use latest
 
 mkdir -p $HOME/.local/share/nvim/skk
 curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L \
