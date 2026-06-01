@@ -73,7 +73,7 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wakatime ghostty)
+    STOW_FOLDERS+=(wakatime ghostty jj)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(ghostty-mac yazi tig-mac)
