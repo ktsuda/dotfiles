@@ -386,6 +386,22 @@ function git_repo_cd() {
 zle -N git_repo_cd
 bindkey "^s" git_repo_cd
 
+function git_repo_checkout() {
+  exec </dev/tty
+  exec <&1
+  local selected_branch
+  # selected_branch=$(wt list | awk '/^[@^+]/ { print $2 }' | fzf --bind 'ctrl-c:abort')
+  selected_branch=$(wt list | awk '/^[+^]/ { print $2 }' | fzf --bind 'ctrl-c:abort')
+  if [ -z "$selected_branch" ]; then
+    zle redisplay > /dev/null 2>&1 || true
+    return
+  fi
+  wt switch ${selected_branch}
+  zle reset-prompt > /dev/null 2>&1 || true
+}
+zle -N git_repo_checkout
+bindkey "^w" git_repo_checkout
+
 function subdir_cd() {
   exec </dev/tty
   exec <&1
