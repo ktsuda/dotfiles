@@ -33,9 +33,9 @@
 # # Creates: ~/worktrees/myproject/feature-auth
 # worktree-path = "~/worktrees/{{ repo }}/{{ branch | sanitize }}"
 #
-# # Bare repository (git clone --bare <url> myproject/.git)
-# # Creates: ~/code/myproject/feature-auth
-# worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
+# Bare repository (git clone --bare <url> myproject/.git)
+# Creates: ~/code/myproject/feature-auth
+worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
 #
 # `~` expands to the home directory. Relative paths resolve from `repo_path`.
 #
