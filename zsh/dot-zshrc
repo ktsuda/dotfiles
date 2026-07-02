@@ -312,6 +312,19 @@ alias gp='git push origin'
 alias gfp='git fetch -p'
 alias grc='git rebase --continue'
 
+function _git_clone_bare_wt() {
+  local repo_url tmp_dir repo_dir
+
+  repo_url="$1"
+  tmp_dir="${2:-$(basename "$1")}"
+  repo_dir="${tmp_dir//.git}"
+
+  git clone --bare "${repo_url}" "${repo_dir}/.git"
+
+  git -C "$repo_dir" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+}
+alias gcw='_git_clone_bare_wt'
+
 function _jj_log_oneliner() {
   jj log -G -T '
     self.change_id().shortest(3)
