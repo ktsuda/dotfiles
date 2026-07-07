@@ -554,46 +554,30 @@ function custom_tmux_send_to() {
   tmux new-window -t "$session" "$*"
 }
 
-function sesh_sessions() {
+function custom_hedr_session() {
   exec </dev/tty
   exec <&1
   local session
   session=$(\
-      sesh list --icons | \
-      fzf --tmux center,90%,90% --border \
-      --bind 'ctrl-d:execute(tmux kill-session -t {2..})+reload(sesh list --icons)' \
-      --preview-window 'right:55%:noborder' --preview 'sesh preview {}' \
+      herdr session list 2>/dev/null | \
+      tail -n +2 | \
+      fzf --tmux center,90%,90% --border --delimiter ' ' --nth 1 \
+      --bind 'ctrl-d:execute(herdr session delete {1})+reload(herdr session list 2>/dev/null | tail -n +2)' | \
+      cut -d' ' -f1 \
     )
   zle reset-prompt > /dev/null 2>&1 || true
-  [[ -z "$session" ]] && return
-  sesh connect $session
-}
-
-function custom_sesh_send_to() {
-  exec </dev/tty
-  exec <&1
-  if [[ $# -lt 1 ]]; then
-    echo "Usage: sa <command>"
+  if [[ -z "$session" ]]; then
+    herdr --session "default"
     return
   fi
-  local session
-  session=$(\
-      sesh list -t --icons | \
-      fzf --tmux center,90%,90% --border --preview-window 'right:55%:noborder' --preview 'sesh preview {}' \
-    )
-  zle reset-prompt > /dev/null 2>&1 || true
-  [[ -z "$session" ]] && return
-  tmux new-window -t "$ID" "$*"
+  herdr session attach "$session"
 }
 
 if (( $+commands[tmux] )); then
-  if (( $+commands[sesh] )); then
-    alias s='sesh_sessions'
-    alias sa='custom_sesh_send_to'
-  else
-    alias s='custom_tmux_session'
-    alias sa='custom_tmux_send_to'
-  fi
+  alias s='custom_tmux_session'
+  alias sa='custom_tmux_send_to'
+elif (( $+commands[herdr] )); then
+  alias s='custom_hedr_session'
 fi
 
 case ${OSTYPE} in
