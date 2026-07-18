@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+## install herdr
+
+# linux
+curl -fsSL https://herdr.dev/install.sh | sh
+
+# darwin
+brew install herdr
+
+## install tmux
+
+# linux
+sudo apt update
+sudo apt install -y tmux
+
+# darwin
+brew install tmux
