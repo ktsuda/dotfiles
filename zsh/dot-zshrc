@@ -172,14 +172,14 @@ function _jj_prompt_info() {
 
 function _vcs_status() {
   if jj root >/dev/null 2>&1; then
-    echo -n "%F{#cba6f7}.jj%f %F{#fab387}$(_jj_prompt_info)%f"
+    echo -n ".%F{#cba6f7}jj%f %F{#fab387}$(_jj_prompt_info)%f"
   elif git rev-parse --show-toplevel >/dev/null 2>&1; then
-    echo -n "%F{#cba6f7}.git%f %F{#a6e3a1}$(git branch --show-current)%f"
+    echo -n ".%F{#cba6f7}git%f %F{#a6e3a1}$(git branch --show-current)%f"
   fi
 }
 
 setopt prompt_subst
-PROMPT='%2d%F{#cba6f7}$(_vcs_status)%f %# '
+PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
 
 # aliases
 if (( $+commands[fzf] )); then
