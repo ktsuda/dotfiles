@@ -311,6 +311,7 @@ alias gco='git checkout'
 alias gp='git push origin'
 alias gfp='git fetch -p'
 alias grc='git rebase --continue'
+alias gsub='git sub'
 
 function _git_clone_bare_wt() {
   local repo_url tmp_dir repo_dir
