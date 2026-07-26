@@ -30,6 +30,12 @@ chsh -s /usr/bin/zsh "$USER"
 
 ## Private
 
+### darwin
+
+```bash
+brew install crix
+```
+
 ### linux
 
 ```bash

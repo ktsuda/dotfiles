@@ -46,6 +46,10 @@ claude mcp add --transport http ticktick https://mcp.ticktick.com/
 #   "Complete the tasks 'Buy milk' and 'Buy daily essentials' in my Personal list."
 #   "Move 'Go camping' to my Outdoor Activities list."
 
+## Install crix
+claude plugin marketplace add tomasz-tomczyk/crit
+claude plugin install crit@crit
+
 # Start using Claude Code:
 #   $ cd your-project
 #   $ claude

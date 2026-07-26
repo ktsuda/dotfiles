@@ -21,3 +21,4 @@ export GO11MODULE="auto"
 $GOROOT/bin/go install github.com/muesli/duf@latest
 $GOROOT/bin/go install github.com/jesseduffield/lazygit@latest
 $GOROOT/bin/go install github.com/x-motemen/ghq@latest
+$GOROOT/bin/go install github.com/tomasz-tomczyk/crit/cmd/crit@latest
