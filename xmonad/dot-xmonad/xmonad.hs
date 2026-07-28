@@ -243,9 +243,8 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook h = do
-    nScreens <- countScreens
-    mapM_ (\s -> dynamicLogWithPP $ marshallPP s (myPP h s)) [0 .. nScreens -1]
+myLogHook n h =
+    mapM_ (\s -> dynamicLogWithPP $ marshallPP s (myPP h s)) [0 .. n - 1]
 
 myPP h s = xmobarPP
     { ppOutput = \str -> hPutStrLn (h !! fromIntegral s) str
@@ -312,7 +311,7 @@ defaults n h = def {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook h,
+        logHook            = myLogHook n h,
         startupHook        = myStartupHook
     }
 
