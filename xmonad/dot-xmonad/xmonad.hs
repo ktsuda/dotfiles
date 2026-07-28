@@ -15,7 +15,7 @@ import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import System.IO (hPutStrLn)
 import XMonad.Hooks.DynamicLog
-import XMonad.Layout.IndependentScreens (countScreens, marshallPP, withScreens, onCurrentScreen)
+import XMonad.Layout.IndependentScreens (countScreens, marshallPP, marshall, onCurrentScreen)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -54,6 +54,12 @@ myModMask       = mod1Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+
+-- withScreens groups physical workspace tags by screen (0_1..0_9,1_1..1_9),
+-- but XMonad.StackSet.new assigns the first N tags to the N physical screens
+-- in order, so screen 1 would start on "0_2" instead of its own "1_1".
+-- Interleave by workspace instead so each screen's "1" comes first.
+myPhysicalWorkspaces n = [marshall s w | w <- myWorkspaces, s <- [0 .. n - 1]]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -299,7 +305,7 @@ defaults n h = def {
         clickJustFocuses   = myClickJustFocuses,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        workspaces         = withScreens n myWorkspaces,
+        workspaces         = myPhysicalWorkspaces n,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
 
