@@ -10,6 +10,7 @@ vim.opt.softtabstop = 2
 vim.opt.expandtab = true
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.o.foldlevelstart = 99
 
 -- default: 'jcroql'
 vim.opt.formatoptions = {
