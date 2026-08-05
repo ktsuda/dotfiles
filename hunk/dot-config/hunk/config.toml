@@ -1,0 +1,12 @@
+theme = 'catppuccin-mocha'
+mode = 'auto'
+vcs = 'git'
+watch = true
+exclude_untracked = false
+line_number = true
+tab_width = 2
+wrap_lines = false
+menu_bar = false
+agent_notes = true
+prompt_save_view_preferences = true
+transparent_background = false
