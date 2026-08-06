@@ -30,7 +30,7 @@ matches:
 
   # Print the current time
   - trigger: "ttime"
-    replace: "{{mytime}}"
+    replace: "({{mytime}}) "
     vars:
       - name: mytime
         type: date
