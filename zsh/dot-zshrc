@@ -354,6 +354,7 @@ if (( $+commands[lazygit] )); then
 fi
 
 alias v="${EDITOR}"
+alias nv="NVIM_APPNAME=nvim_native nvim"
 
 if (( $+commands[nvim] )); then
   alias vimdiff='nvim -d'
