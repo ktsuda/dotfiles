@@ -17,26 +17,36 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 	end,
 })
 
-function _G.my_find(text, _)
-	local files = vim.fn.glob("**/*", true, true)
-	local result = {}
-	for _, f in ipairs(files) do
-		if vim.fn.isdirectory(f) == 0 then
-			local skip = false
-			for _, pat in ipairs(ignore_patterns) do
-				if f:match(pat) then
-					skip = true
-					break
-				end
-			end
-			if not skip then
-				result[#result + 1] = f
-			end
-		end
-	end
-	return vim.fn.matchfuzzy(files, text)
+local search_cmd = ""
+if vim.fn.executable("git") == 1 and vim.fn.isdirectory(".git") == 1 then
+	search_cmd = "git ls-files --cached --others --exclude-standard"
+elseif vim.fn.executable("fd") == 1 then
+	search_cmd = "fd --type f --hidden --exclude .git"
+elseif vim.fn.executable("fdfind") == 1 then
+	search_cmd = "fdfind --type f --hidden --exclude .git"
 end
 
-vim.o.findfunc = "v:lua.my_find"
+if search_cmd ~= "" then
+	_G.native_git_fd_find = function(cmdarg, _)
+		local handle = io.popen(search_cmd)
+		if not handle then
+			return {}
+		end
+
+		local files = {}
+		for line in handle:lines() do
+			table.insert(files, line)
+		end
+		handle:close()
+
+		if cmdarg == "" then
+			return files
+		end
+
+		return vim.fn.matchfuzzy(files, cmdarg)
+	end
+
+	vim.opt.findfunc = "v:lua.native_git_fd_find"
+end
 
 vim.keymap.set("n", "<C-p>", ":find ", { silent = false })
