@@ -398,8 +398,6 @@ function git_repo_cd() {
   eval 'builtin cd -- "${selected_dir}"'
   zle reset-prompt > /dev/null 2>&1 || true
 }
-zle -N git_repo_cd
-bindkey "^s" git_repo_cd
 
 function git_repo_checkout() {
   exec </dev/tty
@@ -416,6 +414,13 @@ function git_repo_checkout() {
 }
 zle -N git_repo_checkout
 bindkey "^w" git_repo_checkout
+
+function git_repo_select_branch() {
+  git_repo_cd
+  git_repo_checkout
+}
+zle -N git_repo_select_branch
+bindkey "^s" git_repo_select_branch
 
 function subdir_cd() {
   exec </dev/tty
