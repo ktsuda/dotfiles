@@ -7,12 +7,9 @@ url=$(git remote get-url origin)
 if [[ $url == *github* ]] || [[ $url == *gitlab* ]] || [[ $url == *gitlab.eurecom.fr* ]]; then
   if [[ $url == http* ]]; then
     :
-  elif [[ $url == git@*.com:* ]]; then
+  elif [[ $url == *:* ]]; then
     url="${url#git@}"
     url="${url/:/\/}"
-    url="https://$url"
-  elif [[ $url == *:* ]]; then
-    url="${url/:/.com\/}"
     url="https://$url"
     url="${url/.git/}"
   fi
