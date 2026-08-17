@@ -3,7 +3,6 @@
     email = ktsuda@users.noreply.github.com
 [core]
     editor = nvim
-    pager = hunk pager
     ignoreCase = false
     excludesFile = ~/.config/git/ignore
     quotepath = false
@@ -15,9 +14,6 @@
 [diff]
     colorMoved = default
     colorMovedWS = allow-indentation-change
-    tool = hunk
-[difftool "hunk"]
-    cmd = hunk diff
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit

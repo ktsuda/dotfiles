@@ -50,7 +50,7 @@ function reset() {
 }
 
 function set_default() {
-    STOW_FOLDERS=(alacritty vim ripgrep git lazygit tig worktrunk btop bash zsh nvim nvim-native)
+    STOW_FOLDERS=(vim ripgrep git lazygit tig worktrunk btop bash zsh nvim nvim-native)
 }
 
 function set_all() {
@@ -73,13 +73,13 @@ function shared() {
 }
 
 function private() {
-    STOW_FOLDERS+=(wakatime ghostty jj espanso herdr hunk)
+    STOW_FOLDERS+=(wakatime espanso tmux herdr)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(ghostty-mac yazi tig-mac)
+            STOW_FOLDERS+=(yazi tig-mac ghostty ghostty-mac)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(ghostty-linux tig-linux xmonad rofi nitrogen)
+            STOW_FOLDERS+=(alacritty tig-linux xmonad rofi nitrogen)
             ;;
         *)
             reset
