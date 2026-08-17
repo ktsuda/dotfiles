@@ -167,10 +167,10 @@ split_horizontal = "prefix+minus"
 
 # Ask for a tab name before creating a new tab.
 # Set false to create tabs immediately with generated names.
-# prompt_new_tab_name = true
+prompt_new_tab_name = false
 
 # Draw borders around split panes.
-# pane_borders = true
+pane_borders = false
 
 # Keep split panes visually separated instead of sharing divider borders.
 # pane_gaps = true
