@@ -24,3 +24,4 @@ $HOME/.cargo/bin/cargo install worktrunk # wt
 # $HOME/.cargo/bin/cargo install bob-nvim # bob 
 # $HOME/.cargo/bin/cargo install --git https://github.com/jj-vcs/jj.git --locked --bin jj jj-cli # jj
 $HOME/.cargo/bin/cargo install stylua --features luajit # stylua 
+$HOME/.cargo/bin/cargo install wlctl # wlctl
