@@ -1,6 +1,0 @@
-require("plugin.skkeleton")
-require("plugin.gitsigns")
-require("plugin.surround")
-require("plugin.markdown")
-require("plugin.oil")
-pcall(require, "plugin.wakatime")

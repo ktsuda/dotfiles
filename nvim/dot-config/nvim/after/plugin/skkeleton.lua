@@ -1,4 +1,4 @@
-vim.keymap.set({ 'i', 'c' }, '<C-j>', '<Plug>(skkeleton-toggle)', { noremap = false, desc = 'Toggle skk' })
+vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)", { noremap = false, desc = "Toggle skk" })
 
 vim.cmd([[
   call skkeleton#config({

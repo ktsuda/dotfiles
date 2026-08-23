@@ -2,8 +2,7 @@
 *.swp
 /tmux/dot-tmux/plugins/tpm
 /nvim/dot-config/nvim/nvim-pack-lock.json
-/nvim-native/dot-config/nvim_native/nvim-pack-lock.json
-/nvim-native/dot-config/nvim_native/package-lock.json
+/nvim/dot-config/nvim/package-lock.json
 /jj/dot-config/jj/repos
 /herdr/dot-config/herdr/*.log
 /herdr/dot-config/herdr/*.sock

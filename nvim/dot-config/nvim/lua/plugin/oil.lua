@@ -1,10 +1,10 @@
 vim.pack.add({
-  { src = 'https://github.com/stevearc/oil.nvim' },
-  -- { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+	{ src = "https://github.com/stevearc/oil.nvim" },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
-require('oil').setup({
-  keymaps = {
+require("oil").setup({
+	keymaps = {
     -- stylua: ignore start
     ['<C-p>'] = false,
     ['?']     = { 'actions.show_help',     mode = 'n' },
@@ -27,17 +27,17 @@ require('oil').setup({
     ['gx']    = { 'actions.open_external', mode = 'n' },
     ['I']     = { 'actions.toggle_hidden', mode = 'n' },
     ['g\\']   = { 'actions.toggle_trash',  mode = 'n' },
-    -- stylua: ignore end
-  },
-  view_options = {
-    show_hidden = true,
-    is_always_hidden = function(name, _)
-      return vim.startswith(name, '..')
-    end,
-    sort = {
-      { 'type', 'asc' },
-      { 'name', 'asc' },
-    },
-  },
-  delete_to_trash = true,
+		-- stylua: ignore end
+	},
+	view_options = {
+		show_hidden = true,
+		is_always_hidden = function(name, _)
+			return vim.startswith(name, "..")
+		end,
+		sort = {
+			{ "type", "asc" },
+			{ "name", "asc" },
+		},
+	},
+	delete_to_trash = true,
 })
