@@ -1,7 +1,9 @@
 local M = {}
 
+local markdown_config = vim.fs.joinpath(vim.fn.stdpath("data"), "markdownlint", "config.json")
+
 M.linters = {
-	markdown = { "markdownlint", "--json", "-s" },
+	markdown = { "markdownlint", "--json", "-s", "-c", markdown_config },
 }
 
 local lint_ns = vim.api.nvim_create_namespace("my_linter")
