@@ -2,7 +2,7 @@
 
 ## Requirements
 
-### darwin
+darwin:
 
 ```bash
 brew install stow rust golang
@@ -11,7 +11,7 @@ brew install nvim git lazygit btop
 cargo install ripgrep fd-find tree-sitter-cli
 ```
 
-### linux
+linux:
 
 ```bash
 apt install -y curl vim zsh clang
@@ -32,13 +32,13 @@ chsh -s /usr/bin/zsh "$USER"
 
 ## Private
 
-### darwin
+darwin:
 
 ```bash
 brew install crix
 ```
 
-### linux
+linux:
 
 ```bash
 apt install -y xmonad rofi nitrogen
@@ -75,3 +75,4 @@ cd dotfiles
 cd dotfiles
 ./update -D
 ```
+
