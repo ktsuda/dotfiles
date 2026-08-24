@@ -16,3 +16,4 @@ curl -fsSL https://deno.land/install.sh | sh
 
 # install markdownlint
 npm i -g markdownlint-cli
+npm i -g eslint_d
