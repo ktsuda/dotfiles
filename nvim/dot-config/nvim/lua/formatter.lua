@@ -1,6 +1,4 @@
-local M = {}
-
-M.formatters = {
+local formatters = {
 	lua = "stylua -",
 	javascript = "prettier --stdin-filepath %",
 	typescript = "prettier --stdin-filepath %",
@@ -8,10 +6,10 @@ M.formatters = {
 	json = "prettier --stdin-filepath %",
 }
 
-function M.format()
+local function format()
 	local bufnr = vim.api.nvim_get_current_buf()
 	local ft = vim.bo[bufnr].filetype
-	local cmd = M.formatters[ft]
+	local cmd = formatters[ft]
 
 	if cmd then
 		local bufname = vim.api.nvim_buf_get_name(bufnr)
@@ -37,4 +35,4 @@ function M.format()
 	end
 end
 
-vim.keymap.set("n", "<leader>f", M.format)
+vim.keymap.set("n", "<leader>f", format)
