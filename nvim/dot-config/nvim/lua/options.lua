@@ -11,9 +11,4 @@ vim.o.undofile = true
 vim.o.autoread = true
 vim.o.laststatus = 3
 vim.o.cmdheight = 1
-
-if vim.fn.has("mac") == 1 or vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
-	vim.opt.clipboard = "unnamed"
-else
-	vim.opt.clipboard = "unnamedplus" -- install xsel or xclip
-end
+vim.o.clipboard = "unnamedplus" -- See :checkhealth provider
