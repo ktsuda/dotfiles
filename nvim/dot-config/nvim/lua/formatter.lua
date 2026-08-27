@@ -1,4 +1,6 @@
-local formatters = {
+local M = {}
+
+M.formatters = {
 	lua = "stylua -",
 	javascript = "prettierd --stdin-filepath %",
 	typescript = "prettierd --stdin-filepath %",
@@ -9,7 +11,7 @@ local formatters = {
 local function format(args)
 	local bufnr = args.buf
 	local ft = vim.bo[bufnr].filetype
-	local cmd = formatters[ft]
+	local cmd = M.formatters[ft]
 
 	if cmd then
 		local bufname = vim.api.nvim_buf_get_name(bufnr)
@@ -36,9 +38,12 @@ local function format(args)
 end
 
 vim.keymap.set("n", "<leader>f", function()
-	format({ buf = vim.api.nvim_get_current_buf() })
+	local bufnr = vim.api.nvim_get_current_buf()
+	format({ buf = bufnr })
 end)
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = format,
 })
+
+return M
