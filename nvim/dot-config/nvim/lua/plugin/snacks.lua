@@ -1,8 +1,8 @@
 vim.pack.add({
-  { src = 'https://github.com/folke/snacks.nvim' },
+  { src = "https://github.com/folke/snacks.nvim" },
 })
 
-local s = require('snacks')
+local s = require("snacks")
 s.setup({
   notifier = {
     enabled = true,
@@ -18,4 +18,3 @@ s.setup({
     },
   },
 })
-
