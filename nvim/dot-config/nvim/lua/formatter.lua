@@ -1,9 +1,9 @@
 local formatters = {
 	lua = "stylua -",
-	javascript = "prettier --stdin-filepath %",
-	typescript = "prettier --stdin-filepath %",
-	typescriptreact = "prettier --stdin-filepath %",
-	json = "prettier --stdin-filepath %",
+	javascript = "prettierd --stdin-filepath %",
+	typescript = "prettierd --stdin-filepath %",
+	typescriptreact = "prettierd --stdin-filepath %",
+	json = "prettierd --stdin-filepath %",
 }
 
 local function format(args)
