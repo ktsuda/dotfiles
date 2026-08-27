@@ -1,10 +1,10 @@
 local function load()
   vim.pack.add({
-    { src = 'https://github.com/wakatime/vim-wakatime' },
+    { src = "https://github.com/wakatime/vim-wakatime" },
   })
 end
 
-local group = vim.api.nvim_create_augroup('my.wakatime', {})
+local group = vim.api.nvim_create_augroup("my.wakatime", {})
 
 local cmd = {
   group = group,
@@ -12,6 +12,6 @@ local cmd = {
   callback = load,
 }
 
-local events = { 'BufReadPre', 'BufNewFile' }
+local events = { "BufReadPre", "BufNewFile" }
 
 vim.api.nvim_create_autocmd(events, cmd)
