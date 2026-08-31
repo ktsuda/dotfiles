@@ -559,7 +559,7 @@ function custom_tmux_send_to() {
   tmux new-window -t "$session" "$*"
 }
 
-function custom_hedr_session() {
+function custom_herdr_session() {
   exec </dev/tty
   exec <&1
   local session
@@ -582,7 +582,7 @@ if (( $+commands[tmux] )); then
   alias s='custom_tmux_session'
   alias sa='custom_tmux_send_to'
 elif (( $+commands[herdr] )); then
-  alias s='custom_hedr_session'
+  alias s='custom_herdr_session'
 fi
 
 case ${OSTYPE} in
