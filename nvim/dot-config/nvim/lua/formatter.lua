@@ -6,6 +6,7 @@ M.formatters = {
   typescript = "prettierd --stdin-filepath %",
   typescriptreact = "prettierd --stdin-filepath %",
   json = "prettierd --stdin-filepath %",
+  markdown = "prettierd --stdin-filepath %",
 }
 
 local function format(args)
