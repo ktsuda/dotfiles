@@ -562,17 +562,24 @@ function custom_tmux_send_to() {
 function custom_herdr_session() {
   exec </dev/tty
   exec <&1
-  local session
-  session=$(\
+  local output
+  output=$(\
       herdr session list 2>/dev/null | \
       tail -n +2 | \
-      fzf --tmux center,90%,90% --border --delimiter ' ' --nth 1 \
+      fzf --print-query --tmux center,90%,90% --border --delimiter ' ' --nth 1 \
+      --bind 'ctrl-s:execute(herdr session stop {1})+reload(herdr session list 2>/dev/null | tail -n +2)' \
       --bind 'ctrl-d:execute(herdr session delete {1})+reload(herdr session list 2>/dev/null | tail -n +2)' | \
       cut -d' ' -f1 \
     )
+
+  local lines=("${(f)output}")
+  local query=$lines[1]
+  local session=$lines[2]
+
   zle reset-prompt > /dev/null 2>&1 || true
   if [[ -z "$session" ]]; then
-    herdr --session "default"
+    [[ -z "$query" ]] && return
+    herdr --session "$query"
     return
   fi
   herdr session attach "$session"
