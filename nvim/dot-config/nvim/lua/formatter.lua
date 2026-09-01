@@ -42,8 +42,4 @@ vim.keymap.set("n", "<leader>f", function()
   format({ buf = bufnr })
 end)
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = format,
-})
-
 return M
