@@ -148,8 +148,8 @@ function update() {
     if [[ ${DELETE} -eq 1 ]]; then
         for folder in "${STOW_FOLDERS[@]}"; do
             restore_all
-            printf "Deleting   %-17s" "$folder"
-            stow --dotfiles -t "$HOME" -D "$folder" 2> /dev/null
+            printf "Deleting   %-17s" "${folder}"
+            stow --dotfiles -t "${HOME}" -D "${folder}" 2> /dev/null
             echo " ...   Done"
         done
     fi
@@ -157,15 +157,15 @@ function update() {
     if [[ ${INSTALL} -eq 1 ]]; then
         for folder in "${STOW_FOLDERS[@]}"; do
             backup_all
-            printf "Installing %-17s" "$folder"
-            stow --ignore='\.DS_Store' --dotfiles -t "$HOME" -S "$folder"
+            printf "Installing %-17s" "${folder}"
+            stow --ignore='\.DS_Store' --dotfiles -t "${HOME}" -S "${folder}"
             echo " ...   Done"
         done
     fi
 }
 
 function main() {
-    pushd "$DOTFILES_DIR" > /dev/null || exit
+    pushd "${DOTFILES_DIR}" > /dev/null || exit
     set_stow_folders "$@"
     update
     popd > /dev/null || exit

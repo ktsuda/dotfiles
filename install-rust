@@ -13,15 +13,15 @@ sudo apt install -y \
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # rust cli tools
-$HOME/.cargo/bin/cargo install ripgrep # rg
-$HOME/.cargo/bin/cargo install fd-find # fd
-$HOME/.cargo/bin/cargo install tree-sitter-cli
-$HOME/.cargo/bin/cargo install zoxide # z
-# $HOME/.cargo/bin/cargo install eza # eza
-# $HOME/.cargo/bin/cargo install du-dust # dust
-$HOME/.cargo/bin/cargo install alacritty # alacritty
-$HOME/.cargo/bin/cargo install worktrunk # wt
-# $HOME/.cargo/bin/cargo install bob-nvim # bob 
-# $HOME/.cargo/bin/cargo install --git https://github.com/jj-vcs/jj.git --locked --bin jj jj-cli # jj
-$HOME/.cargo/bin/cargo install stylua --features luajit # stylua 
-$HOME/.cargo/bin/cargo install wlctl # wlctl
+${HOME}/.cargo/bin/cargo install ripgrep # rg
+${HOME}/.cargo/bin/cargo install fd-find # fd
+${HOME}/.cargo/bin/cargo install tree-sitter-cli
+${HOME}/.cargo/bin/cargo install zoxide # z
+# ${HOME}/.cargo/bin/cargo install eza # eza
+# ${HOME}/.cargo/bin/cargo install du-dust # dust
+${HOME}/.cargo/bin/cargo install alacritty # alacritty
+${HOME}/.cargo/bin/cargo install worktrunk # wt
+# ${HOME}/.cargo/bin/cargo install bob-nvim # bob
+# ${HOME}/.cargo/bin/cargo install --git https://github.com/jj-vcs/jj.git --locked --bin jj jj-cli # jj
+${HOME}/.cargo/bin/cargo install stylua --features luajit # stylua
+${HOME}/.cargo/bin/cargo install wlctl # wlctl

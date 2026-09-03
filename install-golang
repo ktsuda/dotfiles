@@ -3,22 +3,22 @@
 set -e
 
 GOLANG_VERSION="1.24.3"
-GOLANG_FILENAME="go$GOLANG_VERSION.linux-amd64.tar.gz"
+GOLANG_FILENAME="go${GOLANG_VERSION}.linux-amd64.tar.gz"
 
 sudo apt update
-mkdir -p $HOME/Projects
-cd $HOME/Projects
-wget https://go.dev/dl/$GOLANG_FILENAME
+mkdir -p ${HOME}/Projects
+cd ${HOME}/Projects
+wget https://go.dev/dl/${GOLANG_FILENAME}
 sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xzf $GOLANG_FILENAME
-rm -f $GOLANG_FILENAME
+sudo tar -C /usr/local -xzf ${GOLANG_FILENAME}
+rm -f ${GOLANG_FILENAME}
 
 export GOROOT="/usr/local/go"
-export GOPATH="$HOME/go"
-export GOBIN="$GOPATH/bin"
+export GOPATH="${HOME}/go"
+export GOBIN="${GOPATH}/bin"
 export GO11MODULE="auto"
 
-$GOROOT/bin/go install github.com/muesli/duf@latest
-$GOROOT/bin/go install github.com/jesseduffield/lazygit@latest
-$GOROOT/bin/go install github.com/x-motemen/ghq@latest
-$GOROOT/bin/go install github.com/tomasz-tomczyk/crit/cmd/crit@latest
+${GOROOT}/bin/go install github.com/muesli/duf@latest
+${GOROOT}/bin/go install github.com/jesseduffield/lazygit@latest
+${GOROOT}/bin/go install github.com/x-motemen/ghq@latest
+${GOROOT}/bin/go install github.com/tomasz-tomczyk/crit/cmd/crit@latest
