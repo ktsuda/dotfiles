@@ -1,9 +1,9 @@
 local M = {}
 
-local wezterm = require('wezterm')
+local wezterm = require("wezterm")
 
 -- colors
-local c = require('catppuccin_mocha')
+local c = require("catppuccin_mocha")
 local status_bg = c.base
 -- local status_fg = c.text
 local part_fg = c.subtext_0
@@ -18,7 +18,7 @@ M.color_scheme = c.color_scheme
 M.colors = {
   tab_bar = {
     background = status_bg,
-    inactive_tab_edge = 'none',
+    inactive_tab_edge = "none",
   },
 }
 
@@ -26,7 +26,7 @@ M.colors = {
 function M.merge_tables(...)
   local merged = {}
 
-  for i = 1, select('#', ...) do
+  for i = 1, select("#", ...) do
     local obj = (select(i, ...))
 
     for _, v in ipairs(obj) do
@@ -58,7 +58,7 @@ end
 
 function M.format_farleft_status(text)
   return M.merge_tables(
-    M.status_part(' ' .. text .. ' ', part_fg, part_bg),
+    M.status_part(" " .. text .. " ", part_fg, part_bg),
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, status_bg, part_bg)
   )
 end
@@ -66,14 +66,14 @@ end
 function M.format_farright_status(text)
   return M.merge_tables(
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, part_bg, status_bg),
-    M.status_part(' ' .. text .. ' ', part_fg, part_bg)
+    M.status_part(" " .. text .. " ", part_fg, part_bg)
   )
 end
 
 function M.format_status(text)
   return M.merge_tables(
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, part_bg, status_bg),
-    M.status_part(' ' .. text .. ' ', part_fg, part_bg),
+    M.status_part(" " .. text .. " ", part_fg, part_bg),
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, status_bg, part_bg)
   )
 end
@@ -92,7 +92,7 @@ function M.format_tab(bool, text)
 
   return M.merge_tables(
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, edge_fg, edge_bg),
-    M.status_part(' ' .. text .. ' ', fg, bg),
+    M.status_part(" " .. text .. " ", fg, bg),
     M.status_part(wezterm.nerdfonts.pl_right_hard_divider, edge_bg, edge_fg)
   )
 end

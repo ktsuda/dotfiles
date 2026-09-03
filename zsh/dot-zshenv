@@ -1,5 +1,7 @@
-export XDG_CONFIG_HOME="$HOME/.config"
+# vim: ft=zsh :
 
-if [[ -f $HOME/.local/share/bob/env/env.sh ]]; then
-  . "$HOME/.local/share/bob/env/env.sh"
+export XDG_CONFIG_HOME="${HOME}/.config"
+
+if [[ -f ${HOME}/.local/share/bob/env/env.sh ]]; then
+  . "${HOME}/.local/share/bob/env/env.sh"
 fi

@@ -55,7 +55,7 @@ path=(
   /usr/local/lib/nodejs/bin(N-/)
   /opt/local/bin(N-/)
   /Library/Apple/usr/bin(N-/)
-  $path
+  ${path}
 )
 
 case ${OSTYPE} in
@@ -72,7 +72,7 @@ if (( $+commands[brew] )); then
     $(brew --prefix)/share/zsh/site-functions(N-/)
     $(brew --prefix)/share/zsh-syntax-highlighting(N-/)
     $(brew --prefix)/share/zsh-f-sy-h(N-/)
-    $fpath
+    ${fpath}
   )
   if [ -f "$(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
     source $(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
@@ -83,11 +83,11 @@ fi
 
 fpath=(
   ~/.config/zsh/zsh-completions(N-/)
-  $fpath
+  ${fpath}
 )
 
 # git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-if [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+if [ -f "${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
@@ -118,7 +118,7 @@ compdef _op op
 # fzf fuzzy completion
 function _fzf() {
   unfunction "$0"
-  FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source <($HOME/.fzf/bin/fzf --zsh)
+  FZF_CTRL_R_COMMAND= FZF_ALT_C_COMMAND= source <(${HOME}/.fzf/bin/fzf --zsh)
   $0 "$@"
 }
 compdef _fzf fzf
@@ -126,7 +126,7 @@ compdef _fzf fzf
 # Ruby
 function _rbenv() {
   unfunction "$0"
-  eval "$($HOME/.rbenv/bin/rbenv init - zsh)"
+  eval "$(${HOME}/.rbenv/bin/rbenv init - zsh)"
   $0 "$@"
 }
 compdef _rbenv rbenv
@@ -155,11 +155,11 @@ if (( $+commands[jj] )); then
 fi
 
 # golang
-export GOPATH="$HOME/go"
-export GOBIN="$HOME/go/bin"
+export GOPATH="${HOME}/go"
+export GOBIN="${HOME}/go/bin"
 export GO11MODULE="auto"
 
-export WAKATIME_HOME="$HOME/.wakatime_home"
+export WAKATIME_HOME="${HOME}/.wakatime_home"
 
 # prompt
 function _jj_prompt_info() {
@@ -183,7 +183,7 @@ PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
 
 # aliases
 if (( $+commands[fzf] )); then
-  if [ -z "$FZF_DEFAULT_OPTS" ]; then
+  if [ -z "${FZF_DEFAULT_OPTS}" ]; then
     FZF_DEFAULT_OPTS="\
       --highlight-line \
       --info=inline-right \
@@ -272,14 +272,14 @@ fi
 
 function jj_ai_desc() {
   DIFF=$(git diff --color=never)
-  MSG=$(echo "$DIFF" | \
+  MSG=$(echo "${DIFF}" | \
       CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
       "Write a concise, one-line commit message for this diff. Output only the text." \
       --no-session-persistence --model=haiku \
       --tools='' --disable-slash-commands \
       --setting-sources='' --system-prompt=''
   )
-  jj desc -m "$MSG"
+  jj desc -m "${MSG}"
 }
 
 if (( $+commands[jj] )); then
@@ -322,7 +322,7 @@ function _git_clone_bare_wt() {
 
   git clone --bare "${repo_url}" "${repo_dir}/.git"
 
-  git -C "$repo_dir" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+  git -C "${repo_dir}" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 }
 alias gcw='_git_clone_bare_wt'
 
@@ -364,10 +364,10 @@ alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 alias y='yazi-cwd'
 function yazi-cwd() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-  command yazi "$@" --cwd-file="$tmp"
-  IFS= read -r -d '' cwd < "$tmp"
-  [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
-  rm -f -- "$tmp"
+  command yazi "$@" --cwd-file="${tmp}"
+  IFS= read -r -d '' cwd < "${tmp}"
+  [ "${cwd}" != "${PWD}" ] && [ -d "${cwd}" ] && builtin cd -- "${cwd}"
+  rm -f -- "${tmp}"
 }
 
 alias q='goto_repo_root'
@@ -390,7 +390,7 @@ function git_repo_cd() {
   exec <&1
   local selected_dir
   selected_dir=$(ghq list --full-path | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
-  if [ -z "$selected_dir" ]; then
+  if [ -z "${selected_dir}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
@@ -403,7 +403,7 @@ function git_repo_checkout() {
   exec <&1
   local selected_branch
   selected_branch=$(wt list 2>/dev/null | awk '/^[+^]/ { print $2 }' | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
-  if [ -z "$selected_branch" ]; then
+  if [ -z "${selected_branch}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
@@ -429,7 +429,7 @@ function subdir_cd() {
   else
     selected_dir=$(find . -type d | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
   fi
-  if [ -z "$selected_dir" ]; then
+  if [ -z "${selected_dir}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
@@ -444,14 +444,14 @@ function history_widget() {
   exec <&1
   local selected num
   selected=($(fc -rl 1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort'))
-  if [ -z "$selected" ]; then
+  if [ -z "${selected}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
-  num=$selected[1]
-  [[ -z "$num" ]] && return
+  num=${selected}[1]
+  [[ -z "${num}" ]] && return
   zle reset-prompt > /dev/null 2>&1 || true
-  zle vi-fetch-history -n $num
+  zle vi-fetch-history -n ${num}
 }
 zle -N history_widget
 bindkey "^r" history_widget
@@ -465,12 +465,12 @@ function ipv4_address() {
       awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
       fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' \
     )
-  if [ -z "$ipv4_address" ]; then
+  if [ -z "${ipv4_address}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
   zle reset-prompt > /dev/null 2>&1 || true
-  echo "$ipv4_address"
+  echo "${ipv4_address}"
 }
 
 alias sp='pkg_search'
@@ -481,27 +481,27 @@ function pkg_search() {
   case ${OSTYPE} in
     linux*)
       selected=$(dpkg -l | awk '/^ii/ { print $2 }' | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
-      if [ -z "$selected" ]; then
+      if [ -z "${selected}" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
       fi
       zle reset-prompt > /dev/null 2>&1 || true
-      apt-cache depends $selected
+      apt-cache depends ${selected}
       echo
-      apt-cache rdepends $selected
+      apt-cache rdepends ${selected}
       ;;
     darwin*)
       selected=$(brew list -1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
-      if [ -z "$selected" ]; then
+      if [ -z "${selected}" ]; then
         zle redisplay > /dev/null 2>&1 || true
         return
       fi
       zle reset-prompt > /dev/null 2>&1 || true
       echo "${selected} depends on..."
-      brew deps $selected 2>/dev/null
+      brew deps ${selected} 2>/dev/null
       echo
       echo "${selected} is used by..."
-      brew uses --eval-all $selected 2>/dev/null
+      brew uses --eval-all ${selected} 2>/dev/null
       echo
       ;;
   esac
@@ -513,11 +513,11 @@ function custom_tmux_session() {
   local session
   if [[ $# -ge 1 ]]; then
     session="$1"
-    if [[ -n $TMUX ]]; then
-      tmux new-session -d -s"$session"
-      tmux switch-client -t "$session"
+    if [[ -n ${TMUX} ]]; then
+      tmux new-session -d -s"${session}"
+      tmux switch-client -t "${session}"
     else
-      tmux new-session -s"$session"
+      tmux new-session -s"${session}"
     fi
   else
     session=$(\
@@ -527,14 +527,14 @@ function custom_tmux_session() {
         cut -d: -f1 \
       )
     zle reset-prompt > /dev/null 2>&1 || true
-    if [[ -z "$session" ]]; then
+    if [[ -z "${session}" ]]; then
       tmux new-session -s"default"
       return
     fi
-    if [[ -n $TMUX ]]; then
-      tmux switch-client -t "$session"
+    if [[ -n ${TMUX} ]]; then
+      tmux switch-client -t "${session}"
     else
-      tmux attach-session -t "$session"
+      tmux attach-session -t "${session}"
     fi
   fi
 }
@@ -555,8 +555,8 @@ function custom_tmux_send_to() {
       cut -d: -f1 \
     )
   zle reset-prompt > /dev/null 2>&1 || true
-  [[ -z "$session" ]] && return
-  tmux new-window -t "$session" "$*"
+  [[ -z "${session}" ]] && return
+  tmux new-window -t "${session}" "$*"
 }
 
 function custom_herdr_session() {
@@ -573,16 +573,16 @@ function custom_herdr_session() {
     )
 
   local lines=("${(f)output}")
-  local query=$lines[1]
-  local session=$lines[2]
+  local query=${lines}[1]
+  local session=${lines}[2]
 
   zle reset-prompt > /dev/null 2>&1 || true
-  if [[ -z "$session" ]]; then
-    [[ -z "$query" ]] && return
-    herdr --session "$query"
+  if [[ -z "${session}" ]]; then
+    [[ -z "${query}" ]] && return
+    herdr --session "${query}"
     return
   fi
-  herdr session attach "$session"
+  herdr session attach "${session}"
 }
 
 if (( $+commands[tmux] )); then
