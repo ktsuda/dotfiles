@@ -7,6 +7,8 @@ M.formatters = {
   typescriptreact = "prettierd --stdin-filepath %",
   json = "prettierd --stdin-filepath %",
   markdown = "prettierd --stdin-filepath %",
+  sh = "beautysh -i 4 --variable-style braces -s fnpar -",
+  zsh = "beautysh -i 2 --variable-style braces -s fnpar -",
 }
 
 local function format(args)
@@ -27,11 +29,13 @@ local function format(args)
         table.remove(formatted)
       end
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, formatted)
+      vim.notify("Custom formatter applied: ft=" .. ft)
     end
   else
     for _, cl in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
       if cl:supports_method("textDocument/formatting") then
         vim.lsp.buf.format({ bufnr = bufnr, async = false })
+        vim.notify("LSP Formatter applied: ft=" .. ft)
         break
       end
     end
