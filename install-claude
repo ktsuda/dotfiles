@@ -32,6 +32,9 @@ curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.
 #   /caveman:compress <file>                 # Rewrites a memory file into caveman-speak
 #   /cavecrew-investigator/builder/reveiwer  # Caveman subagents for Claude Code
 
+## Install workmux
+curl -fsSL https://raw.githubusercontent.com/raine/workmux/main/scripts/install.sh | bash
+
 ## Install ticktick mcp
 claude mcp add --transport http ticktick https://mcp.ticktick.com/
 # Authorization:

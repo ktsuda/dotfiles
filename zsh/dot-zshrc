@@ -270,6 +270,10 @@ if (( $+commands[wt] )); then
   eval "$(command wt config shell init zsh)"
 fi
 
+if (( $+commands[workmux] )); then
+  alias wm='workmux'
+fi
+
 function jj_ai_desc() {
   DIFF=$(git diff --color=never)
   MSG=$(echo "${DIFF}" | \
