@@ -577,8 +577,8 @@ function custom_herdr_session() {
     )
 
   local lines=("${(f)output}")
-  local query=${lines}[1]
-  local session=${lines}[2]
+  local query=${lines[1]}
+  local session=${lines[2]}
 
   zle reset-prompt > /dev/null 2>&1 || true
   if [[ -z "${session}" ]]; then
