@@ -76,7 +76,7 @@ function private() {
     STOW_FOLDERS+=(wakatime espanso herdr)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(yazi tig-mac ghostty ghostty-mac)
+            STOW_FOLDERS+=(yazi tig-mac ghostty ghostty-mac sketchybar aerospace)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(alacritty tig-linux xmonad rofi nitrogen)

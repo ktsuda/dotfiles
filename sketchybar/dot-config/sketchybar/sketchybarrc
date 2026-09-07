@@ -1,0 +1,169 @@
+# This is a demo config to showcase some of the most important commands.
+# It is meant to be changed and configured, as it is intentionally kept sparse.
+# For a (much) more advanced configuration example see my dotfiles:
+# https://github.com/FelixKratz/dotfiles
+
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+# Resolve aerospace binary path (sketchybar often has minimal PATH)
+if [ -x "/opt/homebrew/bin/aerospace" ]; then
+  AEROSPACE="/opt/homebrew/bin/aerospace"
+elif [ -x "/usr/local/bin/aerospace" ]; then
+  AEROSPACE="/usr/local/bin/aerospace"
+elif command -v aerospace >/dev/null 2>&1; then
+  AEROSPACE="$(command -v aerospace)"
+else
+  echo "ERROR: aerospace not found" >&2
+  exit 1
+fi
+
+##### Bar Appearance #####
+# Configuring the general appearance of the bar.
+# These are only some of the options available. For all options see:
+# https://felixkratz.github.io/SketchyBar/config/bar
+# If you are looking for other colors, see the color picker:
+# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+
+bar=(
+  position=top
+  height=32
+  blur_radius=30
+  color=0xff1e1e2e
+  padding_left=0
+  padding_right=0
+  margin=0
+  corner_radius=0
+  blur_radius=0
+)
+sketchybar --bar "${bar[@]}"
+
+##### Changing Defaults #####
+# We now change some default values, which are applied to all further items.
+# For a full list of all available item properties see:
+# https://felixkratz.github.io/SketchyBar/config/items
+
+default=(
+  padding_left=5
+  padding_right=5
+  icon.font="UbuntuMono Nerd Font:Bold:17.0"
+  label.font="UbuntuMono Nerd Font:Bold:14.0"
+  icon.color=0xffffffff
+  label.color=0xffffffff
+  icon.padding_left=4
+  icon.padding_right=4
+  label.padding_left=4
+  label.padding_right=4
+)
+sketchybar --default "${default[@]}"
+
+# Register the custom event from AeroSpace
+sketchybar --add event aerospace_workspace_change
+
+# Apple logo (opens System Settings)
+apple=(
+  icon=""
+  icon.font="UbuntuMono Nerd Font:Regular:20.0"
+  icon.color=0xffffffff
+  label.drawing=off
+  click_script="open x-apple.systempreferences:"
+)
+sketchybar --add item apple left \
+  --set apple "${apple[@]}"
+
+##### Adding Mission Control Space Indicators #####
+# Let's add some mission control spaces:
+# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
+# to indicate active and available mission control spaces.
+
+# Aerospace workspaces (1-5) - using item type, not space type
+WORKSPACES="$("$AEROSPACE" list-workspaces --all 2>/dev/null)"
+for sid in $WORKSPACES; do
+  space=(
+    label="$sid"
+    label.font="UbuntuMono Nerd Font:Regular:17.0"
+    icon.color=0xffffffff
+    label.color=0xffffffff
+    icon.drawing=off
+    label.width=24
+    padding_left=0          # override global 4
+    padding_right=0         # override global 4
+    background.padding_left=0   # override global 4
+    background.padding_right=0  # override global 4
+    icon.padding_left=0     # unnecessary but inherited
+    icon.padding_right=0    # unnecessary but inherited
+    click_script="$AEROSPACE workspace $sid"
+    script="$CONFIG_DIR/plugins/aerospace.sh $sid"
+  )
+  sketchybar --add item space.$sid left \
+    --subscribe space.$sid aerospace_workspace_change \
+    --set space.$sid "${space[@]}"
+done
+
+# Trigger initial highlight for the currently focused workspace
+FOCUSED_INIT=$("$AEROSPACE" list-workspaces --focused 2>/dev/null)
+sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE="$FOCUSED_INIT"
+
+##### Adding Left Items #####
+# We add some regular items to the left side of the bar, where
+# only the properties deviating from the current defaults need to be set
+
+chevron=(
+  icon=
+  label.drawing=off
+)
+sketchybar --add item chevron left \
+  --set chevron "${chevron[@]}"
+           
+front_app=(
+  icon.drawing=off
+  script="$PLUGIN_DIR/front_app.sh"
+)
+sketchybar --add item front_app left \
+  --set front_app "${front_app[@]}" \
+  --subscribe front_app front_app_switched
+
+##### Adding Right Items #####
+# In the same way as the left items we can add items to the right side.
+# Additional position (e.g. center) are available, see:
+# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+
+# Some items refresh on a fixed cycle, e.g. the clock runs its script once
+# every 10s. Other items respond to events they subscribe to, e.g. the
+# volume.sh script is only executed once an actual change in system audio
+# volume is registered. More info about the event system can be found here:
+# https://felixkratz.github.io/SketchyBar/config/events
+
+clock=(
+  update_freq=10
+  icon= 
+  script="$PLUGIN_DIR/clock.sh"
+)
+sketchybar --add item clock right \
+  --set clock "${clock[@]}"
+
+volume=(
+  script="$PLUGIN_DIR/volume.sh"
+)
+sketchybar --add item volume right \
+  --set volume "${volume[@]}" \
+  --subscribe volume volume_change
+
+battery=(
+  update_freq=120
+  script="$PLUGIN_DIR/battery.sh"
+)
+sketchybar --add item battery right \
+  --set battery "${battery[@]}" \
+  --subscribe battery system_woke power_source_change
+
+weather=(
+  update_freq=1800
+  script="$PLUGIN_DIR/weather.sh"
+  icon.font="UbuntuMono Nerd Font:Regular:14.0"
+)
+
+sketchybar --add item weather right \
+  --set weather "${weather[@]}"
+
+##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --update
