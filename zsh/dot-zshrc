@@ -365,7 +365,6 @@ fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 
-alias y='yazi-cwd'
 function yazi-cwd() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="${tmp}"
@@ -373,6 +372,9 @@ function yazi-cwd() {
   [ "${cwd}" != "${PWD}" ] && [ -d "${cwd}" ] && builtin cd -- "${cwd}"
   rm -f -- "${tmp}"
 }
+if (( $+commands[yazi] )); then
+  alias y='yazi-cwd'
+fi
 
 alias q='goto_repo_root'
 function goto_repo_root() {
