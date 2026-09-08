@@ -7,7 +7,7 @@
     excludesFile = ~/.config/git/ignore
     quotepath = false
 [merge]
-    conflictStyle = diff3
+    conflictStyle = zdiff3
 [push]
     default = simple
     autoSetupRemote = true
@@ -16,6 +16,8 @@
     colorMovedWS = allow-indentation-change
     wordRegex = [a-zA-Z0-9_]+|[ぁ-ん]+|[ァ-ヶー]+|[一-龥々〇〆]+|.
     algorithm = histogram
+[rerere]
+    enabled = true
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit

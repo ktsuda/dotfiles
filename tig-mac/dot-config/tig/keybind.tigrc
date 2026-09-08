@@ -1,8 +1,12 @@
-bind main R !git rebase -i %(commit)
-bind diff R !git rebase -i %(commit)
+bind main R ?!git rebase -i %(commit)
+bind diff R ?!git rebase -i %(commit)
+bind main F ?!git commit --fixup %(commit)
+bind diff F ?!git commit --fixup %(commit)
 bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
-bind status C !git commit -v
-bind status P !git push
+bind status C ?!git commit -v
+bind status P ?!git push
+bind status z ?!git stash
+bind status Z ?!git stash -u
 bind generic <Ctrl-r> refresh
 bind generic <Ctrl-Y> move-first-line
 bind generic <Ctrl-E> move-last-line
