@@ -148,6 +148,14 @@ sketchybar --add item volume right \
   --set volume "${volume[@]}" \
   --subscribe volume volume_change
 
+wifi=(
+  update_freq=35
+  script="$PLUGIN_DIR/wifi.sh"
+)
+sketchybar --add item wifi right \
+           --set wifi "${wifi[@]}" \
+           --subscribe wifi wifi_change
+
 battery=(
   update_freq=120
   script="$PLUGIN_DIR/battery.sh"
