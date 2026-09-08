@@ -6,6 +6,10 @@ git:
     - git log --graph --all --color=always --abbrev-commit --pretty=format:'%C(cyan)%as %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset' --
   ignoreWhitespaceInDiffView: true
   diffContextSize: 5
+  diffRenderers:
+    - type: rawGit
+      args: [--color-words]
+      name: color-words
 refresher:
   refreshInterval: 60
   fetchInterval: 300

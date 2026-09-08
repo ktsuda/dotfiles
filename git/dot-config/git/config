@@ -12,8 +12,10 @@
     default = simple
     autoSetupRemote = true
 [diff]
-    colorMoved = default
+    colorMoved = dimmed-zebra
     colorMovedWS = allow-indentation-change
+    wordRegex = [a-zA-Z0-9_]+|[ぁ-ん]+|[ァ-ヶー]+|[一-龥々〇〆]+|.
+    algorithm = histogram
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit
