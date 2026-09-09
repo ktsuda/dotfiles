@@ -21,7 +21,8 @@
 [alias]
     fix = commit --amend
     now = commit --amend --no-edit
-    l = log --graph --date-order --abbrev-commit --date=short --pretty=format:'%C("#89dceb")%ad %C("#cba6f7")%h %C("#a6e3a1")%cn %C("#cdd6f4")%s %C("#f9e2af")%d%Creset'
+    ll = log --graph --date-order --abbrev-commit --date=short --pretty=format:'%C("#89dceb")%ad %C("#cba6f7")%h %C("#a6e3a1")%cn %C("#cdd6f4")%s %C("#f9e2af")%d%Creset'
+    la = ll --all
     sub = submodule update --init --recursive
     clang-format = clang-format-12
 [init]
