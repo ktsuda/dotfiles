@@ -1,5 +1,6 @@
 require("plugin.skkeleton")
 require("plugin.gitsigns")
+require("plugin.zdiff")
 require("plugin.surround")
 require("plugin.markdown")
 require("plugin.oil")
