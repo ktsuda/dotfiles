@@ -6,8 +6,8 @@ require("zdiff").setup({
   default_expanded = false,
   default_branch = "main",
   keymaps = {
-    goto_file = "<CR>",
-    toggle = "<Tab>",
+    goto_file = "e",
+    toggle = "l",
     close = "q",
     refresh = "R",
     toggle_mode = "m",
