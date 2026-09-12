@@ -354,7 +354,7 @@ if (( $+commands[lazyjj] )); then
 fi
 
 if (( $+commands[lazygit] )); then
-  alias lg='lazygit'
+  alias l='lazygit'
 fi
 
 alias v="${EDITOR}"
