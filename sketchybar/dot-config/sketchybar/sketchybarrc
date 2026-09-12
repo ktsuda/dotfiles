@@ -29,8 +29,8 @@ bar=(
   height=32
   blur_radius=30
   color=0xff1e1e2e
-  padding_left=0
-  padding_right=0
+  padding_left=10
+  padding_right=10
   margin=0
   corner_radius=0
   blur_radius=0
@@ -84,7 +84,7 @@ for sid in $WORKSPACES; do
     icon.color=0xffffffff
     label.color=0xffffffff
     icon.drawing=off
-    label.width=24
+    label.width=18
     padding_left=0          # override global 4
     padding_right=0         # override global 4
     background.padding_left=0   # override global 4
@@ -107,12 +107,12 @@ sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE="$FOCUSED_INIT
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
-chevron=(
-  icon=
-  label.drawing=off
-)
-sketchybar --add item chevron left \
-  --set chevron "${chevron[@]}"
+# chevron=(
+#   icon=
+#   label.drawing=off
+# )
+# sketchybar --add item chevron left \
+#   --set chevron "${chevron[@]}"
            
 front_app=(
   icon.drawing=off
@@ -141,12 +141,29 @@ clock=(
 sketchybar --add item clock right \
   --set clock "${clock[@]}"
 
-volume=(
-  script="$PLUGIN_DIR/volume.sh"
+battery=(
+  update_freq=120
+  script="$PLUGIN_DIR/battery.sh"
 )
-sketchybar --add item volume right \
-  --set volume "${volume[@]}" \
-  --subscribe volume volume_change
+sketchybar --add item battery right \
+  --set battery "${battery[@]}" \
+  --subscribe battery system_woke power_source_change
+
+memory=(
+  update_freq=10
+  icon='' \
+  script="$PLUGIN_DIR/memory.sh"
+)
+sketchybar --add item memory right \
+  --set memory "${memory[@]}"
+
+cpu=(
+  update_freq=10 \
+  icon='' \
+  script="$PLUGIN_DIR/cpu.sh"
+)
+sketchybar --add item cpu right \
+  --set cpu "${cpu[@]}"
 
 wifi=(
   update_freq=35
@@ -156,20 +173,18 @@ sketchybar --add item wifi right \
            --set wifi "${wifi[@]}" \
            --subscribe wifi wifi_change
 
-battery=(
-  update_freq=120
-  script="$PLUGIN_DIR/battery.sh"
+volume=(
+  script="$PLUGIN_DIR/volume.sh"
 )
-sketchybar --add item battery right \
-  --set battery "${battery[@]}" \
-  --subscribe battery system_woke power_source_change
+sketchybar --add item volume right \
+  --set volume "${volume[@]}" \
+  --subscribe volume volume_change
 
 weather=(
   update_freq=1800
   script="$PLUGIN_DIR/weather.sh"
   icon.font="UbuntuMono Nerd Font:Regular:14.0"
 )
-
 sketchybar --add item weather right \
   --set weather "${weather[@]}"
 
