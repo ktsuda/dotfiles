@@ -1,7 +1,7 @@
 bind main R ?!git rebase -i %(commit)
 bind diff R ?!git rebase -i %(commit)
-bind main F ?!git commit --fixup %(commit)
-bind diff F ?!git commit --fixup %(commit)
+bind main F ?!git history fixup %(commit)
+bind diff F ?!git history fixup %(commit)
 bind generic y @sh -c "printf '%s' %(commit) | pbcopy"
 bind status C ?!git commit -v
 bind status P ?!git push
