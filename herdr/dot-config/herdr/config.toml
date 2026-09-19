@@ -116,10 +116,10 @@ split_horizontal = "prefix+minus"
 # Custom commands use the same binding syntax.
 # type = "shell" runs detached in the background.
 # type = "pane" opens a temporary pane and closes it when the command exits.
-# [[keys.command]]
-# key = "prefix+alt+g"
-# type = "pane"
-# command = "lazygit"
+[[keys.command]]
+key = "prefix+g"
+type = "pane"
+command = "lazygit"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -170,13 +170,13 @@ split_horizontal = "prefix+minus"
 prompt_new_tab_name = false
 
 # Draw borders around split panes.
-pane_borders = false
+pane_borders = true
 
 # Keep split panes visually separated instead of sharing divider borders.
-# pane_gaps = true
+pane_gaps = false
 
 # Show detected/reported agent labels in split pane borders when no manual pane name is set.
-# show_agent_labels_on_pane_borders = false
+show_agent_labels_on_pane_borders = true
 
 # Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
 # "workspaces" is accepted as an alias for "spaces".
@@ -187,26 +187,24 @@ pane_borders = false
 # accent = "cyan"
 
 # Background notification popup delivery
-show_agent_labels_on_pane_borders = false
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
 # terminal = ask the outer terminal to show a desktop notification
 # system = ask the OS notification service directly
-# delivery = "off"
-# delay_seconds = 1
+delivery = "herdr"
+delay_seconds = 1
 
-delivery = "system"
 [ui.toast.herdr]
-# position = "bottom-right"
+position = "bottom-left"
 
 [ui.toast.clipboard]
-# enabled = true
-# position = "bottom-center"
+enabled = true
+position = "bottom-left"
 
 # Play sounds when agents change state in background workspaces
 [ui.sound]
-# enabled = true
+enabled = true
 # Optional custom mp3 sound files. Relative paths are resolved from this config file's directory.
 # path = "sounds/notification.mp3"   # one mp3 file for all sound notifications
 # done_path = "sounds/done.mp3"      # overrides only finished notifications
@@ -217,7 +215,6 @@ delivery = "system"
 # [ui.sound.agents]
 # droid = "off"
 
-enabled = true
 [session]
 # Resume supported AI-agent panes into their native conversation sessions after
 # a Herdr server restart. Requires official integrations that report session refs.
