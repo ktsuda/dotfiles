@@ -90,10 +90,14 @@ rename_tab = "prefix+shift+a"
 # close_tab = "prefix+shift+x"
 # rename_pane = "prefix+shift+p"
 # edit_scrollback = "prefix+e"
-# focus_pane_left = "prefix+h"
-# focus_pane_down = "prefix+j"
-# focus_pane_up = "prefix+k"
-# focus_pane_right = "prefix+l"
+focus_pane_left  = ["prefix+h", "prefix+ctrl+h"]
+focus_pane_down  = ["prefix+j", "prefix+ctrl+j"]
+focus_pane_up    = ["prefix+k", "prefix+ctrl+k"]
+focus_pane_right = ["prefix+l", "prefix+ctrl+l"]
+# swap_pane_left = "prefix+shift+h"
+# swap_pane_down = "prefix+shift+j"
+# swap_pane_up = "prefix+shift+k"
+# swap_pane_right = "prefix+shift+l"
 # cycle_pane_next = "prefix+tab"
 # cycle_pane_previous = "prefix+shift+tab"
 # last_pane = ""          # optional, unset by default; bind e.g. "prefix+tab" for global back-and-forth
@@ -106,8 +110,8 @@ split_horizontal = "prefix+minus"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Do not include prefix+, esc, enter, tab, or 1..9 here.
-navigate_workspace_up = "shift+k"
-navigate_workspace_down = "shift+j"
+navigate_workspace_up = "ctrl+k"
+navigate_workspace_down = "ctrl+j"
 # navigate_pane_left = "h"      # left arrow always focuses the pane to the left
 # navigate_pane_down = "j"
 # navigate_pane_up = "k"
@@ -120,6 +124,17 @@ navigate_workspace_down = "shift+j"
 key = "prefix+g"
 type = "pane"
 command = "lazygit"
+
+[[keys.command]]
+key = "prefix+shift+t"
+type = "popup"
+command = "$HOME/.local/share/herdr/move-pane-to-tab.sh"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "herdr-better-worktrees.manage"
+description = "manage canonical worktrees"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
@@ -187,6 +202,7 @@ show_agent_labels_on_pane_borders = true
 # accent = "cyan"
 
 # Background notification popup delivery
+status_indicators = "symbols"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
