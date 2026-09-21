@@ -53,6 +53,10 @@ claude mcp add --transport http ticktick https://mcp.ticktick.com/
 claude plugin marketplace add tomasz-tomczyk/crit
 claude plugin install crit@crit
 
+## Install ponytail
+claude plugin marketplace add DietrichGebert/ponytail
+claude plugin install ponytail@ponytail
+
 # Start using Claude Code:
 #   $ cd your-project
 #   $ claude
