@@ -130,12 +130,6 @@ key = "prefix+shift+t"
 type = "popup"
 command = "$HOME/.local/share/herdr/move-pane-to-tab.sh"
 
-[[keys.command]]
-key = "prefix+shift+g"
-type = "plugin_action"
-command = "herdr-better-worktrees.manage"
-description = "manage canonical worktrees"
-
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
