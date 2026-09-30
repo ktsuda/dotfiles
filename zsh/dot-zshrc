@@ -308,9 +308,14 @@ else
   echo 'Install xclip or xsel'
 fi
 
-alias rm='rm -i'
-alias cp='cp -ip'
-alias mv='mv -i'
+# Claude Code's shell has no TTY, so -i prompts hang until timeout instead of protecting anything.
+if [[ -z $CLAUDECODE ]]; then
+  alias rm='rm -i'
+  alias cp='cp -ip'
+  alias mv='mv -i'
+else
+  alias cp='cp -p'
+fi
 
 alias gl='git ll'
 alias gb='git branch -av'
