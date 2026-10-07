@@ -46,7 +46,40 @@ worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
 # ### Claude Code
 #
 [commit.generation]
-command = "CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p --no-session-persistence --model=haiku --tools='' --disable-slash-commands --setting-sources='' --system-prompt=''"
+# The wrapper enforces 50/72; the prompt below alone is not obeyed reliably.
+command = "sh ~/.config/worktrunk/commit-msg.sh"
+template = """
+Write a commit message for the staged changes below.
+
+<format>
+- Subject line: at most 50 characters, no trailing period
+- For material changes, add a blank line, then a body wrapped at 72 characters per line
+- Body explains what changed and why, not how; keep it to a few short lines
+- Output only the commit message, no quotes or code blocks
+- Write in English, even if the diff content is in another language
+</format>
+
+<style>
+- Imperative mood: "Add feature" not "Added feature"
+- Match recent commit style (conventional commits if used), except where it conflicts with the format above
+- Describe the change, not the intent or benefit
+</style>
+
+<diffstat>
+{{ git_diff_stat }}
+</diffstat>
+
+<diff>
+{{ git_diff }}
+</diff>
+
+<context>
+Branch: {{ branch }}
+{% if recent_commits %}<recent_commits>
+{% for commit in recent_commits %}- {{ commit }}
+{% endfor %}</recent_commits>{% endif %}
+</context>
+"""
 #
 # ### Codex
 #
