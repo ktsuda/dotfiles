@@ -4,34 +4,40 @@ DOTFILES_DIR=$(dirname "$(readlink "$0" || echo "$0")")
 
 DELETE=0
 INSTALL=1
+USE_DEFAULT=0
 STOW_FOLDERS=()
+DOTFILES=(.bash_aliases .zshrc .zshenv)
 
-function set_stow_folders() {
+function parse_args() {
     while [[ $# -gt 0 ]]; do
         case $1 in
-            -D | --delete)
+            -d | --delete)
                 DELETE=1
                 INSTALL=0
                 shift
                 ;;
-            -U | --update)
+            -u | --update)
                 DELETE=1
                 INSTALL=1
                 shift
                 ;;
             -h | --help)
                 usage
-                exit 1
+                exit 0
                 ;;
             -p | --private)
-                set_default
-                private
+                USE_DEFAULT=1
+                set_private
                 shift
                 ;;
             -s | --shared)
-                set_default
-                shared
+                USE_DEFAULT=1
+                set_shared
                 shift
+                ;;
+            -*)
+                usage >&2
+                exit 1
                 ;;
             *)
                 STOW_FOLDERS+=("$1")
@@ -40,135 +46,136 @@ function set_stow_folders() {
         esac
     done
 
+    if [[ ${USE_DEFAULT} -eq 1 ]]; then
+        set_default
+    fi
+
     if [[ ${#STOW_FOLDERS[@]} -eq 0 ]]; then
-        set_all
+        usage >&2
+        exit 1
     fi
 }
 
-function reset() {
-    STOW_FOLDERS=()
-}
-
 function set_default() {
-    STOW_FOLDERS=(vim ripgrep git lazygit tig worktrunk btop zsh nvim)
-}
-
-function set_all() {
-    mapfile -t STOW_FOLDERS < <(/bin/ls -d -- */ | sed 's/\///g')
-}
-
-function shared() {
-    STOW_FOLDERS+=(tmux)
+    STOW_FOLDERS=(vim ripgrep git lazygit tig worktrunk btop zsh nvim "${STOW_FOLDERS[@]}")
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(tig-mac)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(tig-linux bash)
-            ;;
-        *)
-            reset
+            STOW_FOLDERS+=(tig-linux)
             ;;
     esac
 }
 
-function private() {
+function unsupported_os() {
+    echo "unsupported OSTYPE: ${OSTYPE}" >&2
+    exit 1
+}
+
+function set_shared() {
+    STOW_FOLDERS+=(tmux)
+    case ${OSTYPE} in
+        darwin*) ;;
+        linux-gnu*)
+            STOW_FOLDERS+=(bash)
+            ;;
+        *)
+            unsupported_os
+            ;;
+    esac
+}
+
+function set_private() {
     STOW_FOLDERS+=(wakatime espanso herdr)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(yazi tig-mac ghostty ghostty-mac sketchybar aerospace)
+            STOW_FOLDERS+=(yazi ghostty ghostty-mac sketchybar aerospace)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(alacritty tig-linux xmonad rofi nitrogen)
+            STOW_FOLDERS+=(alacritty xmonad rofi nitrogen)
             ;;
         *)
-            reset
+            unsupported_os
             ;;
     esac
 }
 
 function usage() {
     cat << EOF
-usage: $(basename "${0}") [--help] [--list] [--update | --delete]
-                        [--private | --shared] [dirs]
+usage: $(basename "${0}") [--help]
+       $(basename "${0}") [--update | --delete] (--private | --shared | dirs...)
 
 options:
     --help,    -h     print this
-    --delete,  -D     delete dotfiles
+    --update,  -u     delete and reinstall dotfiles
+    --delete,  -d     delete dotfiles
     --shared,  -s     select dotfiles for a shared host
     --private, -p     select dotfiles for a private host
+
+--private, --shared, or at least one dir is required.
 
 EOF
 }
 
 function restore_file() {
-    if [[ $# -lt 1 ]]; then
-        echo "Pass at least one dotfile name: $1 ($#)"
-        exit 1
-    fi
+    local file="${HOME}/$1"
 
-    FILENAME="$1"
-
-    if [[ -f ${HOME}/${FILENAME}.backup ]]; then
-        if [[ -L ${HOME}/${FILENAME} ]]; then
-            /bin/rm -f "${HOME}/${FILENAME}"
+    if [[ -f ${file}.backup && ! -L ${file}.backup ]]; then
+        if [[ -L ${file} ]]; then
+            rm -f "${file}"
         fi
-        /bin/mv -f "${HOME}/${FILENAME}.backup" "${HOME}/${FILENAME}"
+        mv -f "${file}.backup" "${file}"
     fi
 }
 
 function backup_file() {
-    if [[ $# -lt 1 ]]; then
-        echo "Pass at least one dotfile name"
-        exit 1
-    fi
+    local file="${HOME}/$1"
 
-    FILENAME="$1"
-
-    if [[ -e ${HOME}/${FILENAME} ]]; then
-        if [[ ! -L ${HOME}/${FILENAME} ]]; then
-            /bin/mv -f "${HOME}/${FILENAME}" "${HOME}/${FILENAME}.backup"
-        fi
+    if [[ -e ${file} && ! -L ${file} ]]; then
+        mv -f "${file}" "${file}.backup"
     fi
 }
 
-function restore_all() {
-    restore_file ".bash_aliases"
-    restore_file ".zshrc"
-    restore_file ".zshenv"
-}
-
-function backup_all() {
-    backup_file ".bash_aliases"
-    backup_file ".zshrc"
-    backup_file ".zshenv"
+function report() {
+    if "$@"; then
+        echo " ...   Done"
+    else
+        echo " ...   Failed"
+    fi
 }
 
 function update() {
     if [[ ${DELETE} -eq 1 ]]; then
+        for file in "${DOTFILES[@]}"; do
+            restore_file "${file}"
+        done
         for folder in "${STOW_FOLDERS[@]}"; do
-            restore_all
             printf "Deleting   %-17s" "${folder}"
-            stow --dotfiles -t "${HOME}" -D "${folder}" 2> /dev/null
-            echo " ...   Done"
+            report stow --dotfiles -t "${HOME}" -D "${folder}"
+        done
+        for dir in "${HOME}/.config" "${HOME}/.local"; do
+            if [[ -d ${dir} ]]; then
+                find "${dir}" -mindepth 1 -type d -empty -delete
+            fi
         done
     fi
 
     if [[ ${INSTALL} -eq 1 ]]; then
+        for file in "${DOTFILES[@]}"; do
+            backup_file "${file}"
+        done
         for folder in "${STOW_FOLDERS[@]}"; do
-            backup_all
             printf "Installing %-17s" "${folder}"
-            stow --ignore='\.DS_Store' --dotfiles -t "${HOME}" -S "${folder}"
-            echo " ...   Done"
+            report stow --no-folding --ignore='\.DS_Store' --dotfiles -t "${HOME}" -S "${folder}"
         done
     fi
 }
 
 function main() {
-    pushd "${DOTFILES_DIR}" > /dev/null || exit
-    set_stow_folders "$@"
+    cd "${DOTFILES_DIR}" || exit
+    parse_args "$@"
     update
-    popd > /dev/null || exit
 }
 
 main "$@"
