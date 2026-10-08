@@ -18,14 +18,14 @@ apt install -y curl vim zsh clang
 snap install ghostty --classic
 snap install btop
 
-./install-term
-./install-git
-./install-fzf
-./install-golang
-./install-rust
-./install-neovim
-./install-nodejs
-./install-fonts
+./scripts/term
+./scripts/git
+./scripts/fzf
+./scripts/golang
+./scripts/rust
+./scripts/neovim
+./scripts/nodejs
+./scripts/fonts
 
 chsh -s /usr/bin/zsh "$USER"
 ```
@@ -73,6 +73,6 @@ cd dotfiles
 
 ```bash
 cd dotfiles
-./update -D
+./update -d
 ```
 

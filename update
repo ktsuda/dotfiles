@@ -173,7 +173,7 @@ function update() {
 }
 
 function main() {
-    cd "${DOTFILES_DIR}" || exit
+    cd "${DOTFILES_DIR}/src" || exit
     parse_args "$@"
     update
 }
