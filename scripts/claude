@@ -57,6 +57,10 @@ claude plugin install crit@crit
 claude plugin marketplace add DietrichGebert/ponytail
 claude plugin install ponytail@ponytail
 
+## Install superpower
+claude plugin marketplace add obra/superpowers-marketplace
+claude plugin install superpowers@superpowers-marketplace
+
 # Start using Claude Code:
 #   $ cd your-project
 #   $ claude

@@ -87,7 +87,7 @@ function set_shared() {
 }
 
 function set_private() {
-    STOW_FOLDERS+=(wakatime espanso herdr)
+    STOW_FOLDERS+=(wakatime espanso herdr claude)
     case ${OSTYPE} in
         darwin*)
             STOW_FOLDERS+=(yazi ghostty ghostty-mac sketchybar aerospace)
