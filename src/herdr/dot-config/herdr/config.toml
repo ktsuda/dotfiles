@@ -130,6 +130,11 @@ key = "prefix+shift+t"
 type = "popup"
 command = "$HOME/.local/share/herdr/move-pane-to-tab.sh"
 
+[[keys.command]]
+key = "prefix+shift+g"
+type = "popup"
+command = "$HOME/.local/share/herdr/create-worktree.sh"
+
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
 # [keys.indexed]
