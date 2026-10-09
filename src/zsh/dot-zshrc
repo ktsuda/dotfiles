@@ -73,14 +73,16 @@ esac
 typeset -U fpath
 
 if (( $+commands[brew] )); then
+  # shellenv sets HOMEBREW_PREFIX on macOS; fall back for Linuxbrew
+  : ${HOMEBREW_PREFIX:=$(brew --prefix)}
   fpath=(
-    $(brew --prefix)/share/zsh-completions(N-/)
-    $(brew --prefix)/share/zsh/site-functions(N-/)
+    ${HOMEBREW_PREFIX}/share/zsh-completions(N-/)
+    ${HOMEBREW_PREFIX}/share/zsh/site-functions(N-/)
     ${fpath}
   )
 
-  if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  if [ -f "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source ${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   fi
 fi
 
@@ -216,48 +218,34 @@ case ${OSTYPE} in
   darwin*)
     if (( $+commands[gls] )); then
       alias ls='gls -X -F -C -T 2 --color=auto'
-      alias la='ls -a'
-      alias ll='ls -lrt'
-      alias lla='ll -a'
     else
       alias ls='ls -F -C -G'
-      alias la='ls -a'
-      alias ll='ls -lrt'
-      alias lla='ll -a'
-    fi
-
-    if (( $+commands[fd] )); then
-      alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='\
-        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
-        [[ -n $SELECTED ]] && \
-        ${EDITOR} ${SELECTED} \
-        '
     fi
     ;;
   linux*)
     alias ls='ls -X -F -C -T 2 --color=auto'
-    alias la='ls -a'
-    alias ll='ls -lrt'
-    alias lla='ll -a'
-
-    if (( $+commands[fd] )); then
-      alias fd='fd --hidden --follow --exclude .git --exclude .jj'
-      alias f='\
-        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
-        [[ -n $SELECTED ]] && \
-        ${EDITOR} ${SELECTED} \
-        '
-    elif (( $+commands[fdfind] )); then
-      alias fd='fdfind --hidden --exclude .git --exclude .jj'
-      alias f='\
-        SELECTED=$(fd -t f -t l | fzf --tmux center,90%,90% --border --bind "ctrl-c:abort") && \
-        [[ -n $SELECTED ]] && \
-        ${EDITOR} ${SELECTED} \
-        '
-    fi
     ;;
 esac
+alias la='ls -a'
+alias ll='ls -lrt'
+alias lla='ll -a'
+
+function _fzf_pick() {
+  fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' "$@"
+}
+
+if (( $+commands[fd] )); then
+  alias fd='fd --hidden --follow --exclude .git --exclude .jj'
+elif (( $+commands[fdfind] )); then
+  alias fd='fdfind --hidden --follow --exclude .git --exclude .jj'
+fi
+if (( $+aliases[fd] )); then
+  alias f='\
+    SELECTED=$(fd -t f -t l | _fzf_pick) && \
+    [[ -n $SELECTED ]] && \
+    ${EDITOR} ${SELECTED} \
+    '
+fi
 
 if (( $+commands[rg] )); then
   alias rg='rg -H --column -n -S --no-heading --hidden --no-binary'
@@ -401,7 +389,7 @@ function git_repo_cd() {
   exec </dev/tty
   exec <&1
   local selected_dir
-  selected_dir=$(ghq list --full-path | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+  selected_dir=$(ghq list --full-path | _fzf_pick)
   if [ -z "${selected_dir}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -417,8 +405,7 @@ function git_repo_checkout() {
   output=$(\
       wt list 2>/dev/null | \
       awk '/^[+^]/ { print $2 }' | \
-      fzf --print-query --tmux center,90%,90% --border \
-      --bind 'ctrl-c:abort' \
+      _fzf_pick --print-query \
       --bind 'ctrl-d:execute(wt remove -D {1} 2>/dev/null)+abort' \
     )
 
@@ -453,9 +440,9 @@ function subdir_cd() {
   exec <&1
   local selected_dir
   if (( $+commands[fd] )); then
-    selected_dir=$(fd -t d | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+    selected_dir=$(fd -t d | _fzf_pick)
   else
-    selected_dir=$(find . -type d | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+    selected_dir=$(find . -type d | _fzf_pick)
   fi
   if [ -z "${selected_dir}" ]; then
     zle redisplay > /dev/null 2>&1 || true
@@ -471,7 +458,7 @@ function history_widget() {
   exec </dev/tty
   exec <&1
   local selected num
-  selected=($(fc -rl 1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort'))
+  selected=($(fc -rl 1 | _fzf_pick))
   if [ -z "${selected}" ]; then
     zle redisplay > /dev/null 2>&1 || true
     return
@@ -491,13 +478,11 @@ function ipv4_address() {
   local ipv4_address
   ipv4_address=$(ifconfig | \
       awk '$0 ~ /inet [0-9]+.[0-9]+.[0-9]+.[0-9]+/{ print $2 }' | \
-      fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' \
+      _fzf_pick \
     )
   if [ -z "${ipv4_address}" ]; then
-    zle redisplay > /dev/null 2>&1 || true
     return
   fi
-  zle reset-prompt > /dev/null 2>&1 || true
   echo "${ipv4_address}"
 }
 
@@ -508,23 +493,19 @@ function pkg_search() {
   local selected
   case ${OSTYPE} in
     linux*)
-      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+      selected=$(dpkg -l | awk '/^ii/ { print $2 }' | _fzf_pick)
       if [ -z "${selected}" ]; then
-        zle redisplay > /dev/null 2>&1 || true
         return
       fi
-      zle reset-prompt > /dev/null 2>&1 || true
       apt-cache depends ${selected}
       echo
       apt-cache rdepends ${selected}
       ;;
     darwin*)
-      selected=$(brew list -1 | fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort')
+      selected=$(brew list -1 | _fzf_pick)
       if [ -z "${selected}" ]; then
-        zle redisplay > /dev/null 2>&1 || true
         return
       fi
-      zle reset-prompt > /dev/null 2>&1 || true
       echo "${selected} depends on..."
       brew deps ${selected} 2>/dev/null
       echo
@@ -533,6 +514,13 @@ function pkg_search() {
       echo
       ;;
   esac
+}
+
+function _tmux_pick_session() {
+  tmux list-sessions 2>/dev/null | \
+    _fzf_pick --delimiter : --nth 1 \
+    --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
+    cut -d: -f1
 }
 
 function custom_tmux_session() {
@@ -548,13 +536,7 @@ function custom_tmux_session() {
       tmux new-session -s"${session}"
     fi
   else
-    session=$(\
-        tmux list-sessions 2>/dev/null | \
-        fzf --tmux center,90%,90% --border --delimiter : --nth 1 \
-        --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
-        cut -d: -f1 \
-      )
-    zle reset-prompt > /dev/null 2>&1 || true
+    session=$(_tmux_pick_session)
     if [[ -z "${session}" ]]; then
       tmux new-session -s"default"
       return
@@ -572,17 +554,10 @@ function custom_tmux_send_to() {
   exec <&1
   if [[ $# -lt 1 ]]; then
     echo "Usage: sa <command>"
-    zle redisplay > /dev/null 2>&1 || true
     return
   fi
   local session
-  session=$(\
-      tmux list-sessions 2>/dev/null | \
-      fzf --tmux center,90%,90% --border --delimiter : --nth 1 \
-      --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
-      cut -d: -f1 \
-    )
-  zle reset-prompt > /dev/null 2>&1 || true
+  session=$(_tmux_pick_session)
   [[ -z "${session}" ]] && return
   tmux new-window -t "${session}" "$*"
 }
@@ -594,7 +569,7 @@ function custom_herdr_session() {
   output=$(\
       herdr session list 2>/dev/null | \
       tail -n +2 | \
-      fzf --print-query --tmux center,90%,90% --border --delimiter ' ' --nth 1 \
+      _fzf_pick --print-query --delimiter ' ' --nth 1 \
       --bind 'ctrl-s:execute(herdr session stop {1})+reload(herdr session list 2>/dev/null | tail -n +2)' \
       --bind 'ctrl-d:execute(herdr session delete {1})+reload(herdr session list 2>/dev/null | tail -n +2)' | \
       cut -d' ' -f1 \
@@ -604,7 +579,6 @@ function custom_herdr_session() {
   local query=${lines[1]}
   local session=${lines[2]}
 
-  zle reset-prompt > /dev/null 2>&1 || true
   if [[ -z "${session}" ]]; then
     [[ -z "${query}" ]] && return
     herdr --session "${query}"
@@ -628,10 +602,10 @@ esac
 
 # syntax highlighting must be sourced after all widgets are defined
 if (( $+commands[brew] )); then
-  if [ -f "$(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
-    source $(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
-  elif [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  if [ -f "${HOMEBREW_PREFIX}/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
+    source ${HOMEBREW_PREFIX}/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
+  elif [ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source ${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
 fi
 
