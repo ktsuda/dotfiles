@@ -1,4 +1,6 @@
 [general]
+live_config_reload = true
+
 # Alacritty configuration file
 import = [
   "~/.config/alacritty/catppuccin-mocha.toml",
