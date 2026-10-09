@@ -1,11 +1,11 @@
 bind main R ?!git rebase -i %(commit)
 bind diff R ?!git rebase -i %(commit)
-bind main F ?!git history fixup %(commit)
-bind diff F ?!git history fixup %(commit)
+bind main F ?+git history fixup %(commit)
+bind diff F ?+git history fixup %(commit)
 bind generic y @sh -c "~/.local/share/tig/copy-to-clipboard.sh %(commit)"
 bind generic S view-stash
 bind status C ?!git commit -v
-bind status P ?!git push
+bind status P ?+git push
 bind main z ?!git stash
 bind status z ?!git stash
 bind generic <Ctrl-r> refresh
