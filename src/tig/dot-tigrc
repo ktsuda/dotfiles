@@ -3,6 +3,7 @@ set commit-order = topo # auto default topo date author-date reverse
 set ignore-case = smart-case
 set wrap-lines = yes
 set vertical-split = auto
+set split-view-width = 70%
 
 set main-view = line-number:no,interval=10 \
                 date:relative-compact \
