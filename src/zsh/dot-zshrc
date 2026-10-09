@@ -78,11 +78,6 @@ if (( $+commands[brew] )); then
     $(brew --prefix)/share/zsh/site-functions(N-/)
     ${fpath}
   )
-  if [ -f "$(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
-    source $(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
-  elif [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  fi
 
   if [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -165,7 +160,6 @@ fi
 # golang
 export GOPATH="${HOME}/go"
 export GOBIN="${HOME}/go/bin"
-export GO11MODULE="auto"
 
 export WAKATIME_HOME="${HOME}/.wakatime_home"
 
@@ -215,7 +209,7 @@ if (( $+commands[fzf] )); then
   fi
 
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
-    --follow --exclude .git --exlude .jj"
+    --follow --exclude .git --exclude .jj"
 fi
 
 case ${OSTYPE} in
@@ -305,7 +299,7 @@ elif (( $+commands[xclip] )); then
 elif (( $+commands[xsel] )); then
   alias pbcopy='xsel --clipboard --input'
 else
-  echo 'Install xclip or xsel'
+  echo 'Install xclip or xsel' >&2
 fi
 
 # Claude Code's shell has no TTY, so -i prompts hang until timeout instead of protecting anything.
@@ -482,7 +476,7 @@ function history_widget() {
     zle redisplay > /dev/null 2>&1 || true
     return
   fi
-  num=${selected}[1]
+  num=${selected[1]}
   [[ -z "${num}" ]] && return
   zle reset-prompt > /dev/null 2>&1 || true
   zle vi-fetch-history -n ${num}
@@ -631,6 +625,15 @@ case ${OSTYPE} in
     export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
     ;;
 esac
+
+# syntax highlighting must be sourced after all widgets are defined
+if (( $+commands[brew] )); then
+  if [ -f "$(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
+    source $(brew --prefix)/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
+  elif [ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
+fi
 
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
