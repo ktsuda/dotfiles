@@ -6,7 +6,7 @@ set -euo pipefail
 #   normal clone (<repo>/.git)  -> ~/.config/herdr/worktrees/<repo>/<branch>
 #   bare repo at <repo>(.git)   -> ~/.config/herdr/worktrees/<repo>/<branch>
 COMMON=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || {
-    echo "Error: Not in a git repository." >&2
+    read -rsn1 -p "Not in a git repository. Press any key..."
     exit 1
 }
 if [ "$(basename "${COMMON}")" = ".git" ]; then

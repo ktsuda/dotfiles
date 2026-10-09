@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 PANE_ID="${HERDR_ACTIVE_PANE_ID}"
@@ -12,9 +12,8 @@ TABS=$(herdr tab list 2>/dev/null | jq -r --arg current "$CURRENT_TAB" --arg ws 
 ')
 
 if [ -z "${TABS}" ]; then
-    echo "移動先のタブがありません"
-    sleep 1
-    exit 0
+    read -rsn1 -p "No destination tab. Press any key..."
+    exit 1
 fi
 
 TARGET=$(echo "${TABS}" | fzf --prompt="Move to tab> " --with-nth=2 --delimiter='\t' | cut -f1)
