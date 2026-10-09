@@ -1,4 +1,4 @@
-bindkey -e
+# ===== env =====
 
 umask 022
 
@@ -13,6 +13,22 @@ case ${OSTYPE} in
     export LANGUAGE=en_US.utf8
     ;;
 esac
+
+# golang
+export GOPATH="${HOME}/go"
+export GOBIN="${HOME}/go/bin"
+
+export WAKATIME_HOME="${HOME}/.wakatime_home"
+
+case ${OSTYPE} in
+  linux*)
+    export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
+    ;;
+esac
+
+# ===== options / history =====
+
+bindkey -e
 
 # prevent zsh from exit with ctrl-d key
 setopt ignoreeof
@@ -36,6 +52,8 @@ setopt pushd_ignore_dups
 
 # disable lock/unlock with ctrl-s/ctrl-q
 setopt no_flow_control
+
+# ===== path / fpath =====
 
 typeset -U path PATH
 
@@ -72,6 +90,8 @@ esac
 
 typeset -U fpath
 
+# ===== plugins / completion =====
+
 if (( $+commands[brew] )); then
   # shellenv sets HOMEBREW_PREFIX on macOS; fall back for Linuxbrew
   : ${HOMEBREW_PREFIX:=$(brew --prefix)}
@@ -84,6 +104,15 @@ if (( $+commands[brew] )); then
   if [ -f "${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source ${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   fi
+else
+  fpath=(
+    /usr/share/zsh/site-functions(N-/)
+    ${fpath}
+  )
+
+  if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
 fi
 
 fpath=(
@@ -91,26 +120,7 @@ fpath=(
   ${fpath}
 )
 
-# git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-if [ -f "${HOME}/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
-
 autoload -Uz compinit; compinit
-
-# Set the default editor
-if (( $+commands[nvim] )); then
-  EDITOR='nvim'
-elif (( $+commands[vim] )); then
-  EDITOR='vim'
-elif (( $+commands[vi] )); then
-  EDITOR='vi'
-else
-  EDITOR='nano'
-fi
-
-export VISUAL=${EDITOR}
-export EDITOR
 
 # 1Password
 function _op() {
@@ -144,6 +154,27 @@ function _uv() {
 }
 compdef _uv uv
 
+# jujutsu
+if (( $+commands[jj] )); then
+  source <(jj util completion zsh)
+fi
+
+# ===== tool init =====
+
+# Set the default editor
+if (( $+commands[nvim] )); then
+  EDITOR='nvim'
+elif (( $+commands[vim] )); then
+  EDITOR='vim'
+elif (( $+commands[vi] )); then
+  EDITOR='vi'
+else
+  EDITOR='nano'
+fi
+
+export VISUAL=${EDITOR}
+export EDITOR
+
 # direnv
 if (( $+commands[direnv] )); then
   eval "$(direnv hook zsh)"
@@ -154,38 +185,6 @@ if (( $+commands[zoxide] )); then
   eval "$(zoxide init --cmd cd zsh)"
 fi
 
-# jujutsu
-if (( $+commands[jj] )); then
-  source <(jj util completion zsh)
-fi
-
-# golang
-export GOPATH="${HOME}/go"
-export GOBIN="${HOME}/go/bin"
-
-export WAKATIME_HOME="${HOME}/.wakatime_home"
-
-# prompt
-function _jj_prompt_info() {
-  jj log -G -r @ -T '
-    self.change_id().shortest(3)
-    ++ if(self.local_bookmarks(), "on " ++ self.local_bookmarks())
-    ++ if(self.conflict(), "💥")
-  ' --no-pager 2>/dev/null
-}
-
-function _vcs_status() {
-  if jj root >/dev/null 2>&1; then
-    echo -n ".%F{#cba6f7}jj%f %F{#fab387}$(_jj_prompt_info)%f"
-  elif git rev-parse --show-toplevel >/dev/null 2>&1; then
-    echo -n ".%F{#cba6f7}git%f %F{#a6e3a1}$(git branch --show-current)%f"
-  fi
-}
-
-setopt prompt_subst
-PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
-
-# aliases
 if (( $+commands[fzf] )); then
   if [ -z "${FZF_DEFAULT_OPTS}" ]; then
     FZF_DEFAULT_OPTS="\
@@ -214,6 +213,12 @@ if (( $+commands[fzf] )); then
     --follow --exclude .git --exclude .jj"
 fi
 
+if (( $+commands[wt] )); then
+  eval "$(command wt config shell init zsh)"
+fi
+
+# ===== aliases =====
+
 case ${OSTYPE} in
   darwin*)
     if (( $+commands[gls] )); then
@@ -229,10 +234,6 @@ esac
 alias la='ls -a'
 alias ll='ls -lrt'
 alias lla='ll -a'
-
-function _fzf_pick() {
-  fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' "$@"
-}
 
 if (( $+commands[fd] )); then
   alias fd='fd --hidden --follow --exclude .git --exclude .jj'
@@ -256,25 +257,9 @@ if (( $+commands[tig] )); then
   alias ta='tig --all'
 fi
 
-if (( $+commands[wt] )); then
-  eval "$(command wt config shell init zsh)"
-fi
-
 if (( $+commands[workmux] )); then
   alias wm='workmux'
 fi
-
-function jj_ai_desc() {
-  DIFF=$(git diff --color=never)
-  MSG=$(echo "${DIFF}" | \
-      CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
-      "Write a concise, one-line commit message for this diff. Output only the text." \
-      --no-session-persistence --model=haiku \
-      --tools='' --disable-slash-commands \
-      --setting-sources='' --system-prompt=''
-  )
-  jj desc -m "${MSG}"
-}
 
 if (( $+commands[jj] )); then
   alias jjc='jj_ai_desc'
@@ -311,29 +296,8 @@ alias gfp='git fetch -p'
 alias grc='git rebase --continue'
 alias gsub='git sub'
 
-function _git_clone_bare_wt() {
-  local repo_url tmp_dir repo_dir
-
-  repo_url="$1"
-  tmp_dir="${2:-$(basename "$1")}"
-  repo_dir="${tmp_dir//.git}"
-
-  git clone --bare "${repo_url}" "${repo_dir}/.git"
-
-  git -C "${repo_dir}" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-}
 alias gcw='_git_clone_bare_wt'
 
-function _jj_log_oneliner() {
-  jj log -G -T '
-    self.change_id().shortest(3)
-    ++ " " ++ self.author().name()
-    ++ " " ++ self.author().timestamp().format("%Y-%m-%d %H:%M:%S")
-    ++ if(self.local_bookmarks(), " " ++ self.local_bookmarks())
-    ++ if(self.description(), " " ++ self.description().first_line())
-    ++ " " ++ self.commit_id().shortest(3) ++ "\n"
-  ' --no-pager "$@" 2>/dev/null
-}
 alias jl='_jj_log_oneliner -n 20'
 alias jla='_jj_log_oneliner'
 alias jci='jj commit --interactive'
@@ -359,6 +323,84 @@ fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
 
+if (( $+commands[yazi] )); then
+  alias y='yazi-cwd'
+fi
+
+alias q='goto_repo_root'
+
+alias ipv4='ipv4_address'
+
+alias sp='pkg_search'
+
+if (( $+commands[tmux] )); then
+  alias s='custom_tmux_session'
+  alias sa='custom_tmux_send_to'
+elif (( $+commands[herdr] )); then
+  alias s='custom_herdr_session'
+fi
+
+# ===== functions / widgets =====
+
+# prompt
+function _jj_prompt_info() {
+  jj log -G -r @ -T '
+    self.change_id().shortest(3)
+    ++ if(self.local_bookmarks(), "on " ++ self.local_bookmarks())
+    ++ if(self.conflict(), "💥")
+  ' --no-pager 2>/dev/null
+}
+
+function _vcs_status() {
+  if jj root >/dev/null 2>&1; then
+    echo -n ".%F{#cba6f7}jj%f %F{#fab387}$(_jj_prompt_info)%f"
+  elif git rev-parse --show-toplevel >/dev/null 2>&1; then
+    echo -n ".%F{#cba6f7}git%f %F{#a6e3a1}$(git branch --show-current)%f"
+  fi
+}
+
+setopt prompt_subst
+PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
+
+function _fzf_pick() {
+  fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' "$@"
+}
+
+function jj_ai_desc() {
+  DIFF=$(git diff --color=never)
+  MSG=$(echo "${DIFF}" | \
+      CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
+      "Write a concise, one-line commit message for this diff. Output only the text." \
+      --no-session-persistence --model=haiku \
+      --tools='' --disable-slash-commands \
+      --setting-sources='' --system-prompt=''
+  )
+  jj desc -m "${MSG}"
+}
+
+function _git_clone_bare_wt() {
+  local repo_url tmp_dir repo_dir
+
+  repo_url="$1"
+  tmp_dir="${2:-$(basename "$1")}"
+  repo_dir="${tmp_dir//.git}"
+
+  git clone --bare "${repo_url}" "${repo_dir}/.git"
+
+  git -C "${repo_dir}" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+}
+
+function _jj_log_oneliner() {
+  jj log -G -T '
+    self.change_id().shortest(3)
+    ++ " " ++ self.author().name()
+    ++ " " ++ self.author().timestamp().format("%Y-%m-%d %H:%M:%S")
+    ++ if(self.local_bookmarks(), " " ++ self.local_bookmarks())
+    ++ if(self.description(), " " ++ self.description().first_line())
+    ++ " " ++ self.commit_id().shortest(3) ++ "\n"
+  ' --no-pager "$@" 2>/dev/null
+}
+
 function yazi-cwd() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="${tmp}"
@@ -366,11 +408,7 @@ function yazi-cwd() {
   [ "${cwd}" != "${PWD}" ] && [ -d "${cwd}" ] && builtin cd -- "${cwd}"
   rm -f -- "${tmp}"
 }
-if (( $+commands[yazi] )); then
-  alias y='yazi-cwd'
-fi
 
-alias q='goto_repo_root'
 function goto_repo_root() {
   if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
     cd "$(git rev-parse --show-toplevel)"
@@ -471,7 +509,6 @@ function history_widget() {
 zle -N history_widget
 bindkey "^r" history_widget
 
-alias ipv4='ipv4_address'
 function ipv4_address() {
   exec </dev/tty
   exec <&1
@@ -486,7 +523,6 @@ function ipv4_address() {
   echo "${ipv4_address}"
 }
 
-alias sp='pkg_search'
 function pkg_search() {
   exec </dev/tty
   exec <&1
@@ -587,18 +623,7 @@ function custom_herdr_session() {
   herdr session attach "${session}"
 }
 
-if (( $+commands[tmux] )); then
-  alias s='custom_tmux_session'
-  alias sa='custom_tmux_send_to'
-elif (( $+commands[herdr] )); then
-  alias s='custom_herdr_session'
-fi
-
-case ${OSTYPE} in
-  linux*)
-    export CPLUS_INCLUDE_PATH=/usr/include/c++/11:/usr/include/x86_64-linux-gnu/c++/11
-    ;;
-esac
+# ===== syntax highlighting =====
 
 # syntax highlighting must be sourced after all widgets are defined
 if (( $+commands[brew] )); then
@@ -608,6 +633,8 @@ if (( $+commands[brew] )); then
     source ${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
 fi
+
+# ===== zcompile =====
 
 if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
   zcompile ~/.zshrc
