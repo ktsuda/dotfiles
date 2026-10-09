@@ -291,7 +291,7 @@ else
 fi
 
 # Claude Code's shell has no TTY, so -i prompts hang until timeout instead of protecting anything.
-if [[ -z $CLAUDECODE ]]; then
+if [[ -z ${CLAUDECODE} ]]; then
   alias rm='rm -i'
   alias cp='cp -ip'
   alias mv='mv -i'
