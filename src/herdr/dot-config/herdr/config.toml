@@ -63,20 +63,20 @@ prefix = "ctrl+t"
 
 # Prefix-mode actions
 # help = "prefix+?"
-settings = "prefix+period"
+settings = "prefix+comma"
 detach = "prefix+d"
-reload_config = "prefix+ctrl+r"
+reload_config = "prefix+shift+r"
 # open_notification_target = "prefix+o"
-# workspace_picker = "prefix+w"
+workspace_picker = ["prefix+w", "prefix+ctrl+w"]
 goto = "prefix+s"
-# new_workspace = "prefix+shift+n"
-# new_worktree = "prefix+shift+g"
+new_workspace = ""
+new_worktree = ""
 # open_worktree = ""    # optional, unset by default
 # remove_worktree = ""  # optional, unset by default; opens confirmation
 rename_workspace = "prefix+$"
 # close_workspace = "prefix+shift+d"
-previous_workspace = "prefix+shift+k" # optional, unset by default
-next_workspace = "prefix+shift+j"     # optional, unset by default
+previous_workspace = "" # optional, unset by default
+next_workspace = ""     # optional, unset by default
 # previous_agent = ""     # optional, unset by default
 # next_agent = ""         # optional, unset by default
 # focus_agent = ""        # optional indexed binding, e.g. "prefix+alt+1..9"
@@ -105,7 +105,7 @@ split_vertical = "prefix+semicolon"
 split_horizontal = "prefix+minus"
 # close_pane = "prefix+x"
 # zoom = "prefix+z"       # legacy alias: fullscreen
-# resize_mode = "prefix+r"
+resize_mode = ["prefix+r", "prefix+ctrl+r"]
 # toggle_sidebar = "prefix+b"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
@@ -121,17 +121,17 @@ navigate_workspace_down = "ctrl+j"
 # type = "shell" runs detached in the background.
 # type = "pane" opens a temporary pane and closes it when the command exits.
 [[keys.command]]
-key = "prefix+g"
+key = "prefix+ctrl+g"
 type = "pane"
 command = "lazygit"
 
 [[keys.command]]
-key = "prefix+shift+t"
+key = "prefix+ctrl+m"
 type = "popup"
 command = "$HOME/.local/share/herdr/move-pane-to-tab.sh"
 
 [[keys.command]]
-key = "prefix+shift+g"
+key = "prefix+ctrl+o"
 type = "popup"
 command = "$HOME/.local/share/herdr/create-worktree.sh"
 
