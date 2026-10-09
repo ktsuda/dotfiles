@@ -58,14 +58,6 @@ function parse_args() {
 
 function set_default() {
     STOW_FOLDERS=(vim ripgrep git lazygit tig worktrunk btop zsh nvim "${STOW_FOLDERS[@]}")
-    case ${OSTYPE} in
-        darwin*)
-            STOW_FOLDERS+=(tig-mac)
-            ;;
-        linux-gnu*)
-            STOW_FOLDERS+=(tig-linux)
-            ;;
-    esac
 }
 
 function unsupported_os() {
