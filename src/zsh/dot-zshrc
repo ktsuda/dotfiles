@@ -626,11 +626,32 @@ function custom_herdr_session() {
   local current
   current=$(herdr session list 2>/dev/null | awk -v s="${HERDR_SOCKET_PATH}" '$NF == s { print $1 }')
   [[ -z "${current}" || "${current}" == "${target}" ]] && return
-  local next="${XDG_STATE_HOME:-$HOME/.local/state}/herdr/next-session"
+  local next="${XDG_STATE_HOME:-${HOME}/.local/state}/herdr/next-session"
   mkdir -p "${next:h}"
   print -r -- "${target}" > "${next}"
   herdr session stop "${current}"
 }
+
+# herdr: name the space after the repo (worktrees share the main repo name),
+# or the directory outside git
+function _herdr_label_space() {
+  local common name
+  common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+  if [[ -z ${common} ]]; then
+    name=${PWD:t}
+  elif [[ ${common:t} == .git ]]; then
+    name=${common:h:t}
+  else
+    name=${${common:t}%.git}
+  fi
+  herdr workspace rename "${HERDR_WORKSPACE_ID}" "${name:-/}" &>/dev/null &!
+}
+
+if [[ -n ${HERDR_ENV} ]]; then
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _herdr_label_space
+  _herdr_label_space
+fi
 
 # ===== syntax highlighting =====
 
