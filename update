@@ -79,13 +79,13 @@ function set_shared() {
 }
 
 function set_private() {
-    STOW_FOLDERS+=(wakatime espanso herdr claude)
+    STOW_FOLDERS+=(wakatime espanso herdr claude ghostty alacritty)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(yazi ghostty ghostty-mac sketchybar aerospace)
+            STOW_FOLDERS+=(yazi sketchybar aerospace)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(alacritty xmonad rofi nitrogen)
+            STOW_FOLDERS+=(xmonad rofi nitrogen)
             ;;
         *)
             unsupported_os

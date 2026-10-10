@@ -1,22 +1,25 @@
-# font
+# appearance
+
+command = ~/.local/share/herdr/session-loop.sh default
 
 font-family = UbuntuMono Nerd Font
 font-size = 16
-
-# appearance
-
-config-file = ?"./appearance"
+theme = Catppuccin Mocha
+split-divider-color = #c6a0f6
+grapheme-width-method=unicode
+background-opacity = 1.0
+unfocused-split-opacity = 1.0
+window-decoration = none
 
 # behaviour
 
+mouse-hide-while-typing = true
 copy-on-select = clipboard
 shell-integration = detect
 term = xterm-256color
+clipboard-read = allow
+clipboard-write = allow
 
-# os specific
-
-config-file = ?"./extra"
- 
 # keybinds
 
-config-file = ?"./keybinds"
+keybind = clear

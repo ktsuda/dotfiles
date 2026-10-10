@@ -13,4 +13,8 @@ transparent_background_colors = true
 [selection]
 save_to_clipboard = true
 
+[terminal.shell]
+program = "/bin/sh"
+args = ["-c", "exec ~/.local/share/herdr/session-loop.sh default"]
+
 # vim: set ft=toml ts=2 sw=2 sts=2 et :
