@@ -46,7 +46,30 @@ remove_worktree() {
         confirm "Force remove (discards local changes)?" || exit 1
         git worktree remove --force "${path}"
     fi
+    # Delete the branch before closing the workspace, which may kill this popup
+    if [ -n "${DELETE_BRANCH:-}" ]; then
+        git branch -D "$1"
+        git config --remove-section "branch.$1" 2>/dev/null || true
+    fi
     [ -z "${ws}" ] || herdr workspace close "${ws}" >/dev/null
+}
+
+# Squash-merge the branch into its recorded base, then remove worktree and branch
+squash_merge() {
+    local base base_wt
+    base=$(git config "branch.$1.herdrBase" || echo main)
+    base_wt=$(git worktree list --porcelain |
+        awk -v ref="branch refs/heads/${base}" '/^worktree /{p=substr($0,10)} $0==ref{print p}')
+    if [ -z "${base_wt}" ]; then
+        read -rsn1 -p "'${base}' is not checked out in any worktree. Press any key..."
+        exit 1
+    fi
+    confirm "Squash-merge '$1' into '${base}'?" || exit 0
+    git -C "${base_wt}" merge --squash "$1"
+    git -C "${base_wt}" commit
+    # The popup may be running inside the worktree about to be removed
+    cd "${base_wt}"
+    DELETE_BRANCH=1 remove_worktree "$1"
 }
 
 # Pick an existing branch, or type a new name.
@@ -54,15 +77,20 @@ remove_worktree() {
 RC=0
 SELECTED=$(git for-each-ref --format='%(refname:short)' refs/heads |
     fzf --print-query --prompt 'branch> ' \
-        --header 'enter: select / alt-enter: use typed name / ctrl-d: remove worktree' \
+        --header 'enter: select / alt-enter: use typed name / ctrl-d: remove worktree / ctrl-s: squash-merge & remove' \
         --bind 'alt-enter:print-query' \
-        --bind 'ctrl-d:become(echo {}; exit 42)') || RC=$?
+        --bind 'ctrl-d:become(echo {}; exit 42)' \
+        --bind 'ctrl-s:become(echo {}; exit 43)') || RC=$?
 BRANCH_NAME=$(tail -n 1 <<<"${SELECTED}")
 [ -n "${BRANCH_NAME}" ] || exit 0
 case "${RC}" in
 0 | 1) ;;
 42)
     remove_worktree "${BRANCH_NAME}"
+    exit 0
+    ;;
+43)
+    squash_merge "${BRANCH_NAME}"
     exit 0
     ;;
 *) exit 0 ;;
@@ -76,6 +104,7 @@ fi
 # Branch off the caller's checkout, not the bare repo's HEAD (--cwd points there)
 BASE=$(git symbolic-ref -q --short HEAD || git rev-parse HEAD)
 TARGET_PATH="${WORKTREE_ROOT}/${BRANCH_NAME//\//-}"
+git config "branch.${BRANCH_NAME}.herdrBase" "${BASE}"
 
 herdr worktree create \
     --cwd "${REPO_ROOT}" \
