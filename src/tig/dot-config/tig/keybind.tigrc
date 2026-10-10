@@ -4,7 +4,7 @@ bind main F ?+git history fixup %(commit)
 bind diff F ?+git history fixup %(commit)
 bind generic y +sh -c "~/.local/share/tig/copy-to-clipboard.sh %(commit) 2>&1"
 bind generic S view-stash
-bind status C ?!git commit -v
+bind status C ?!wt step commit --stage none
 bind status P ?+git push
 bind main z ?!git stash
 bind status z ?!git stash
