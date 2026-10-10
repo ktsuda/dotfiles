@@ -5,6 +5,9 @@
 next="${XDG_STATE_HOME:-$HOME/.local/state}/herdr/next-session"
 session="${1:-default}"
 
+# Ghostty on macOS runs this with launchd's minimal PATH (no Homebrew).
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 while [[ -n "${session}" ]]; do
   herdr --session "${session}"
   session=$(cat "${next}" 2>/dev/null)
