@@ -644,10 +644,10 @@ function _herdr_label_space() {
   dirs=("${(@f)$(git rev-parse --path-format=absolute --git-dir --git-common-dir 2>/dev/null)}")
   common=${dirs[2]}
   if [[ -z ${common} ]]; then
-    name=${PWD:t}
+    name=${PWD/#${HOME}/\~}
   elif [[ ${dirs[1]} != ${common} ]]; then
     name=$(git branch --show-current 2>/dev/null)
-    name=${name:-${PWD:t}}
+    name=${name:-${PWD/#${HOME}/\~}}
   elif [[ ${common:t} == .git ]]; then
     name=${common:h:t}
   else
