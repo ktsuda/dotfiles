@@ -51,13 +51,21 @@ function parse_args() {
     fi
 
     if [[ ${#STOW_FOLDERS[@]} -eq 0 ]]; then
-        usage >&2
-        exit 1
+        if [[ ${DELETE} -eq 1 && ${INSTALL} -eq 0 ]]; then
+            set_all
+        else
+            usage >&2
+            exit 1
+        fi
     fi
 }
 
 function set_default() {
     STOW_FOLDERS=(vim ripgrep git lazygit tig worktrunk btop zsh nvim "${STOW_FOLDERS[@]}")
+}
+
+function set_all() {
+    mapfile -t STOW_FOLDERS < <(/bin/ls -d -- */ | sed 's/\///g')
 }
 
 function unsupported_os() {
