@@ -51,12 +51,19 @@ remove_worktree() {
         git branch -D "$1"
         git config --remove-section "branch.$1" 2>/dev/null || true
     fi
-    [ -z "${ws}" ] || herdr workspace close "${ws}" >/dev/null
+    # Focus before closing (closing the focused workspace moves focus to its
+    # neighbor); detached so the popup dying on focus change can't skip the close
+    if [ -n "${FOCUS_WS:-}" ]; then
+        setsid -f sh -c 'herdr workspace focus "$1"; [ -z "$2" ] || herdr workspace close "$2"' \
+            _ "${FOCUS_WS}" "${ws}" >/dev/null 2>&1
+    elif [ -n "${ws}" ]; then
+        herdr workspace close "${ws}" >/dev/null
+    fi
 }
 
 # Squash-merge the branch into its recorded base, then remove worktree and branch
 squash_merge() {
-    local base base_wt
+    local base base_wt base_ws
     base=$(git config "branch.$1.herdrBase" || echo main)
     base_wt=$(git worktree list --porcelain |
         awk -v ref="branch refs/heads/${base}" '/^worktree /{p=substr($0,10)} $0==ref{print p}')
@@ -69,7 +76,9 @@ squash_merge() {
     git -C "${base_wt}" commit
     # The popup may be running inside the worktree about to be removed
     cd "${base_wt}"
-    DELETE_BRANCH=1 remove_worktree "$1"
+    base_ws=$(herdr worktree list --cwd "${REPO_ROOT}" |
+        jq -r --arg p "${base_wt}" '.result.worktrees[] | select(.path == $p) | .open_workspace_id // empty')
+    DELETE_BRANCH=1 FOCUS_WS="${base_ws}" remove_worktree "$1"
 }
 
 # Pick an existing branch, or type a new name.
