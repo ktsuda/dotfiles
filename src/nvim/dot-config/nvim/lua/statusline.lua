@@ -1,9 +1,12 @@
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
   callback = function()
-    local root = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null"):gsub("%s+$", "")
-    if root ~= "" then
-      vim.b.git_branch = "(" .. vim.fn.system("git branch --show-current 2>/dev/null"):gsub("%s+$", "") .. ")"
-      vim.b.rel_path = vim.fn.expand("%:p"):sub(#root + 2)
+    -- Ask git about the file's own directory, not nvim's cwd
+    local path = vim.fn.resolve(vim.fn.expand("%:p"))
+    local dir = vim.fn.fnamemodify(path, ":h")
+    local root = vim.fn.systemlist({ "git", "-C", dir, "rev-parse", "--show-toplevel" })[1]
+    if vim.v.shell_error == 0 and root and vim.startswith(path, root .. "/") then
+      vim.b.git_branch = "(" .. (vim.fn.systemlist({ "git", "-C", dir, "branch", "--show-current" })[1] or "") .. ")"
+      vim.b.rel_path = path:sub(#root + 2)
     else
       vim.b.git_branch = nil
       vim.b.rel_path = vim.fn.expand("%:p:~")
