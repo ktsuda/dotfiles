@@ -444,7 +444,7 @@ function git_repo_checkout() {
       wt list 2>/dev/null | \
       awk '/^[+^]/ { print $2 }' | \
       _fzf_pick --print-query \
-      --bind 'ctrl-d:execute(wt remove -D {1} 2>/dev/null)+abort' \
+      --bind 'ctrl-d:execute(wt remove -D {1} 2>/dev/null)+reload(wt list 2>/dev/null | awk "/^[+\^]/ { print \$2 }")' \
     )
 
   local lines=("${(f)output}")
@@ -632,13 +632,17 @@ function custom_herdr_session() {
   herdr session stop "${current}"
 }
 
-# herdr: name the space after the repo (worktrees share the main repo name),
+# herdr: name the space after the repo, the branch in linked worktrees,
 # or the directory outside git
 function _herdr_label_space() {
-  local common name
-  common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+  local dirs common name
+  dirs=("${(@f)$(git rev-parse --path-format=absolute --git-dir --git-common-dir 2>/dev/null)}")
+  common=${dirs[2]}
   if [[ -z ${common} ]]; then
     name=${PWD:t}
+  elif [[ ${dirs[1]} != ${common} ]]; then
+    name=$(git branch --show-current 2>/dev/null)
+    name=${name:-${PWD:t}}
   elif [[ ${common:t} == .git ]]; then
     name=${common:h:t}
   else
