@@ -617,16 +617,21 @@ function custom_herdr_session() {
 
   local target=${session:-${query}}
   [[ -z "${target}" ]] && return
+  local next="${XDG_STATE_HOME:-${HOME}/.local/state}/herdr/next-session"
   if [[ -z ${HERDR_ENV} ]]; then
-    herdr --session "${target}"
+    # follow switches requested from inside herdr (see below)
+    while [[ -n "${target}" ]]; do
+      herdr --session "${target}"
+      target=$(cat "${next}" 2>/dev/null)
+      rm -f "${next}"
+    done
     return
   fi
   # inside herdr: stopping the current session kills this shell, so leave
-  # the next session name for session-loop.sh (ghostty command) to start
+  # the next session name for the outer custom_herdr_session loop to start
   local current
   current=$(herdr session list 2>/dev/null | awk -v s="${HERDR_SOCKET_PATH}" '$NF == s { print $1 }')
   [[ -z "${current}" || "${current}" == "${target}" ]] && return
-  local next="${XDG_STATE_HOME:-${HOME}/.local/state}/herdr/next-session"
   mkdir -p "${next:h}"
   print -r -- "${target}" > "${next}"
   herdr session stop "${current}"

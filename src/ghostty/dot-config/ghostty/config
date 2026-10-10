@@ -1,7 +1,5 @@
 # appearance
 
-command = ~/.local/share/herdr/session-loop.sh default
-
 font-family = UbuntuMono Nerd Font
 font-size = 16
 theme = Catppuccin Mocha
