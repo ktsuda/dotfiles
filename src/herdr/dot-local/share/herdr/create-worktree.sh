@@ -61,8 +61,9 @@ remove_worktree() {
     fi
 }
 
-# Squash-merge the branch into its recorded base, then remove worktree and branch
-squash_merge() {
+# Merge the branch into its recorded base, then remove worktree and branch.
+# $2: "squash" for a squash commit, otherwise fast-forward when possible
+merge_branch() {
     local base base_wt base_ws
     base=$(git config "branch.$1.herdrBase" || echo main)
     base_wt=$(git worktree list --porcelain |
@@ -71,9 +72,14 @@ squash_merge() {
         read -rsn1 -p "'${base}' is not checked out in any worktree. Press any key..."
         exit 1
     fi
-    confirm "Squash-merge '$1' into '${base}'?" || exit 0
-    git -C "${base_wt}" merge --squash "$1"
-    git -C "${base_wt}" commit
+    if [ "$2" = squash ]; then
+        confirm "Squash-merge '$1' into '${base}'?" || exit 0
+        git -C "${base_wt}" merge --squash "$1"
+        git -C "${base_wt}" commit
+    else
+        confirm "Merge '$1' into '${base}'?" || exit 0
+        git -C "${base_wt}" merge --ff "$1"
+    fi
     # The popup may be running inside the worktree about to be removed
     cd "${base_wt}"
     base_ws=$(herdr worktree list --cwd "${REPO_ROOT}" |
@@ -82,14 +88,15 @@ squash_merge() {
 }
 
 # Pick an existing branch, or type a new name.
-# fzf exits 1 on no match, 130 on cancel; ctrl-d exits 42 with the selected branch.
+# fzf exits 1 on no match, 130 on cancel; ctrl-d/ctrl-s/ctrl-o exit 42/43/44 with the selected branch.
 RC=0
 SELECTED=$(git for-each-ref --format='%(refname:short)' refs/heads |
     fzf --print-query --prompt 'branch> ' \
-        --header 'enter: select / alt-enter: use typed name / ctrl-d: remove worktree / ctrl-s: squash-merge & remove' \
+        --header 'enter: select / alt-enter: use typed name / ctrl-d: remove worktree / ctrl-s: squash-merge & remove / ctrl-o: merge & remove' \
         --bind 'alt-enter:print-query' \
         --bind 'ctrl-d:become(echo {}; exit 42)' \
-        --bind 'ctrl-s:become(echo {}; exit 43)') || RC=$?
+        --bind 'ctrl-s:become(echo {}; exit 43)' \
+        --bind 'ctrl-o:become(echo {}; exit 44)') || RC=$?
 BRANCH_NAME=$(tail -n 1 <<<"${SELECTED}")
 [ -n "${BRANCH_NAME}" ] || exit 0
 case "${RC}" in
@@ -99,7 +106,11 @@ case "${RC}" in
     exit 0
     ;;
 43)
-    squash_merge "${BRANCH_NAME}"
+    merge_branch "${BRANCH_NAME}" squash
+    exit 0
+    ;;
+44)
+    merge_branch "${BRANCH_NAME}" merge
     exit 0
     ;;
 *) exit 0 ;;
