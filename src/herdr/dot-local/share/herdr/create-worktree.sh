@@ -92,7 +92,7 @@ merge_branch() {
 RC=0
 SELECTED=$(git for-each-ref --format='%(refname:short)' refs/heads |
     fzf --print-query --prompt 'branch> ' \
-        --header 'enter: select / alt-enter: use typed name / ctrl-d: remove worktree / ctrl-s: squash-merge & remove / ctrl-o: merge & remove' \
+        --header 'Enter: select | Alt-Enter: use typed name | Ctrl-d: remove worktree | Ctrl-s: squash-merge & remove | Ctrl-o: merge & remove' \
         --bind 'alt-enter:print-query' \
         --bind 'ctrl-d:become(echo {}; exit 42)' \
         --bind 'ctrl-s:become(echo {}; exit 43)' \
