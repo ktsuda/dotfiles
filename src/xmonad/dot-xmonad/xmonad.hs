@@ -15,8 +15,10 @@ import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import System.IO (hPutStrLn)
 import XMonad.Hooks.DynamicLog
-import XMonad.Layout.IndependentScreens (countScreens, marshallPP, marshall, onCurrentScreen)
+import XMonad.Layout.IndependentScreens (countScreens, marshallPP, marshall, onCurrentScreen, unmarshallS)
 import XMonad.Layout.Spacing
+import XMonad.Hooks.ServerMode (serverModeEventHookF)
+import System.Environment (getArgs)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -243,7 +245,24 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty
+-- Handles "--view <tag>" requests sent by clicking workspaces on xmobar:
+-- focus the tag's screen first, then show the tag there.
+myEventHook = serverModeEventHookF "XMONAD_VIEW" $ \tag -> do
+    mw <- screenWorkspace (unmarshallS tag)
+    windows $ W.greedyView tag . maybe id W.view mw
+
+-- Client side of myEventHook: send the tag to the running xmonad.
+sendView :: String -> IO ()
+sendView tag = do
+    d  <- openDisplay ""
+    rw <- rootWindow d $ defaultScreen d
+    a  <- internAtom d "XMONAD_VIEW" False
+    m  <- internAtom d tag False
+    allocaXEvent $ \e -> do
+        setEventType e clientMessage
+        setClientMessageEvent e rw a 32 m currentTime
+        sendEvent d rw False structureNotifyMask e
+        sync d False
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -251,16 +270,21 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
+-- marshallPP has already renamed "0_1" to "1", so rebuild the physical tag.
+-- ponytail: binary path hardcoded for x86_64-linux
+clickable' :: ScreenId -> WorkspaceId -> String
+clickable' s w = xmobarAction ("~/.xmonad/xmonad-x86_64-linux --view " ++ marshall s w) "1" w
+
 myLogHook n h =
     mapM_ (\s -> dynamicLogWithPP $ marshallPP s (myPP h s)) [0 .. n - 1]
 
 myPP h s = xmobarPP
     { ppOutput = \str -> hPutStrLn (h !! fromIntegral s) str
-    , ppCurrent = xmobarColor "#f9e2af" ""
-    , ppVisible = xmobarColor "#cdd6f4" ""
-    , ppHidden = xmobarColor "#a6adc8" ""
-    , ppHiddenNoWindows = xmobarColor "#6c7086" ""
-    , ppTitle = xmobarColor "#a6e3a1" "" . shorten 50
+    , ppCurrent = xmobarColor "#cba6f7" ""
+    , ppVisible = xmobarColor "#89b4fa" ""
+    , ppHidden = xmobarColor "#a6adc8" "" . clickable' s
+    , ppHiddenNoWindows = xmobarColor "#45475a" "" . clickable' s
+    , ppTitle = xmobarColor "#a6e3a1" "" . shorten 40
     }
 
 ------------------------------------------------------------------------
@@ -278,9 +302,9 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
     spawnOnce "fcitx5 -dr &"
-    spawnOnce "flatpak run org.deskflow.deskflow"
-    spawnOnce "nm-applet &"
-    spawnOnce "stalonetray &"
+    -- spawnOnce "flatpak run org.deskflow.deskflow"
+    -- spawnOnce "nm-applet &"
+    -- spawnOnce "stalonetray &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -288,7 +312,12 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main :: IO ()
-main = do
+main = getArgs >>= \args -> case args of
+    ["--view", tag] -> sendView tag
+    _               -> runXmonad
+
+runXmonad :: IO ()
+runXmonad = do
     -- spawn "pkill -x xmobar >/dev/null 2>&1 || true"
     nScreens <- countScreens
     xmproc <- mapM (\i -> spawnPipe (xmobarCmd i)) [0 .. fromIntegral nScreens - 1]
