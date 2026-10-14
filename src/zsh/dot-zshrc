@@ -213,10 +213,6 @@ if (( $+commands[fzf] )); then
     --follow --exclude .git --exclude .jj"
 fi
 
-if (( $+commands[wt] )); then
-  eval "$(command wt config shell init zsh)"
-fi
-
 # ===== aliases =====
 
 case ${OSTYPE} in
@@ -438,31 +434,46 @@ function git_repo_cd() {
 zle -N git_repo_cd
 bindkey "^s" git_repo_cd
 
+# Pick a worktree to cd into; a typed name that matches none creates
+# <branch> and its worktree where herdr's create-worktree.sh would.
+# ctrl-d removes the selected worktree and deletes its branch.
 function git_repo_checkout() {
   exec </dev/tty
   exec <&1
-  local output
+  local top list output
+  top=$(git rev-parse --show-toplevel 2>/dev/null)
+  # Branches checked out in a worktree other than this one, as "branch<TAB>path"
+  list="git for-each-ref refs/heads --format='%(if)%(worktreepath)%(then)%(if:notequals=${top})%(worktreepath)%(then)%(refname:short)%09%(worktreepath)%(end)%(end)' | grep ."
   output=$(\
-      wt list 2>/dev/null | \
-      awk '/^[+^]/ { print $2 }' | \
-      _fzf_pick --print-query \
-      --bind 'ctrl-d:execute(wt remove -D {1} 2>/dev/null)+reload(wt list 2>/dev/null | awk "/^[+\^]/ { print \$2 }")' \
+      eval "${list}" 2>/dev/null | \
+      _fzf_pick --print-query --delimiter='\t' --with-nth=1 \
+      --bind "ctrl-d:execute(git worktree remove {2} && git branch -D {1})+reload(${list})" \
     )
 
   local lines=("${(f)output}")
   local query=${lines[1]}
-  local branch=${lines[2]}
+  local selected=${lines[2]}
 
-  if [ -z "${branch}" ]; then
-    if [[ -z "${query}" ]]; then
-      zle redisplay > /dev/null 2>&1 || true
-      return
+  if [ -n "${selected}" ]; then
+    builtin cd -- "${selected#*$'\t'}"
+  elif [ -n "${query}" ]; then
+    # Same placement as herdr's create-worktree.sh
+    local common root dir
+    common=$(git rev-parse --path-format=absolute --git-common-dir) || return
+    if [[ ${common:t} == .git ]]; then
+      root=${common:h}
+    else
+      root=${common}
     fi
-    wt switch --create "${query}" 2>/dev/null
-    zle reset-prompt > /dev/null 2>&1 || true
-    return
+    if [[ ${common:t} == .git && $(git --git-dir="${common}" rev-parse --is-bare-repository) == true ]]; then
+      dir=${root}/${query//\//-}
+    else
+      dir=${HOME}/.config/herdr/worktrees/${${root:t}%.git}/${query//\//-}
+    fi
+    # Existing local or remote branch first, else a new branch off HEAD
+    { git worktree add "${dir}" "${query}" || git worktree add -b "${query}" "${dir}" } \
+      >/dev/null 2>&1 && builtin cd -- "${dir}"
   fi
-  wt switch ${branch} 2>/dev/null
   zle reset-prompt > /dev/null 2>&1 || true
 }
 zle -N git_repo_checkout
