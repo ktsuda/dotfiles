@@ -3,7 +3,6 @@
 /src/tmux/dot-tmux/plugins/tpm
 /src/nvim/dot-config/nvim/nvim-pack-lock.json
 /src/nvim/dot-config/nvim/package-lock.json
-/src/jj/dot-config/jj/repos
 /src/herdr/dot-config/herdr/**/*.log
 /src/herdr/dot-config/herdr/**/*.sock
 /src/herdr/dot-config/herdr/**/session.json

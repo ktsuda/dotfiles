@@ -154,11 +154,6 @@ function _uv() {
 }
 compdef _uv uv
 
-# jujutsu
-if (( $+commands[jj] )); then
-  source <(jj util completion zsh)
-fi
-
 # ===== tool init =====
 
 # Set the default editor
@@ -210,7 +205,7 @@ if (( $+commands[fzf] )); then
   fi
 
   export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden \
-    --follow --exclude .git --exclude .jj"
+    --follow --exclude .git"
 fi
 
 # ===== aliases =====
@@ -232,9 +227,9 @@ alias ll='ls -lrt'
 alias lla='ll -a'
 
 if (( $+commands[fd] )); then
-  alias fd='fd --hidden --follow --exclude .git --exclude .jj'
+  alias fd='fd --hidden --follow --exclude .git'
 elif (( $+commands[fdfind] )); then
-  alias fd='fdfind --hidden --follow --exclude .git --exclude .jj'
+  alias fd='fdfind --hidden --follow --exclude .git'
 fi
 if (( $+aliases[fd] )); then
   alias f='\
@@ -255,10 +250,6 @@ fi
 
 if (( $+commands[workmux] )); then
   alias wm='workmux'
-fi
-
-if (( $+commands[jj] )); then
-  alias jjc='jj_ai_desc'
 fi
 
 if (( $+commands[pbcopy] )); then
@@ -294,18 +285,8 @@ alias gsub='git sub'
 
 alias gcw='_git_clone_bare_wt'
 
-alias jl='_jj_log_oneliner -n 20'
-alias jla='_jj_log_oneliner'
-alias jci='jj commit --interactive'
-alias jp='jj git push'
-alias jfp='jj git fetch'
-
 alias drmp='docker rm $(docker ps -q -f "status=exited")'
 alias drmi='docker rmi $(docker images -q -f "dangling=true")'
-
-if (( $+commands[lazyjj] )); then
-  alias lj='lazyjj'
-fi
 
 if (( $+commands[lazygit] )); then
   alias l='lazygit'
@@ -339,18 +320,8 @@ fi
 # ===== functions / widgets =====
 
 # prompt
-function _jj_prompt_info() {
-  jj log -G -r @ -T '
-    self.change_id().shortest(3)
-    ++ if(self.local_bookmarks(), "on " ++ self.local_bookmarks())
-    ++ if(self.conflict(), "💥")
-  ' --no-pager 2>/dev/null
-}
-
 function _vcs_status() {
-  if jj root >/dev/null 2>&1; then
-    echo -n ".%F{#cba6f7}jj%f %F{#fab387}$(_jj_prompt_info)%f"
-  elif git rev-parse --show-toplevel >/dev/null 2>&1; then
+  if git rev-parse --show-toplevel >/dev/null 2>&1; then
     echo -n ".%F{#cba6f7}git%f %F{#a6e3a1}$(git branch --show-current)%f"
   fi
 }
@@ -360,18 +331,6 @@ PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
 
 function _fzf_pick() {
   fzf --tmux center,90%,90% --border --bind 'ctrl-c:abort' "$@"
-}
-
-function jj_ai_desc() {
-  DIFF=$(git diff --color=never)
-  MSG=$(echo "${DIFF}" | \
-      CLAUDECODE= MAX_THINKING_TOKENS=0 claude -p \
-      "Write a concise, one-line commit message for this diff. Output only the text." \
-      --no-session-persistence --model=haiku \
-      --tools='' --disable-slash-commands \
-      --setting-sources='' --system-prompt=''
-  )
-  jj desc -m "${MSG}"
 }
 
 function _git_clone_bare_wt() {
@@ -384,17 +343,6 @@ function _git_clone_bare_wt() {
   git clone --bare "${repo_url}" "${repo_dir}/.git"
 
   git -C "${repo_dir}" config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-}
-
-function _jj_log_oneliner() {
-  jj log -G -T '
-    self.change_id().shortest(3)
-    ++ " " ++ self.author().name()
-    ++ " " ++ self.author().timestamp().format("%Y-%m-%d %H:%M:%S")
-    ++ if(self.local_bookmarks(), " " ++ self.local_bookmarks())
-    ++ if(self.description(), " " ++ self.description().first_line())
-    ++ " " ++ self.commit_id().shortest(3) ++ "\n"
-  ' --no-pager "$@" 2>/dev/null
 }
 
 function yazi-cwd() {
