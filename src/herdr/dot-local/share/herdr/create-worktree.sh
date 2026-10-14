@@ -127,9 +127,16 @@ BASE=$(git symbolic-ref -q --short HEAD || git rev-parse HEAD)
 TARGET_PATH="${WORKTREE_ROOT}/${BRANCH_NAME//\//-}"
 git config "branch.${BRANCH_NAME}.herdrBase" "${BASE}"
 
-herdr worktree create \
+# Focus last: the popup may die once focus leaves this workspace
+CREATED=$(herdr worktree create \
     --cwd "${REPO_ROOT}" \
     --branch "${BRANCH_NAME}" \
     --base "${BASE}" \
     --path "${TARGET_PATH}" \
-    --focus
+    --no-focus)
+
+# Shell on the left, claude on the right
+CLAUDE_PANE=$(herdr pane split "$(jq -r '.result.root_pane.pane_id' <<<"${CREATED}")" \
+    --direction right --cwd "${TARGET_PATH}" | jq -r '.result.pane.pane_id')
+herdr pane run "${CLAUDE_PANE}" claude >/dev/null
+exec herdr workspace focus "$(jq -r '.result.workspace.workspace_id' <<<"${CREATED}")"
