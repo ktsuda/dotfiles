@@ -272,15 +272,11 @@ else
 fi
 
 alias gl='git ll'
-alias gb='git branch -av'
 alias gs='git status -sb'
-alias gd='git diff --color-words'
 alias ga='git add -N . && git add -p'
-alias gc='git commit -v'
-alias gco='git checkout'
+alias gc='sh ~/.local/share/git/llm-commit.sh'
 alias gp='git push origin'
 alias gfp='git fetch -p'
-alias grc='git rebase --continue'
 alias gsub='git sub'
 
 alias gcw='_git_clone_bare_wt'
