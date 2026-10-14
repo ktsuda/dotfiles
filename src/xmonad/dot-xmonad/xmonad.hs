@@ -284,7 +284,11 @@ myPP h s = xmobarPP
     , ppVisible = xmobarColor "#89b4fa" ""
     , ppHidden = xmobarColor "#a6adc8" "" . clickable' s
     , ppHiddenNoWindows = xmobarColor "#45475a" "" . clickable' s
-    , ppTitle = xmobarColor "#a6e3a1" "" . shorten 40
+    -- show WM_CLASS (e.g. "Alacritty") instead of the window title
+    , ppTitle = const ""
+    , ppLayout = const ""
+    , ppExtras = [withWindowSet $ traverse (runQuery className) . W.peek]
+    , ppSep = "  "
     }
 
 ------------------------------------------------------------------------
