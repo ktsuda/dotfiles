@@ -12,12 +12,16 @@ TABS=$(herdr tab list 2>/dev/null | jq -r --arg current "$CURRENT_TAB" --arg ws 
 ')
 
 if [ -z "${TABS}" ]; then
-    read -rsn1 -p "No destination tab. Press any key..."
-    exit 1
+    exec herdr pane move "${PANE_ID}" --new-tab --focus
 fi
 
-TARGET=$(echo "${TABS}" | fzf --prompt="Move to tab> " --with-nth=2 --delimiter='\t' | cut -f1)
+TARGET=$(printf '%s\nnew\t+ New tab\n' "${TABS}" \
+    | fzf --prompt="Move to tab> " --with-nth=2 --delimiter='\t' | cut -f1)
 
 [ -z "${TARGET}" ] && exit 0
+
+if [ "${TARGET}" = "new" ]; then
+    exec herdr pane move "${PANE_ID}" --new-tab --focus
+fi
 
 herdr pane move "${PANE_ID}" --tab "${TARGET}" --split right --focus
