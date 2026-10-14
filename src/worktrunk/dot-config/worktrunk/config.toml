@@ -47,7 +47,7 @@ worktree-path = "{{ repo_path }}/../{{ branch | sanitize }}"
 #
 [commit.generation]
 # The wrapper enforces 50/72; the prompt below alone is not obeyed reliably.
-command = "sh ~/.config/worktrunk/commit-msg.sh"
+command = "sh ~/.local/share/git/commit-msg.sh"
 template = """
 Write a commit message for the staged changes below.
 

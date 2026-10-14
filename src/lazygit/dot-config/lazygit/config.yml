@@ -191,12 +191,12 @@ keybinding:
 customCommands:
   - key: "c"
     context: "files"
-    command: "wt step commit --stage none"
-    description: "wt step commit (staged only)"
-    output: terminal
+    command: "sh ~/.local/share/git/llm-commit.sh"
+    description: "Commit staged changes (LLM message)"
+    loadingText: "Generating commit message..."
   - key: "M"
     context: "commits"
-    command: "sh ~/.config/worktrunk/reword-msg.sh {{.SelectedCommit.Hash}}"
+    command: "sh ~/.local/share/git/llm-commit.sh {{.SelectedCommit.Hash}}"
     description: "Regenerate commit message (LLM)"
     loadingText: "Generating commit message..."
 gui:

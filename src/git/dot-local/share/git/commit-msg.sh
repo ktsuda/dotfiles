@@ -1,5 +1,5 @@
 #!/bin/sh
-# Commit message generator for worktrunk: reads the prompt on stdin and prints
+# Commit message generator for llm-commit.sh: reads the prompt on stdin and prints
 # a message that follows the 50/72 convention. The LLM does not reliably count
 # characters, so both limits are enforced here rather than trusted to the prompt.
 set -eu
