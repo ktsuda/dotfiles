@@ -11,9 +11,7 @@ if [ -z "${WEATHER_DATA}" ]; then
 fi
 
 # Split the fetched data into icon and temperature
-ICON=$(echo "${WEATHER_DATA}" | awk '{print $1}')
-TEMP=$(echo "${WEATHER_DATA}" | awk '{print $2}')
-CITY=$(echo "${WEATHER_DATA}" | awk '{print $3}')
+read -r ICON TEMP CITY <<< "${WEATHER_DATA}"
 
 # Update SketchyBar
 sketchybar --set "${NAME}" icon="${ICON}" label="${TEMP} ${CITY}"
