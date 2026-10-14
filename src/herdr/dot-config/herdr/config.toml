@@ -133,6 +133,16 @@ width = 80
 height = 25
 
 [[keys.command]]
+key = "prefix+<"
+type = "shell"
+command = "$HOME/.local/share/herdr/move-tab.sh left"
+
+[[keys.command]]
+key = "prefix+>"
+type = "shell"
+command = "$HOME/.local/share/herdr/move-tab.sh right"
+
+[[keys.command]]
 key = ["prefix+o", "prefix+ctrl+o"]
 type = "popup"
 command = "$HOME/.local/share/herdr/create-worktree.sh"
