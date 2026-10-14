@@ -3,8 +3,9 @@ set -euo pipefail
 
 # Worktree placement:
 #   bare repo at <repo>/.git    -> <repo>/<branch>
-#   normal clone (<repo>/.git)  -> ~/.config/herdr/worktrees/<repo>/<branch>
-#   bare repo at <repo>(.git)   -> ~/.config/herdr/worktrees/<repo>/<branch>
+#   normal clone (<repo>/.git)  -> ~/.local/share/worktrees/<repo>/<branch>
+#   bare repo at <repo>(.git)   -> ~/.local/share/worktrees/<repo>/<branch>
+# Keep in sync with [worktrees] directory in config.toml and zsh's ^w picker.
 COMMON=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || {
     read -rsn1 -p "Not in a git repository. Press any key..."
     exit 1
@@ -20,7 +21,7 @@ if [ "$(basename "${COMMON}")" = ".git" ] &&
     WORKTREE_ROOT="${REPO_ROOT}"
 else
     REPO_NAME=$(basename "${REPO_ROOT}")
-    WORKTREE_ROOT="${HOME}/.config/herdr/worktrees/${REPO_NAME%.git}"
+    WORKTREE_ROOT="${HOME}/.local/share/worktrees/${REPO_NAME%.git}"
 fi
 
 confirm() {
