@@ -12,6 +12,9 @@ sudo apt install -y \
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
+${HOME}/.cargo/bin/rustup update stable
+rustc --version   # >= 1.95
+
 # rust cli tools
 ${HOME}/.cargo/bin/cargo install ripgrep # rg
 ${HOME}/.cargo/bin/cargo install fd-find # fd

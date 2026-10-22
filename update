@@ -74,7 +74,7 @@ function unsupported_os() {
 }
 
 function set_shared() {
-    STOW_FOLDERS+=(tmux)
+    STOW_FOLDERS+=(herdr)
     case ${OSTYPE} in
         darwin*) ;;
         linux-gnu*)

@@ -5,12 +5,6 @@ set -e
 bob install latest
 bob use latest
 
-mkdir -p ${HOME}/.local/share/nvim/skk
-curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.L \
-    -o ${HOME}/.local/share/nvim/skk/SKK-JISYO.L
-curl -fsSL https://raw.githubusercontent.com/skk-dev/dict/master/SKK-JISYO.edict2 \
-    -o ${HOME}/.local/share/nvim/skk/SKK-JISYO.edict2
-
 curl -fsSL https://deno.land/install.sh | sh
 npm i -g markdownlint-cli
 npm i -g eslint_d
