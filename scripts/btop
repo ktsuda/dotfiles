@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+BTOP_VERSION="v1.4.7"
+BTOP_FILENAME="btop-x86_64-unknown-linux-musl.tar.gz"
+
+mkdir -p ${HOME}/Projects
+cd ${HOME}/Projects
+wget https://github.com/aristocratos/btop/releases/download/${BTOP_VERSION}/${BTOP_FILENAME}
+tar zxvfp ${BTOP_FILENAME}
+pushd btop/ > /dev/null || true
+./install.sh
+popd > /dev/null || true
+
+# for uninstallation
+# cd ${HOME}/Projects/btop
+# ./uninstall.sh
