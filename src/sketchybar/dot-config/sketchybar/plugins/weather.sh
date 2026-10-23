@@ -2,7 +2,7 @@
 
 # Fetch weather condition and temperature using wttr.in format strings
 # %c = condition icon, %t = temperature
-WEATHER_DATA=$(curl -s "wttr.in/Tokyo?format=%c+%t+%l")
+WEATHER_DATA=$(curl -s -m 3 "wttr.in/Tokyo?format=%c+%t+%l")
 
 # If the request fails, show an offline status
 if [ -z "${WEATHER_DATA}" ]; then

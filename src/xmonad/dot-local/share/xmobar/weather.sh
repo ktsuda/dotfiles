@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-WEATHER_DATA=$(curl -s "wttr.in/Tokyo?format=%c+%t+%l")
+WEATHER_DATA=$(curl -s -m 3 "wttr.in/Tokyo?format=%c+%t+%l")
 
 if [ -z "${WEATHER_DATA}" ]; then
   echo 'echo "Weatther Unavailable"'
