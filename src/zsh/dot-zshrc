@@ -588,29 +588,52 @@ function custom_herdr_session() {
   herdr session stop "${current}"
 }
 
-# herdr: name the space after the repo, the branch in linked worktrees,
-# or the directory outside git
-function _herdr_label_space() {
-  local dirs common name
-  dirs=("${(@f)$(git rev-parse --path-format=absolute --git-dir --git-common-dir 2>/dev/null)}")
-  common=${dirs[2]}
-  if [[ -z ${common} ]]; then
-    name=${PWD/#${HOME}/\~}
-  elif [[ ${dirs[1]} != ${common} ]]; then
-    name=$(git branch --show-current 2>/dev/null)
-    name=${name:-${PWD/#${HOME}/\~}}
-  elif [[ ${common:t} == .git ]]; then
-    name=${common:h:t}
+# herdr: session = mode, space = project (named at creation), pane = place (+ agent)
+
+# set _herdr_git to (git-dir common-dir branch), empty outside git
+function _herdr_git() {
+  _herdr_git=("${(@f)$(git rev-parse --path-format=absolute --git-dir --git-common-dir --abbrev-ref HEAD 2>/dev/null)}")
+}
+
+# repo name from the common dir: <repo>/.git or bare <repo>(.git)
+function _herdr_repo_name() {
+  if [[ ${1:t} == .git ]]; then
+    REPLY=${1:h:t}
   else
-    name=${${common:t}%.git}
+    REPLY=${${1:t}%.git}
   fi
-  herdr workspace rename "${HERDR_WORKSPACE_ID}" "${name:-/}" &>/dev/null &!
+}
+
+# pane border title: repo:branch in git, the directory outside it, plus the
+# agent while one runs (a title hides herdr's own agent label)
+_herdr_agents=(claude codex gemini opencode copilot cursor-agent amp droid pi)
+
+function _herdr_title_pane() {
+  [[ $1 == ${_herdr_pane_title} ]] && return
+  _herdr_pane_title=$1
+  herdr pane report-metadata "${HERDR_PANE_ID}" --source zsh --title "$1" &>/dev/null &!
+}
+
+function _herdr_label_pane() {
+  _herdr_git
+  if [[ -z ${_herdr_git[2]} ]]; then
+    _herdr_place=${PWD/#${HOME}/\~}
+  else
+    _herdr_repo_name ${_herdr_git[2]}
+    _herdr_place="${REPLY}:${_herdr_git[3]}"
+  fi
+  _herdr_title_pane ${_herdr_place}
+}
+
+function _herdr_label_agent() {
+  local cmd=${${(z)3}[1]:t}
+  (( ${_herdr_agents[(Ie)${cmd}]} )) && _herdr_title_pane "${_herdr_place} · ${cmd}"
 }
 
 if [[ -n ${HERDR_ENV} ]]; then
   autoload -Uz add-zsh-hook
-  add-zsh-hook chpwd _herdr_label_space
-  _herdr_label_space
+  add-zsh-hook precmd _herdr_label_pane
+  add-zsh-hook preexec _herdr_label_agent
 fi
 
 # ===== syntax highlighting =====

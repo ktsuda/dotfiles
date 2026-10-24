@@ -198,14 +198,23 @@ directory = "~/.local/share/worktrees"
 # Set false to create tabs immediately with generated names.
 prompt_new_tab_name = false
 
-# Draw borders around split panes.
-pane_borders = true
+# Ask for a workspace name before interactive creation.
+# A space is a project; panes show the repo and branch.
+prompt_new_workspace_name = true
+
+# Draw borders around panes; "always" also frames a lone pane.
+pane_borders = "always"
 
 # Keep split panes visually separated instead of sharing divider borders.
 pane_gaps = false
 
 # Show detected/reported agent labels in split pane borders when no manual pane name is set.
 show_agent_labels_on_pane_borders = true
+
+# Current session name (server-side command; sessions map to sockets)
+tab_bar_right = [
+  { type = "command", command = "herdr session list | awk -v s=\"$HERDR_SOCKET_PATH\" '$NF == s { print $1 }'", interval_seconds = 3600 },
+]
 
 # Agent panel ordering: "spaces" (grouped by space) or "priority" (attention queue).
 # "workspaces" is accepted as an alias for "spaces".
@@ -217,6 +226,11 @@ show_agent_labels_on_pane_borders = true
 
 # Background notification popup delivery
 status_indicators = "symbols"
+
+# One row per space: the project name. Branches live on pane borders.
+[ui.sidebar.spaces]
+rows = [["state_icon", "workspace"]]
+
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
