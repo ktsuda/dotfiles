@@ -26,3 +26,6 @@ ${HOME}/.cargo/bin/cargo install alacritty # alacritty
 ${HOME}/.cargo/bin/cargo install bob-nvim # bob
 ${HOME}/.cargo/bin/cargo install stylua --features luajit # stylua
 ${HOME}/.cargo/bin/cargo install wlctl # wlctl
+${HOME}/.cargo/bin/cargo install kondo # kondo
+${HOME}/.cargo/bin/cargo install dnsglobe # dnsglobe
+${HOME}/.cargo/bin/cargo install grex # grex
