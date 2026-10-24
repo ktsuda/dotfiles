@@ -6,7 +6,7 @@ darwin:
 
 ```bash
 brew install stow rust golang
-brew install ghostty tmux herdr fzf zsh
+brew install ghostty herdr fzf zsh
 brew install nvim git lazygit btop
 cargo install ripgrep fd-find tree-sitter-cli
 ```

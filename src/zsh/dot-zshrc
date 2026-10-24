@@ -307,10 +307,7 @@ alias ipv4='ipv4_address'
 
 alias sp='pkg_search'
 
-if (( $+commands[tmux] )); then
-  alias s='custom_tmux_session'
-  alias sa='custom_tmux_send_to'
-elif (( $+commands[herdr] )); then
+if (( $+commands[herdr] )); then
   alias s='custom_herdr_session'
 fi
 
@@ -327,7 +324,7 @@ setopt prompt_subst
 PROMPT='%n@%m %F{#89b4fa}%2d%f$(_vcs_status) %# '
 
 function _fzf_pick() {
-  fzf --tmux center,80%,80% --border --bind 'ctrl-c:abort' "$@"
+  fzf --height=80% --margin=0,10% --border --bind 'ctrl-c:abort' "$@"
 }
 
 function _git_clone_bare_wt() {
@@ -501,52 +498,6 @@ function pkg_search() {
       echo
       ;;
   esac
-}
-
-function _tmux_pick_session() {
-  tmux list-sessions 2>/dev/null | \
-    _fzf_pick --delimiter : --nth 1 \
-    --bind 'ctrl-d:execute(tmux kill-session -t {1})+reload(tmux list-sessions 2>/dev/null)' | \
-    cut -d: -f1
-}
-
-function custom_tmux_session() {
-  exec </dev/tty
-  exec <&1
-  local session
-  if [[ $# -ge 1 ]]; then
-    session="$1"
-    if [[ -n ${TMUX} ]]; then
-      tmux new-session -d -s"${session}"
-      tmux switch-client -t "${session}"
-    else
-      tmux new-session -s"${session}"
-    fi
-  else
-    session=$(_tmux_pick_session)
-    if [[ -z "${session}" ]]; then
-      tmux new-session -s"default"
-      return
-    fi
-    if [[ -n ${TMUX} ]]; then
-      tmux switch-client -t "${session}"
-    else
-      tmux attach-session -t "${session}"
-    fi
-  fi
-}
-
-function custom_tmux_send_to() {
-  exec </dev/tty
-  exec <&1
-  if [[ $# -lt 1 ]]; then
-    echo "Usage: sa <command>"
-    return
-  fi
-  local session
-  session=$(_tmux_pick_session)
-  [[ -z "${session}" ]] && return
-  tmux new-window -t "${session}" "$*"
 }
 
 function custom_herdr_session() {

@@ -1,6 +1,5 @@
 .DS_Store
 *.swp
-/src/tmux/dot-tmux/plugins/tpm
 /src/nvim/dot-config/nvim/nvim-pack-lock.json
 /src/nvim/dot-config/nvim/package-lock.json
 /src/herdr/dot-config/herdr/**/*.log
