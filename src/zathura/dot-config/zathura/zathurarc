@@ -11,5 +11,4 @@ map D toggle_page_mode
 map J zoom in
 map K zoom out
 
-# include tokyonight
 include catppuccin-mocha
