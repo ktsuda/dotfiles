@@ -49,6 +49,7 @@ bindkey '^N' down-line-or-history
 setopt auto_cd
 setopt auto_pushd
 setopt pushd_ignore_dups
+setopt pushd_silent
 
 # disable lock/unlock with ctrl-s/ctrl-q
 setopt no_flow_control
@@ -616,10 +617,12 @@ fi
 
 # syntax highlighting must be sourced after all widgets are defined
 if (( $+commands[brew] )); then
-  if [ -f "${HOMEBREW_PREFIX}/share/zsh-f-sy-h/F-Sy-H.plugin.zsh" ]; then
-    source ${HOMEBREW_PREFIX}/share/zsh-f-sy-h/F-Sy-H.plugin.zsh
-  elif [ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+  if [ -f "${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
     source ${HOMEBREW_PREFIX}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
+else
+  if [ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
 fi
 
