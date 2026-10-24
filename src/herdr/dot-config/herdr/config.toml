@@ -26,6 +26,7 @@ name = "catppuccin"
 # green = "#a6e3a1"
 [theme.custom]
 selection_bg = "#585b70"
+panel_bg = "reset"
 
 [terminal]
 # Executable used for new interactive panes.
