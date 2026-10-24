@@ -1,13 +1,12 @@
 # appearance
 
 font-family = UbuntuMono Nerd Font
-font-size = 12
 adjust-cell-height = 2
 theme = Catppuccin Mocha
 split-divider-color = #cba6f7
 grapheme-width-method=unicode
-background-opacity = 0.85
 background-opacity-cells = true
+alpha-blending = linear-corrected
 unfocused-split-opacity = 1.0
 window-decoration = none
 window-padding-x = 4,4
@@ -33,3 +32,6 @@ keybind = super+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 keybind = ctrl+shift+c=copy_to_clipboard
 keybind = ctrl+shift+.=reload_config
+
+# OS-specific overrides (ghostty-darwin / ghostty-linux)
+config-file = ?config.os
