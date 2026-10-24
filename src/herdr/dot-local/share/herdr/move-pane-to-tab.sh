@@ -16,7 +16,7 @@ if [ -z "${TABS}" ]; then
 fi
 
 TARGET=$(printf '%s\nnew\t+ New tab\n' "${TABS}" \
-    | fzf --prompt="Move to tab> " --with-nth=2 --delimiter='\t' | cut -f1)
+    | fzf --height=100% --prompt="Move to tab> " --with-nth=2 --delimiter='\t' | cut -f1)
 
 [ -z "${TARGET}" ] && exit 0
 

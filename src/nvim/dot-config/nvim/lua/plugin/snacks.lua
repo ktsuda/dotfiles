@@ -6,6 +6,7 @@ local s = require("snacks")
 s.setup({
   lazygit = {
     configure = false,
+    win = { width = 0, height = 0 },
   },
   notifier = {
     enabled = true,

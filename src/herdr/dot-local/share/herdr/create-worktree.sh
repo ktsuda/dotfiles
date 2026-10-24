@@ -92,7 +92,7 @@ merge_branch() {
 # fzf exits 1 on no match, 130 on cancel; ctrl-d/ctrl-s/ctrl-o exit 42/43/44 with the selected branch.
 RC=0
 SELECTED=$(git for-each-ref --format='%(refname:short)' refs/heads |
-    fzf --print-query --prompt 'branch> ' \
+    fzf --height=100% --print-query --prompt 'branch> ' \
         --header 'Enter: select | Alt-Enter: use typed name | Ctrl-d: remove worktree | Ctrl-s: squash-merge & remove | Ctrl-o: merge & remove' \
         --bind 'alt-enter:print-query' \
         --bind 'ctrl-d:become(echo {}; exit 42)' \

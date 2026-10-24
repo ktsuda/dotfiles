@@ -131,8 +131,8 @@ command = "lazygit"
 key = ["prefix+m", "prefix+ctrl+m"]
 type = "popup"
 command = "$HOME/.local/share/herdr/move-pane-to-tab.sh"
-width = 80
-height = 25
+width = "80%"
+height = "80%"
 
 [[keys.command]]
 key = "prefix+<"
@@ -148,8 +148,8 @@ command = "$HOME/.local/share/herdr/move-tab.sh right"
 key = ["prefix+o", "prefix+ctrl+o"]
 type = "popup"
 command = "$HOME/.local/share/herdr/create-worktree.sh"
-width = "90%"
-height = "90%"
+width = "80%"
+height = "80%"
 
 # Legacy indexed shortcut config is still parsed for compatibility.
 # Prefer switch_tab, switch_workspace, and focus_agent for new configs.
