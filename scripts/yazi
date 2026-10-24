@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -e
+
+# nerd-fonts
+# ffmpeg (video thumbnails)
+# 7-zip
+# jq (JSON preview)
+# poppler (PDF preview)
+# fd
+# ripgrep
+# fzf
+# zoxide
+# resvg (SVG)
+# ImageMagick (font, HEIC, JPEG XL preview)
+# xclip (Linux)
+
+sudo snap install yazi --classic

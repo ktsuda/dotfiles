@@ -58,6 +58,28 @@ vim.keymap.set('n', '<C-g>', function()
   end
 end)
 
+vim.keymap.set('n', '<C-n>', function()
+  local tmp = vim.fn.tempname()
+  local file = vim.fn.expand('%:p')
+  local cmd = { 'yazi', '--chooser-file', tmp }
+  if file ~= '' then table.insert(cmd, file) end -- start yazi at the current file
+  s.terminal.open(cmd, {
+    win = {
+      style = 'lazygit',
+      on_close = function()
+        vim.schedule(function()
+          if vim.fn.filereadable(tmp) == 1 then
+            for _, f in ipairs(vim.fn.readfile(tmp)) do
+              vim.cmd.edit(vim.fn.fnameescape(f))
+            end
+            vim.fn.delete(tmp)
+          end
+        end)
+      end,
+    },
+  })
+end)
+
 vim.keymap.set('n', '<C-p>', function()
   p.smart(opts)
 end)

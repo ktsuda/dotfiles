@@ -4,9 +4,11 @@ vim.pack.add({
 
 local s = require("snacks")
 s.setup({
+  styles = {
+    lazygit = { width = 0, height = 0 },
+  },
   lazygit = {
     configure = false,
-    win = { width = 0, height = 0 },
   },
   notifier = {
     enabled = true,
