@@ -12,3 +12,6 @@ vim.o.autoread = true
 vim.o.laststatus = 3
 vim.o.cmdheight = 1
 vim.o.clipboard = "unnamedplus" -- See :checkhealth provider
+
+-- copy on select: yank a mouse selection when the drag ends
+vim.keymap.set("x", "<LeftRelease>", "y")
