@@ -4,6 +4,9 @@ vim.pack.add({
 
 local s = require("snacks")
 s.setup({
+  lazygit = {
+    configure = false,
+  },
   notifier = {
     enabled = true,
   },
