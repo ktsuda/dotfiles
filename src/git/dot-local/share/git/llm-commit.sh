@@ -26,7 +26,10 @@ rules='<format>
 tmp=$(mktemp)
 trap 'rm -f "$tmp"' EXIT
 
-# ponytail: whole diff goes to the LLM; truncate here if huge diffs hit limits
+# ponytail: byte cap keeps minified/vendored diffs under the model limit;
+# diffstat still lists every file. Exclude paths if truncation hurts quality.
+max_diff=200000
+
 if [ $# -eq 0 ]; then
     if git diff --cached --quiet; then
         echo "llm-commit.sh: nothing staged" >&2
@@ -36,7 +39,7 @@ if [ $# -eq 0 ]; then
         printf '%s\n\n%s\n\n<diffstat>\n' "Write a commit message for the staged changes below." "$rules"
         git diff --cached --stat
         printf '</diffstat>\n\n<diff>\n'
-        git diff --cached
+        git diff --cached | head -c "$max_diff"
         printf '</diff>\n\n<context>\nBranch: %s\n<recent_commits>\n' "$(git branch --show-current)"
         git log -10 --format='- %s' 2>/dev/null || true
         printf '</recent_commits>\n</context>\n'
@@ -63,7 +66,7 @@ c=$(git rev-parse "$1")
     printf '</current_message>\n\n<diffstat>\n'
     git show --stat --format= "$c"
     printf '</diffstat>\n\n<diff>\n'
-    git show --format= "$c"
+    git show --format= "$c" | head -c "$max_diff"
     printf '</diff>\n'
 } | sh "$dir/commit-msg.sh" > "$tmp"
 

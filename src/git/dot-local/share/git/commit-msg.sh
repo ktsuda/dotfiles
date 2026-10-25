@@ -13,7 +13,10 @@ llm() {
         --setting-sources='' --system-prompt=''
 }
 
-msg=$(llm)
+if ! msg=$(llm); then
+    printf 'commit-msg.sh: claude failed: %s\n' "$msg" >&2
+    exit 1
+fi
 subject=$(printf '%s\n' "$msg" | head -n 1)
 body=$(printf '%s\n' "$msg" | tail -n +2)
 
