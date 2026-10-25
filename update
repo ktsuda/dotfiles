@@ -90,7 +90,7 @@ function set_private() {
     STOW_FOLDERS+=(wakatime espanso herdr claude ghostty alacritty)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(yazi sketchybar aerospace ghostty-darwin)
+            STOW_FOLDERS+=(yazi sketchybar aerospace borders ghostty-darwin)
             ;;
         linux-gnu*)
             STOW_FOLDERS+=(xmonad rofi nitrogen ghostty-linux)

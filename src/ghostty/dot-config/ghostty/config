@@ -13,6 +13,8 @@ window-padding-x = 4,4
 window-padding-y = 4,2
 cursor-style = block
 macos-titlebar-proxy-icon = hidden
+macos-non-native-fullscreen = true
+macos-window-shadow = false
 
 # behaviour
 
@@ -31,7 +33,10 @@ keybind = super+v=paste_from_clipboard
 keybind = super+c=copy_to_clipboard
 keybind = ctrl+shift+v=paste_from_clipboard
 keybind = ctrl+shift+c=copy_to_clipboard
+keybind = super+.=reload_config
 keybind = ctrl+shift+.=reload_config
+keybind = super+n=new_window
+keybind = ctrl+shift+n=new_window
 
 # OS-specific overrides (ghostty-darwin / ghostty-linux)
 config-file = ?config.os

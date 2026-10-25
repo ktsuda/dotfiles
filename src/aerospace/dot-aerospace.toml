@@ -9,7 +9,8 @@ config-version = 2
 # You can use it to add commands that run after AeroSpace startup.
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  "exec-and-forget sketchybar" 
+  "exec-and-forget sketchybar",
+  "exec-and-forget borders",
 ]
 
 # Start AeroSpace at login
@@ -30,7 +31,7 @@ accordion-padding = 30
 
 # Possible values: tiles|accordion
 # default-root-container-layout = 'tiles'
-default-root-container-layout = 'accordion'
+default-root-container-layout = 'tiles'
 
 # Possible values: horizontal|vertical|auto
 # 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
@@ -79,12 +80,13 @@ key-mapping.preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
-gaps.inner.horizontal = 0
-gaps.inner.vertical =   0
-gaps.outer.left =       0
-gaps.outer.bottom =     0
-gaps.outer.top =        32
-gaps.outer.right =      0
+# xmonad-like: 10px to screen edges, borders (2px, drawn outside windows) touching.
+gaps.inner.horizontal =  6
+gaps.inner.vertical =    6
+gaps.outer.left =        6
+gaps.outer.bottom =      6
+gaps.outer.top =        42
+gaps.outer.right =       6
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

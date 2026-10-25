@@ -20,12 +20,14 @@ fi
 
 FOCUSED="${FOCUSED_WORKSPACE:-$("$AEROSPACE" list-workspaces --focused 2>/dev/null)}"
 
+NONEMPTY="$("$AEROSPACE" list-workspaces --monitor all --empty no 2>/dev/null)"
+
 if [ "$SID" = "$FOCUSED" ]; then
-  sketchybar --set "$NAME" \
-    label.color=0xffcdd6f4 \
-    background.color=0x00000000
+  COLOR=0xffcba6f7 # mauve
+elif echo "$NONEMPTY" | grep -qx "$SID"; then
+  COLOR=0xffa6adc8 # subtext0
 else
-  sketchybar --set "$NAME" \
-    label.color=0xff6c7086 \
-    background.color=0x00000000
+  COLOR=0xff45475a # surface1
 fi
+
+sketchybar --set "$NAME" label.color=$COLOR
