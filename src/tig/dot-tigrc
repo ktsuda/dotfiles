@@ -6,16 +6,27 @@ set vertical-split = auto
 set split-view-width = 70%
 
 set main-view = line-number:no,interval=10 \
-                date:relative-compact \
+                date:custom \
                 id:yes \
                 author:abbreviated \
                 commit-title:graph=v2,refs=yes,overflow=yes
+set main-view-date-format = "%Y-%m-%d %H:%M"
 
 set refs-view = line-number:yes,interval=10 \
-                date:default \
+                date:custom \
                 id:yes \
                 author:abbreviated \
                 ref:yes
+set refs-view-date-format = "%Y-%m-%d %H:%M"
+
+set blame-view-date-display = custom
+set blame-view-date-format  = "%Y-%m-%d %H:%M"
+
+set tree-view-date-display  = custom
+set tree-view-date-format   = "%Y-%m-%d %H:%M"
+
+set stash-view-date-display = custom
+set stash-view-date-format  = "%Y-%m-%d %H:%M"
 
 source ~/.config/tig/color.tigrc
 source ~/.config/tig/keybind.tigrc
