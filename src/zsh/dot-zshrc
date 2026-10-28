@@ -293,6 +293,7 @@ alias v="${EDITOR}"
 
 if (( $+commands[nvim] )); then
   alias vimdiff='nvim -d'
+  alias view='v -R'
 fi
 
 alias rmhist='history -p && rm -f ~/.zsh_history && exit'
