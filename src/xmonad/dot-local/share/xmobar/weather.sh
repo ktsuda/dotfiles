@@ -3,7 +3,7 @@
 WEATHER_DATA=$(curl -s -m 3 "wttr.in/Tokyo?format=%c+%t+%l")
 
 if [ -z "${WEATHER_DATA}" ]; then
-  echo 'echo "Weatther Unavailable"'
+  echo "Weather Unavailable"
   exit 0
 fi
 
