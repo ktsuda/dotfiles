@@ -1,4 +1,7 @@
-local s = require('snacks')
+local ok, s = pcall(require, 'snacks')
+if not ok then
+  return false
+end
 local p = require('snacks.picker')
 local t = require('snacks.toggle')
 

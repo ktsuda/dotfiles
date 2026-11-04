@@ -49,6 +49,12 @@ claude mcp add --transport http ticktick https://mcp.ticktick.com/
 #   "Complete the tasks 'Buy milk' and 'Buy daily essentials' in my Personal list."
 #   "Move 'Go camping' to my Outdoor Activities list."
 
+## Install fff-mcp
+curl -L https://dmtrkovalenko.dev/install-fff-mcp.sh | bash
+# Registration
+# $ claude mcp add -s user fff -- ~/.local/bin/fff-mcp
+# $ fff-mcp --healthcheck
+
 ## Install crit
 claude plugin marketplace add tomasz-tomczyk/crit
 claude plugin install crit@crit
