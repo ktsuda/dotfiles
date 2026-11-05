@@ -208,6 +208,9 @@ prompt_new_workspace_name = true
 # Draw borders around panes; "always" also frames a lone pane.
 pane_borders = "always"
 
+# Draw interactive scrollbars beside terminal panes.
+pane_scrollbars = false
+
 # Keep split panes visually separated instead of sharing divider borders.
 pane_gaps = false
 
