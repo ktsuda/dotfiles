@@ -1,2 +1,3 @@
 #!/bin/bash
-~/src/github.com/qutebrowser/qutebrowser/.venv/bin/python3 -m qutebrowser "$@"
+# pip PyQt6 bundles its own Qt without the fcitx plugin; fcitx5 serves the IBus protocol.
+QT_IM_MODULE=ibus exec ~/src/github.com/qutebrowser/qutebrowser/.venv/bin/python3 -m qutebrowser "$@"
