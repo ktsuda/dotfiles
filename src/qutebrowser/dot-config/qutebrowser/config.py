@@ -18,7 +18,7 @@ if os.path.exists(config.configdir / "theme.py"):
 config.set("auto_save.session", True)
 c.auto_save.session = True
 c.content.pdfjs = True
-c.url.default_page = "https://start.duckduckgo.com/"
+c.url.default_page = "about:blank"
 c.url.searchengines = {
     "DEFAULT": "https://google.com/search?q={}",
     "d": "https://dictionary.cambridge.org/dictionary/english/{}",
@@ -47,6 +47,7 @@ passthrough_urls = [
 ]
 for url in passthrough_urls:
     config.set("input.mode_override", "passthrough", url)
+config.bind("<Ctrl+t>", "open -t", mode="passthrough")
 
 # key bindings
 config.bind("sq", "quickmark-save")
