@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+
+set +e
+
+# Usage: vieb-1pass URL [username|password|otp]
+# Called from viebrc in insert mode: <:!~/.local/share/Vieb/vieb-1pass "<useCurrentUrl>">
+#   (none)    type username <Tab> password into the focused field, copy TOTP to clipboard
+#             (on known split-page logins like Google, the mode is chosen from the URL)
+#   username  type username only
+#   password  type password only
+#   otp       type the one-time password only
+# Typing uses xdotool into the active window, so focus the first field (insert mode) first.
+PAGE_URL="${1:-}"
+MODE="${2:-}"
+
+if [ -z "$MODE" ]; then
+    case "$PAGE_URL" in
+        https://accounts.google.com/*/signin/identifier*) MODE=username ;;
+        https://accounts.google.com/*/challenge/pwd*) MODE=password ;;
+        https://accounts.google.com/*/challenge/totp*) MODE=otp ;;
+    esac
+fi
+
+# Vieb runs us via exec with a pipe on stdin; `op item get` reads IDs from a piped stdin and hangs.
+exec < /dev/null
+
+msg() { notify-send -a vieb-1pass "1password" "$1" 2>/dev/null || echo "$1" >&2; }
+
+command -v xdotool > /dev/null || { msg "xdotool is not installed"; exit 1; }
+
+URL=$(echo "$PAGE_URL" | awk -F/ '{print $3}' | sed 's/^www\.//')
+TOKEN_CACHE="${TMPDIR:-/tmp}/1pass.token"
+
+op_run() {
+    if [ -n "$TOKEN" ]; then op --session "$TOKEN" "$@"; else op "$@"; fi
+}
+
+# Inherited OP_SESSION_* env needs no token. Otherwise reuse cached token, else prompt.
+# Same cache file as qute-1pass, so one sign-in covers both browsers.
+TOKEN=""
+if ! op whoami > /dev/null 2>&1; then
+    [ -f "$TOKEN_CACHE" ] && TOKEN=$(cat "$TOKEN_CACHE")
+    if [ -z "$TOKEN" ] || ! op whoami --session "$TOKEN" > /dev/null 2>&1; then
+        # op v2 reads the password from a TTY only, so feed it through a pty via script(1).
+        TOKEN=$(rofi -dmenu -password -p "1password: " \
+            | script -qec "op signin --raw" /dev/null 2>/dev/null \
+            | tr -d '\r' | tail -n 1) || TOKEN=""
+        if [ -z "$TOKEN" ] || ! op whoami --session "$TOKEN" > /dev/null 2>&1; then
+            msg "Wrong master password"
+            exit 1
+        fi
+        install -m 600 /dev/null "$TOKEN_CACHE"
+        echo "$TOKEN" > "$TOKEN_CACHE"
+    fi
+fi
+
+ITEMS=$(op_run item list --categories Login --format=json) || ITEMS="[]"
+
+# Pick one item from a JSON array: auto if exactly one, rofi (title + username) if several.
+choose() {
+    local n idx
+    n=$(jq length <<< "$1")
+    [ "$n" -eq 0 ] && return
+    if [ "$n" -eq 1 ]; then
+        idx=0
+    else
+        idx=$(jq -r '.[] | .title + (if (.additional_information // "") != "" then "  (\(.additional_information))" else "" end)' <<< "$1" \
+            | rofi -dmenu -i -format i -p "1password: ") || return
+    fi
+    jq -r --argjson i "$idx" '.[$i].id' <<< "$1"
+}
+
+MATCHES=$(jq --arg url "$URL" '[.[] | select([.urls[]?.href] | any(contains($url)))]' <<< "$ITEMS")
+UUID=$(choose "$MATCHES")
+
+if [ -z "$UUID" ] && [ "$(jq length <<< "$MATCHES")" -eq 0 ]; then
+    msg "No entry found for $URL"
+    UUID=$(choose "$ITEMS")
+fi
+
+if [ -z "$UUID" ]; then
+    msg "Entry not found for $URL"
+    exit 1
+fi
+
+ITEM=$(op_run item get "$UUID" --reveal --format=json)
+TITLE=$(jq -r '.title' <<< "$ITEM")
+USERNAME=$(jq -r '[.fields[]? | select(.purpose == "USERNAME") | .value][0] // empty' <<< "$ITEM")
+PASSWORD=$(jq -r '[.fields[]? | select(.purpose == "PASSWORD") | .value][0] // empty' <<< "$ITEM")
+
+need() {
+    if [ -z "$2" ]; then
+        msg "No $1 found for $TITLE"
+        exit 1
+    fi
+}
+
+# Let rofi hand focus back to Vieb and the trigger keys (Ctrl+Shift) be released.
+sleep 0.3
+# --clearmodifiers: the mapping's Ctrl+Shift may still be held. "--" so values starting with "-" aren't flags.
+type_text() { xdotool type --clearmodifiers --delay 12 -- "$1"; }
+
+case "$MODE" in
+    username) need username "$USERNAME"; type_text "$USERNAME" ;;
+    password) need password "$PASSWORD"; type_text "$PASSWORD" ;;
+    otp)
+        TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        need "one time password" "$TOTP"
+        type_text "$TOTP"
+        ;;
+    "")
+        need password "$PASSWORD"
+        if [ -n "$USERNAME" ]; then
+            type_text "$USERNAME"
+            xdotool key --clearmodifiers Tab
+        fi
+        type_text "$PASSWORD"
+        TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        if [ -n "$TOTP" ]; then
+            echo -n "$TOTP" | xclip -in -selection clipboard
+            msg "Copied one time password for $TITLE to clipboard"
+        fi
+        ;;
+    *) msg "Unknown mode: $MODE"; exit 1 ;;
+esac
