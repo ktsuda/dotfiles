@@ -2,47 +2,24 @@
 
 set +e
 
-# JS field injection code based on https://github.com/qutebrowser/qutebrowser/blob/main/misc/userscripts/password_fill
-javascript_escape() {
-    # print the first argument in an escaped way, such that it can safely
-    # be used within javascripts double quotes
-    # shellcheck disable=SC2001
-    sed "s,[\\\\'\"\/],\\\\&,g" <<< "$1"
-}
+# Usage: qute-1pass [username|password|otp]
+#   (none)    type username <Tab> password into the focused field, copy TOTP to clipboard
+#             (on known split-page logins like Google, the mode is chosen from the URL)
+#   username  type username only (e.g. Google's email page)
+#   password  type password only
+#   otp       type the one-time password only
+# Typing uses fake-key (like upstream qute-pass), so focus the first field before running.
+MODE="${1:-}"
 
-js() {
-cat <<EOF
-    function isVisible(elem) {
-        var style = elem.ownerDocument.defaultView.getComputedStyle(elem, null);
-        if (style.getPropertyValue("visibility") !== "visible" ||
-            style.getPropertyValue("display") === "none" ||
-            style.getPropertyValue("opacity") === "0") {
-            return false;
-        }
-        return elem.offsetWidth > 0 && elem.offsetHeight > 0;
-    };
-    function fill(input, value) {
-        input.focus();
-        Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(input, value);
-        input.dispatchEvent(new Event("input", {bubbles: true}));
-        input.dispatchEvent(new Event("change", {bubbles: true}));
-        input.blur();
-    };
-    if ("$(javascript_escape "${QUTE_URL}")" == window.location.href) {
-        var inputs = Array.from(document.querySelectorAll("input")).filter(isVisible);
-        var pwIndex = inputs.findIndex(function (i) { return i.type == "password"; });
-        var users = inputs.slice(0, pwIndex < 0 ? inputs.length : pwIndex)
-            .filter(function (i) { return i.type == "text" || i.type == "email"; });
-        var user = pwIndex < 0 ? users[0] : users[users.length - 1];
-        if (user) { fill(user, "$(javascript_escape "${USERNAME}")"); }
-        inputs.forEach(function (i) {
-            if (i.type == "password") { fill(i, "$(javascript_escape "${PASSWORD}")"); }
-        });
-    } else {
-        alert("Secrets will not be inserted.\nUrl of this page and the one where the user script was started differ.");
-    }
-EOF
-}
+# Sites that ask for username and password on separate pages: pick the mode from the URL.
+# ponytail: per-site URL rules; add a case here for other split-page logins.
+if [ -z "$MODE" ]; then
+    case "$QUTE_URL" in
+        https://accounts.google.com/*/signin/identifier*) MODE=username ;;
+        https://accounts.google.com/*/challenge/pwd*) MODE=password ;;
+        https://accounts.google.com/*/challenge/totp*) MODE=otp ;;
+    esac
+fi
 
 # qutebrowser leaves stdin as an open pipe; `op item get` reads IDs from a piped stdin and hangs forever.
 exec < /dev/null
@@ -107,20 +84,56 @@ if [ -z "$UUID" ]; then
 fi
 
 ITEM=$(op_run item get "$UUID" --reveal --format=json)
-PASSWORD=$(jq -r '[.fields[]? | select(.purpose == "PASSWORD") | .value][0] // empty' <<< "$ITEM")
-
-if [ -z "$PASSWORD" ]; then
-    echo "message-error 'No password found for $URL'" >> "$QUTE_FIFO"
-    exit 1
-fi
-
 TITLE=$(jq -r '.title' <<< "$ITEM")
 USERNAME=$(jq -r '[.fields[]? | select(.purpose == "USERNAME") | .value][0] // empty' <<< "$ITEM")
+PASSWORD=$(jq -r '[.fields[]? | select(.purpose == "PASSWORD") | .value][0] // empty' <<< "$ITEM")
 
-echo "jseval -q $(js | sed 's,//.*$,,' | tr '\n' ' ')" >> "$QUTE_FIFO"
+# Send text as fake keystrokes to the focused element, one escaped character per command.
+fake_type() {
+    local s=$1 c i
+    for ((i = 0; i < ${#s}; i++)); do
+        c=${s:i:1}
+        if [ "$c" = " " ]; then echo 'fake-key " "'; else echo "fake-key \\$c"; fi
+    done >> "$QUTE_FIFO"
+}
 
-TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
-if [ -n "$TOTP" ]; then
-    echo -n "$TOTP" | xclip -in -selection clipboard
-    echo "message-info 'Pasted one time password for $TITLE to clipboard'" >> "$QUTE_FIFO"
-fi
+# fake-key can't type non-ASCII (no Qt key for it), and insert-text is async so it would race
+# with the following fake-keys. Refuse rather than type a mangled credential.
+need() {
+    if [ -z "$2" ]; then
+        echo "message-error 'No $1 found for $TITLE'" >> "$QUTE_FIFO"
+        exit 1
+    fi
+    if LC_ALL=C grep -q '[^ -~]' <<< "$2"; then
+        echo "message-error '$1 of $TITLE has non-ASCII characters; fake-key cannot type them'" >> "$QUTE_FIFO"
+        exit 1
+    fi
+}
+
+case "$MODE" in
+    username) need username "$USERNAME"; fake_type "$USERNAME" ;;
+    password) need password "$PASSWORD"; fake_type "$PASSWORD" ;;
+    otp)
+        TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        need "one time password" "$TOTP"
+        fake_type "$TOTP"
+        ;;
+    "")
+        need password "$PASSWORD"
+        if [ -n "$USERNAME" ]; then
+            need username "$USERNAME"
+            fake_type "$USERNAME"
+            echo "fake-key <Tab>" >> "$QUTE_FIFO"
+        fi
+        fake_type "$PASSWORD"
+        TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        if [ -n "$TOTP" ]; then
+            echo -n "$TOTP" | xclip -in -selection clipboard
+            echo "message-info 'Copied one time password for $TITLE to clipboard'" >> "$QUTE_FIFO"
+        fi
+        ;;
+    *) echo "message-error 'Unknown mode: $MODE'" >> "$QUTE_FIFO"; exit 1 ;;
+esac
+
+# Stay in insert mode so Enter submits the form.
+echo "mode-enter insert" >> "$QUTE_FIFO"
