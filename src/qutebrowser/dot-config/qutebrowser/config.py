@@ -79,4 +79,4 @@ config.bind("<Meta+]>", ":forward")
 
 # 1Password: types into the focused field, so also bound in insert mode
 for mode in ("normal", "insert"):
-    config.bind("<Ctrl+Shift+x>", "spawn --userscript ~/.config/qutebrowser/qute-1pass", mode=mode)
+    config.bind("<Ctrl+Shift+x>", "spawn --userscript qute-1pass", mode=mode)
