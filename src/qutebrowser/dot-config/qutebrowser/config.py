@@ -35,7 +35,15 @@ c.tabs.padding = {"bottom": 4, "left": 4, "right": 4, "top": 4}
 # Pages where qutebrowser keys are off (passthrough mode). Leave with <Shift+Escape>.
 passthrough_urls = [
     # "https://mail.google.com/*",
-    "https://mail.google.com/mail/*",
+    "https://mail.google.com/*",
+    "https://calendar.google.com/*",
+    "https://drive.google.com/*",
+    "https://app.simplenote.com/*",
+    "https://www.youtube.com/*",
+    "https://instapaper.com/*",
+    "https://app.raindrop.io/*",
+    "https://feedly.com/*",
+    "http://localhost:3000/*",
 ]
 for url in passthrough_urls:
     config.set("input.mode_override", "passthrough", url)

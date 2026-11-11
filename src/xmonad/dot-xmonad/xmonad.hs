@@ -77,7 +77,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
     , ((modm .|. shiftMask, xK_x     ), spawn $ XMonad.terminal conf)
-    , ((modm .|. shiftMask, xK_f     ), spawn "brave-browser")
+    , ((modm .|. shiftMask, xK_f     ), spawn "qutebrowser")
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
