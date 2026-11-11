@@ -1,0 +1,126 @@
+#!/usr/bin/env bash
+
+set +e
+
+# JS field injection code based on https://github.com/qutebrowser/qutebrowser/blob/main/misc/userscripts/password_fill
+javascript_escape() {
+    # print the first argument in an escaped way, such that it can safely
+    # be used within javascripts double quotes
+    # shellcheck disable=SC2001
+    sed "s,[\\\\'\"\/],\\\\&,g" <<< "$1"
+}
+
+js() {
+cat <<EOF
+    function isVisible(elem) {
+        var style = elem.ownerDocument.defaultView.getComputedStyle(elem, null);
+        if (style.getPropertyValue("visibility") !== "visible" ||
+            style.getPropertyValue("display") === "none" ||
+            style.getPropertyValue("opacity") === "0") {
+            return false;
+        }
+        return elem.offsetWidth > 0 && elem.offsetHeight > 0;
+    };
+    function fill(input, value) {
+        input.focus();
+        Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set.call(input, value);
+        input.dispatchEvent(new Event("input", {bubbles: true}));
+        input.dispatchEvent(new Event("change", {bubbles: true}));
+        input.blur();
+    };
+    if ("$(javascript_escape "${QUTE_URL}")" == window.location.href) {
+        var inputs = Array.from(document.querySelectorAll("input")).filter(isVisible);
+        var pwIndex = inputs.findIndex(function (i) { return i.type == "password"; });
+        var users = inputs.slice(0, pwIndex < 0 ? inputs.length : pwIndex)
+            .filter(function (i) { return i.type == "text" || i.type == "email"; });
+        var user = pwIndex < 0 ? users[0] : users[users.length - 1];
+        if (user) { fill(user, "$(javascript_escape "${USERNAME}")"); }
+        inputs.forEach(function (i) {
+            if (i.type == "password") { fill(i, "$(javascript_escape "${PASSWORD}")"); }
+        });
+    } else {
+        alert("Secrets will not be inserted.\nUrl of this page and the one where the user script was started differ.");
+    }
+EOF
+}
+
+# qutebrowser leaves stdin as an open pipe; `op item get` reads IDs from a piped stdin and hangs forever.
+exec < /dev/null
+# Allow running outside qutebrowser for debugging: commands go to stderr.
+QUTE_FIFO="${QUTE_FIFO:-/dev/stderr}"
+
+URL=$(echo "$QUTE_URL" | awk -F/ '{print $3}' | sed 's/^www\.//')
+TOKEN_CACHE="${TMPDIR:-/tmp}/1pass.token"
+
+echo "message-info 'Looking for password for $URL...'" >> "$QUTE_FIFO"
+
+op_run() {
+    if [ -n "$TOKEN" ]; then op --session "$TOKEN" "$@"; else op "$@"; fi
+}
+
+# Inherited OP_SESSION_* env needs no token. Otherwise reuse cached token, else prompt.
+TOKEN=""
+if ! op whoami > /dev/null 2>&1; then
+    [ -f "$TOKEN_CACHE" ] && TOKEN=$(cat "$TOKEN_CACHE")
+    if [ -z "$TOKEN" ] || ! op whoami --session "$TOKEN" > /dev/null 2>&1; then
+        # op v2 reads the password from a TTY only, so feed it through a pty via script(1).
+        # Output is "prompt\r\n<token>\r\n"; the token is the last line.
+        TOKEN=$(rofi -dmenu -password -p "1password: " \
+            | script -qec "op signin --raw" /dev/null 2>/dev/null \
+            | tr -d '\r' | tail -n 1) || TOKEN=""
+        if [ -z "$TOKEN" ] || ! op whoami --session "$TOKEN" > /dev/null 2>&1; then
+            echo "message-error 'Wrong master password'" >> "$QUTE_FIFO"
+            exit 1
+        fi
+        install -m 600 /dev/null "$TOKEN_CACHE"
+        echo "$TOKEN" > "$TOKEN_CACHE"
+    fi
+fi
+
+ITEMS=$(op_run item list --categories Login --format=json) || ITEMS="[]"
+
+# Pick one item from a JSON array: auto if exactly one, rofi (title + username) if several.
+choose() {
+    local n idx
+    n=$(jq length <<< "$1")
+    [ "$n" -eq 0 ] && return
+    if [ "$n" -eq 1 ]; then
+        idx=0
+    else
+        idx=$(jq -r '.[] | .title + (if (.additional_information // "") != "" then "  (\(.additional_information))" else "" end)' <<< "$1" \
+            | rofi -dmenu -i -format i -p "1password: ") || return
+    fi
+    jq -r --argjson i "$idx" '.[$i].id' <<< "$1"
+}
+
+MATCHES=$(jq --arg url "$URL" '[.[] | select([.urls[]?.href] | any(contains($url)))]' <<< "$ITEMS")
+UUID=$(choose "$MATCHES")
+
+if [ -z "$UUID" ] && [ "$(jq length <<< "$MATCHES")" -eq 0 ]; then
+    echo "message-error 'No entry found for $URL'" >> "$QUTE_FIFO"
+    UUID=$(choose "$ITEMS")
+fi
+
+if [ -z "$UUID" ]; then
+    echo "message-error 'Entry not found for $URL'" >> "$QUTE_FIFO"
+    exit 1
+fi
+
+ITEM=$(op_run item get "$UUID" --reveal --format=json)
+PASSWORD=$(jq -r '[.fields[]? | select(.purpose == "PASSWORD") | .value][0] // empty' <<< "$ITEM")
+
+if [ -z "$PASSWORD" ]; then
+    echo "message-error 'No password found for $URL'" >> "$QUTE_FIFO"
+    exit 1
+fi
+
+TITLE=$(jq -r '.title' <<< "$ITEM")
+USERNAME=$(jq -r '[.fields[]? | select(.purpose == "USERNAME") | .value][0] // empty' <<< "$ITEM")
+
+echo "jseval -q $(js | sed 's,//.*$,,' | tr '\n' ' ')" >> "$QUTE_FIFO"
+
+TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
+if [ -n "$TOTP" ]; then
+    echo -n "$TOTP" | xclip -in -selection clipboard
+    echo "message-info 'Pasted one time password for $TITLE to clipboard'" >> "$QUTE_FIFO"
+fi
