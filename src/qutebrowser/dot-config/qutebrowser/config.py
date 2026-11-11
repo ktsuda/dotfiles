@@ -44,6 +44,7 @@ passthrough_urls = [
     "https://app.raindrop.io/*",
     "https://feedly.com/*",
     "http://localhost:3000/*",
+    "https://*.vercel.app/*"
 ]
 for url in passthrough_urls:
     config.set("input.mode_override", "passthrough", url)
