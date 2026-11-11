@@ -3,4 +3,7 @@ xset r rate 200 30
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+# `exec xmonad` skips Xsession.d/95dbus_update-activation-env, so do its job here:
+# apps started via dbus/systemd (e.g. desktop entries like Vieb) need the IM variables.
+dbus-update-activation-environment --systemd --all
 exec xmonad
