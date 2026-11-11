@@ -48,14 +48,18 @@ passthrough_urls = [
 ]
 for url in passthrough_urls:
     config.set("input.mode_override", "passthrough", url)
-config.bind("<Ctrl+t>", "open -t", mode="passthrough")
-config.bind("<Ctrl+r>", "reload", mode="passthrough")
 
 # key bindings
-config.bind("sq", "quickmark-save")
-config.bind("R", "config-source")
-config.bind("<Ctrl+r>", "reload")
 
+## normal
+config.bind("sq", "quickmark-save")
+config.bind("<Ctrl+h>", "history")
+config.bind("h", "help")
+config.bind("[", "tab-prev")
+config.bind("]", "tab-next")
+config.bind("R", "config-source")
+
+## insert
 config.bind("<Ctrl+f>", "fake-key <right>", mode="insert")
 config.bind("<Ctrl+b>", "fake-key <left>", mode="insert")
 config.bind("<Ctrl+n>", "fake-key <down>", mode="insert")
@@ -65,18 +69,16 @@ config.bind("<Ctrl+e>", "fake-key <end>", mode="insert")
 config.bind("<Ctrl+d>", "fake-key <delete>", mode="insert")
 config.bind("<Ctrl+h>", "fake-key <backspace>", mode="insert")
 
+## command
 config.bind("<Ctrl+n>", "completion-item-focus --history next", mode="command")
 config.bind("<Ctrl+p>", "completion-item-focus --history prev", mode="command")
 
-config.bind("[", ":tab-prev")
-config.bind("]", ":tab-next")
-config.bind("<Ctrl+Shift+Tab>", ":tab-prev")
-config.bind("<Ctrl+Tab>", ":tab-next")
-config.bind("{", ":tab-move -")
-config.bind("}", ":tab-move +")
-config.bind("<Meta+[>", ":back")
-config.bind("<Meta+]>", ":forward")
-
-# 1Password: types into the focused field, so also bound in insert mode
+## 1Password: types into the focused field, so also bound in insert mode
 for mode in ("normal", "insert"):
     config.bind("<Ctrl+Shift+x>", "spawn --userscript qute-1pass", mode=mode)
+
+## tab
+for mode in ("normal", "insert", "passthrough"):
+    config.bind("<Ctrl+t>", "open -t", mode=mode)
+    config.bind("<Ctrl+r>", "reload", mode=mode)
+    config.bind("<Ctrl+w>", "tab-close", mode=mode)
