@@ -48,10 +48,12 @@ passthrough_urls = [
 for url in passthrough_urls:
     config.set("input.mode_override", "passthrough", url)
 config.bind("<Ctrl+t>", "open -t", mode="passthrough")
+config.bind("<Ctrl+r>", "reload", mode="passthrough")
 
 # key bindings
 config.bind("sq", "quickmark-save")
-config.bind("<Ctrl+r>", "config-source")
+config.bind("R", "config-source")
+config.bind("<Ctrl+r>", "reload")
 
 config.bind("<Ctrl+f>", "fake-key <right>", mode="insert")
 config.bind("<Ctrl+b>", "fake-key <left>", mode="insert")
