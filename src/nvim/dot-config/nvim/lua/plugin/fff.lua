@@ -27,7 +27,7 @@ require("fff").setup({
     send_to_quickfix = "<C-q>",
   },
   grep = {
-    modes = { 'plain', 'fuzzy', 'regex', 'definition_only' },
+    modes = { "plain", "fuzzy", "regex", "definition_only" },
   },
   debug = {
     enabled = false,

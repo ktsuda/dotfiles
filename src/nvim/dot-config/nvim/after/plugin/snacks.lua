@@ -1,27 +1,27 @@
-local ok, s = pcall(require, 'snacks')
+local ok, s = pcall(require, "snacks")
 if not ok then
   return false
 end
-local p = require('snacks.picker')
-local t = require('snacks.toggle')
+local p = require("snacks.picker")
+local t = require("snacks.toggle")
 
 local opts = {}
-local is_inside_work_tree = vim.fn.systemlist('git rev-parse --is-inside-work-tree')[1] == 'true'
+local is_inside_work_tree = vim.fn.systemlist("git rev-parse --is-inside-work-tree")[1] == "true"
 if is_inside_work_tree then
-  opts = { cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1] }
+  opts = { cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1] }
 end
 
 local function is_tracked_by_git(bufnr)
   bufnr = bufnr or 0
 
   local filepath = vim.api.nvim_buf_get_name(bufnr)
-  if filepath == '' then
+  if filepath == "" then
     return false
   end
 
   filepath = vim.loop.fs_realpath(filepath) or filepath
 
-  local root = vim.system({ 'git', 'rev-parse', '--show-toplevel' }, { text = true }):wait()
+  local root = vim.system({ "git", "rev-parse", "--show-toplevel" }, { text = true }):wait()
 
   if root.code ~= 0 then
     return false
@@ -36,16 +36,16 @@ local function is_tracked_by_git(bufnr)
 
   local relpath = filepath:sub(#git_root + 2)
 
-  local result = vim.system({ 'git', 'ls-files', '--error-unmatch', relpath }, { text = true, cwd = git_root }):wait()
+  local result = vim.system({ "git", "ls-files", "--error-unmatch", relpath }, { text = true, cwd = git_root }):wait()
 
   return result.code == 0
 end
 
-vim.keymap.set('n', '<leader>/', p.lines)
-vim.keymap.set('n', '<leader>sk', p.keymaps)
-vim.keymap.set('n', '<C-b>', p.buffers)
-vim.keymap.set('n', '<leader>sh', p.help)
-vim.keymap.set('n', '<leader>gl', function()
+vim.keymap.set("n", "<leader>/", p.lines)
+vim.keymap.set("n", "<leader>sk", p.keymaps)
+vim.keymap.set("n", "<C-b>", p.buffers)
+vim.keymap.set("n", "<leader>sh", p.help)
+vim.keymap.set("n", "<leader>gl", function()
   local bufnr = vim.api.nvim_get_current_buf()
   if is_tracked_by_git(bufnr) then
     p.git_log_file()
@@ -53,22 +53,24 @@ vim.keymap.set('n', '<leader>gl', function()
     p.git_log()
   end
 end)
-vim.keymap.set('n', '<leader>gs', function()
+vim.keymap.set("n", "<leader>gs", function()
   if is_inside_work_tree then
     s.lazygit.open()
   else
-    vim.notify('Snakcs.lazygit: Outside of git repo.', vim.log.levels.ERROR)
+    vim.notify("Snakcs.lazygit: Outside of git repo.", vim.log.levels.ERROR)
   end
 end)
 
-vim.keymap.set('n', '<C-n>', function()
+vim.keymap.set("n", "<C-n>", function()
   local tmp = vim.fn.tempname()
-  local file = vim.fn.expand('%:p')
-  local cmd = { 'yazi', '--chooser-file', tmp }
-  if file ~= '' then table.insert(cmd, file) end -- start yazi at the current file
+  local file = vim.fn.expand("%:p")
+  local cmd = { "yazi", "--chooser-file", tmp }
+  if file ~= "" then
+    table.insert(cmd, file)
+  end -- start yazi at the current file
   s.terminal.open(cmd, {
     win = {
-      style = 'lazygit',
+      style = "lazygit",
       on_close = function()
         vim.schedule(function()
           if vim.fn.filereadable(tmp) == 1 then
@@ -83,22 +85,22 @@ vim.keymap.set('n', '<C-n>', function()
   })
 end)
 
-vim.keymap.set('n', '<C-p>', function()
+vim.keymap.set("n", "<C-p>", function()
   p.smart(opts)
 end)
 
-vim.keymap.set('n', '<C-s>', function()
+vim.keymap.set("n", "<C-s>", function()
   p.projects({
-    dev = { '~/src', '~/go', '~/Projects', '~/Library/Mobile Documents/iCloud~md~obsidian/' },
-    patterns = { '.git' },
+    dev = { "~/src", "~/go", "~/Projects", "~/Library/Mobile Documents/iCloud~md~obsidian/" },
+    patterns = { ".git" },
     max_depth = 5,
     recent = true,
   })
 end)
 
-vim.keymap.set('n', '<leader>sa', function()
+vim.keymap.set("n", "<leader>sa", function()
   p.git_grep({
-    format = 'file',
+    format = "file",
     live = true,
     supports_live = true,
     untracked = true,
@@ -106,9 +108,9 @@ vim.keymap.set('n', '<leader>sa', function()
   })
 end)
 
-vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
+vim.keymap.set({ "n", "x" }, "<leader>sw", function()
   p.git_grep({
-    format = 'file',
+    format = "file",
     search = function(picker)
       return picker:word()
     end,
@@ -119,5 +121,4 @@ vim.keymap.set({ 'n', 'x' }, '<leader>sw', function()
   })
 end)
 
-t.zoom():map('<leader>z')
-
+t.zoom():map("<leader>z")

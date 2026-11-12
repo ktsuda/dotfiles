@@ -1,4 +1,4 @@
-local ok, chainsaw=pcall(require, 'chainsaw')
+local ok, chainsaw = pcall(require, "chainsaw")
 if not ok then
   return
 end
