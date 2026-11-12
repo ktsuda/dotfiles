@@ -29,6 +29,8 @@ exec < /dev/null
 MACOS=""; [ "$(uname)" = Darwin ] && MACOS=1
 
 if [ -n "$MACOS" ]; then
+    # Vieb launched from Finder gets a PATH without Homebrew (choose).
+    PATH="/opt/homebrew/bin:$PATH"
     # Values go in as argv so quotes in them can't break the AppleScript.
     osa() { osascript -e 'on run argv' -e "$1" -e 'end run' "${@:2}"; }
     msg() { osa 'display notification (item 1 of argv) with title "1password"' "$1" 2>/dev/null || echo "$1" >&2; }

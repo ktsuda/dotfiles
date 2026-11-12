@@ -14,6 +14,8 @@ case "$CMD" in
 esac
 
 if [ "$(uname)" = Darwin ]; then
+    # Vieb launched from Finder gets a PATH without Homebrew (choose).
+    PATH="/opt/homebrew/bin:$PATH"
     HIST="$HOME/Library/Application Support/Vieb/hist"
     VIEB=/Applications/Vieb.app/Contents/MacOS/Vieb
     menu() { choose -m -p "$CMD"; }
