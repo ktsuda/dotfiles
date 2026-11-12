@@ -53,7 +53,7 @@ vim.keymap.set('n', '<leader>gl', function()
     p.git_log()
   end
 end)
-vim.keymap.set('n', '<C-g>', function()
+vim.keymap.set('n', '<leader>gs', function()
   if is_inside_work_tree then
     s.lazygit.open()
   else
