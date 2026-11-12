@@ -22,3 +22,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end, opts)
   end,
 })
+
+vim.keymap.set("n", "<leader>zd", "<cmd>Zdiff<cr>")
+vim.keymap.set("n", "<leader>zD", "<cmd>Zdiff main<cr>")

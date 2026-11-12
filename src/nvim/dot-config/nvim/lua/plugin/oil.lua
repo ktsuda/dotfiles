@@ -3,7 +3,9 @@ vim.pack.add({
   { src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
-require("oil").setup({
+local oil = require("oil")
+
+oil.setup({
   keymaps = {
     -- stylua: ignore start
     ['<C-p>'] = false,
@@ -53,3 +55,7 @@ require("oil").setup({
   },
   delete_to_trash = true,
 })
+
+vim.keymap.set("n", "<C-e>", function()
+  oil.open_float()
+end)

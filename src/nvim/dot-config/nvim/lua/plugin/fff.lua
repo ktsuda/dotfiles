@@ -1,7 +1,3 @@
-vim.pack.add({
-  { src = "https://github.com/dmtrKovalenko/fff" },
-})
-
 vim.api.nvim_create_autocmd("PackChanged", {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
@@ -14,7 +10,12 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
-require("fff").setup({
+vim.pack.add({
+  { src = "https://github.com/dmtrKovalenko/fff" },
+})
+
+local f = require("fff")
+f.setup({
   prompt = ": ",
   title = "fff",
   lazy_sync = true,
@@ -34,3 +35,11 @@ require("fff").setup({
     show_scores = true,
   },
 })
+
+vim.keymap.set("n", "<C-p>", f.find_files)
+vim.keymap.set("n", "<leader>sa", f.live_grep)
+vim.keymap.set({ "n", "x" }, "<leader>sw", f.live_grep_under_cursor)
+vim.keymap.set("n", "<leader>ff", function()
+  local dir = vim.fn.expand("%:p:h")
+  f.find_files_in_dir(dir)
+end)
