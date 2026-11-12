@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage: vieb-history [open|tabnew]
-# Pick a URL from Vieb's history with rofi (most recent first) and open it with the given
+# Pick a URL from Vieb's history with rofi (choose-gui on macOS), most recent first, and open it with the given
 # Vieb command: open = current tab (default), tabnew = new tab.
 # Typing something that isn't in the list opens it as-is (URL or search words), like `:open`.
 # Called from viebrc: nmap o <:!~/.local/share/Vieb/vieb-history>, nmap O <:!~/.local/share/Vieb/vieb-history tabnew>
@@ -13,14 +13,22 @@ case "$CMD" in
     *) echo "Usage: vieb-history [open|tabnew]" >&2; exit 1 ;;
 esac
 
-HIST="${XDG_CONFIG_HOME:-$HOME/.config}/Vieb/hist"
+if [ "$(uname)" = Darwin ]; then
+    HIST="$HOME/Library/Application Support/Vieb/hist"
+    VIEB=/Applications/Vieb.app/Contents/MacOS/Vieb
+    menu() { choose -m -p "$CMD"; }
+else
+    HIST="${XDG_CONFIG_HOME:-$HOME/.config}/Vieb/hist"
+    VIEB=vieb
+    menu() { rofi -dmenu -i -p "$CMD" -display-columns 1,2 -display-column-separator '\t'; }
+fi
 
 CHOICE=$(jq -r 'to_entries | sort_by(.value.visits[-1] // "") | reverse | .[]
         | "\(.value.title // "" | gsub("[\t\n]"; " "))\t\(.key)"' "$HIST" 2> /dev/null \
-    | rofi -dmenu -i -p "$CMD" -display-columns 1,2 -display-column-separator '\t') || exit 0
+    | menu) || exit 0
 
 # A picked line is "title<TAB>url"; free text has no tab.
 TARGET="${CHOICE##*$'\t'}"
 [ -n "$TARGET" ] || exit 0
 
-exec vieb --execute=":$CMD $TARGET" > /dev/null 2>&1
+exec "$VIEB" --execute=":$CMD $TARGET" > /dev/null 2>&1

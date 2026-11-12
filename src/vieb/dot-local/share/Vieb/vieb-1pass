@@ -9,7 +9,9 @@ set +e
 #   username  type username only
 #   password  type password only
 #   otp       type the one-time password only
-# Typing uses xdotool into the active window, so focus the first field (insert mode) first.
+# Typing goes into the active window (xdotool; System Events on macOS, which needs Accessibility
+# permission for Vieb), so focus the first field (insert mode) first.
+# Menus: rofi on Linux, choose (brew install choose-gui) on macOS.
 PAGE_URL="${1:-}"
 MODE="${2:-}"
 
@@ -24,9 +26,25 @@ fi
 # Vieb runs us via exec with a pipe on stdin; `op item get` reads IDs from a piped stdin and hangs.
 exec < /dev/null
 
-msg() { notify-send -a vieb-1pass "1password" "$1" 2>/dev/null || echo "$1" >&2; }
+MACOS=""; [ "$(uname)" = Darwin ] && MACOS=1
 
-command -v xdotool > /dev/null || { msg "xdotool is not installed"; exit 1; }
+if [ -n "$MACOS" ]; then
+    # Values go in as argv so quotes in them can't break the AppleScript.
+    osa() { osascript -e 'on run argv' -e "$1" -e 'end run' "${@:2}"; }
+    msg() { osa 'display notification (item 1 of argv) with title "1password"' "$1" 2>/dev/null || echo "$1" >&2; }
+    menu_index() { choose -i -p "1password: "; }
+    type_text() { osa 'tell application "System Events" to keystroke (item 1 of argv)' "$1"; }
+    type_tab() { osa 'tell application "System Events" to key code 48'; }
+    copy() { pbcopy; }
+else
+    msg() { notify-send -a vieb-1pass "1password" "$1" 2>/dev/null || echo "$1" >&2; }
+    command -v xdotool > /dev/null || { msg "xdotool is not installed"; exit 1; }
+    menu_index() { rofi -dmenu -i -format i -p "1password: "; }
+    # --clearmodifiers: the mapping's Ctrl+Shift may still be held. "--" so values starting with "-" aren't flags.
+    type_text() { xdotool type --clearmodifiers --delay 12 -- "$1"; }
+    type_tab() { xdotool key --clearmodifiers Tab; }
+    copy() { xclip -in -selection clipboard; }
+fi
 
 URL=$(echo "$PAGE_URL" | awk -F/ '{print $3}' | sed 's/^www\.//')
 TOKEN_CACHE="${TMPDIR:-/tmp}/1pass.token"
@@ -35,10 +53,11 @@ op_run() {
     if [ -n "$TOKEN" ]; then op --session "$TOKEN" "$@"; else op "$@"; fi
 }
 
-# Inherited OP_SESSION_* env needs no token. Otherwise reuse cached token, else prompt.
+# macOS: the 1Password app's CLI integration authenticates op (Touch ID), so no token is needed.
+# Linux: inherited OP_SESSION_* env needs no token. Otherwise reuse cached token, else prompt.
 # Same cache file as qute-1pass, so one sign-in covers both browsers.
 TOKEN=""
-if ! op whoami > /dev/null 2>&1; then
+if [ -z "$MACOS" ] && ! op whoami > /dev/null 2>&1; then
     [ -f "$TOKEN_CACHE" ] && TOKEN=$(cat "$TOKEN_CACHE")
     if [ -z "$TOKEN" ] || ! op whoami --session "$TOKEN" > /dev/null 2>&1; then
         # op v2 reads the password from a TTY only, so feed it through a pty via script(1).
@@ -56,8 +75,8 @@ fi
 
 ITEMS=$(op_run item list --categories Login --format=json) || ITEMS="[]"
 
-# Pick one item from a JSON array: auto if exactly one, rofi (title + username) if several.
-choose() {
+# Pick one item from a JSON array: auto if exactly one, menu (title + username) if several.
+pick() {
     local n idx
     n=$(jq length <<< "$1")
     [ "$n" -eq 0 ] && return
@@ -65,17 +84,18 @@ choose() {
         idx=0
     else
         idx=$(jq -r '.[] | .title + (if (.additional_information // "") != "" then "  (\(.additional_information))" else "" end)' <<< "$1" \
-            | rofi -dmenu -i -format i -p "1password: ") || return
+            | menu_index) || return
     fi
+    [[ "$idx" =~ ^[0-9]+$ ]] || return
     jq -r --argjson i "$idx" '.[$i].id' <<< "$1"
 }
 
 MATCHES=$(jq --arg url "$URL" '[.[] | select([.urls[]?.href] | any(contains($url)))]' <<< "$ITEMS")
-UUID=$(choose "$MATCHES")
+UUID=$(pick "$MATCHES")
 
 if [ -z "$UUID" ] && [ "$(jq length <<< "$MATCHES")" -eq 0 ]; then
     msg "No entry found for $URL"
-    UUID=$(choose "$ITEMS")
+    UUID=$(pick "$ITEMS")
 fi
 
 if [ -z "$UUID" ]; then
@@ -95,10 +115,8 @@ need() {
     fi
 }
 
-# Let rofi hand focus back to Vieb and the trigger keys (Ctrl+Shift) be released.
+# Let the menu hand focus back to Vieb and the trigger keys (Ctrl+Shift) be released.
 sleep 0.3
-# --clearmodifiers: the mapping's Ctrl+Shift may still be held. "--" so values starting with "-" aren't flags.
-type_text() { xdotool type --clearmodifiers --delay 12 -- "$1"; }
 
 case "$MODE" in
     username) need username "$USERNAME"; type_text "$USERNAME" ;;
@@ -112,12 +130,12 @@ case "$MODE" in
         need password "$PASSWORD"
         if [ -n "$USERNAME" ]; then
             type_text "$USERNAME"
-            xdotool key --clearmodifiers Tab
+            type_tab
         fi
         type_text "$PASSWORD"
         TOTP=$(op_run item get "$UUID" --otp 2>/dev/null) || TOTP=""
         if [ -n "$TOTP" ]; then
-            echo -n "$TOTP" | xclip -in -selection clipboard
+            echo -n "$TOTP" | copy
             msg "Copied one time password for $TITLE to clipboard"
         fi
         ;;
