@@ -20,4 +20,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.cmd("set completeopt+=noselect")
+vim.opt.completeopt:append({ "menuone", "noselect" })

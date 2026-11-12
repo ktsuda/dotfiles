@@ -1,0 +1,5 @@
+require("core.options")
+require("core.colorscheme")
+require("core.statusline")
+require("core.autocmd")
+require("core.diagnostics")

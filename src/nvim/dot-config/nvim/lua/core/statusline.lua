@@ -61,4 +61,4 @@ end
 
 _G.my_statusline = statusline
 
-vim.o.statusline = "%!v:lua.my_statusline()"
+vim.opt.statusline = "%!v:lua.my_statusline()"
