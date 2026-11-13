@@ -87,13 +87,13 @@ function set_shared() {
 }
 
 function set_private() {
-    STOW_FOLDERS+=(wakatime nvim-analysis espanso herdr claude ghostty alacritty qutebrowser)
+    STOW_FOLDERS+=(wakatime nvim-analysis espanso herdr claude)
     case ${OSTYPE} in
         darwin*)
-            STOW_FOLDERS+=(yazi sketchybar aerospace borders ghostty-darwin qutebrowser-darwin)
+            STOW_FOLDERS+=(yazi sketchybar aerospace borders ghostty ghostty-darwin)
             ;;
         linux-gnu*)
-            STOW_FOLDERS+=(xmonad rofi nitrogen ghostty-linux qutebrowser-linux alacritty-linux)
+            STOW_FOLDERS+=(xmonad rofi nitrogen alacritty alacritty-linux)
             ;;
         *)
             unsupported_os
