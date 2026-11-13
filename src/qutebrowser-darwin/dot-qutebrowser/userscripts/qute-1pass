@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+
+set +e
+
+# Usage: qute-1pass [username|password|otp]
+#   (none)    type username <Tab> password into the focused field, copy TOTP to clipboard
+#             (on known split-page logins like Google, the mode is chosen from the URL)
+#   username  type username only (e.g. Google's email page)
+#   password  type password only
+#   otp       type the one-time password only
+# Typing uses fake-key (like upstream qute-pass), so focus the first field before running.
+# Requires the 1Password app with Settings > Developer > "Integrate with 1Password CLI" on;
+# the app authenticates op (Touch ID), so this script handles no sign-in or token.
+# Menu: choose (brew install choose-gui).
+MODE="${1:-}"
+
+# Sites that ask for username and password on separate pages: pick the mode from the URL.
+# ponytail: per-site URL rules; add a case here for other split-page logins.
+if [ -z "$MODE" ]; then
+    case "$QUTE_URL" in
+        https://accounts.google.com/*/signin/identifier*) MODE=username ;;
+        https://accounts.google.com/*/challenge/pwd*) MODE=password ;;
+        https://accounts.google.com/*/challenge/totp*) MODE=otp ;;
+    esac
+fi
+
+# qutebrowser leaves stdin as an open pipe; `op item get` reads IDs from a piped stdin and hangs forever.
+exec < /dev/null
+# Allow running outside qutebrowser for debugging: commands go to stderr.
+QUTE_FIFO="${QUTE_FIFO:-/dev/stderr}"
+# qutebrowser launched from Spotlight/Finder gets a PATH without Homebrew (op, jq, choose).
+PATH="/opt/homebrew/bin:$PATH"
+
+URL=$(echo "$QUTE_URL" | awk -F/ '{print $3}' | sed 's/^www\.//')
+
+echo "message-info 'Looking for password for $URL...'" >> "$QUTE_FIFO"
+
+if ! ITEMS=$(op item list --categories Login --format=json); then
+    echo "message-error 'op failed: unlock 1Password and enable its CLI integration'" >> "$QUTE_FIFO"
+    exit 1
+fi
+
+# Pick one item from a JSON array: auto if exactly one, choose (title + username) if several.
+pick() {
+    local n idx
+    n=$(jq length <<< "$1")
+    [ "$n" -eq 0 ] && return
+    if [ "$n" -eq 1 ]; then
+        idx=0
+    else
+        idx=$(jq -r '.[] | .title + (if (.additional_information // "") != "" then "  (\(.additional_information))" else "" end)' <<< "$1" \
+            | choose -i -p "1password: ") || return
+    fi
+    # choose prints nothing or -1 on cancel.
+    [[ "$idx" =~ ^[0-9]+$ ]] || return
+    jq -r --argjson i "$idx" '.[$i].id' <<< "$1"
+}
+
+MATCHES=$(jq --arg url "$URL" '[.[] | select([.urls[]?.href] | any(contains($url)))]' <<< "$ITEMS")
+UUID=$(pick "$MATCHES")
+
+if [ -z "$UUID" ] && [ "$(jq length <<< "$MATCHES")" -eq 0 ]; then
+    echo "message-error 'No entry found for $URL'" >> "$QUTE_FIFO"
+    UUID=$(pick "$ITEMS")
+fi
+
+if [ -z "$UUID" ]; then
+    echo "message-error 'Entry not found for $URL'" >> "$QUTE_FIFO"
+    exit 1
+fi
+
+ITEM=$(op item get "$UUID" --reveal --format=json)
+TITLE=$(jq -r '.title' <<< "$ITEM")
+USERNAME=$(jq -r '[.fields[]? | select(.purpose == "USERNAME") | .value][0] // empty' <<< "$ITEM")
+PASSWORD=$(jq -r '[.fields[]? | select(.purpose == "PASSWORD") | .value][0] // empty' <<< "$ITEM")
+
+# Send text as fake keystrokes to the focused element, one escaped character per command.
+fake_type() {
+    local s=$1 c i
+    for ((i = 0; i < ${#s}; i++)); do
+        c=${s:i:1}
+        if [ "$c" = " " ]; then echo 'fake-key " "'; else echo "fake-key \\$c"; fi
+    done >> "$QUTE_FIFO"
+}
+
+# fake-key can't type non-ASCII (no Qt key for it), and insert-text is async so it would race
+# with the following fake-keys. Refuse rather than type a mangled credential.
+need() {
+    if [ -z "$2" ]; then
+        echo "message-error 'No $1 found for $TITLE'" >> "$QUTE_FIFO"
+        exit 1
+    fi
+    if LC_ALL=C grep -q '[^ -~]' <<< "$2"; then
+        echo "message-error '$1 of $TITLE has non-ASCII characters; fake-key cannot type them'" >> "$QUTE_FIFO"
+        exit 1
+    fi
+}
+
+case "$MODE" in
+    username) need username "$USERNAME"; fake_type "$USERNAME" ;;
+    password) need password "$PASSWORD"; fake_type "$PASSWORD" ;;
+    otp)
+        TOTP=$(op item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        need "one time password" "$TOTP"
+        fake_type "$TOTP"
+        ;;
+    "")
+        need password "$PASSWORD"
+        if [ -n "$USERNAME" ]; then
+            need username "$USERNAME"
+            fake_type "$USERNAME"
+            echo "fake-key <Tab>" >> "$QUTE_FIFO"
+        fi
+        fake_type "$PASSWORD"
+        TOTP=$(op item get "$UUID" --otp 2>/dev/null) || TOTP=""
+        if [ -n "$TOTP" ]; then
+            echo -n "$TOTP" | pbcopy
+            echo "message-info 'Copied one time password for $TITLE to clipboard'" >> "$QUTE_FIFO"
+        fi
+        ;;
+    *) echo "message-error 'Unknown mode: $MODE'" >> "$QUTE_FIFO"; exit 1 ;;
+esac
+
+# Stay in insert mode so Enter submits the form.
+echo "mode-enter insert" >> "$QUTE_FIFO"

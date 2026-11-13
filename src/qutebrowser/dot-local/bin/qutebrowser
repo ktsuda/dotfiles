@@ -1,3 +1,5 @@
 #!/bin/bash
 # pip PyQt6 bundles its own Qt without the fcitx plugin; fcitx5 serves the IBus protocol.
-QT_IM_MODULE=ibus exec ~/src/github.com/qutebrowser/qutebrowser/.venv/bin/python3 -m qutebrowser "$@"
+# macOS uses the native Cocoa input method, so only Linux needs the override.
+[[ ${OSTYPE} == linux* ]] && export QT_IM_MODULE=ibus
+exec ~/src/github.com/qutebrowser/qutebrowser/.venv/bin/python3 -m qutebrowser "$@"

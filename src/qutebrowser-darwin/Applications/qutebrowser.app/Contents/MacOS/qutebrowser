@@ -1,0 +1,3 @@
+#!/bin/bash
+# A bare app bundle lets Spotlight/Finder launch the wrapper without opening a terminal.
+exec "${HOME}/.local/bin/qutebrowser" "$@"
