@@ -8,6 +8,9 @@ git:
   diffContextSize: 5
   diffRenderers:
     - type: rawGit
+      args: []
+      name: default
+    - type: rawGit
       args: [--color-words]
       name: color-words
 refresher:

@@ -14,7 +14,7 @@
 [diff]
     colorMoved = dimmed-zebra
     colorMovedWS = allow-indentation-change
-    wordRegex = [[:alnum:]_]+|.
+    wordRegex = [A-Za-z0-9_]+|[^[:space:]]
     algorithm = histogram
 [rerere]
     enabled = true
