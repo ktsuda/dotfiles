@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=/home/oai/.cargo/bin/alacritty
+Exec=alacritty
 Icon=Alacritty
 Terminal=false
 Categories=System;TerminalEmulator;
@@ -14,4 +14,4 @@ Actions=New;
 
 [Desktop Action New]
 Name=New Terminal
-Exec=/home/oai/.cargo/bin/alacritty
+Exec=alacritty
