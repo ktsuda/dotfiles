@@ -1,6 +1,7 @@
 git:
   autoFetch: false
   autoRefresh: true
+  fetchAll: true
   branchLogCmd: git log --graph --color=always --abbrev-commit --pretty=format:'%C(cyan)%as %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset' {{branchName}} --
   allBranchesLogCmds:
     - git log --graph --all --color=always --abbrev-commit --pretty=format:'%C(cyan)%as %C(magenta)%h %C(green)%cn %C(white)%s %C(yellow)%d%Creset' --
@@ -13,6 +14,8 @@ git:
     - type: rawGit
       args: [--color-words]
       name: color-words
+  worktree:
+    defaultPath: "~/.local/share/worktrees"
 refresher:
   refreshInterval: 60
   fetchInterval: 300
