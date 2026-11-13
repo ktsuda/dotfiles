@@ -24,6 +24,7 @@ oil.setup({
     ['<BS>']  = { 'actions.parent',        mode = 'n' },
     ['<C-h>'] = { 'actions.parent',        mode = 'n' },
     ['gh']    = { 'actions.parent',        mode = 'n' },
+    ['gv']    = { 'actions.preview',       mode = 'n' },
     ['<Esc>'] = { 'actions.close',         mode = 'n' },
     ['q']     = { 'actions.close',         mode = 'n' },
     ['<C-e>'] = { 'actions.close',         mode = 'n' },
