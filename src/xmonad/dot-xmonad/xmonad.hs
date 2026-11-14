@@ -232,11 +232,12 @@ myLayout = avoidStruts $ spacingRaw False (Border 10 10 10 10) True (Border 0 0 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , className =? "Deskflow"        --> doFloat
+    , className =? "Deskflow"       --> doFloat
     , className =? "Rofi"           --> doFloat
     -- oclock: keep its own size, pin to top-right just below xmobar (TopHM 40, margin 5).
     -- ponytail: offsets are screen-height ratios tuned for ~1080px, adjust on other resolutions
     , className =? "Clock"          --> doFloatDep (\(W.RationalRect _ _ w h) -> W.RationalRect (1 - w - 0.005) 0.05 w h)
+    , className =? "XClock"         --> doFloatDep (\(W.RationalRect _ _ w h) -> W.RationalRect (1 - w - 0.005) 0.05 w h)
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
