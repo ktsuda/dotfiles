@@ -143,6 +143,16 @@ clock=(
 sketchybar --add item clock right \
   --set clock "${clock[@]}"
 
+# Event-driven instead of polling: macOS posts this on every input source switch
+sketchybar --add event input_change AppleSelectedInputSourcesChangedNotification
+ime=(
+  icon.drawing=off
+  script="$PLUGIN_DIR/ime.sh"
+)
+sketchybar --add item ime right \
+  --set ime "${ime[@]}" \
+  --subscribe ime input_change
+
 battery=(
   update_freq=60
   script="$PLUGIN_DIR/battery.sh"
