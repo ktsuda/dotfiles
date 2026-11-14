@@ -234,10 +234,8 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Deskflow"       --> doFloat
     , className =? "Rofi"           --> doFloat
-    -- oclock: keep its own size, pin to top-right just below xmobar (TopHM 40, margin 5).
-    -- ponytail: offsets are screen-height ratios tuned for ~1080px, adjust on other resolutions
     , className =? "Clock"          --> doFloatDep (\(W.RationalRect _ _ w h) -> W.RationalRect (1 - w - 0.005) 0.05 w h)
-    , className =? "XClock"         --> doFloatDep (\(W.RationalRect _ _ w h) -> W.RationalRect (1 - w - 0.005) 0.05 w h)
+    , className =? "XClock"         --> doIgnore
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -311,6 +309,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
     spawnOnce "fcitx5 -dr &"
+    spawnOnce "xclock -geometry -10+55 &"
     -- spawnOnce "flatpak run org.deskflow.deskflow"
     -- spawnOnce "nm-applet &"
     -- spawnOnce "stalonetray &"
