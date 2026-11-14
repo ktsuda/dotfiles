@@ -13,6 +13,7 @@ import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers (doFloatDep)
 import System.IO (hPutStrLn)
 import XMonad.Hooks.DynamicLog
 import XMonad.Layout.IndependentScreens (countScreens, marshallPP, marshall, onCurrentScreen, unmarshallS)
@@ -233,6 +234,9 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Deskflow"        --> doFloat
     , className =? "Rofi"           --> doFloat
+    -- oclock: keep its own size, pin to top-right just below xmobar (TopHM 40, margin 5).
+    -- ponytail: offsets are screen-height ratios tuned for ~1080px, adjust on other resolutions
+    , className =? "Clock"          --> doFloatDep (\(W.RationalRect _ _ w h) -> W.RationalRect (1 - w - 0.005) 0.05 w h)
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
