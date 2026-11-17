@@ -5,3 +5,6 @@ export XDG_CONFIG_HOME="${HOME}/.config"
 if [[ -f ${HOME}/.local/share/bob/env/env.sh ]]; then
   . "${HOME}/.local/share/bob/env/env.sh"
 fi
+
+# for modern-web-guidance
+export DISABLE_TELEMETRY=1
