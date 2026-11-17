@@ -6,6 +6,7 @@ require("autoclose").setup({
   keys = {
     ["'"] = { escape = true, close = false, pair = "''" },
     ['"'] = { escape = true, close = false, pair = '""' },
+    ["["] = { escape = true, close = false, pair = "[]" },
   },
   options = {
     auto_indent = true,
