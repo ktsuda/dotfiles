@@ -1,0 +1,33 @@
+/* Loaded by `colourscheme qute`; replaces the built-in dark theme, so the
+   core dark palette is restated here (built-ins cannot be @imported). */
+:root {
+    --tridactyl-bg: #000;
+    --tridactyl-fg: #fff;
+    --tridactyl-of-fg: #000;
+    --tridactyl-of-bg: #ffec8b;
+    --tridactyl-url-fg: #9cdb73;
+    --tridactyl-header-first-bg: #222;
+    --tridactyl-header-second-bg: #333;
+    --tridactyl-header-third-bg: #222;
+    --tridactyl-cmplt-border-top: 1px solid #444;
+
+    /* qutebrowser default hint colours */
+    --tridactyl-hintspan-font-family: monospace;
+    --tridactyl-hintspan-font-size: 10pt;
+    --tridactyl-hintspan-font-weight: bold;
+    --tridactyl-hintspan-fg: #000;
+    --tridactyl-hintspan-pressed-fg: #5f8700;
+    --tridactyl-hintspan-bg: linear-gradient(to bottom, #fff785, #ffc542);
+    --tridactyl-hintspan-border-color: #e3be23;
+    --tridactyl-hintspan-border-width: 1px;
+    --tridactyl-hintspan-border-style: solid;
+    --tridactyl-hintspan-active-fg: #000;
+    --tridactyl-hintspan-active-bg: var(--tridactyl-hintspan-bg);
+}
+
+/* hint.css hardcodes padding; higher specificity wins over its !important */
+:root span.TridactylHint {
+    padding: 0 3px !important;
+    border-radius: 3px !important;
+    line-height: normal !important;
+}

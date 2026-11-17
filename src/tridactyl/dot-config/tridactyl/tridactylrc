@@ -1,0 +1,65 @@
+" Reset defaults so reloading config doesn't duplicate binds
+sanitise tridactyllocal tridactylsync
+
+" Dark command line + qutebrowser-style hints (themes/qute.css, needs native messenger)
+colourscheme qute
+
+" Replace Tridactyl's default help page on new tabs with a blank screen
+set newtab about:blank
+
+" Hide the bottom status/mode indicator unless typing a command (ultra-minimal)
+" Change 'always' to 'never' if you want the mode indicator completely gone
+set modeindicatorshow never
+
+" Clean up link hints (flat, sharp corners, high contrast)
+set hintchars hjklasdfgyuiopqwertnmzxcvb
+set hintfiltermode vimperator-reflow
+" qutebrowser does not tint hinted elements, only shows labels
+set hintstyles.fg none
+set hintstyles.bg none
+set hintstyles.outline none
+
+" Smooth scrolling without visual clutter
+set smoothscroll true
+set scrollstep 100
+
+" Essential navigation binds for a bar-less browser
+bind [ tabprev
+bind ] tabnext
+bind t tabnew
+bind d tabclose
+bind R source
+bind u undo
+
+" Escape hatch for Firefox internal pages (about:config, addons, etc.)
+bind <C-,> escapehatch
+
+" Bind to both insert and input modes (focused text boxes use input mode)
+bind --mode=insert <C-f> text.forward_char
+bind --mode=input  <C-f> text.forward_char
+bind --mode=insert <C-b> text.backward_char
+bind --mode=input  <C-b> text.backward_char
+bind --mode=insert <C-a> text.beginning_of_line
+bind --mode=input  <C-a> text.beginning_of_line
+bind --mode=insert <C-e> text.end_of_line
+bind --mode=input  <C-e> text.end_of_line
+bind --mode=insert <C-d> text.delete_char
+bind --mode=input  <C-d> text.delete_char
+bind --mode=insert <C-h> text.backward_delete_char
+bind --mode=input  <C-h> text.backward_delete_char
+bind --mode=insert <C-k> text.kill_line
+bind --mode=input  <C-k> text.kill_line
+
+" native messenger is requried. (:nativeinstall)
+autocmd DocStart ^https://mail\.google\.com/ mode ignore
+autocmd DocStart ^https://calendar\.google\.com/ mode ignore
+autocmd DocStart ^https://drive\.google\.com/ mode ignore
+autocmd DocStart ^https://app\.simplenote\.com/ mode ignore
+autocmd DocStart ^https://www\.youtube\.com/ mode ignore
+autocmd DocStart ^https://instapaper\.com/ mode ignore
+autocmd DocStart ^https://app\.raindrop\.io/ mode ignore
+autocmd DocStart ^https://feedly\.com/ mode ignore
+autocmd DocStart ^https?://localhost(:[0-9]+)?/ mode ignore
+autocmd DocStart ^https://[a-zA-Z0-9-]+\.vercel\.app/ mode ignore
+
+

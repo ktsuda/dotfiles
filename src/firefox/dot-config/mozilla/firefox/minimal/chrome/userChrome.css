@@ -1,0 +1,39 @@
+/* Hide the native tab bar completely (use Tridactyl 'b' to switch tabs) */
+#TabsToolbar {
+  visibility: collapse !important;
+}
+
+/* Hide the sidebar header if you use vertical tabs or bookmarks sidebar */
+#sidebar-header {
+  display: none !important;
+}
+
+/* Collapse the navigation/URL bar unless focused with Ctrl+L */
+#nav-bar:not([customizing]):not(:focus-within) {
+  max-height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  border: none !important;
+}
+
+/* Smoothly reveal the URL bar when focused via Ctrl+L */
+#nav-bar:focus-within {
+  max-height: 40px !important;
+  opacity: 1 !important;
+  transition: opacity 0.1s ease-in-out;
+}
+
+/* Hide the bottom-left URL hover preview so it doesn't overlap Tridactyl's command bar */
+#statuspanel {
+  display: none !important;
+}
+
+/* Hide window controls (minimize/maximize/close) on Linux/Windows if using a tiling WM */
+/* Uncomment the block below if you use i3, Sway, Hyprland, etc. */
+/*
+.titlebar-buttonbox-container { display: none !important;
+}
+*/
