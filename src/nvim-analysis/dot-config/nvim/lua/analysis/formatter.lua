@@ -47,4 +47,14 @@ vim.keymap.set("n", "<leader>f", function()
   format({ buf = bufnr })
 end)
 
+vim.api.nvim_create_autocmd("BufWritePost", {
+  callback = function(args)
+    local bufnr = args.buf
+    local ft = vim.bo[bufnr].filetype
+    if ft == "markdown" then
+      format({ buf = bufnr })
+    end
+  end,
+})
+
 return M
