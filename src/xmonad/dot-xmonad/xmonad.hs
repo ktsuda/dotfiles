@@ -9,6 +9,7 @@
 
 import XMonad
 import Data.Monoid
+import Control.Monad (filterM)
 import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run
@@ -278,8 +279,17 @@ sendView tag = do
 clickable' :: ScreenId -> WorkspaceId -> String
 clickable' s w = xmobarAction ("~/.xmonad/xmonad-x86_64-linux --view " ++ marshall s w) "1" w
 
-myLogHook n h =
+myLogHook n h = do
     mapM_ (\s -> dynamicLogWithPP $ marshallPP s (myPP h s)) [0 .. n - 1]
+    raiseXClock
+
+-- xclock is unmanaged (doIgnore), so xmonad's restacking leaves it below
+-- managed windows; re-raise it after every state change.
+raiseXClock :: X ()
+raiseXClock = withDisplay $ \d -> do
+    (_, _, ws) <- io . queryTree d =<< asks theRoot
+    xs <- filterM (runQuery (className =? "XClock")) ws
+    io $ mapM_ (raiseWindow d) xs
 
 myPP h s = xmobarPP
     { ppOutput = \str -> hPutStrLn (h !! fromIntegral s) str
@@ -309,7 +319,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "compton -c -b -m 0.75 &"
     spawnOnce "fcitx5 -dr &"
-    spawnOnce "xclock -geometry -10+55 &"
+    spawnOnce "xclock -geometry +10-10 &"
     -- spawnOnce "flatpak run org.deskflow.deskflow"
     -- spawnOnce "nm-applet &"
     -- spawnOnce "stalonetray &"
